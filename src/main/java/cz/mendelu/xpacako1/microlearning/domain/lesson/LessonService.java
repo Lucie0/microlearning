@@ -22,4 +22,13 @@ public class LessonService {
     public List<Lesson> getAllLessons(){
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+
+    public Iterable<Lesson> createLesson(List<Lesson> lessons){
+        return repository.saveAll(lessons);
+    }
+
+    public Lesson createLesson(Lesson lesson){
+        return repository.save(lesson);
+    }
+
 }

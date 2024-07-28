@@ -45,11 +45,6 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured'
 	testImplementation 'io.rest-assured:spring-mock-mvc'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
-
-	// kvuli init data do db
-//	implementation 'org.hibernate:hibernate-core:4.1.4.Final'
-//	implementation 'org.hibernate:hibernate-entitymanager:5.2.3.Final'
-
 }
 
 tasks.named('test') {

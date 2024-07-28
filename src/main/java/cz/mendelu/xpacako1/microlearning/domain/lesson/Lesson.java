@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import java.sql.Clob;
@@ -25,4 +26,9 @@ public class Lesson {
     @Column(columnDefinition = "text")
 //    private Clob content;
     private String content;
+
+    public Lesson(String name, String content){
+        this.name = name;
+        this.content = content;
+    }
 }
