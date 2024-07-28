@@ -2,6 +2,10 @@ package cz.mendelu.xpacako1.microlearning.utils.data;
 
 import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.lesson.LessonService;
+import cz.mendelu.xpacako1.microlearning.domain.option.Option;
+import cz.mendelu.xpacako1.microlearning.domain.option.OptionService;
+import cz.mendelu.xpacako1.microlearning.domain.question.Question;
+import cz.mendelu.xpacako1.microlearning.domain.question.QuestionService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +19,19 @@ import java.util.List;
 public class Seeder {
 
     private final LessonService lessonService;
+    private final OptionService optionService;
+    private final QuestionService questionService;
 
     // constructor
     @Autowired
-    public Seeder(LessonService lessonService){
+    public Seeder(
+            LessonService lessonService,
+            OptionService optionService,
+            QuestionService questionService
+    ){
         this.lessonService = lessonService;
+        this.optionService = optionService;
+        this.questionService = questionService;
     }
 
     private boolean shouldSeedData() {
@@ -123,8 +135,23 @@ public class Seeder {
                 int suma=0, current_value, count=1;
                 The variable current_value has undefined value, but suma has value zero and count has value 1.
                 """));
-
         lessonService.createLesson(lessonList);
+
+        List<Question> questionList = new ArrayList<>();
+        Question q = new Question();
+        q.setText("Parameters of the main function are enclosed by:");
+        q.setNumber(1);
+        q.setPoints(1);
+
+        List<Option> optionList = new ArrayList<>();
+        optionList.add(new Option("parenthesis", true, q));
+        optionList.add(new Option("curly brackets", false, q));
+        optionList.add(new Option("spaces", false, q));
+
+        q.setOptions(optionList);
+        questionList.add(q);
+        questionService.createQuestion(questionList);
+        optionService.createLesson(optionList);
 
         log.info("--- Default data seeded ---");
     }
