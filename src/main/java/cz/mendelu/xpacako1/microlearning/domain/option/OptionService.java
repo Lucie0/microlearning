@@ -25,11 +25,11 @@ public class OptionService {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
-    public Iterable<Option> createLesson(List<Option> options){
+    public Iterable<Option> createOption (List<Option> options){
         return repository.saveAll(options);
     }
 
-    public Option createLesson(Option option){
+    public Option createOption(Option option){
         return repository.save(option);
     }
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -138,20 +139,67 @@ public class Seeder {
         lessonService.createLesson(lessonList);
 
         List<Question> questionList = new ArrayList<>();
-        Question q = new Question();
-        q.setText("Parameters of the main function are enclosed by:");
-        q.setNumber(1);
-        q.setPoints(1);
-
         List<Option> optionList = new ArrayList<>();
-        optionList.add(new Option("parenthesis", true, q));
-        optionList.add(new Option("curly brackets", false, q));
-        optionList.add(new Option("spaces", false, q));
+        // ------------------ Q1 ---------
+        Question q1= new Question();
+        q1.setText("Parameters of the main function are enclosed by:");
+        q1.setNumber(1);
+        q1.setPoints(1);
 
-        q.setOptions(optionList);
-        questionList.add(q);
+        q1.addOption(new Option("parenthesis", true, q1));
+        q1.addOption(new Option("curly brackets", false, q1));
+        q1.addOption(new Option("spaces", false, q1));
+
+        questionList.add(q1);
+
+        // --------------- Q2 ----------------------
+        Question q2 = new Question();
+        q2.setText("The header file is:");
+        q2.setNumber(1);
+        q2.setPoints(1);
+
+        q2.addOption(new Option("file with function declaration and/or some definition in C/C++ language.", true, q2));
+        q2.addOption(new Option("file with a part of function body or main function body.", false, q2));
+        q2.addOption(new Option("file containing the first line of C/C++ source code.", false, q2));
+        q2.addOption(new Option("file containing any part of source code.", false, q2));
+
+        questionList.add(q2);
+
+        // --------------- q3 ----------------------
+        Question q3 = new Question();
+        q3.setText("The header file to come with compiler or operating system is used to write:");
+        q3.setNumber(2);
+        q3.setPoints(1);
+
+        q3.addOption(new Option("#include <filename>", true, q3));
+        q3.addOption(new Option("#using <filename>", false, q3));
+        q3.addOption(new Option("#include \"filename\"", false, q3));
+        q3.addOption(new Option("!copy filename", false, q3));
+
+        questionList.add(q3);
+
+        // --------------- q4 ----------------------
+        Question q4 = new Question();
+        q4.setText("The header file written by programmer is used to write");
+        q4.setNumber(3);
+        q4.setPoints(1);
+
+        q4.addOption(new Option("#include \"filename\"", true, q4));
+        q4.addOption(new Option("#define \"filename\"", false, q4));
+        q4.addOption(new Option("#use \"filename\"", false, q4));
+        q4.addOption(new Option("#include <filename>", false, q4));
+
+        questionList.add(q4);
+
+
+        // ------------ ZAVER -----------
+
         questionService.createQuestion(questionList);
-        optionService.createLesson(optionList);
+
+        // naplneni list vsemi moznostmi, ktere byly vytvoreny
+        questionList.forEach(question -> optionList.addAll(question.getOptions()));
+        // ulozeni moznosti do db
+        optionService.createOption(optionList);
 
         log.info("--- Default data seeded ---");
     }

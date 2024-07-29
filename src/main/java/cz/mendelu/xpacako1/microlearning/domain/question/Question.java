@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,15 @@ public class Question {
     private int number;
 
     @OneToMany(mappedBy = "question")
-    private List<Option> options;
+    private List<Option> options = new ArrayList<>();
+
+    public void addOption(Option option){
+        this.options.add(option);
+    }
+
+    public void addOption(List<Option> options){
+        this.options.addAll(options);
+    }
 
     public Question(String text, int points, int number, List<Option> options){
         this.text = text;

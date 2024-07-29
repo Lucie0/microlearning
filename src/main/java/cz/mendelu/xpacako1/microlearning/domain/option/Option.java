@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Option {
+public class Option implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +31,10 @@ public class Option {
         this.text = text;
         this.correctAnswer = correctAnswer;
         this.question = question;
+    }
+
+    public String toString(){
+        return " Option("+ this.id + "," + this.text + "," + this.correctAnswer + ")";
     }
 
 }
