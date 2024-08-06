@@ -31,6 +31,8 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Option> options = new ArrayList<>();
 
+    // todo manytoone folder
+
     public void addOption(Option option){
         this.options.add(option);
     }

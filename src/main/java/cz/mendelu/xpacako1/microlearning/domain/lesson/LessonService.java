@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,6 +22,9 @@ public class LessonService {
     // fuctions
     public List<Lesson> getAllLessons(){
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+    public Optional<Lesson> getById(Long id){
+        return repository.findById(id);
     }
 
     public Iterable<Lesson> createLesson(List<Lesson> lessons){
