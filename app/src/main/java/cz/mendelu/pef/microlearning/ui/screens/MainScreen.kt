@@ -20,11 +20,34 @@ import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 // https://spatialhub.mendelu.cz/
 
 @Composable
-fun MainScreen(navigation: INavigationRouter) {
+fun MainScreen(
+    lastLessonId: Long?,
+    navigation: INavigationRouter
+) {
+
+    // kdyz se vracim z lesson null stranky, tak to sleti na IllegalArgExc pro mainScreenu?
+    // pri vynute wifi i z lesson by id
+    // TODO VYRESIT
+    // java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}                                                                                                    java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}
+
+    // todo hodit do VM
+    var myLLId: Long = lastLessonId ?: 1L
+    // moje osetreni pro nepreteceni
+    if (myLLId > 8) {
+        myLLId = 1
+    }
+
+    // todo VM
+    // ulozit prichazejici lastLessonId do VM
+    // pokud zadne lastLessonId neni, nastavit na 1
+    // popripade na jinou inicializacni hodnotu (zacatek grafu, nahodne cislo, ... ???)
+    // pote, kdyz chci navigovat na stranku s lekci, tak predavat tam lastLessonId
+
     BaseScreen(
         topBarText = "MainScreen"
     ) {
         MainScreenContent(
+            lastLessonId = myLLId,
             paddingValues = it,
             navigation = navigation
         )
@@ -33,6 +56,7 @@ fun MainScreen(navigation: INavigationRouter) {
 
 @Composable
 fun MainScreenContent(
+    lastLessonId: Long,
     paddingValues: PaddingValues,
     navigation: INavigationRouter
 ){
@@ -43,10 +67,11 @@ fun MainScreenContent(
         HelloWorldScreen()
 
         Button(onClick = { navigation.navigateToLessonScreen() }) {
-            Text(text = "Lesson")
+            Text(text = "Lesson null")
         }
 
-        Button(onClick = { navigation.navigateToLessonScreen(1) }) {
+        // predtim misto last lesson id byla 1
+        Button(onClick = { navigation.navigateToLessonScreen(lastLessonId) }) {
             Text(text = "Lesson by id")
         }
 

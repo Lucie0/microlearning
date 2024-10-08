@@ -20,6 +20,10 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.navigate(Destination.LessonScreen.route + "/" + id)
     }
 
+    override fun navigateToMainScreen(lastLessonId: Long?) {
+        navController.navigate(Destination.MainScreen.route + "/" + lastLessonId)
+    }
+
 //    override fun navigateToGameScreen() {
 //        navController.navigate(Destination.GameScreen.route)
 //    }

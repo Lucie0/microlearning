@@ -21,13 +21,34 @@ fun NavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
+        // main screen bez argumentu
         composable(route = Destination.MainScreen.route) {
-            MainScreen(navigation) // zavolani jine composable fce a jen se zavola
+            MainScreen(null, navigation) // zavolani jine composable fce a jen se zavola
         }
+
+        // main screen s argumenty
+        composable(
+            route = Destination.MainScreen.route + "/{id}",
+            arguments = listOf(
+                navArgument("id"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            val id = it.arguments?.getLong("id")
+            MainScreen(
+                lastLessonId = if (id != -1L) id else null,
+                navigation = navigation
+            )
+        }
+
+        // lesson screen bez argumentu
         composable(route = Destination.LessonScreen.route) {
             LessonScreen(null, navigation) // zavolani jine composable fce a jen se zavola
         }
 
+        // lesson screen s argumenty
         composable(
             route = Destination.LessonScreen.route + "/{id}", // receni, ze to bude paramter v ceste
             arguments = listOf(
@@ -43,7 +64,7 @@ fun NavGraph(
                 navigation = navigation
             )
         }
-//
+
 //        composable(route = Destination.GameScreen.route) {
 //            GameScreen(navigation) // zavolani jine composable fce a jen se zavola
 //        }

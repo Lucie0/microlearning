@@ -55,7 +55,8 @@ fun LessonScreen(
         drawFullScreenContent = true,
 //        showLoading = uiState.value.loading,
         onBackClick = {
-            navigation.navigateBack()
+//            navigation.navigateBack()
+            navigation.navigateToMainScreen(id)
         }
     ) {
         LessonScreenContent(
@@ -76,8 +77,6 @@ fun LessonScreenContent(
 ){
     // zobrazit lekci z API
 //    println("Data: ${uiState.data}")
-
-
 
         if (uiState.data != null) {
         LazyColumn(

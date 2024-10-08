@@ -19,13 +19,13 @@ object RetrofitModule {
     fun provideMoshiConverter(): Moshi =
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-
+    // todo NGROK URL
     //https://d600-195-113-216-27.ngrok-free.app/lessons/1
     @Provides
     @Singleton
     fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://5f1e-195-113-216-27.ngrok-free.app")
+            .baseUrl("https://55aa-94-113-102-25.ngrok-free.app/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
