@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Microlearning</string>
+    <string name="communication_error">Communication error</string>
+    <string name="some_unexpected_error">Some unexpected error</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="empty_list">Empty list</string>
+    <string name="no_data">No data</string>
+    <string name="wrong_lesson_id">Wrong lesson ID</string>
+</resources>
