@@ -78,6 +78,13 @@ dependencies {
     // html element
 //    implementation("com.github.mukeshsolanki:compose-html:1.0.0")
 
+    // rich editor pro HTML text
+//    implementation("com.mohamedrejeb.richeditor:richeditor-compose:1.0.0-rc10")
+
+    // html text
+    // jitpack in setting -- https://github.com/jeziellago/compose-markdown
+//    implementation ("com.github.jeziellago:compose-markdown:{LAST-RELEASE}")
+
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
