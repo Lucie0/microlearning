@@ -16,8 +16,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// umi strong, b, i, em, linky do prohlizece, podrzeni, button list
+// umi strong, b, i, em, linky do prohlizece, podtrzeni, button list
 // todo cislovany seznam
+// todo obrazky
 
 @Composable
 fun HtmlText(

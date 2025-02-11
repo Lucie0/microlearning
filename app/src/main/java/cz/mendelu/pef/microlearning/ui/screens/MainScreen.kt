@@ -101,38 +101,37 @@ fun MainScreenContent(
     }
 }
 
-@Composable
-fun HtmlViewer(htmlContent: String) {
-    HtmlCompat.fromHtml("<h1>Hello</h1>", HtmlCompat.FROM_HTML_MODE_COMPACT)
-//    HtmlCompat.fromHtml(htmlContent, 0)
-}
-
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun HelloWorldScreen() {
-//    val htmlContent = """
-//        <h1 style="color:blue;">This <strong>is</strong> a <a href="https://medium.com/">link</a> in HTML.</h1>
-//        <p>This <strong>is</strong> a <a href="https://medium.com/">link</a> in HTML.</p>
-//        <p>This <em>is</em> a <a href="https://medium.com/">link</a> in HTML.</p><div>This <i>is</i> a <a href="https://medium.com/">link</a> in HTML.</div>
-//    """.trimIndent()
-
 
     val spannableString = SpannableStringBuilder("<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
-            " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget gravida cum sociis natoque penatibus.</p>\n" +
-            "<p>Nisi porta lorem mollis aliquam. <i>Dolor purus non enim praesent.</i> Sed sed <em>risus pretium</em> quam vulputate dignissim. " +
-            "<u>Ipsum dolor sit</u> amet consectetur adipiscing. <del>Augue</del> mauris <small>augue</small> neque gravida in fermentum et sollicitudin. Ullamcorper velit sed ullamcorper morbi tincidunt. Consectetur purus ut faucibus pulvinar. At imperdiet dui accumsan sit amet.</p>" +
+            " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien " +
+            "faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim " +
+            "lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget " +
+            "gravida cum sociis natoque penatibus.</p>\n" +
+            "<p>Nisi porta lorem mollis aliquam. <i>Dolor purus non enim praesent.</i> Sed sed <em>risus pretium</em> quam " +
+            "vulputate dignissim. " +
+            "<u>Ipsum dolor sit</u> amet consectetur adipiscing. <del>Augue</del> mauris <small>augue</small> neque gravida in" +
+            " fermentum et <b>sollicitudin. U<i>llamcorper velit sed ullamcorper</i> morbi tincidunt.</b> Consectetur purus ut faucibus " +
+            "pulvinar. At <img src='pokus'> imperdiet dui accumsan sit amet.</p>" +
             "" +
-            "<ul>\n" +
-            "  <li>•\t\tCoffee</li>\n" +
-            "  <li>•\t\tTea</li>\n" +
-            "  <li>•\t\tMilk</li>\n" +
+            "<ul>" +
+//            "  <li>•\t\tCoffee</li>\n" +
+//            "  <li>•\t\tTea</li>\n" +
+//            "  <li>•\t\tMilk</li>\n" +
+            "<li>Coffee</li>" +
+            "<li>Tea</li>" +
+            "<li>Milk</li>" +
             "</ul>" +
             "<br>" +
-            "<ol>\n" +
-            "\t<li>Coffee</li>\n" +
-            "  <li>Tea</li>\n" +
-            "  <li>Milk</li>\n" +
-            "</ol>").toString()
+            "lerisque fermentum dui. Risus nullam" +
+            "<br>" +
+            "<ol>" +
+            "<li>Coffee</li>" +
+            "<li>Tea</li>" +
+            "<li>Milk</li>" +
+            "</ol>").toString().replace("<li>", "<li>\u2022\t\t")
 
     // funguje link, br, h1
     //jinak nic
@@ -155,20 +154,6 @@ fun HelloWorldScreen() {
 //    Text("Clickable text")
     HtmlText(html = annotatedText)
 
-//
-//    // funguje link, b, strong, i, em, del, small, ul
-//    //nefunguje ul a vlastni nastaveni dalsich tagu, nezmenila jsem ani barvu
-//    MyHtml(text = "TextView:<br>$spannableString")
-
-//    val spanned2 = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_LEGACY, null, CustomTagHandler())
-//    val text = buildAnnotatedString {
-//        append(spanned2.toString())
-//    }
-//
-//    Text(text = text, style = androidx.compose.ui.text.TextStyle(fontSize = 16.sp))
-
-
-//    Text(text = spannableString.toRichHtmlString())
 }
 
 
@@ -195,63 +180,3 @@ fun makeBulletedList(items: List<String>): AnnotatedString {
 }
 
 
-//val spannableString = SpannableStringBuilder("<b>Hello</b> <i>World</i>").toString()
-//val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
-//
-//Text(text = spanned.toAnnotatedString())
-
-// mohamedrejeb rich editor
-//@Composable
-//fun String.toRichHtmlString(): AnnotatedString {
-//    val state = rememberRichTextState()
-//
-//    LaunchedEffect(this) {
-//        state.setHtml(this@toRichHtmlString)
-//    }
-//
-//    return state.annotatedString
-//}
-
-@Composable
-fun MyHtml(text: String) {
-    AndroidView(factory = { context ->
-        TextView(context).apply {
-            setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY))
-        }
-    })
-}
-
-/*
-class CustomTagHandler : Html.TagHandler {
-    override fun handleTag(opening: Boolean, tag: String, output: Editable, xmlReader: XMLReader) {
-        if (tag.equals("customtag", ignoreCase = true)) {
-            println("CustomTag")
-            if (opening) {
-                val len = output.length
-                output.setSpan(ForegroundColorSpan(android.graphics.Color.RED), len, len, Editable.SPAN_MARK_MARK)
-            } else {
-                val len = output.length
-                val obj = getLast(output, ForegroundColorSpan::class.java)
-                val where = output.getSpanStart(obj)
-                output.removeSpan(obj)
-                if (where != len) {
-                    output.setSpan(ForegroundColorSpan(android.graphics.Color.RED), where, len, Editable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                }
-            }
-        }
-    }
-
-    private fun <T> getLast(text: Editable, kind: Class<T>): T? {
-        val objs = text.getSpans(0, text.length, kind)
-        if (objs.isEmpty()) {
-            return null
-        } else {
-            for (i in objs.size - 1 downTo 0) {
-                if (text.getSpanFlags(objs[i]) == Editable.SPAN_MARK_MARK) {
-                    return objs[i]
-                }
-            }
-            return null
-        }
-    }
-}*/

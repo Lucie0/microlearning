@@ -5,6 +5,7 @@ import android.os.Build
 import android.text.Spanned
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.ImageSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -26,10 +27,40 @@ import androidx.compose.ui.unit.sp
 
 
 //https://stackoverflow.com/questions/66494838/android-compose-how-to-use-html-tags-in-a-text-view
-@OptIn(ExperimentalTextApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
 fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
     val spanned = this@toAnnotatedString
+//    var string = ""
+//    var lastIndex = 0
+//
+//    println("string:$string")
+//
+//    getSpans(0, spanned.length, android.text.style.BulletSpan::class.java).forEach {bulletSpan ->
+////        println(bulletSpan.spanTypeId)
+//        val start = getSpanStart(bulletSpan)
+//        val end = getSpanEnd(bulletSpan)
+//        println("$start, $end")
+////        println(spanned.length)
+//        println("lI:$lastIndex")
+//        append(spanned.subSequence(lastIndex, start))
+//        println("t1:${spanned.subSequence(lastIndex, start)}")
+//        append("\u2022\t\t")
+//        append(spanned.subSequence(start,end))
+//        println("t2:${spanned.subSequence(start,end)}")
+//        lastIndex = end
+//        println("lI:$lastIndex")
+//        println(this.length)
+//        println("-------------------")
+////        val text1 = spanned.subSequence(0, start)
+////        val append = "\u2022\t\t"
+////        val text2 = spanned.subSequence(start, string.length-1)
+////        string = "$text1$append$text2"
+////        println(string.subSequence(start, end))
+//    }
+//
+//    println(spanned.subSequence(0, spanned.length))
+//    println("string:$string")
+
     append(spanned.toString())
 
     getSpans(0, spanned.length, Any::class.java).forEach { span ->
@@ -93,6 +124,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             }
             //BulletSpan
             is BulletSpan -> {
+                // todo co s temi puntiky pred textem v seznamu
                 println("gap:${span.gapWidth}")
                 println("start:$start, end: $end")
                 println("len:${this.length}")
@@ -129,6 +161,15 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 //                        append("\t\t")
 //                    }
 //                }
+            }
+            is ImageSpan -> {
+                // todo osetrit obrazky
+                println(span.source)
+
+//                AsyncImage(
+//                    model = "https://example.com/image.jpg",
+//                    contentDescription = "Translated description of what the image contains"
+//                )
             }
             // todo pridat?
 //            else -> {
