@@ -15,6 +15,8 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
+import cz.mendelu.pef.microlearning.ui.theme.onSecondaryDark
 
 // umi strong, b, i, em, linky do prohlizece, podtrzeni, button list
 // todo cislovany seznam
@@ -24,7 +26,7 @@ import androidx.compose.ui.unit.sp
 fun HtmlText(
     html: AnnotatedString,
     linkColor: Color = Color.Red, // Default link color
-    textColor: Color = Color.White,
+    textColor: Color = basicTextColor(),
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal
 ) {
@@ -40,7 +42,12 @@ fun HtmlText(
                     context.startActivity(intent)
                 }
         },
-        style = TextStyle(color = textColor, fontSize = fontSize, baselineShift = BaselineShift.Subscript))
+        style = TextStyle(
+            color = textColor,
+            fontSize = fontSize,
+            baselineShift = BaselineShift.Subscript
+        )
+    )
 }
 
 
