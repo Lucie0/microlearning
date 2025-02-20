@@ -7,13 +7,23 @@ import android.os.Build
 import android.text.SpannableStringBuilder
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -22,12 +32,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
+import cz.mendelu.pef.microlearning.ui.theme.primaryDark
 
 
 // todo zeptat se Landy na HTML komponentu? Elisky? Gono?
@@ -82,7 +94,9 @@ fun MainScreenContent(
     ) {
         HelloWorldScreen()
 
-        Button(onClick = { navigation.navigateToLessonScreen() }) {
+        Button(
+            onClick = { navigation.navigateToLessonScreen() }
+        ) {
             Text(text = "Lesson null")
         }
 
@@ -95,8 +109,11 @@ fun MainScreenContent(
             Text(text = "Question")
         }
 
+
+
         // Html()
         // HtmlText() // zavislost v gradle
+
 
     }
 }
@@ -154,29 +171,6 @@ fun HelloWorldScreen() {
 //    Text("Clickable text")
     HtmlText(html = annotatedText)
 
-}
-
-
-@OptIn(ExperimentalTextApi::class)
-@Composable
-fun makeBulletedList(items: List<String>): AnnotatedString {
-    val bulletString = "\u2022\t\t"
-    val textStyle = LocalTextStyle.current
-    val textMeasurer = rememberTextMeasurer()
-    val bulletStringWidth = remember(textStyle, textMeasurer) {
-        textMeasurer.measure(text = bulletString, style = textStyle).size.width
-    }
-    val restLine = with(LocalDensity.current) { bulletStringWidth.toSp() }
-    val paragraphStyle = ParagraphStyle(textIndent = TextIndent(restLine = restLine))
-
-    return buildAnnotatedString {
-        items.forEach { text ->
-            withStyle(style = paragraphStyle) {
-                append(bulletString)
-                append(text)
-            }
-        }
-    }
 }
 
 

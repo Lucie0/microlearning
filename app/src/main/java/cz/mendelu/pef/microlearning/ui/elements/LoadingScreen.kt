@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cz.mendelu.pef.microlearning.ui.theme.Purple40
+import cz.mendelu.pef.microlearning.ui.theme.primaryDark
 
 @Composable
 fun LoadingScreen(
@@ -23,7 +23,7 @@ fun LoadingScreen(
 
         CircularProgressIndicator(
             modifier = Modifier.size(48.dp),
-            color = Purple40,
+            color = primaryDark,
             strokeWidth = 5.dp)
     }
 }
