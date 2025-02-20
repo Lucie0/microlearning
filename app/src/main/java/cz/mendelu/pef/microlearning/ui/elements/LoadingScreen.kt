@@ -11,19 +11,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cz.mendelu.pef.microlearning.ui.theme.primaryDark
+import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
 @Composable
 fun LoadingScreen(
     modifier: Modifier,
 ){
-    Column(modifier = modifier.fillMaxSize().background(Color.Black),
+    Column(modifier = modifier
+        .fillMaxSize()
+        .background(Color.Black),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         CircularProgressIndicator(
             modifier = Modifier.size(48.dp),
-            color = primaryDark,
+            color = getPrimaryColor(),
             strokeWidth = 5.dp)
     }
 }
