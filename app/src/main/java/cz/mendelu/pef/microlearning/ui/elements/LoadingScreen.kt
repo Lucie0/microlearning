@@ -18,8 +18,8 @@ fun LoadingScreen(
     modifier: Modifier,
 ){
     Column(modifier = modifier
-        .fillMaxSize()
-        .background(Color.Black),
+        .fillMaxSize(),
+//        .background(Color.Black),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
