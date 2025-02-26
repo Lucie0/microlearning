@@ -13,8 +13,6 @@ import dagger.hilt.android.HiltAndroidApp
 //Or, set and send a custom/non-standard browser User-Agent request header.
 //Or, please upgrade to any paid ngrok account.
 
-// todo html componenta pro zobrazovani lessons, zeptat se nekoho ze SpatialHubu
-
 @HiltAndroidApp
 class MainApplication : Application() {
 

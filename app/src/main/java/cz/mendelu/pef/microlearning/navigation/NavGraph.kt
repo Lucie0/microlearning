@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import cz.mendelu.pef.microlearning.ui.screens.LessonScreen
+import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.MainScreen
 
 @Composable

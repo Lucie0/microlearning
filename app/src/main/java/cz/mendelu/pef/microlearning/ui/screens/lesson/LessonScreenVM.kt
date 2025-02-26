@@ -1,4 +1,4 @@
-package cz.mendelu.pef.microlearning.ui.screens
+package cz.mendelu.pef.microlearning.ui.screens.lesson
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,6 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Lesson
 import cz.mendelu.pef.microlearning.model.UiState
-import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

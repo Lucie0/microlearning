@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,16 +26,16 @@ import cz.mendelu.pef.microlearning.ui.theme.onSecondaryDark
 @Composable
 fun HtmlText(
     html: AnnotatedString,
-    linkColor: Color = Color.Red, // Default link color
+    linkColor: Color = Color.Blue, // Default link color
     textColor: Color = basicTextColor(),
-    fontSize: TextUnit = 16.sp,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontSize: TextUnit = MaterialTheme.typography.bodyLarge.fontSize,
+    fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium
 ) {
     val context = LocalContext.current
 
     ClickableText(
         text = html,
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+        modifier = Modifier.padding(start=16.dp,end=26.dp, bottom=16.dp),
         onClick = { offset ->
             html.getStringAnnotations(tag = "URL", start = offset, end = offset)
                 .firstOrNull()?.let { annotation ->
@@ -45,7 +46,8 @@ fun HtmlText(
         style = TextStyle(
             color = textColor,
             fontSize = fontSize,
-            baselineShift = BaselineShift.Subscript
+            baselineShift = BaselineShift.Subscript,
+            fontWeight = fontWeight
         )
     )
 }

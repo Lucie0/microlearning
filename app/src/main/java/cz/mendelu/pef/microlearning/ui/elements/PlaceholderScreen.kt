@@ -38,8 +38,7 @@ fun PlaceHolderScreen(
 
             if (content.text != null){
                 Text(text = content.text,
-                    textAlign = TextAlign.Center,
-                    color = Color.White)
+                    textAlign = TextAlign.Center)
             }
         }
     }
