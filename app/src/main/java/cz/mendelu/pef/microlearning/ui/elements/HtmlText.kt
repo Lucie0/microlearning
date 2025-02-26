@@ -11,13 +11,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cz.mendelu.pef.microlearning.ui.theme.aBeeZeeFontFamily
 import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.onSecondaryDark
+import cz.mendelu.pef.microlearning.ui.theme.robotoFontFamily
 
 // umi strong, b, i, em, linky do prohlizece, podtrzeni, button list
 // todo cislovany seznam
