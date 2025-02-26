@@ -98,7 +98,7 @@ fun MainScreenContent(
             Text(text = "Lesson by id")
         }
 
-        Button(onClick = { /*TODO navigate to another screen*/ }) {
+        Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
             Text(text = "Question")
         }
 
@@ -115,7 +115,10 @@ fun MainScreenContent(
 @Composable
 fun HelloWorldScreen() {
 
-    val spannableString = SpannableStringBuilder("<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
+    val spannableString = SpannableStringBuilder("<monospace>Nullam non</monospace>" +
+            "<typeface>Typeface</typeface><br>" +
+            "<font face='code'>Font</font>" +
+            " #include &lt;name&gt; &lt")/*<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
             " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien " +
             "faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim " +
             "lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget " +
@@ -141,7 +144,10 @@ fun HelloWorldScreen() {
             "<li>Coffee</li>" +
             "<li>Tea</li>" +
             "<li>Milk</li>" +
-            "</ol>").toString().replace("<li>", "<li>\u2022\t\t")
+            "</ol>")*/.toString()
+            /*.replace("<li>", "<li>\u2022\t\t")
+            */
+
 
     // funguje link, br, h1
     //jinak nic
@@ -155,6 +161,8 @@ fun HelloWorldScreen() {
     val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
     val annotatedText = spanned.toAnnotatedString()
+    //    HtmlText(html = annotatedText)
+
     //funguje b, strong, i, em, underline, h1, br
     // nefunguje del, ol, ul, small, link
 //    Text(text = annotatedText)
@@ -162,7 +170,8 @@ fun HelloWorldScreen() {
 //    println(spanned)
 
 //    Text("Clickable text")
-    HtmlText(html = annotatedText)
+
+    HtmlText(string = spannableString)
 
 }
 

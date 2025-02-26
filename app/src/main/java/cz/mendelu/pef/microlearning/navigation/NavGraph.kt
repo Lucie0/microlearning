@@ -1,5 +1,7 @@
 package cz.mendelu.pef.microlearning.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -10,7 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.MainScreen
+import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun NavGraph(
     navController: NavHostController = rememberNavController(),//aby si pamatoval, kde je
@@ -65,6 +69,21 @@ fun NavGraph(
             )
         }
 
+        // QuestionScreen s argumenty
+        composable(route = Destination.QuestionScreen.route + "/{title}",
+            arguments = listOf(
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) {
+            QuestionScreen(
+                title = it.arguments?.getString("title") ?: "",
+                navigation = navigation
+            )
+        }
+
 //        composable(route = Destination.GameScreen.route) {
 //            GameScreen(navigation) // zavolani jine composable fce a jen se zavola
 //        }
@@ -82,7 +101,7 @@ fun NavGraph(
 //        }
 //
 //        composable(
-//            route = Destination.CardsDetailScreen.route + "/{id}", // receni, ze to bude paramter v ceste
+//            route = Destination.CardsDetailScreen.route + "/{id}", // receni, ze to bude parameter v ceste
 //            arguments = listOf(
 //                navArgument("id"){
 //                    type = NavType.LongType

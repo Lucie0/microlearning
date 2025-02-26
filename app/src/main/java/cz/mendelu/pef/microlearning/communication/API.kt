@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -26,5 +27,11 @@ interface API {
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/lessons/{id}")
     suspend fun getLessonById(@Path("id") id: Long) : Response<ObjectResponse<Lesson>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/questions")
+    suspend fun getQuestions() : Response<ArrayResponse<Question>>
+
+
 
 }

@@ -35,6 +35,7 @@ fun LessonScreen(
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
     viewModel.lessonId = id
+
     LaunchedEffect(key1 = 1, block = { viewModel.getLessonById() })
 
     val uiState: MutableState<UiState<ObjectResponse<Lesson>, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
@@ -56,7 +57,7 @@ fun LessonScreen(
             )
         } else null,
         drawFullScreenContent = true,
-//        showLoading = uiState.value.loading,
+//      todo ^ showLoading = uiState.value.loading,
         onBackClick = {
 //            navigation.navigateBack()
             navigation.navigateToMainScreen(id)
@@ -93,7 +94,7 @@ fun LessonScreenContent(
 //                Text(text = uiState.data!!.content.content!!, color = Color.White)
 //            }
             item{
-                HtmlText(html = HtmlCompat.fromHtml(uiState.data!!.content.content!!, HtmlCompat.FROM_HTML_MODE_COMPACT).toAnnotatedString())
+                HtmlText(string = uiState.data!!.content.content!!.toString())
             }
             item{
                 Button(

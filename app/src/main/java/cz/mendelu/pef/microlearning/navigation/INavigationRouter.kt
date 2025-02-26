@@ -7,6 +7,8 @@ interface INavigationRouter {
     fun navigateToLessonScreen()
     fun navigateToLessonScreen(id: Long?)
 
+    fun navigateToQuestionScreen(title: String)
+
     fun navigateToMainScreen(lastLessonId: Long?)
 
 //    fun navigateToAddAccountScreen()

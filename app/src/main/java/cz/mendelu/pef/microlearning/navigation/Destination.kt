@@ -2,7 +2,8 @@ package cz.mendelu.pef.microlearning.navigation
 
 sealed class Destination(val route: String) {
     object MainScreen: Destination(route = "main")
-    object LessonScreen: Destination(route = "lessons")
+    object LessonScreen: Destination(route = "lesson")
+    object QuestionScreen: Destination(route = "question")
 //    object GameScreen: Destination(route = "game")
 //    object MyCardsScreen: Destination(route = "my_cards")
 //    object CardsDetailScreen: Destination(route = "card_detail")
