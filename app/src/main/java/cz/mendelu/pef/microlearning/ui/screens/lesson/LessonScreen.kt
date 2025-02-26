@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,7 +50,8 @@ fun LessonScreen(
     // todo neprepisuje se nazev, prestoze se uz prepisoval!!
     // je to kvuli show Loading true -- proooc?
     BaseScreen(
-        topBarText = "L${viewModel.lessonId} "+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
+        topBarText = "L${viewModel.lessonId} "//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
+            ,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -57,7 +60,7 @@ fun LessonScreen(
             )
         } else null,
         drawFullScreenContent = true,
-//      todo ^ showLoading = uiState.value.loading,
+      showLoading = uiState.value.loading,
         onBackClick = {
 //            navigation.navigateBack()
             navigation.navigateToMainScreen(id)
@@ -80,8 +83,6 @@ fun LessonScreenContent(
     id: Long?,
     navigation: INavigationRouter
 ){
-    // zobrazit lekci z API
-//    println("Data: ${uiState.data}")
 
         if (uiState.data != null) {
         LazyColumn(
@@ -90,13 +91,18 @@ fun LessonScreenContent(
                 .padding(top = paddingValues.calculateTopPadding(), bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            item {
-//                Text(text = uiState.data!!.content.content!!, color = Color.White)
-//            }
-            item{
+
+            item {
+                HtmlText(
+                    string = uiState.data!!.content.name!!,
+                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                    textAlign = TextAlign.Center
+                )
+            }
+            item {
                 HtmlText(string = uiState.data!!.content.content!!.toString())
             }
-            item{
+            item {
                 Button(
                     onClick = {
                         if (id != null) {

@@ -54,7 +54,7 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = title,
+        topBarText = "$title – Test",
         placeholderScreenContent = null,
         drawFullScreenContent = true,
         showLoading = uiState.value.loading,

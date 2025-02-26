@@ -32,36 +32,6 @@ import androidx.compose.ui.unit.sp
 @RequiresApi(Build.VERSION_CODES.P)
 fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
     val spanned = this@toAnnotatedString
-//    var string = ""
-//    var lastIndex = 0
-//
-//    println("string:$string")
-//
-//    getSpans(0, spanned.length, android.text.style.BulletSpan::class.java).forEach {bulletSpan ->
-////        println(bulletSpan.spanTypeId)
-//        val start = getSpanStart(bulletSpan)
-//        val end = getSpanEnd(bulletSpan)
-//        println("$start, $end")
-////        println(spanned.length)
-//        println("lI:$lastIndex")
-//        append(spanned.subSequence(lastIndex, start))
-//        println("t1:${spanned.subSequence(lastIndex, start)}")
-//        append("\u2022\t\t")
-//        append(spanned.subSequence(start,end))
-//        println("t2:${spanned.subSequence(start,end)}")
-//        lastIndex = end
-//        println("lI:$lastIndex")
-//        println(this.length)
-//        println("-------------------")
-////        val text1 = spanned.subSequence(0, start)
-////        val append = "\u2022\t\t"
-////        val text2 = spanned.subSequence(start, string.length-1)
-////        string = "$text1$append$text2"
-////        println(string.subSequence(start, end))
-//    }
-//
-//    println(spanned.subSequence(0, spanned.length))
-//    println("string:$string")
 
     append(spanned.toString())
 
@@ -132,37 +102,12 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
                 println("len:${this.length}")
                 println("string:${spanned.subSequence(start, end)}")
 
-//                println()
-
-//                append("\u2022")
-//                append("\t\t")
-
-//                println("start:$start, end: $end")
-
-                val text1 = spanned.subSequence(0, start)
-                val text2 = spanned.subSequence(end, spanned.length)
-//                this.withStyle(ParagraphStyle(textIndent = TextIndent(firstLine = span.gapWidth.sp))) {
-//
-//                }
                 addStyle(
                     style = ParagraphStyle(textIndent = TextIndent(firstLine = (span.gapWidth*4).sp)),
                     start,
                     end
                 )
 
-//                append("\u2022\t\t")
-
-
-//                buildAnnotatedString {
-//                    withStyle(
-//                        style = ParagraphStyle(textIndent = TextIndent(restLine = 12.sp)),
-//                        start,
-//                        end
-//                    ) {
-//                        append("\u2022")
-//                        append("\t\t")
-//                    }
-//                }
             }
             is ImageSpan -> {
                 // todo osetrit obrazky
@@ -175,14 +120,11 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             }
             is TypefaceSpan -> {
                 println(span.family)
-                println(span.typeface)
                 when(span.family){
                     "code" -> addStyle(SpanStyle(fontFamily = FontFamily.Monospace), start, end)
-
                 }
-//                when(span.family.toString()){
-//                    "code" -> addStyle(TypefaceSpan(FontFamily.Monospace,start,end))
-//                }
+
+                println("Code: " + spanned.subSequence(start, end))
             }
             // todo pridat?
 //            else -> {

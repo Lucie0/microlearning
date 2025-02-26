@@ -159,17 +159,11 @@ fun HelloWorldScreen() {
 //    )
 
     val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
-
     val annotatedText = spanned.toAnnotatedString()
     //    HtmlText(html = annotatedText)
 
     //funguje b, strong, i, em, underline, h1, br
     // nefunguje del, ol, ul, small, link
-//    Text(text = annotatedText)
-//    println(spannableString)
-//    println(spanned)
-
-//    Text("Clickable text")
 
     HtmlText(string = spannableString)
 

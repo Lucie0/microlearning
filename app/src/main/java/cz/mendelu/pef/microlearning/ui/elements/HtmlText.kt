@@ -16,6 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,23 +36,26 @@ import cz.mendelu.pef.microlearning.ui.theme.robotoFontFamily
 fun HtmlText(
     string: String,
 //    html: AnnotatedString?,
+    modifier: Modifier = Modifier,
     linkColor: Color = Color.Blue, // Default link color
     textColor: Color = basicTextColor(),
     fontSize: TextUnit = MaterialTheme.typography.bodyLarge.fontSize,
-    fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium
+    fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium,
+    textAlign: TextAlign? = null
 ) {
     val context = LocalContext.current
 
-    val html = HtmlCompat.fromHtml(string
+    val html = HtmlCompat.fromHtml(
+        string
             .replace("<li>", "<li>\u2022\t\t") //bullets
-            .replace("\n","<br>") // new line
+            .replace("\n", "<br>") // new line
             .replace("  ", "\t"), // tabs
         HtmlCompat.FROM_HTML_MODE_COMPACT
     ).toAnnotatedString()
 
     ClickableText(
         text = html,
-        modifier = Modifier.padding(start=16.dp,end=26.dp, bottom=16.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         onClick = { offset ->
             html.getStringAnnotations(tag = "URL", start = offset, end = offset)
                 .firstOrNull()?.let { annotation ->
@@ -60,10 +64,11 @@ fun HtmlText(
                 }
         },
         style = TextStyle(
+//            textAlign = textAlign,
             color = textColor,
             fontSize = fontSize,
+            fontWeight = fontWeight,
             baselineShift = BaselineShift.Subscript,
-            fontWeight = fontWeight
         )
     )
 }
