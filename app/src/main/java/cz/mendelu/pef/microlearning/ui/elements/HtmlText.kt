@@ -2,6 +2,8 @@ package cz.mendelu.pef.microlearning.ui.elements
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +19,8 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.HtmlCompat
+import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 import cz.mendelu.pef.microlearning.ui.theme.aBeeZeeFontFamily
 import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.onSecondaryDark
@@ -26,15 +30,24 @@ import cz.mendelu.pef.microlearning.ui.theme.robotoFontFamily
 // todo cislovany seznam
 // todo obrazky
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun HtmlText(
-    html: AnnotatedString,
+    string: String,
+//    html: AnnotatedString?,
     linkColor: Color = Color.Blue, // Default link color
     textColor: Color = basicTextColor(),
     fontSize: TextUnit = MaterialTheme.typography.bodyLarge.fontSize,
     fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium
 ) {
     val context = LocalContext.current
+
+    val html = HtmlCompat.fromHtml(string
+            .replace("<li>", "<li>\u2022\t\t") //bullets
+            .replace("\n","<br>") // new line
+            .replace("  ", "\t"), // tabs
+        HtmlCompat.FROM_HTML_MODE_COMPACT
+    ).toAnnotatedString()
 
     ClickableText(
         text = html,
