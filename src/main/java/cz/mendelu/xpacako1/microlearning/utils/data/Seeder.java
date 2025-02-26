@@ -49,24 +49,27 @@ public class Seeder {
 
         // else
 
+        // todo pozn: pro pouziti zobrazitelnych <,> je nutne je nahradit &gt;, resp. &gt;,
+        //  jinak je html compat v androidu zahodi jako tagy
+
         List<Lesson> lessonList = new ArrayList<>();
         lessonList.add(new Lesson("First source code", """
                 When you want to write your program in C you have to write so called 'main' function.
                 Functions in C/C++ are a pieces of code that have own name (identificator) and body. Main function represents whole program, so it must be always written in source code.
                 The general form of function is:
-                data_type function_name (parameters) { body }
+                <font face='code'>data_type function_name (parameters) { body }</font>
                 So the main function may have following form:
-                int main() {
+                <font face='code'>int main() {
                     // here are statements of function body
-                   return 0;  // so called return value of function
-                }
-                The main function returns integer value, thus data type of function main is int.
+                    return 0;  // so called return value of function
+                }</font>
+                The main function returns integer value, thus data type of function main is <b>int</b>.
                 """));
         lessonList.add(new Lesson("Header files", """
                 A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.
                 The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.
                 You request to use a header file in your program by including it with the C preprocessing directive #include. The syntax of #include has following two forms:
-                #include <name>
+                <font face='code'>#include &lt;name&gt;</font>
                 This variant is for the system (compiler) files, and
                 #include 'name'
                 for files written by programmer.
@@ -86,25 +89,25 @@ public class Seeder {
                 There are differences between C and C++ standard library. We prefer C++ approach, so we show C++ simple input/output and appropriate part of standard library for this.
                 We need some input values and write output in almost every program. In very simple form we have statement for input: cin (it stands for 'console input'), and statement for output: cout (i.e. 'console output').
                 When we need mentioned commands, we have to include a standard library for this in following form:
-                #include <iostream>
+                #include &lt;iostream&gt;
                 """));
 
         lessonList.add(new Lesson("Simple input and output in C++", """
-                As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator '<<' and '>>'. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator '>>' points from cin to the variable, operator '<<' points from variable or expression to cout. For example input to two variables:
-                cin >> Var1 >> Var2;
+                As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator '&lt;&lt;' and '&gt;&gt;'. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator '&gt;&gt;' points from cin to the variable, operator '&lt;&lt;' points from variable or expression to cout. For example input to two variables:
+                cin &gt;&gt; Var1 &gt;&gt; Var2;
                 Output can be realized as a sequence of expressions:
-                cout << 'The value is ' << Var1 + Var2*5 << '.' << endl;
+                cout &lt;&lt; 'The value is ' &lt;&lt; Var1 + Var2*5 &lt;&lt; '.' &lt;&lt; endl;
                 Note that cin, cout and endl (stands for 'end of line') are objects in namespace std. When we use them directly, we have to open this namespace via command:
                 using namespace std;
                 If we did not specify this command, it would be necessary to write a space name for each element contained in it:
-                std::cout << 'The value is ' << Var1 + Var2*5 << '.' << std::endl;
+                std::cout &lt;&lt; 'The value is ' &lt;&lt; Var1 + Var2*5 &lt;&lt; '.' &lt;&lt; std::endl;
                 Standard error output
                 Just as we can write to the standard output (stream cout), we can write to the standard error output in the same way using the stream cerr. Everything else remains the same as cout. We will always use the standard error output if we want to convey some non-standard situation or auxiliary information to the user. We never mix these auxiliary messages with data, so we don""t write them to standard output! For example:
                 double a, b;
-                cin >> a >> b; // input two non-zero numbers
-                if (a*b == 0) cerr << 'invalid data!' << endl;  // error!
+                cin &gt;&gt; a &gt;&gt; b; // input two non-zero numbers
+                if (a*b == 0) cerr &lt;&lt; 'invalid data!' &lt;&lt; endl;  // error!
                    else // valid data, output to stdout
-                      cout << 'Contents of rectangle is ' << a*b << endl;
+                      cout &lt;&lt; 'Contents of rectangle is ' &lt;&lt; a*b &lt;&lt; endl;
                 """));
 
         lessonList.add(new Lesson("What is a variable?", """
@@ -171,8 +174,8 @@ public class Seeder {
         q3.setNumber(2);
         q3.setPoints(1);
 
-        q3.addOption(new Option("#include <filename>", true, q3));
-        q3.addOption(new Option("#using <filename>", false, q3));
+        q3.addOption(new Option("#include &lt;filename&gt;", true, q3));
+        q3.addOption(new Option("#using &lt;filename&gt;", false, q3));
         q3.addOption(new Option("#include \"filename\"", false, q3));
         q3.addOption(new Option("!copy filename", false, q3));
 
@@ -187,7 +190,7 @@ public class Seeder {
         q4.addOption(new Option("#include \"filename\"", true, q4));
         q4.addOption(new Option("#define \"filename\"", false, q4));
         q4.addOption(new Option("#use \"filename\"", false, q4));
-        q4.addOption(new Option("#include <filename>", false, q4));
+        q4.addOption(new Option("#include &lt;filename&gt;", false, q4));
 
         questionList.add(q4);
 
