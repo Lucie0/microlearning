@@ -1,6 +1,7 @@
-package cz.mendelu.pef.microlearning.ui.screens
+package cz.mendelu.pef.microlearning.ui.screens.lesson
 
-import androidx.compose.foundation.layout.Column
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
@@ -23,8 +23,11 @@ import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
+import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
+import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreen(
     id: Long?,
@@ -68,6 +71,7 @@ fun LessonScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreenContent(
     paddingValues: PaddingValues,
@@ -81,12 +85,15 @@ fun LessonScreenContent(
         if (uiState.data != null) {
         LazyColumn(
             modifier = Modifier
-                .padding(PaddingValues(8.dp))
-                .padding(top = paddingValues.calculateTopPadding()),
+//                .padding(PaddingValues(8.dp))
+                .padding(top = paddingValues.calculateTopPadding(), bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                Text(text = uiState.data!!.content.content!!, color = Color.White)
+//            item {
+//                Text(text = uiState.data!!.content.content!!, color = Color.White)
+//            }
+            item{
+                HtmlText(html = HtmlCompat.fromHtml(uiState.data!!.content.content!!, HtmlCompat.FROM_HTML_MODE_COMPACT).toAnnotatedString())
             }
             item{
                 Button(
