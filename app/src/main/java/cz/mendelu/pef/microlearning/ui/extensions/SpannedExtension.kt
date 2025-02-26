@@ -9,6 +9,7 @@ import android.text.style.ImageSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
+import android.text.style.TypefaceSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
 import androidx.annotation.RequiresApi
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -170,6 +172,17 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 //                    model = "https://example.com/image.jpg",
 //                    contentDescription = "Translated description of what the image contains"
 //                )
+            }
+            is TypefaceSpan -> {
+                println(span.family)
+                println(span.typeface)
+                when(span.family){
+                    "code" -> addStyle(SpanStyle(fontFamily = FontFamily.Monospace), start, end)
+
+                }
+//                when(span.family.toString()){
+//                    "code" -> addStyle(TypefaceSpan(FontFamily.Monospace,start,end))
+//                }
             }
             // todo pridat?
 //            else -> {
