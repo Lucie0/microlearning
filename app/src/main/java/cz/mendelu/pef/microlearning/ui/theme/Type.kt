@@ -40,7 +40,7 @@ val aBeeZeeFontFamily = FontFamily(
     Font(R.font.abeezee_italic, FontWeight.Normal, FontStyle.Italic),
     Font(R.font.abeezee_regular, FontWeight.Normal)
 )
-val bodyFontFamily = robotoFontFamily
+//val bodyFontFamily = robotoFontFamily
 val displayFontFamily = aBeeZeeFontFamily
 
 // Default Material 3 typography values
@@ -56,12 +56,12 @@ val AppTypography = Typography(
     titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
     titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
     titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),
-    bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
-    bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily),
-    bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
-    labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-    labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
-    labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
+//    bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
+//    bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily),
+//    bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
+//    labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
+//    labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
+//    labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
 )
 
 

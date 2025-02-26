@@ -221,7 +221,7 @@ val surfaceContainerHighDarkHighContrast = Color(0xFF3A3B41)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF45464C)
 
 @Composable
-fun basicTextColor(): Color = if (isSystemInDarkTheme()) secondaryDark else secondaryLight
+fun basicTextColor(): Color = if (isSystemInDarkTheme()) onBackgroundDark else onBackgroundLight
 
 @Composable
 fun getPrimaryColor(): Color = if (isSystemInDarkTheme()) primaryDark else primaryLight
