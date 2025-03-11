@@ -57,7 +57,7 @@ public class Seeder {
                 When you want to write your program in C you have to write so called 'main' function.
                 Functions in C/C++ are a pieces of code that have own name (identificator) and body. Main function represents whole program, so it must be always written in source code.
                 The general form of function is:
-                <font face='code'> data_type function_name (parameters) { body }</font>
+                <font face='code'>data_type function_name (parameters) { body }</font>
                 So the main function may have following form:
                 <font face='code'>int main() {
                     // here are statements of function body

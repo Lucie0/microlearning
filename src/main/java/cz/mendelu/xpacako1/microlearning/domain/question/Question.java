@@ -37,7 +37,7 @@ public class Question {
         this.options.add(option);
     }
 
-    public void addOption(List<Option> options){
+    public void addOptions(List<Option> options){
         this.options.addAll(options);
     }
 
