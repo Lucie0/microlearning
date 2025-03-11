@@ -45,18 +45,29 @@ class QuestionScreenVM @Inject constructor(
 
                 is CommunicationResult.Error -> {
                     println(result.error)
-                    if (result.error.code == 500) {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
-                        )
-                    } else if (result.error.code == 404) {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = QuestionsErrors(R.string.wrong_lesson_id) // "exception" resource code
-                        )
+                    when (result.error.code) {
+                        500 -> {
+                            uiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
+                            )
+                        }
+                        404 -> {
+                            uiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = QuestionsErrors(R.string.not_found) // "not found" resource code
+                            )
+                        }
+                        else -> {
+                            uiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
+                            )
+                            println(result.error.message)
+                        }
                     }
                 }
 

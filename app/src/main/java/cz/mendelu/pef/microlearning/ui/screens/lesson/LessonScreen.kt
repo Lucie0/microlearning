@@ -49,6 +49,7 @@ fun LessonScreen(
 
     // todo neprepisuje se nazev, prestoze se uz prepisoval!!
     // je to kvuli show Loading true -- proooc?
+    // --> TODO text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
         topBarText = "L${viewModel.lessonId} "//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
             ,
@@ -59,8 +60,8 @@ fun LessonScreen(
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
         } else null,
+        showLoading = uiState.value.loading,
         drawFullScreenContent = true,
-      showLoading = uiState.value.loading,
         onBackClick = {
 //            navigation.navigateBack()
             navigation.navigateToMainScreen(id)

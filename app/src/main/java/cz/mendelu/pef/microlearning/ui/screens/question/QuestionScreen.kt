@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,7 @@ import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
+import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -44,9 +46,10 @@ fun QuestionScreen(
 
     LaunchedEffect(key1 = 1, block = { viewModel.getQuestions() })
 
+    // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = rememberSaveable { mutableStateOf(
         UiState()
-    ) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
+    ) }
 
     // poslech nad uistatem
     viewModel.uiState.value.let {
@@ -55,15 +58,20 @@ fun QuestionScreen(
 
     BaseScreen(
         topBarText = "$title – Test",
-        placeholderScreenContent = null,
-        drawFullScreenContent = true,
+        placeholderScreenContent = if (uiState.value.errors != null) {
+            PlaceholderScreenContent(
+                image = null,
+//                image = R.drawable.undraw_warning,
+                text = stringResource(id = uiState.value.errors!!.communicationError)
+            )
+        } else null,
         showLoading = uiState.value.loading,
+        drawFullScreenContent = true,
         onBackClick = { navigation.navigateBack() } // todo navigation to main screen se zapamatovanim stavu
     ) {
         QuestionScreenContent(
             paddingValues = it,
             questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            radioOptions = listOf("Calls", "Missed", "Friends"))
             options = uiState.value.data?.items?.get(0)?.options?.items)
     }
 
@@ -86,7 +94,6 @@ fun QuestionScreenContent(
             HtmlText(string = questionText, fontSize = MaterialTheme.typography.titleLarge.fontSize)
 
             RadioButtonSingleSelection(
-//                modifier = Modifier.padding(paddingValues),
                 radioOptions = radioOptions
             )
         }
@@ -94,7 +101,7 @@ fun QuestionScreenContent(
 }
 
 @Composable
-fun RadioButtonSingleSelection(
+private fun RadioButtonSingleSelection(
     modifier: Modifier = Modifier,
     radioOptions: List<String?>) {
     val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
@@ -128,7 +135,6 @@ fun RadioButtonSingleSelection(
                 )
             }
         }
-
         Text(text = selectedOption)
     }
 }

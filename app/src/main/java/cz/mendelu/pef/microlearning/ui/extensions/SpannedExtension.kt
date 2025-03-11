@@ -124,7 +124,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
                     "code" -> addStyle(SpanStyle(fontFamily = FontFamily.Monospace), start, end)
                 }
 
-                println("Code: " + spanned.subSequence(start, end))
+//                println("Code: " + spanned.subSequence(start, end))
             }
             // todo pridat?
 //            else -> {
