@@ -63,7 +63,10 @@ fun BaseScreen(
                                 )
                             }
                         }
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ) // surface dark
                 )
             }
         ) {
