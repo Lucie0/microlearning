@@ -3,18 +3,34 @@ package cz.mendelu.pef.microlearning.ui.screens
 //import com.mohamedrejeb.richeditor.model.rememberRichTextState
 
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.text.SpannableStringBuilder
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -25,13 +41,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.core.text.HtmlCompat
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
+import cz.mendelu.pef.microlearning.ui.elements.Dropdown
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceHolderScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
+import cz.mendelu.pef.microlearning.ui.elements.TabScreen
 import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 
 
@@ -75,6 +97,7 @@ fun MainScreen(
     }
 }
 
+@SuppressLint("MutableCollectionMutableState")
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun MainScreenContent(
@@ -101,14 +124,19 @@ fun MainScreenContent(
         Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
             Text(text = "Question")
         }
-
-
+//
+//        val list = listOf("whole program","alternative part","int","string","returned value","clear screen","clear input buffer")
 
         // Html()
         // HtmlText() // zavislost v gradle
 
 
     }
+}
+
+//todo dat do VM
+private fun onClickSuggestionChip(){
+
 }
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -118,7 +146,7 @@ fun HelloWorldScreen() {
     val spannableString = SpannableStringBuilder("<monospace>Nullam non</monospace>" +
             "<typeface>Typeface</typeface><br>" +
             "<font face='code'>Font</font>" +
-            " #include &lt;name&gt; &lt")/*<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
+            " #include &lt;name&gt;")/*<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
             " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien " +
             "faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim " +
             "lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget " +
@@ -169,66 +197,3 @@ fun HelloWorldScreen() {
 
 }
 
-@Composable
-fun TabScreen() {
-    var tabIndex by remember { mutableStateOf(1) }
-
-    val tabs = listOf("My Lessons", "All Lessons")
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        TabRow(selectedTabIndex = tabIndex) {
-            tabs.forEachIndexed { index, title ->
-                Tab(text = { Text(title) },
-                    selected = tabIndex == index,
-                    onClick = { tabIndex = index }
-                )
-            }
-        }
-        when (tabIndex) {
-            0 -> MyLessons(listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI"))
-            1 -> AllLessons(listOf())
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
-@Composable
-fun MyLessons(lessons: List<String>) {
-
-    if (lessons.isNotEmpty()) {
-        FlowRow(
-            modifier = Modifier.padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            lessons.forEach { lesson ->
-                SuggestionChip(onClick = { }, label = { Text(text = lesson) })
-            }
-        }
-    } else {
-        PlaceHolderScreen(
-            modifier = Modifier.fillMaxWidth(),
-            content = PlaceholderScreenContent(null, "No lessons in progress")
-        )
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun AllLessons(lessons: List<String>){
-    if (lessons.isNotEmpty()) {
-        FlowRow(
-            modifier = Modifier.padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            lessons.forEach { lesson ->
-                SuggestionChip(onClick = { }, label = { Text(text = lesson) })
-            }
-        }
-    } else {
-        PlaceHolderScreen(
-            modifier = Modifier.fillMaxWidth(),
-            content = PlaceholderScreenContent(null, "No lessons available")
-        )
-    }
-}

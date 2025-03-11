@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
@@ -40,14 +41,15 @@ fun HtmlText(
     linkColor: Color = Color.Blue, // Default link color
     textColor: Color = basicTextColor(),
     fontSize: TextUnit = MaterialTheme.typography.bodyLarge.fontSize,
-    fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium,
+    fontWeight: FontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Normal,
+    baselineShift: BaselineShift = BaselineShift.Subscript,
     textAlign: TextAlign? = null
 ) {
     val context = LocalContext.current
 
     val html = HtmlCompat.fromHtml(
         string
-            .replace("<li>", "<li>\u2022\t\t") //bullets
+            .replace("<li>", "<li>\u2022\t\t") // bullets
             .replace("\n", "<br>") // new line
             .replace("  ", "\t"), // tabs
         HtmlCompat.FROM_HTML_MODE_COMPACT
@@ -68,7 +70,7 @@ fun HtmlText(
             color = textColor,
             fontSize = fontSize,
             fontWeight = fontWeight,
-            baselineShift = BaselineShift.Subscript,
+            baselineShift = baselineShift,
         )
     )
 }
