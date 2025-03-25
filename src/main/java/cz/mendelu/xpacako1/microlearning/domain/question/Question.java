@@ -20,6 +20,9 @@ public class Question {
     private Long id;
 
     @NotNull
+    private QuestionType questionType;
+
+    @NotNull
     private String text;
 
     @NotNull

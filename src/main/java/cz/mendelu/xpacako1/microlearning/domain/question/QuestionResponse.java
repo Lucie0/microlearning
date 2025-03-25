@@ -1,17 +1,13 @@
 package cz.mendelu.xpacako1.microlearning.domain.question;
 
-import cz.mendelu.xpacako1.microlearning.domain.option.Option;
 import cz.mendelu.xpacako1.microlearning.domain.option.OptionResponse;
 import cz.mendelu.xpacako1.microlearning.utils.response.ArrayResponse;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class QuestionResponse {
     private Long id;
+    private String questionType;
     private String text;
     private int points;
     private int number;
@@ -20,6 +16,7 @@ public class QuestionResponse {
 
     public QuestionResponse(Question question){
         this.id = question.getId();
+        this.questionType = question.getQuestionType().name();
         this.text = question.getText();
         this.points = question.getPoints();
         this.number = question.getNumber();
