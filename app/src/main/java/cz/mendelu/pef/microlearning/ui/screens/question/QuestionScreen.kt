@@ -38,6 +38,7 @@ import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
+import cz.mendelu.pef.microlearning.ui.elements.HtmlToNormalText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 
@@ -75,12 +76,59 @@ fun QuestionScreen(
         drawFullScreenContent = true,
         onBackClick = { navigation.navigateBack() } // todo navigation to main screen se zapamatovanim stavu
     ) {
-        QuestionScreenContent(
-            paddingValues = it,
-            question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
+        LazyColumn {
+            item {
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
-        )
+                )
+            }
+            item {
+
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                )
+
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                )
+            }
+            item {
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                )
+            }
+
+            item {
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(6), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                )
+            }
+
+            item {
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(8), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                )
+            }
+
+        }
     }
 
 }
@@ -98,28 +146,29 @@ fun QuestionScreenContent(
 
     val answer = remember { mutableStateOf("") }
 
-    LazyColumn(
+    // LazyColumn()
+    Column(
         modifier = Modifier.padding(paddingValues)
     ) {
         if (question != null) {
             when (question.questionType) {
                 "ONE_FROM_N" -> {
-                    item {
-                        // otazka
-                        HtmlText(
-                            string = questionText,
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
-                        )
+//                    item {
+                    // otazka
+                    HtmlText(
+                        string = questionText,
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    )
 
-                        //moznosti
-                        RadioButtonSingleSelection(
-                            radioOptions = radioOptions
-                        )
-                    }
+                    //moznosti
+                    RadioButtonSingleSelection(
+                        radioOptions = radioOptions
+                    )
+//                }
                 }
                 "MORE_FROM_N" -> {
                     // pravdepodobne se nepouzije
-                    item {
+//                    item {
                         // otazka
                         HtmlText(
                             string = questionText,
@@ -128,10 +177,10 @@ fun QuestionScreenContent(
 
                         //moznosti
                         CheckBoxMultipleSelection()
-                    }
+//                    }
                 }
                 "CLOZE" -> {
-                    item {
+//                    item {
                         // doplnovacka
                         // dropdown
                         // text, dropdown, text, ...
@@ -164,8 +213,13 @@ fun QuestionScreenContent(
                         //
                         for (sentence in dividedSentence!!.subList(0, dividedSentence.size-1)) {
                             // text
-                            HtmlText(
-                                string = sentence,
+//                            HtmlText(
+//                                string = sentence,
+//                                fontSize = MaterialTheme.typography.titleLarge.fontSize
+//                            )
+                            HtmlToNormalText(
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                                text = sentence,
                                 fontSize = MaterialTheme.typography.titleLarge.fontSize
                             )
 
@@ -209,15 +263,16 @@ fun QuestionScreenContent(
 //                            Text(".")
 //                        }
 
-                    }
+//                    }
                 }
                 "OPEN" -> {
                     // otevrena otazka
-                    item {
+//                    item {
                         HtmlText(
                             string = questionText,
                             fontSize = MaterialTheme.typography.titleLarge.fontSize
                         )
+
                         OutlinedTextField(
                             value = answer.value,
                             onValueChange = { answer.value = it },
@@ -227,7 +282,7 @@ fun QuestionScreenContent(
                                 .fillMaxWidth(),
                             minLines = 1
                         )
-                    }
+//                    }
                 }
             }
 

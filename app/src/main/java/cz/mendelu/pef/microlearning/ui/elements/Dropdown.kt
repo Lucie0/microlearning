@@ -71,7 +71,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { Text(it ?: "none") }, onClick = {
+                DropdownMenuItem(text = { HtmlToNormalText(it ?: "none") }, onClick = {
                     selected = it ?: "none"
                     expanded = !expanded
                 })

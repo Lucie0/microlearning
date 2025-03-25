@@ -55,19 +55,19 @@ fun RadioButtonSingleSelection(
                     selected = (text == selectedOption),
                     onClick = null // null recommended for accessibility with screen readers
                 )
-//                Text(
-//                    text = text ?: "null",
-//                    style = MaterialTheme.typography.bodyLarge,
-//                    modifier = Modifier.padding(start = 16.dp)
-//                )
-
-                HtmlText(
-                    string = text ?: "null",
-                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    fontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium,
-                    modifier = Modifier.padding(start = 16.dp),
-                    baselineShift = BaselineShift(-1f) // kvuli posunuti se na stejou uroven jako rButton
+                HtmlToNormalText(
+                    text = text ?: "null",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
+
+//                HtmlText(
+//                    string = text ?: "null",
+//                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+//                    fontWeight = MaterialTheme.typography.bodyLarge.fontWeight ?: FontWeight.Medium,
+//                    modifier = Modifier.padding(start = 16.dp),
+//                    baselineShift = BaselineShift(-1f) // kvuli posunuti se na stejou uroven jako rButton
+//                )
             }
         }
 

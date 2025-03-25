@@ -124,8 +124,6 @@ fun MainScreenContent(
         Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
             Text(text = "Question")
         }
-//
-//        val list = listOf("whole program","alternative part","int","string","returned value","clear screen","clear input buffer")
 
         // Html()
         // HtmlText() // zavislost v gradle
