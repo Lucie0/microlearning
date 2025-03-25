@@ -136,28 +136,51 @@ fun QuestionScreenContent(
                         // dropdown
                         // text, dropdown, text, ...
                         // text.forEach {...}
-                        val dividedSentence = listOf(
-                            "The main function represents",
-                            "of C-program. Its declaration consists of ",
-                            "type, identifier \"main\", parameters and body. The body of main " +
-                                    "function contains statement for ",
-                            ".")
-                        val listOptions = listOf(
-                            "whole program",
-                            "alternative part",
-                            "int",
-                            "string",
-                            "returned value",
-                            "clear screen",
-                            "clear input buffer").sorted()
+                        var groupNumber = 1
+                        var listOptions: List<Option?>?
 
-                        for (sentence in dividedSentence.subList(0,dividedSentence.size-1)) {
+                        // rozdeli vetu, v mistech vynechavky vypise dropdown
+                        var dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
+                        println(dividedSentence)
+
+//                        dividedSentence = listOf(
+//                            "The main function represents",
+//                            "of C-program. Its declaration consists of ",
+//                            "type, identifier \"main\", parameters and body. The body of main " +
+//                                    "function contains statement for ",
+//                            ".")
+                        listOptions = question.options.items
+                        println(listOptions)
+
+//                        listOptions = listOf(
+//                            "whole program",
+//                            "alternative part",
+//                            "int",
+//                            "string",
+//                            "returned value",
+//                            "clear screen",
+//                            "clear input buffer").sorted()
+
+                        //
+                        for (sentence in dividedSentence!!.subList(0, dividedSentence.size-1)) {
+                            // text
                             HtmlText(
                                 string = sentence,
                                 fontSize = MaterialTheme.typography.titleLarge.fontSize
                             )
-                            Dropdown(listOptions)
+
+                            // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
+                            val listStrings = listOptions?.filter { opt -> opt.groupNumber == groupNumber }?.map { opt -> opt.text }
+
+                            // okenko pro vyberovy seznam
+                            if (listStrings != null)
+                                Dropdown(listStrings)
+
+                            // zvyseni na dalsi skupinu
+                            groupNumber += 1
                         }
+
+                        // posledni blok textu, pote uz nenasleduje vyberovy seznam
                         HtmlText(string = dividedSentence[dividedSentence.size-1])
 
 

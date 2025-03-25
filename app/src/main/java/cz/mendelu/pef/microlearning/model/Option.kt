@@ -9,6 +9,7 @@ data class Option(
     var id: Long?,
     var text: String?,
     var correctAnswer: Boolean?,
+    var groupNumber: Int?,
     var questionId: Long?
 ): Serializable {
 }

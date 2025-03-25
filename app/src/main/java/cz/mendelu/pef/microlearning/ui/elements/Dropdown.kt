@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.toSize
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dropdown(
-    options: List<String>
+    options: List<String?>
 ){
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf("") }
@@ -71,8 +71,8 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { Text(it) }, onClick = {
-                    selected = it
+                DropdownMenuItem(text = { Text(it ?: "none") }, onClick = {
+                    selected = it ?: "none"
                     expanded = !expanded
                 })
             }
