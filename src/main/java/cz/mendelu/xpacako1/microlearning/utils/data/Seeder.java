@@ -6,6 +6,7 @@ import cz.mendelu.xpacako1.microlearning.domain.option.Option;
 import cz.mendelu.xpacako1.microlearning.domain.option.OptionService;
 import cz.mendelu.xpacako1.microlearning.domain.question.Question;
 import cz.mendelu.xpacako1.microlearning.domain.question.QuestionService;
+import cz.mendelu.xpacako1.microlearning.domain.question.QuestionType;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class Seeder {
 
         // else
 
-        // todo pozn: pro pouziti zobrazitelnych <,> je nutne je nahradit &gt;, resp. &gt;,
+        // todo pozn: pro pouziti zobrazitelnych <,> je nutne je nahradit &gt;, resp. &lt;,
         //  jinak je html compat v androidu zahodi jako tagy
 
         List<Lesson> lessonList = new ArrayList<>();
@@ -144,7 +145,8 @@ public class Seeder {
         List<Question> questionList = new ArrayList<>();
         List<Option> optionList = new ArrayList<>();
         // ------------------ Q1 ---------
-        Question q1= new Question();
+        Question q1 = new Question();
+        q1.setQuestionType(QuestionType.ONE_FROM_N);
         q1.setText("Parameters of the main function are enclosed by:");
         q1.setNumber(1);
         q1.setPoints(1);
@@ -157,6 +159,7 @@ public class Seeder {
 
         // --------------- Q2 ----------------------
         Question q2 = new Question();
+        q2.setQuestionType(QuestionType.ONE_FROM_N);
         q2.setText("The header file is:");
         q2.setNumber(1);
         q2.setPoints(1);
@@ -170,6 +173,7 @@ public class Seeder {
 
         // --------------- q3 ----------------------
         Question q3 = new Question();
+        q3.setQuestionType(QuestionType.ONE_FROM_N);
         q3.setText("The header file to come with compiler or operating system is used to write:");
         q3.setNumber(2);
         q3.setPoints(1);
@@ -183,6 +187,7 @@ public class Seeder {
 
         // --------------- q4 ----------------------
         Question q4 = new Question();
+        q4.setQuestionType(QuestionType.ONE_FROM_N);
         q4.setText("The header file written by programmer is used to write");
         q4.setNumber(3);
         q4.setPoints(1);
@@ -194,6 +199,45 @@ public class Seeder {
 
         questionList.add(q4);
 
+        // --------------- q5 ----------------------
+        Question q5 = new Question();
+        q5.setQuestionType(QuestionType.OPEN);
+        q5.setText("Assume the following variable declarations:\n" +
+                "   <font face='code'>double A, B = 0;\n" +
+                "   float C, D=1.2E-2;</font>\n" +
+                "How much total memory do these variables take?");
+        q5.setNumber(4);
+        q5.setPoints(2);
+
+        // zadne moznosti
+
+        questionList.add(q5);
+
+        // --------------- q6 ----------------------
+        Question q6 = new Question();
+        q6.setQuestionType(QuestionType.CLOZE);
+        q6.setText("The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, " +
+                "identifier \"main\", parameters and body. The body of main function contains statement " +
+                "for [[3]].");
+        q6.setNumber(5);
+        q6.setPoints(2);
+
+//        (1)	whole program
+//        alternative part
+//        (2)	int
+//                string
+//        (3)	returned value
+//        clear screen
+//        clear input buffer
+        q6.addOption(new Option("whole program", true, 1, q6));
+        q6.addOption(new Option("alternative part", false, 1, q6));
+        q6.addOption(new Option("int", true, 2, q6));
+        q6.addOption(new Option("string", false, 2, q6));
+        q6.addOption(new Option("returned value", true, 3, q6));
+        q6.addOption(new Option("clear screen", false, 3, q6));
+        q6.addOption(new Option("clear input buffer", false, 3, q6));
+
+        questionList.add(q6);
 
         // ------------ ZAVER -----------
 
