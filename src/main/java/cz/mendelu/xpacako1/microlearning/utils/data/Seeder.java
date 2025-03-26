@@ -2,11 +2,13 @@ package cz.mendelu.xpacako1.microlearning.utils.data;
 
 import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.lesson.LessonService;
+import cz.mendelu.xpacako1.microlearning.domain.node.Node;
 import cz.mendelu.xpacako1.microlearning.domain.option.Option;
 import cz.mendelu.xpacako1.microlearning.domain.option.OptionService;
 import cz.mendelu.xpacako1.microlearning.domain.question.Question;
 import cz.mendelu.xpacako1.microlearning.domain.question.QuestionService;
 import cz.mendelu.xpacako1.microlearning.domain.question.QuestionType;
+import cz.mendelu.xpacako1.microlearning.domain.test.Test;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,8 @@ public class Seeder {
 
         // todo pozn: pro pouziti zobrazitelnych <,> je nutne je nahradit &gt;, resp. &lt;,
         //  jinak je html compat v androidu zahodi jako tagy
+
+        // ------------------------------------ LESSONS ------------------------------------
 
         List<Lesson> lessonList = new ArrayList<>();
         lessonList.add(new Lesson("First source code", """
@@ -144,7 +148,7 @@ public class Seeder {
 
         List<Question> questionList = new ArrayList<>();
         List<Option> optionList = new ArrayList<>();
-        // ------------------ Q1 ---------
+        // ------------------------------------ Q1 ------------------------------------
         Question q1 = new Question();
         q1.setQuestionType(QuestionType.ONE_FROM_N);
         q1.setText("Parameters of the main function are enclosed by:");
@@ -157,7 +161,7 @@ public class Seeder {
 
         questionList.add(q1);
 
-        // --------------- Q2 ----------------------
+        // ------------------------------------ Q2 ------------------------------------
         Question q2 = new Question();
         q2.setQuestionType(QuestionType.ONE_FROM_N);
         q2.setText("The header file is:");
@@ -171,7 +175,7 @@ public class Seeder {
 
         questionList.add(q2);
 
-        // --------------- q3 ----------------------
+        // ------------------------------------ q3 ------------------------------------
         Question q3 = new Question();
         q3.setQuestionType(QuestionType.ONE_FROM_N);
         q3.setText("The header file to come with compiler or operating system is used to write:");
@@ -185,7 +189,7 @@ public class Seeder {
 
         questionList.add(q3);
 
-        // --------------- q4 ----------------------
+        // ------------------------------------ q4 ------------------------------------
         Question q4 = new Question();
         q4.setQuestionType(QuestionType.ONE_FROM_N);
         q4.setText("The header file written by programmer is used to write");
@@ -199,7 +203,7 @@ public class Seeder {
 
         questionList.add(q4);
 
-        // --------------- q5 ----------------------
+        // ------------------------------------ q5 ------------------------------------
         Question q5 = new Question();
         q5.setQuestionType(QuestionType.OPEN);
         q5.setText("Assume the following variable declarations:\n" +
@@ -213,7 +217,7 @@ public class Seeder {
 
         questionList.add(q5);
 
-        // --------------- q6 ----------------------
+        // ------------------------------------ q6 ------------------------------------
         Question q6 = new Question();
         q6.setQuestionType(QuestionType.CLOZE);
         q6.setText("The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, " +
@@ -239,7 +243,72 @@ public class Seeder {
 
         questionList.add(q6);
 
-        // ------------ ZAVER -----------
+        // ------------------------------------ Q7 ------------------------------------
+        Question q7 = new Question();
+        q7.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
+        q7.setText("The body of main function is enclosed by parenthesis.");
+        q7.setNumber(1);
+        q7.setPoints(1);
+
+        q7.addOption(new Option("True", false, q7));
+        q7.addOption(new Option("False", true, q7));
+
+        questionList.add(q7);
+
+        // ------------------------------------ Q8 ------------------------------------
+        Question q8 = new Question();
+        q8.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
+        q8.setText("Header files have two types: system and programmer made.");
+        q8.setNumber(1);
+        q8.setPoints(1);
+
+        q8.addOption(new Option("True", true, q8));
+        q8.addOption(new Option("False", false, q8));
+
+        questionList.add(q8);
+
+        // ------------------------------------ Q9 ------------------------------------
+        Question q9 = new Question();
+        q9.setQuestionType(QuestionType.ONE_FROM_N);
+        q9.setText("For input/output operations in C++ we use:");
+        q9.setNumber(1);
+        q9.setPoints(1);
+
+        q9.addOption(new Option("#include &lt;iostream&gt;", true, q9));
+        q9.addOption(new Option("#include &lt;stdio&gt;", false, q9));
+        q9.addOption(new Option("#include \"inputoutput\"", false, q9));
+        q9.addOption(new Option("#input \"iostream\"", false, q9));
+
+        questionList.add(q9);
+        
+        // ------------------------------------ q10 ------------------------------------
+        Question q10 = new Question();
+        q10.setQuestionType(QuestionType.ONE_FROM_N);
+        q10.setText("What is a variable in programming language?");
+        q10.setNumber(1);
+        q10.setPoints(1);
+
+        q10.addOption(new Option("Certain place in computer memory.", true, q10));
+        q10.addOption(new Option("Letter representing some real number.", false, q10));
+        q10.addOption(new Option("Number of program steps.", false, q10));
+
+        questionList.add(q10);
+
+        // ------------------------------------ q11 ------------------------------------
+        Question q11 = new Question();
+        q11.setQuestionType(QuestionType.ONE_FROM_N);
+        q11.setText("Variable identifier in programming language");
+        q11.setNumber(1);
+        q11.setPoints(1);
+
+        q11.addOption(new Option("represents the address of variable in memory.", true, q11));
+        q11.addOption(new Option("represents the value of variable.", false, q11));
+        q11.addOption(new Option("represents number of possible values.", false, q11));
+
+        questionList.add(q11);
+
+
+        // ------------------------------------ ZAVER ------------------------------------
 
         questionService.createQuestion(questionList);
 
@@ -247,6 +316,19 @@ public class Seeder {
         questionList.forEach(question -> optionList.addAll(question.getOptions()));
         // ulozeni moznosti do db
         optionService.createOption(optionList);
+
+        // ------------------------------------ TESTY ------------------------------------
+        List<Test> testList = new ArrayList<>();
+
+        Test t1 = new Test();
+        t1.setName("Hello World Test");
+
+        testList.add(t1);
+
+        //todo test service, repo, response, controller
+
+        // ------------------------------------ NODES ------------------------------------
+        Node n1 = new Node(t1, lessonList.get(0));
 
         log.info("--- Default data seeded ---");
     }
