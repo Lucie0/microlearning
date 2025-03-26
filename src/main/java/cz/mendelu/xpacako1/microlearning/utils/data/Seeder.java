@@ -97,7 +97,7 @@ public class Seeder {
                 }</font>
                 The main function returns integer value, thus data type of function main is <b>int</b>.
                 """
-//                ,n1 // todo tohle funguje, v lesson se objevi id uzlu
+                ,n1 // todo tohle funguje, v lesson se objevi id uzlu
         ));
 
         lessonList.add(new Lesson("Header files", """
@@ -110,7 +110,7 @@ public class Seeder {
                 for files written by programmer.
                 Detailed information about preprocessing directives comes later in this course.
                 """
-//                ,n2
+                ,n2
         ));
 
         lessonList.add(new Lesson("Common simple input/output", """
@@ -120,7 +120,7 @@ public class Seeder {
                 Every programming language have some commands for the input and output operations, but every programming language have a different approach for it.
                 We will discuss two approaches because of two different versions of C language: pure C and C++ versions.
                 """
-//                ,n3
+                ,n3
         ));
 
         lessonList.add(new Lesson("Standard library for simple input/output", """
@@ -130,7 +130,7 @@ public class Seeder {
                 When we need mentioned commands, we have to include a standard library for this in following form:
                 #include &lt;iostream&gt;
                 """
-//                ,n3
+                ,n3
         ));
 
         lessonList.add(new Lesson("Simple input and output in C++", """
@@ -158,7 +158,7 @@ public class Seeder {
                 Each memory space has its address. In order not to remember the numeric form of the address, these addresses are named, so we call it a variable identifier. It represents the numeric form of the address.
                 So each variable has its address (or name in form of identifier) and its value.
                 """
-//               , n4
+               , n4
         ));
 
         lessonList.add(new Lesson("Values of variable", """
@@ -168,7 +168,7 @@ public class Seeder {
                 The minimum value is represented by all zeros and represents zero. The maximum value is formed by the ones themselves. Two bytes are 16 binary ones, which is a decimal number of 65,535. So a two-byte variable can hold a value between 0 and 65,535.
                     Generally, a variable on a n-bit space can hold a maximum value of 2n-1.
                 """
-                //,                n4
+                ,n4
         ));
 
         lessonList.add(new Lesson("Variable declaration", """

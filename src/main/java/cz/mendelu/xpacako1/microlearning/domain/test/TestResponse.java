@@ -12,7 +12,7 @@ public class TestResponse {
         this.id = test.getId();
         this.name = test.getName();
 
-        // todo vyresit
+        // todo vyresit lepe
         if (test.getNode() != null) this.nodeId = test.getNode().getId();
         else this.nodeId = 0L;
     }
