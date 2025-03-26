@@ -1,6 +1,6 @@
 package cz.mendelu.xpacako1.microlearning.domain.lesson;
 
-//import cz.mendelu.xpacako1.microlearning.domain.node.Node;
+import cz.mendelu.xpacako1.microlearning.domain.node.Node;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,8 @@ public class Lesson {
     @Column(columnDefinition = "text")
     private String content;
 
-//    @OneToOne
-//    private Node node;
+    @OneToOne
+    private Node node;
 
     // todo pridat node do constructoru?
     public Lesson(String name, String content){
