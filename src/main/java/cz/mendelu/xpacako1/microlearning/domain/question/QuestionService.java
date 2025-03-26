@@ -1,11 +1,13 @@
 package cz.mendelu.xpacako1.microlearning.domain.question;
 
+import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.option.Option;
 import cz.mendelu.xpacako1.microlearning.domain.option.OptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,6 +25,10 @@ public class QuestionService {
     // fuctions
     public List<Question> getAllQuestions(){
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+
+    public Optional<Question> getById(Long id){
+        return repository.findById(id);
     }
 
     public Iterable<Question> createQuestion(List<Question> questions){

@@ -48,21 +48,20 @@ public class QuestionController {
         );
     }
 
-    // todo get question by id
-//    @Operation(
-//            summary = "Get one lesson by ID",
-//            description = "Get lesson by ID."
-//    )
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Lesson by ID"),
-//            @ApiResponse(responseCode = "404", description = "Lesson not found"),
-//    })
-//    @GetMapping(value = "/{id}", produces = "application/json")
-//    public ObjectResponse<LessonResponse> getLessonById(@PathVariable Long id) {
-//        Lesson lesson = questionService.getById(id).orElseThrow(() -> new NotFoundException("Lesson not found"));
-//        return ObjectResponse.of(
-//                lesson,
-//                LessonResponse::new
-//        );
-//    }
+    @Operation(
+            summary = "Get one question by ID",
+            description = "Get question by ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Question by ID"),
+            @ApiResponse(responseCode = "404", description = "Question not found"),
+    })
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ObjectResponse<QuestionResponse> getQuestionById(@PathVariable Long id) {
+        Question question = questionService.getById(id).orElseThrow(() -> new NotFoundException("Question not found"));
+        return ObjectResponse.of(
+                question,
+                QuestionResponse::new
+        );
+    }
 }
