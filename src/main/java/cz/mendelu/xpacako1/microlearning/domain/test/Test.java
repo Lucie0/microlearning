@@ -35,7 +35,8 @@ public class Test {
 //    @OneToMany
 //    private List<Question> questions;
 //
-    @OneToOne
+//    @OneToOne(mappedBy = "pretest")
+    @ManyToOne//(mappedBy = "pretest")
     private Node node;
 
 

@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -16,11 +19,13 @@ public class Node {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "node")
-    private Test pretest;
+//    @OneToOne(mappedBy = "node")
+    @OneToMany(mappedBy = "node")
+    private List<Test> pretests = new ArrayList<>();
 
-    @OneToOne(mappedBy = "node")
-    private Lesson lesson;
+//    @OneToOne(mappedBy = "node")
+    @OneToMany(mappedBy = "node")
+    private List<Lesson> lessons = new ArrayList<>();
 
     // zaznam o tom, jestli byl uzel projity, neprojity, uspesne ci neuspesne absolvovan
 
@@ -31,8 +36,8 @@ public class Node {
     private boolean successfullyCompleted = false;
 
 
-    public Node(Test pretest, Lesson lesson){
-        this.pretest = pretest;
-        this.lesson = lesson;
-    }
+//    public Node(Test pretest, Lesson lesson){
+//        this.pretest = pretest;
+//        this.lesson = lesson;
+//    }
 }

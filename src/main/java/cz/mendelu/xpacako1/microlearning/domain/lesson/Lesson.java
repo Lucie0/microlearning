@@ -26,12 +26,19 @@ public class Lesson {
     @Column(columnDefinition = "text")
     private String content;
 
-    @OneToOne
+//    @OneToOne(mappedBy = "lesson")
+    @ManyToOne//(mappedBy = "lesson")
     private Node node;
 
     // todo pridat node do constructoru?
     public Lesson(String name, String content){
         this.name = name;
         this.content = content;
+    }
+
+    public Lesson(String name, String content, Node node){
+        this.name = name;
+        this.content = content;
+        this.node = node;
     }
 }
