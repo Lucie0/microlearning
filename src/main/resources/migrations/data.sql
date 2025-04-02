@@ -148,3 +148,12 @@ INSERT INTO public.question (id, text, points, number, question_type) VALUES (8,
 INSERT INTO public.question (id, text, points, number, question_type) VALUES (9, 'For input/output operations in C++ we use:', 1, 1, 0);
 INSERT INTO public.question (id, text, points, number, question_type) VALUES (10, 'What is a variable in programming language?', 1, 1, 0);
 INSERT INTO public.question (id, text, points, number, question_type) VALUES (11, 'Variable identifier in programming language', 1, 1, 0);
+
+-- -------------------------------------------------------------------------
+-- LINKS
+-- -------------------------------------------------------------------------
+INSERT INTO public.link (id, actual_node, next_node) VALUES (1, 1, 2);
+INSERT INTO public.link (id, actual_node, next_node) VALUES (2, 2, 3);
+INSERT INTO public.link (id, actual_node, next_node) VALUES (3, 2, 4);
+INSERT INTO public.link (id, actual_node, next_node) VALUES (4, 3, 5);
+INSERT INTO public.link (id, actual_node, next_node) VALUES (5, 4, 5);
