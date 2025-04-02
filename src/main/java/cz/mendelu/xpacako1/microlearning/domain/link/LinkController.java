@@ -39,10 +39,10 @@ public class LinkController {
             @ApiResponse(responseCode = "200", description = "List of links between nodes")
     })
     @GetMapping(value = {"","/"}, produces = "application/json")
-    public ArrayResponse<LinkResponse> getAllLinks() {
+    public ArrayResponse<LinkBeforeResponse> getAllLinks() {
         return ArrayResponse.of(
                 linkService.getAllLinks(),
-                LinkResponse::new
+                LinkBeforeResponse::new
         );
     }
 
@@ -55,43 +55,43 @@ public class LinkController {
             @ApiResponse(responseCode = "404", description = "Link not found"),
     })
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ObjectResponse<LinkResponse> getLinkById(@PathVariable Long id) {
+    public ObjectResponse<LinkBeforeResponse> getLinkById(@PathVariable Long id) {
         Link link = linkService.getById(id).orElseThrow(() -> new NotFoundException("Link not found"));
         return ObjectResponse.of(
                 link,
-                LinkResponse::new
+                LinkBeforeResponse::new
         );
     }
 
     @Operation(
-            summary = "Get list of nodes before queried node",
-            description = "Get list of nodes before node."
+            summary = "Get list of nodes preceding node.",
+            description = "Get list of node IDs preceding the specified node."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of nodes"),
+            @ApiResponse(responseCode = "200", description = "List of IDs of nodes"),
 //            @ApiResponse(responseCode = "404", description = "Link not found"),
     })
     @GetMapping(value = "/before/{id}", produces = "application/json")
-    public ArrayResponse<LinkResponse> getLinksBefore(@PathVariable Long id) {
+    public ArrayResponse<LinkBeforeResponse> getLinksBefore(@PathVariable Long id) {
         return ArrayResponse.of(
                 linkService.getLinksBefore(id),
-                LinkResponse::new
+                LinkBeforeResponse::new
         );
     }
 
     @Operation(
-            summary = "Get list of nodes after queried node",
-            description = "Get list of nodes after node."
+            summary = "Get list of following nodes.",
+            description = "list of node IDs following the specified node."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of nodes"),
+            @ApiResponse(responseCode = "200", description = "List of IDs of nodes"),
 //            @ApiResponse(responseCode = "404", description = "Link not found"),
     })
     @GetMapping(value = "/after/{id}", produces = "application/json")
-    public ArrayResponse<LinkResponse> getLinksAfter(@PathVariable Long id) {
+    public ArrayResponse<LinkAfterResponse> getLinksAfter(@PathVariable Long id) {
         return ArrayResponse.of(
                 linkService.getLinksAfter(id),
-                LinkResponse::new
+                LinkAfterResponse::new
         );
     }
 
