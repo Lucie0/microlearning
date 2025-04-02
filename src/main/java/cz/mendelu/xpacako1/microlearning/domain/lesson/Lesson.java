@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import java.sql.Clob;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,10 +29,12 @@ public class Lesson {
     private String content;
 
 //    @OneToOne(mappedBy = "lesson")
-    @ManyToOne//(mappedBy = "lesson")
-    private Node node;
+//    @ManyToOne//(mappedBy = "lesson")
+//    private Node node;
 
-    // todo pridat node do constructoru?
+    @OneToMany(mappedBy = "lesson")
+    private List<Node> nodes = new ArrayList<>();
+
     public Lesson(String name, String content){
         this.name = name;
         this.content = content;
@@ -39,6 +43,6 @@ public class Lesson {
     public Lesson(String name, String content, Node node){
         this.name = name;
         this.content = content;
-        this.node = node;
+        this.nodes.add(node);
     }
 }

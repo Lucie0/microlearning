@@ -100,6 +100,7 @@ public class Seeder {
                 ,n1 // todo tohle funguje, v lesson se objevi id uzlu
         ));
 
+
         lessonList.add(new Lesson("Header files", """
                 A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.
                 The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.

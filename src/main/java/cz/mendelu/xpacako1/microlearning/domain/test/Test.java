@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // todo tridu Folder na otazky
 
 // todo
@@ -28,18 +31,20 @@ public class Test {
 
     // todo one to many slozky k testu, folders to test
 
-    public Test(String name){
-        this.name = name;
-    }
 
+    // todo atribut seznam otazek
+    // pozn. test je obalka na otazky
 //    @OneToMany
 //    private List<Question> questions;
 //
-//    @OneToOne(mappedBy = "pretest")
-    @ManyToOne//(mappedBy = "pretest")
-    private Node node;
+    @OneToMany(mappedBy = "pretest")
+    private List<Node> nodes = new ArrayList<>();
+//    @ManyToOne//(mappedBy = "pretest")
+//    private Node node;
 
-
+    public Test(String name){
+        this.name = name;
+    }
 
 //    public Test(List<Question> questions, Node node){
 //        this.questions = new ArrayList<>(questions);

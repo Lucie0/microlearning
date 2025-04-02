@@ -20,12 +20,18 @@ public class Node {
     private Long id;
 
 //    @OneToOne(mappedBy = "node")
-    @OneToMany(mappedBy = "node")
-    private List<Test> pretests = new ArrayList<>();
+//    @OneToMany(mappedBy = "node")
+//    private List<Test> pretests = new ArrayList<>();
+
+    @ManyToOne
+    private Test pretest;
 
 //    @OneToOne(mappedBy = "node")
-    @OneToMany(mappedBy = "node")
-    private List<Lesson> lessons = new ArrayList<>();
+//    @OneToMany(mappedBy = "node")
+//    private List<Lesson> lessons = new ArrayList<>();
+
+    @ManyToOne
+    private Lesson lesson;
 
     // zaznam o tom, jestli byl uzel projity, neprojity, uspesne ci neuspesne absolvovan
 
