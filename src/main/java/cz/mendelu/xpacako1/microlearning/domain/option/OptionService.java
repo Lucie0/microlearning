@@ -2,10 +2,12 @@ package cz.mendelu.xpacako1.microlearning.domain.option;
 
 import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.lesson.LessonRepository;
+import cz.mendelu.xpacako1.microlearning.domain.node.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -31,6 +33,10 @@ public class OptionService {
 
     public Option createOption(Option option){
         return repository.save(option);
+    }
+
+    public Optional<Option> getById(Long id){
+        return repository.findById(id);
     }
 
 }
