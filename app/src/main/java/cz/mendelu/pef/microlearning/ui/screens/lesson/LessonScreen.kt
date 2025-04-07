@@ -32,11 +32,12 @@ import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreen(
-    id: Long?,
+    lessonId: Long?,
+    nodeId: Long?,
     navigation: INavigationRouter
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
-    viewModel.lessonId = id
+    viewModel.lessonId = lessonId
 
     LaunchedEffect(key1 = 1, block = { viewModel.getLessonById() })
 
@@ -64,13 +65,13 @@ fun LessonScreen(
         drawFullScreenContent = true,
         onBackClick = {
 //            navigation.navigateBack()
-            navigation.navigateToMainScreen(id)
+            navigation.navigateToMainScreen(lessonId)
         }
     ) {
         LessonScreenContent(
             paddingValues = it,
             uiState = uiState.value,
-            id = id,
+            id = lessonId,
             navigation = navigation
         )
     }
@@ -107,7 +108,7 @@ fun LessonScreenContent(
                 Button(
                     onClick = {
                         if (id != null) {
-                            navigation.navigateToLessonScreen(id = id + 1L)
+                            navigation.navigateToLessonScreen(lessonId = id + 1L)
                         }
                     }
                 ) {

@@ -49,7 +49,7 @@ fun NavGraph(
 
         // lesson screen bez argumentu
         composable(route = Destination.LessonScreen.route) {
-            LessonScreen(null, navigation) // zavolani jine composable fce a jen se zavola
+            LessonScreen(null, null, navigation) // zavolani jine composable fce a jen se zavola
         }
 
         // lesson screen s argumenty
@@ -64,7 +64,31 @@ fun NavGraph(
         ) {
             val id = it.arguments?.getLong("id")
             LessonScreen(
-                id = if (id != -1L) id else null,
+                lessonId = if (id != -1L) id else null,
+                nodeId = null,
+                navigation = navigation
+            )
+        }
+
+        // lesson screen s 2 argumenty
+        composable(
+            route = Destination.LessonScreen.route + "/{lessonId}/{nodeId}", // receni, ze to bude paramter v ceste
+            arguments = listOf(
+                navArgument("lessonId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("nodeId"){
+                    type = androidx.navigation.NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            val lessonId = it.arguments?.getLong("lessonId")
+            val nodeId = it.arguments?.getLong("nodeId")
+            LessonScreen(
+                lessonId = if (lessonId != -1L) lessonId else null,
+                nodeId = if (nodeId != -1L) nodeId else null,
                 navigation = navigation
             )
         }
