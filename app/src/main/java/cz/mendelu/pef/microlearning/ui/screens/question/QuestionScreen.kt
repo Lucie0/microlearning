@@ -46,6 +46,8 @@ import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 @Composable
 fun QuestionScreen(
     title: String,
+    nodeId: Long?,
+    testId: Long?,
     navigation: INavigationRouter
 ){
     // VM

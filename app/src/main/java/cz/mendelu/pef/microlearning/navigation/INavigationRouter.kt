@@ -10,6 +10,8 @@ interface INavigationRouter {
     fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?)
 
     fun navigateToQuestionScreen(title: String)
+    fun navigateToQuestionScreen(title: String, nodeId: Long?)
+    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?)
 
     fun navigateToMainScreen(lastLessonId: Long?)
 

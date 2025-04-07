@@ -104,6 +104,54 @@ fun NavGraph(
         ) {
             QuestionScreen(
                 title = it.arguments?.getString("title") ?: "",
+                nodeId = null,
+                testId = null,
+                navigation = navigation
+            )
+        }
+
+        // QuestionScreen s 2 argumenty
+        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}",
+            arguments = listOf(
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("nodeId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+            )
+        ) {
+            QuestionScreen(
+                title = it.arguments?.getString("title") ?: "",
+                nodeId = it.arguments?.getLong("nodeId"),
+                testId = null,
+                navigation = navigation
+            )
+        }
+
+        // QuestionScreen s 3 argumenty
+        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}",
+            arguments = listOf(
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("nodeId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("testId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            QuestionScreen(
+                title = it.arguments?.getString("title") ?: "",
+                nodeId = it.arguments?.getLong("nodeId"),
+                testId = it.arguments?.getLong("testId"),
                 navigation = navigation
             )
         }
