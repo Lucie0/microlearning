@@ -2,7 +2,9 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
+import cz.mendelu.pef.microlearning.model.Test
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +33,46 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         return processResponse(
             withContext(Dispatchers.IO) {
                 api.getQuestions()
+            }
+        )
+    }
+
+    override suspend fun getQuestionById(id: Long): CommunicationResult<ObjectResponse<Question>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getQuestionById(id)
+            }
+        )
+    }
+
+    override suspend fun getNodes(): CommunicationResult<ArrayResponse<Node>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getNodes()
+            }
+        )
+    }
+
+    override suspend fun getNodeById(id: Long): CommunicationResult<ObjectResponse<Node>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getNodeById(id)
+            }
+        )
+    }
+
+    override suspend fun getTests(): CommunicationResult<ArrayResponse<Test>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getTests()
+            }
+        )
+    }
+
+    override suspend fun getTestById(id: Long): CommunicationResult<ObjectResponse<Test>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getTestById(id)
             }
         )
     }

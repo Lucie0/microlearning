@@ -2,7 +2,9 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
+import cz.mendelu.pef.microlearning.model.Test
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -32,6 +34,24 @@ interface API {
     @GET("/questions")
     suspend fun getQuestions() : Response<ArrayResponse<Question>>
 
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/questions/{id}")
+    suspend fun getQuestionById(@Path("id") id: Long) : Response<ObjectResponse<Question>>
 
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/nodes")
+    suspend fun getNodes() : Response<ArrayResponse<Node>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/nodes/{id}")
+    suspend fun getNodeById(@Path("id") id: Long) : Response<ObjectResponse<Node>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/tests")
+    suspend fun getTests() : Response<ArrayResponse<Test>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/tests/{id}")
+    suspend fun getTestById(@Path("id") id: Long) : Response<ObjectResponse<Test>>
 
 }
