@@ -39,10 +39,10 @@ public class LinkController {
             @ApiResponse(responseCode = "200", description = "List of links between nodes")
     })
     @GetMapping(value = {"","/"}, produces = "application/json")
-    public ArrayResponse<LinkBeforeResponse> getAllLinks() {
+    public ArrayResponse<LinkAfterResponse> getAllLinks() {
         return ArrayResponse.of(
                 linkService.getAllLinks(),
-                LinkBeforeResponse::new
+                LinkAfterResponse::new
         );
     }
 
@@ -55,11 +55,11 @@ public class LinkController {
             @ApiResponse(responseCode = "404", description = "Link not found"),
     })
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ObjectResponse<LinkBeforeResponse> getLinkById(@PathVariable Long id) {
+    public ObjectResponse<LinkAfterResponse> getLinkById(@PathVariable Long id) {
         Link link = linkService.getById(id).orElseThrow(() -> new NotFoundException("Link not found"));
         return ObjectResponse.of(
                 link,
-                LinkBeforeResponse::new
+                LinkAfterResponse::new
         );
     }
 
