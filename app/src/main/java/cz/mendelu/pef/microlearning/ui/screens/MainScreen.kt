@@ -36,17 +36,25 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.core.text.HtmlCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.Node
+import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
@@ -55,6 +63,8 @@ import cz.mendelu.pef.microlearning.ui.elements.PlaceHolderScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.TabScreen
 import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
+import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreenVM
+import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonsErrors
 
 
 // todo zeptat se Landy na HTML komponentu? Elisky? Gono?
@@ -73,11 +83,23 @@ fun MainScreen(
     // TODO VYRESIT
     // java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}                                                                                                    java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}
 
+    val viewModel = hiltViewModel<MainScreenVM>()
+    viewModel.myLLId = lastLessonId ?: 1L
+
+    val uiState: MutableState<UiState<ObjectResponse<Node>, MainErrors>> = rememberSaveable { mutableStateOf(
+        UiState()
+    ) }
+
+    // poslech nad uistatem
+    viewModel.mainUiState.value.let {
+        uiState.value = it
+    }
+
     // todo hodit do VM
-    var myLLId: Long = lastLessonId ?: 1L
+//    var myLLId: Long = lastLessonId ?: 1L
     // moje osetreni pro nepreteceni
-    if (myLLId > 8) {
-        myLLId = 1
+    if (viewModel.myLLId > 8) {
+        viewModel.myLLId = 1
     }
 
     // todo VM
@@ -87,12 +109,21 @@ fun MainScreen(
     // pote, kdyz chci navigovat na stranku s lekci, tak predavat tam lastLessonId
 
     BaseScreen(
-        topBarText = "MainScreen"
+        topBarText = "MainScreen",
+        showLoading = uiState.value.loading,
+        placeholderScreenContent = if (uiState.value.errors != null) {
+            PlaceholderScreenContent(
+                image = null,
+//                image = R.drawable.undraw_warning,
+                text = stringResource(id = uiState.value.errors!!.communicationError)
+            )
+        } else null
     ) {
         MainScreenContent(
-            lastLessonId = myLLId,
+            lastLessonId = viewModel.myLLId,
             paddingValues = it,
-            navigation = navigation
+            navigation = navigation,
+            uiState = uiState.value
         )
     }
 }
@@ -103,12 +134,23 @@ fun MainScreen(
 fun MainScreenContent(
     lastLessonId: Long,
     paddingValues: PaddingValues,
-    navigation: INavigationRouter
+    navigation: INavigationRouter,
+    uiState: UiState<ObjectResponse<Node>, MainErrors>
 ){
     Column {
         HelloWorldScreen()
 
         TabScreen()
+
+        Button(
+            onClick = {
+                println(uiState)
+                navigation.navigateToLessonScreen(uiState.data?.content?.lessonId)
+                      },
+            enabled = !uiState.loading
+        ) {
+            Text(text = "Start")
+        }
 
         Button(
             onClick = { navigation.navigateToLessonScreen() }
