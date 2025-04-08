@@ -16,9 +16,5 @@ public class TestResponse {
         this.name = test.getName();
 
         this.nodeIds = test.getNodes().stream().map(Node::getId).toList();
-
-//         todo vyresit lepe
-//        if (test.getNode() != null) this.nodeId = test.getNode().getId();
-//        else this.nodeId = 0L;
     }
 }
