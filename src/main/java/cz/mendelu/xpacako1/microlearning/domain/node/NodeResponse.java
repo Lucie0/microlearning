@@ -2,8 +2,6 @@ package cz.mendelu.xpacako1.microlearning.domain.node;
 
 import lombok.Data;
 
-// todo predavat i nazev lekce a testu
-
 @Data
 public class NodeResponse {
     private Long id;
