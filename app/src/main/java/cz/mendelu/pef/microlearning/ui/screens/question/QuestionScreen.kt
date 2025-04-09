@@ -57,9 +57,9 @@ fun QuestionScreen(
 
     LaunchedEffect(key1 = 1, block = { viewModel.getQuestions() })
 
-    // todo lesson Id je null, potrebuju rozhodovani, jak doapdl test -- PREDELAT
+    // todo lesson Id je zatim null, potrebuju rozhodovani, jak dopadl test -- PREDELAT
     // lesson Id  nastaveno napevno
-    var myLessonId = 2L
+    val myLessonId = 2L
 
     // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = rememberSaveable { mutableStateOf(

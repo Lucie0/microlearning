@@ -23,14 +23,15 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
 
 // todo nefunguje prime kliknuti na text jako oznaceni dane moznosti,
-//  plocha kolem ano, ale samotny text nikoliv
+// plocha kolem ano, ale samotny text nikoliv
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun RadioButtonSingleSelection(
     modifier: Modifier = Modifier,
     radioOptions: List<String?>
 ) {
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
+//    val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
+    val selectedOption = remember { mutableStateOf("") }
 
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
     Column(modifier.selectableGroup()) {
@@ -40,10 +41,11 @@ fun RadioButtonSingleSelection(
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = (text == selectedOption),
+                        selected = (text == selectedOption.value),
                         onClick = {
                             if (text != null) {
-                                onOptionSelected(text)
+//                                onOptionSelected(text)
+                                selectedOption.value = text
                             }
                         },
                         role = Role.RadioButton
@@ -52,7 +54,7 @@ fun RadioButtonSingleSelection(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
+                    selected = (text == selectedOption.value),
                     onClick = null // null recommended for accessibility with screen readers
                 )
                 HtmlToNormalText(
@@ -72,6 +74,6 @@ fun RadioButtonSingleSelection(
         }
 
         // vypsani odpovedi, ciste ke kontrole
-        Text(text = selectedOption)
+        Text(text = selectedOption.value)
     }
 }
