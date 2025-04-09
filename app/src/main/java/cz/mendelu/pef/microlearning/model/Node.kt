@@ -8,7 +8,9 @@ import java.io.Serializable
 data class Node(
     var id: Long?,
     var testId: Long?,
+    var testName: String?,
     var lessonId: Long?,
+    var lessonName: String?,
     var walkThrough: Boolean?,
     var successfullyCompleted: Boolean?,
 ): Serializable {
