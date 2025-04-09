@@ -94,6 +94,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
             }
@@ -105,6 +106,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
 
@@ -115,6 +117,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
             }
@@ -126,6 +129,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
             }
@@ -138,6 +142,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
             }
@@ -150,6 +155,7 @@ fun QuestionScreen(
 //            options = uiState.value.data?.items?.get(0)?.options?.items
                     lessonId = myLessonId,
                     nodeId = nodeId,
+                    viewModel = viewModel,
                     navigation = navigation
                 )
             }
@@ -167,6 +173,7 @@ fun QuestionScreenContent(
     question: Question?,
     lessonId: Long?,
     nodeId: Long?,
+    viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ){
     val questionText: String = question?.text ?: "No data"
@@ -182,6 +189,8 @@ fun QuestionScreenContent(
         if (question != null) {
             when (question.questionType) {
                 "ONE_FROM_N" -> {
+                        val selectedOption = remember { mutableStateOf("") }
+
 //                    item {
                     // otazka
                     HtmlText(
@@ -191,7 +200,24 @@ fun QuestionScreenContent(
 
                     //moznosti
                     RadioButtonSingleSelection(
-                        radioOptions = radioOptions
+                        radioOptions = radioOptions,
+                        // popis:
+                        // pokud uz je klic obsazen v hashmape, tak do MutableStatu uloz jeho
+                        // hodnotu, pokud ne, nic nedelej, kazdopadne odesli do fce RadioButton
+                        // promennou selectedOption
+                        // FUNGUJE !!!
+                        selectedOption = if (viewModel.selectedOptions.keys.contains(questionText)) {
+                            selectedOption.value = viewModel.selectedOptions[questionText]!!
+                            selectedOption
+                        } else selectedOption,
+                        onClick = {
+                            // pod klic se znenim otazky je ulozena hodnota odpovedi
+                            viewModel.selectedOptions[questionText] = selectedOption.value
+
+//                            viewModel.selectedOptions.add(viewModel.selectedOption.value)
+                            println(viewModel.selectedOptions)
+
+                        }
                     )
 //                }
                 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,10 +29,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RadioButtonSingleSelection(
     modifier: Modifier = Modifier,
-    radioOptions: List<String?>
+    radioOptions: List<String?>,
+    selectedOption: MutableState<String>,
+    onClick: () -> Unit
 ) {
 //    val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
-    val selectedOption = remember { mutableStateOf("") }
+//    val selectedOption = remember { mutableStateOf("") }
 
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
     Column(modifier.selectableGroup()) {
@@ -47,6 +50,7 @@ fun RadioButtonSingleSelection(
 //                                onOptionSelected(text)
                                 selectedOption.value = text
                             }
+                            onClick()
                         },
                         role = Role.RadioButton
                     )

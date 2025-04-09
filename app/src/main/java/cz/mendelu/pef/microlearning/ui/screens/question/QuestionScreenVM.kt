@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.ui.screens.question
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
@@ -24,6 +25,12 @@ class QuestionScreenVM @Inject constructor(
 
     // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = mutableStateOf(UiState())
+
+    // mutable state kvuli radiobuttonu -- jinak se pri rekompozici zapomene :)
+    val selectedOption = mutableStateOf("")
+
+//    val selectedOptions = arrayListOf<String>()
+    val selectedOptions = hashMapOf<String, String>()
 
     init {
 //        getQuestions()
