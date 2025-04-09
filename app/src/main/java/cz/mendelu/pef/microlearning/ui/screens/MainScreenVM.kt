@@ -26,6 +26,7 @@ class MainScreenVM @Inject constructor(
 //    var lessonId: Long? = null
 
     var myLLId: Long = 1L
+    var nodeId: Long = 1L
 
     init {
         getNodeById()
@@ -37,7 +38,7 @@ class MainScreenVM @Inject constructor(
         launch {
             val result =
                 withContext(Dispatchers.IO) {
-                    remoteRepository.getNodeById(1)
+                    remoteRepository.getNodeById(nodeId)
                 }
 
             when (result) {

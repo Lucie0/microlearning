@@ -49,7 +49,7 @@ fun NavGraph(
 
         // lesson screen bez argumentu
         composable(route = Destination.LessonScreen.route) {
-            LessonScreen(null, null, navigation) // zavolani jine composable fce a jen se zavola
+            LessonScreen(null, null, null, navigation) // zavolani jine composable fce a jen se zavola
         }
 
         // lesson screen s argumenty
@@ -62,9 +62,31 @@ fun NavGraph(
                 }
             )
         ) {
-            val id = it.arguments?.getLong("id")
             LessonScreen(
-                lessonId = if (id != -1L) id else null,
+                title = null,
+                lessonId = if (it.arguments?.getLong("id") != -1L) it.arguments?.getLong("id") else null,
+                nodeId = null,
+                navigation = navigation
+            )
+        }
+
+        // lesson screen s argumenty
+        composable(
+            route = Destination.LessonScreen.route + "/{title}/{id}", // receni, ze to bude parametr v ceste
+            arguments = listOf(
+                navArgument("id"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) {
+            LessonScreen(
+                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
+                lessonId = if (it.arguments?.getLong("id") != -1L) it.arguments?.getLong("id") else null,
                 nodeId = null,
                 navigation = navigation
             )
@@ -72,14 +94,18 @@ fun NavGraph(
 
         // lesson screen s 2 argumenty
         composable(
-            route = Destination.LessonScreen.route + "/{lessonId}/{nodeId}", // receni, ze to bude paramter v ceste
+            route = Destination.LessonScreen.route + "/{title}/{lessonId}/{nodeId}", // receni, ze to bude paramter v ceste
             arguments = listOf(
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
                 navArgument("lessonId"){
                     type = NavType.LongType
                     defaultValue = -1L
                 },
                 navArgument("nodeId"){
-                    type = androidx.navigation.NavType.LongType
+                    type = NavType.LongType
                     defaultValue = -1L
                 }
             )
@@ -87,6 +113,7 @@ fun NavGraph(
             val lessonId = it.arguments?.getLong("lessonId")
             val nodeId = it.arguments?.getLong("nodeId")
             LessonScreen(
+                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
                 lessonId = if (lessonId != -1L) lessonId else null,
                 nodeId = if (nodeId != -1L) nodeId else null,
                 navigation = navigation
@@ -106,6 +133,7 @@ fun NavGraph(
                 title = it.arguments?.getString("title") ?: "",
                 nodeId = null,
                 testId = null,
+                lessonId = null,
                 navigation = navigation
             )
         }
@@ -127,6 +155,7 @@ fun NavGraph(
                 title = it.arguments?.getString("title") ?: "",
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = null,
+                lessonId = null,
                 navigation = navigation
             )
         }
@@ -152,6 +181,37 @@ fun NavGraph(
                 title = it.arguments?.getString("title") ?: "",
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = it.arguments?.getLong("testId"),
+                lessonId = null,
+                navigation = navigation
+            )
+        }
+
+        // QuestionScreen s 4 argumenty
+        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}/{lessonId}",
+            arguments = listOf(
+                navArgument("title"){
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("nodeId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("testId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("lessonId"){
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            QuestionScreen(
+                title = it.arguments?.getString("title") ?: "",
+                nodeId = it.arguments?.getLong("nodeId"),
+                testId = it.arguments?.getLong("testId"),
+                lessonId = it.arguments?.getLong("lessonId"),
                 navigation = navigation
             )
         }

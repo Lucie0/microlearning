@@ -32,8 +32,9 @@ import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreen(
-    lessonId: Long?,
-    nodeId: Long?,
+    title: String?,
+    lessonId: Long?, // cislo lekce, ktera se ma zobrazit
+    nodeId: Long?, // cislo uzlu, ve kterem se nachazim
     navigation: INavigationRouter
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
@@ -52,8 +53,7 @@ fun LessonScreen(
     // je to kvuli show Loading true -- proooc?
     // --> TODO text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
-        topBarText = "L${viewModel.lessonId} "//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
-            ,
+        topBarText = title ?: "L${viewModel.lessonId}",//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -65,6 +65,7 @@ fun LessonScreen(
         drawFullScreenContent = true,
         onBackClick = {
 //            navigation.navigateBack()
+            // lessonId = k zapamatovani stavu
             navigation.navigateToMainScreen(lessonId)
         }
     ) {

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -46,14 +47,19 @@ import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 @Composable
 fun QuestionScreen(
     title: String,
-    nodeId: Long?,
-    testId: Long?,
+    nodeId: Long?,// v jakem uzlu se nachazim
+    testId: Long?, // jaky test mam zobrazovat
+    lessonId: Long?,
     navigation: INavigationRouter
 ){
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
 
     LaunchedEffect(key1 = 1, block = { viewModel.getQuestions() })
+
+    // todo lesson Id je null, potrebuju rozhodovani, jak doapdl test -- PREDELAT
+    // lesson Id  nastaveno napevno
+    var myLessonId = 2L
 
     // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = rememberSaveable { mutableStateOf(
@@ -66,7 +72,7 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = "$title – Test",
+        topBarText = title,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -82,18 +88,24 @@ fun QuestionScreen(
             item {
                 QuestionScreenContent(
                     paddingValues = it,
-                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!!
+                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
+//                    question = uiState.value.data?.items?.get(testId),
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
             }
             item {
-
                 QuestionScreenContent(
                     paddingValues = it,
                     question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
 
                 QuestionScreenContent(
@@ -101,6 +113,9 @@ fun QuestionScreen(
                     question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
             }
             item {
@@ -109,6 +124,9 @@ fun QuestionScreen(
                     question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
             }
 
@@ -118,6 +136,9 @@ fun QuestionScreen(
                     question = uiState.value.data?.items?.get(6), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
             }
 
@@ -127,6 +148,9 @@ fun QuestionScreen(
                     question = uiState.value.data?.items?.get(8), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    navigation = navigation
                 )
             }
 
@@ -141,6 +165,9 @@ fun QuestionScreen(
 fun QuestionScreenContent(
     paddingValues: PaddingValues,
     question: Question?,
+    lessonId: Long?,
+    nodeId: Long?,
+    navigation: INavigationRouter,
 ){
     val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
@@ -201,7 +228,7 @@ fun QuestionScreenContent(
 //                                    "function contains statement for ",
 //                            ".")
                         listOptions = question.options.items
-                        println(listOptions)
+//                        println(listOptions)
 
 //                        listOptions = listOf(
 //                            "whole program",
@@ -238,34 +265,6 @@ fun QuestionScreenContent(
 
                         // posledni blok textu, pote uz nenasleduje vyberovy seznam
                         HtmlText(string = dividedSentence[dividedSentence.size-1])
-
-
-//                        Text()
-//                        Dropdown()
-//        OutlinedTextField(
-//            value = listOfVars[0] ?: "",
-//            onValueChange = {},
-//            readOnly = true
-//        )
-////        OutlinedTextField(
-////            value = var1,
-////            onValueChange = {},
-////            readOnly = true
-////        )
-//                        Text()
-//                        Dropdown()
-////        OutlinedTextField(value = if (listOfVars.size > 1) listOfVars[1] else "", onValueChange = {}, enabled = false)
-//        OutlinedTextField(value = listOfVars[1] ?: "", onValueChange = {}, enabled = false)
-////        OutlinedTextField(value = var2, onValueChange = {}, enabled = false)
-//                        Text()
-//                        Row {
-//                            Dropdown()
-//        OutlinedTextField(value = listOfVars[2] ?: "", onValueChange = {}, enabled = false)
-////        OutlinedTextField(value = var3, onValueChange = {}, enabled = false)
-//                            Text(".")
-//                        }
-
-//                    }
                 }
                 "OPEN" -> {
                     // otevrena otazka
@@ -288,6 +287,17 @@ fun QuestionScreenContent(
                 }
             }
 
+            Button(onClick = {
+            // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                // pokud je test OK
+                // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
+                // presmerovat se na lekci
+                // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
+
+                navigation.navigateToLessonScreen(title = "TODO", lessonId = lessonId, nodeId = nodeId)
+                  }) {
+                Text("Submit")
+            }
         }
     }
 }

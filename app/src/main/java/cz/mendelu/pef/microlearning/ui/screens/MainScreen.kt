@@ -123,7 +123,8 @@ fun MainScreen(
             lastLessonId = viewModel.myLLId,
             paddingValues = it,
             navigation = navigation,
-            uiState = uiState.value
+            uiState = uiState.value,
+            nodeId = viewModel.nodeId
         )
     }
 }
@@ -135,7 +136,8 @@ fun MainScreenContent(
     lastLessonId: Long,
     paddingValues: PaddingValues,
     navigation: INavigationRouter,
-    uiState: UiState<ObjectResponse<Node>, MainErrors>
+    uiState: UiState<ObjectResponse<Node>, MainErrors>,
+    nodeId: Long
 ){
     Column {
         HelloWorldScreen()
@@ -145,7 +147,8 @@ fun MainScreenContent(
         Button(
             onClick = {
                 println(uiState)
-                navigation.navigateToLessonScreen(uiState.data?.content?.lessonId)
+                navigation.navigateToQuestionScreen(title = uiState.data?.content?.testName ?: "Test", nodeId = nodeId, testId = uiState.data?.content?.testId)
+//                navigation.navigateToLessonScreen(lessonId = uiState.data?.content?.lessonId, nodeId = nodeId)
                       },
             enabled = !uiState.loading
         ) {
