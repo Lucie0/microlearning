@@ -51,7 +51,7 @@ fun QuestionScreen(
     testId: Long?, // jaky test mam zobrazovat
     lessonId: Long?,
     navigation: INavigationRouter
-){
+) {
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
 
@@ -62,9 +62,12 @@ fun QuestionScreen(
     val myLessonId = 2L
 
     // uistate
-    val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = rememberSaveable { mutableStateOf(
-        UiState()
-    ) }
+    val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> =
+        rememberSaveable {
+            mutableStateOf(
+                UiState()
+            )
+        }
 
     // poslech nad uistatem
     viewModel.uiState.value.let {
@@ -121,17 +124,6 @@ fun QuestionScreen(
                     viewModel = viewModel,
                     navigation = navigation
                 )
-
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
             }
 
 
@@ -159,11 +151,20 @@ fun QuestionScreen(
                     viewModel = viewModel,
                     navigation = navigation
                 )
-            }
 
+                QuestionScreenContent(
+                    paddingValues = it,
+                    question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    viewModel = viewModel,
+                    navigation = navigation
+                )
+            }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -295,7 +296,10 @@ fun QuestionScreenContent(
 
                     OutlinedTextField(
                         value = answer.value,
-                        onValueChange = { answer.value = it },
+                        onValueChange = {
+                            answer.value = it
+                            viewModel.selectedOptions[questionText] = it
+                                        },
                         label = { Text("Answer") },
                         modifier = Modifier
                             .padding(16.dp)
