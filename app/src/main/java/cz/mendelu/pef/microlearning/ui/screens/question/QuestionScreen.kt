@@ -88,6 +88,18 @@ fun QuestionScreen(
             item {
                 QuestionScreenContent(
                     paddingValues = it,
+                    question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
+//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+//            options = uiState.value.data?.items?.get(0)?.options?.items
+                    lessonId = myLessonId,
+                    nodeId = nodeId,
+                    viewModel = viewModel,
+                    navigation = navigation
+                )
+            }
+            item {
+                QuestionScreenContent(
+                    paddingValues = it,
                     question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
 //                    question = uiState.value.data?.items?.get(testId),
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
@@ -121,18 +133,7 @@ fun QuestionScreen(
                     navigation = navigation
                 )
             }
-            item {
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-            }
+
 
             item {
                 QuestionScreenContent(
@@ -214,7 +215,6 @@ fun QuestionScreenContent(
                             // pod klic se znenim otazky je ulozena hodnota odpovedi
                             viewModel.selectedOptions[questionText] = selectedOption.value
 
-//                            viewModel.selectedOptions.add(viewModel.selectedOption.value)
                             println(viewModel.selectedOptions)
 
                         }
@@ -237,35 +237,14 @@ fun QuestionScreenContent(
                 "CLOZE" -> {
 //                    item {
                         // doplnovacka
-                        // dropdown
-                        // text, dropdown, text, ...
-                        // text.forEach {...}
                         var groupNumber = 1
                         var listOptions: List<Option?>?
 
                         // rozdeli vetu, v mistech vynechavky vypise dropdown
                         var dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
-                        println(dividedSentence)
 
-//                        dividedSentence = listOf(
-//                            "The main function represents",
-//                            "of C-program. Its declaration consists of ",
-//                            "type, identifier \"main\", parameters and body. The body of main " +
-//                                    "function contains statement for ",
-//                            ".")
                         listOptions = question.options.items
-//                        println(listOptions)
 
-//                        listOptions = listOf(
-//                            "whole program",
-//                            "alternative part",
-//                            "int",
-//                            "string",
-//                            "returned value",
-//                            "clear screen",
-//                            "clear input buffer").sorted()
-
-                        //
                         for (sentence in dividedSentence!!.subList(0, dividedSentence.size-1)) {
                             // text
 //                            HtmlText(
