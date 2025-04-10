@@ -32,13 +32,15 @@ import androidx.compose.ui.unit.toSize
 @Composable
 fun Dropdown(
     options: List<String?>,
-//    selectedOption: MutableState<String>
+    selected: MutableState<String>,
+    onClickBefore: () -> Unit = {},
+    onClickAfter: () -> Unit = {},
 ){
     var expanded = remember { mutableStateOf(false) }
-    var selected = remember { mutableStateOf("") }
+//    var selected = remember { mutableStateOf("") }
 
-//    val list = listOf("whole program","alternative part","int","string","returned value","clear screen","clear input buffer")
 //        .sorted() // dle abecedy
+    // velikost textoveho pole, kvuli roztazeni na maximum
     var textFieldSize by remember {
         mutableStateOf(Size.Zero)
 //            list.maxOf { item -> item.length * 100 })
@@ -75,8 +77,10 @@ fun Dropdown(
         ) {
             options.forEach{
                 DropdownMenuItem(text = { HtmlToNormalText(it ?: "none") }, onClick = {
+                    onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value
+                    onClickAfter()
                 })
             }
         }

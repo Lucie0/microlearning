@@ -190,7 +190,7 @@ fun QuestionScreenContent(
         if (question != null) {
             when (question.questionType) {
                 "ONE_FROM_N" -> {
-                        val selectedOption = remember { mutableStateOf("") }
+                    val selectedOption = remember { mutableStateOf("") }
 
 //                    item {
                     // otazka
@@ -211,83 +211,97 @@ fun QuestionScreenContent(
                             selectedOption.value = viewModel.selectedOptions[questionText]!!
                             selectedOption
                         } else selectedOption,
-                        onClick = {
+                        onClickAfter = {
                             // pod klic se znenim otazky je ulozena hodnota odpovedi
                             viewModel.selectedOptions[questionText] = selectedOption.value
-
-                            println(viewModel.selectedOptions)
-
+//                            println(viewModel.selectedOptions)
                         }
                     )
 //                }
                 }
+
                 "MORE_FROM_N" -> {
                     // pravdepodobne se nepouzije
 //                    item {
-                        // otazka
-                        HtmlText(
-                            string = questionText,
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
-                        )
+                    // otazka
+                    HtmlText(
+                        string = questionText,
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    )
 
-                        //moznosti
-                        CheckBoxMultipleSelection()
+                    //moznosti
+                    CheckBoxMultipleSelection()
 //                    }
                 }
+
                 "CLOZE" -> {
 //                    item {
-                        // doplnovacka
-                        var groupNumber = 1
-                        var listOptions: List<Option?>?
+                    // doplnovacka
+                    var groupNumber = 1
 
-                        // rozdeli vetu, v mistech vynechavky vypise dropdown
-                        var dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
+//                    val listOptions: List<Option?>? = question.options.items
 
-                        listOptions = question.options.items
+                    // rozdeli vetu, v mistech vynechavky vypise dropdown
+                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
 
-                        for (sentence in dividedSentence!!.subList(0, dividedSentence.size-1)) {
-                            // text
+                    for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
+                        val selectedOption = remember { mutableStateOf("") }
+                        // text
 //                            HtmlText(
 //                                string = sentence,
 //                                fontSize = MaterialTheme.typography.titleLarge.fontSize
 //                            )
-                            HtmlToNormalText(
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                text = sentence,
-                                fontSize = MaterialTheme.typography.titleLarge.fontSize
-                            )
-
-                            // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
-                            val listStrings = listOptions?.filter { opt -> opt.groupNumber == groupNumber }?.map { opt -> opt.text }
-
-                            // okenko pro vyberovy seznam
-                            if (listStrings != null)
-                                Dropdown(listStrings)
-
-                            // zvyseni na dalsi skupinu
-                            groupNumber += 1
-                        }
-
-                        // posledni blok textu, pote uz nenasleduje vyberovy seznam
-                        HtmlText(string = dividedSentence[dividedSentence.size-1])
-                }
-                "OPEN" -> {
-                    // otevrena otazka
-//                    item {
-                        HtmlText(
-                            string = questionText,
+                        HtmlToNormalText(
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                            text = sentence,
                             fontSize = MaterialTheme.typography.titleLarge.fontSize
                         )
 
-                        OutlinedTextField(
-                            value = answer.value,
-                            onValueChange = { answer.value = it },
-                            label = { Text("Answer")},
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            minLines = 1
-                        )
+                        // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
+                        val listStrings = // listOptions. ...
+                            question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
+                                ?.map { opt -> opt.text }
+
+                        // okenko pro vyberovy seznam
+                        if (listStrings != null)
+                            Dropdown(
+                                options = listStrings,
+                                selected = if (viewModel.selectedOptions.keys.contains(sentence)) {
+                                    selectedOption.value = viewModel.selectedOptions[sentence]!!
+                                    selectedOption
+                                } else selectedOption,
+                                onClickAfter = {
+                                    // pod klic se znenim casti otazky otazky je ulozena hodnota odpovedi
+                                    viewModel.selectedOptions[sentence] = selectedOption.value
+                                    println(viewModel.selectedOptions)
+                                }
+                            )
+
+                        // zvyseni na dalsi skupinu
+                        groupNumber += 1
+                    }
+
+                    // posledni blok textu, pote uz nenasleduje vyberovy seznam
+                    HtmlText(string = dividedSentence[dividedSentence.size - 1])
+                }
+
+                "OPEN" -> {
+                    // otevrena otazka
+//                    item {
+                    HtmlText(
+                        string = questionText,
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    )
+
+                    OutlinedTextField(
+                        value = answer.value,
+                        onValueChange = { answer.value = it },
+                        label = { Text("Answer") },
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        minLines = 1
+                    )
 //                    }
                 }
             }
