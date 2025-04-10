@@ -31,7 +31,8 @@ fun RadioButtonSingleSelection(
     modifier: Modifier = Modifier,
     radioOptions: List<String?>,
     selectedOption: MutableState<String>,
-    onClick: () -> Unit
+    onClickBefore: () -> Unit = {},
+    onClickAfter: () -> Unit = {}
 ) {
 //    val (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
 //    val selectedOption = remember { mutableStateOf("") }
@@ -46,11 +47,12 @@ fun RadioButtonSingleSelection(
                     .selectable(
                         selected = (text == selectedOption.value),
                         onClick = {
+                            onClickBefore()
                             if (text != null) {
 //                                onOptionSelected(text)
                                 selectedOption.value = text
                             }
-                            onClick()
+                            onClickAfter()
                         },
                         role = Role.RadioButton
                     )
