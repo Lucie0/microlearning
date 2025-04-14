@@ -7,7 +7,7 @@ import dagger.hilt.android.HiltAndroidApp
 // todo model Question
 // todo model Option
 
-// todo ngrok -- odstranit upozrnovaci stranku -- pomoci v cmd: ngrok http 8090 --request-header-add "ngrok-skip-browser-warning: 1"
+// ngrok -- odstranit upozrnovaci stranku -- pomoci v cmd: ngrok http 8090 --request-header-add "ngrok-skip-browser-warning: 1"
 //To remove this page:
 //Set and send an ngrok-skip-browser-warning request header with any value.
 //Or, set and send a custom/non-standard browser User-Agent request header.
