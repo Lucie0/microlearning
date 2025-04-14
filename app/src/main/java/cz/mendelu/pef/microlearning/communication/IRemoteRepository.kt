@@ -4,6 +4,8 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.architecture.IBaseRemoteRepository
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LinkAfter
+import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
@@ -21,6 +23,9 @@ interface IRemoteRepository : IBaseRemoteRepository {
 
     suspend fun getNodes() : CommunicationResult<ArrayResponse<Node>>
     suspend fun getNodeById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Node>>
+    suspend fun getNodeAfter(@Path("id") id: Long) : CommunicationResult<ArrayResponse<LinkAfter>>
+    suspend fun getNodeBefore(@Path("id") id: Long) : CommunicationResult<ArrayResponse<LinkBefore>>
+
     suspend fun getTests() : CommunicationResult<ArrayResponse<Test>>
     suspend fun getTestById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Test>>
 

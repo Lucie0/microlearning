@@ -2,6 +2,8 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LinkAfter
+import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
@@ -60,6 +62,23 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
             }
         )
     }
+
+    override suspend fun getNodeAfter(id: Long): CommunicationResult<ArrayResponse<LinkAfter>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getNodeAfter(id)
+            }
+        )
+    }
+
+    override suspend fun getNodeBefore(id: Long): CommunicationResult<ArrayResponse<LinkBefore>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getNodeBefore(id)
+            }
+        )
+    }
+
 
     override suspend fun getTests(): CommunicationResult<ArrayResponse<Test>> {
         return processResponse(

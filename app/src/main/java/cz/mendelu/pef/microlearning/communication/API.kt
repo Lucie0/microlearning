@@ -2,6 +2,8 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LinkAfter
+import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
@@ -45,6 +47,14 @@ interface API {
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/nodes/{id}")
     suspend fun getNodeById(@Path("id") id: Long) : Response<ObjectResponse<Node>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/links/after/{id}")
+    suspend fun getNodeAfter(@Path("id") id: Long) : Response<ArrayResponse<LinkAfter>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/links/before/{id}")
+    suspend fun getNodeBefore(@Path("id") id: Long) : Response<ArrayResponse<LinkBefore>>
 
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/tests")

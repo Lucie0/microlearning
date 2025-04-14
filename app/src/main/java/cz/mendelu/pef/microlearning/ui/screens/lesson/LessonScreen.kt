@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -33,25 +34,32 @@ import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 @Composable
 fun LessonScreen(
     title: String?,
-    lessonId: Long?, // cislo lekce, ktera se ma zobrazit
     nodeId: Long?, // cislo uzlu, ve kterem se nachazim
+    lessonId: Long?, // cislo lekce, ktera se ma zobrazit
     navigation: INavigationRouter
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
     viewModel.lessonId = lessonId
+    viewModel.actualNodeId = nodeId
 
-    LaunchedEffect(key1 = 1, block = { viewModel.getLessonById() })
+    LaunchedEffect(key1 = 1, block = {
+        viewModel.getData()
+    })
 
-    val uiState: MutableState<UiState<ObjectResponse<Lesson>, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
+    val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
+//    val linkUiState: MutableState<UiState<ObjectResponse<LinkAfter>, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
 
     // poslech nad uistatem
     viewModel.lessonsUiState.value.let {
         uiState.value = it
     }
+//    viewModel.linkAfterUiState.value.let {
+//        linkUiState.value = it
+//    }
 
-    // todo neprepisuje se nazev, prestoze se uz prepisoval!!
+    // neprepisuje se nazev, prestoze se uz prepisoval!!
     // je to kvuli show Loading true -- proooc?
-    // --> TODO text staticky predavat v parametru screeny a uz ho pote neaktualizovat
+    // --> text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
         topBarText = title ?: "L${viewModel.lessonId}",//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
@@ -72,7 +80,7 @@ fun LessonScreen(
         LessonScreenContent(
             paddingValues = it,
             uiState = uiState.value,
-            id = lessonId,
+            lessonId = lessonId,
             navigation = navigation
         )
     }
@@ -82,38 +90,50 @@ fun LessonScreen(
 @Composable
 fun LessonScreenContent(
     paddingValues: PaddingValues,
-    uiState: UiState<ObjectResponse<Lesson>, LessonsErrors>,
-    id: Long?,
+    uiState: UiState<LessonData, LessonsErrors>,
+    lessonId: Long?,
     navigation: INavigationRouter
-){
-
-        if (uiState.data != null) {
+) {
+    if (uiState.data != null) {
         LazyColumn(
             modifier = Modifier
-//                .padding(PaddingValues(8.dp))
                 .padding(top = paddingValues.calculateTopPadding(), bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             item {
+                // nadpis
                 HtmlText(
-                    string = uiState.data!!.content.name!!,
+                    string = uiState.data!!.lesson?.content?.name!!,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     textAlign = TextAlign.Center
                 )
             }
             item {
-                HtmlText(string = uiState.data!!.content.content!!.toString())
+                // samotny content
+                HtmlText(string = uiState.data!!.lesson?.content?.content!!.toString())
             }
             item {
+//                // tlacitko
+//                Button(
+//                    onClick = {
+//                        if (lessonId != null) {
+//                            navigation.navigateToLessonScreen(lessonId = lessonId + 1L)
+//                        }
+//                    }
+//                ) {
+//                    Text("Next lesson")
+//                }
+
+
                 Button(
                     onClick = {
-                        if (id != null) {
-                            navigation.navigateToLessonScreen(lessonId = id + 1L)
-                        }
+                        // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci...
+                        // pokracovat na test v nasledujicim uzlu
                     }
                 ) {
-                    Text("Next lesson")
+                    // todo jiny text
+                    Text("Continue")
                 }
             }
         }

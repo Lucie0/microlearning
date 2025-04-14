@@ -7,8 +7,10 @@ import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
+import cz.mendelu.pef.microlearning.ui.screens.MainErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,15 +23,28 @@ class LessonScreenVM @Inject constructor(
 ) : BaseViewModel() {
 
     // uistate
-    val lessonsUiState: MutableState<UiState<ObjectResponse<Lesson>, LessonsErrors>> = mutableStateOf(UiState())
+    val lessonsUiState: MutableState<UiState<LessonData, LessonsErrors>> =
+        mutableStateOf(UiState())
+//    val linkAfterUiState: MutableState<UiState<ObjectResponse<LinkAfter>, LessonsErrors>> =
+//        mutableStateOf(UiState())
+
+    var data = LessonData(null, null, null)
     var lessonId: Long? = null
 
-    init {
-        getLessonById()
-    }
+    var actualNodeId: Long? = null
+    var nextNodeId: Long? = null
 
-    //  getLessons + getLesson
-    fun getLessonById() {
+//    init {
+//        getLessonById()
+//    }
+
+
+    fun getData(){
+        getLessonById()
+        getNextNodeId()
+    }
+    //  getLesson
+    private fun getLessonById() {
         if (lessonId != null) {
             launch {
                 val result =
@@ -56,6 +71,7 @@ class LessonScreenVM @Inject constructor(
                                     errors = LessonsErrors(R.string.some_unexpected_error) // "exception" resource code
                                 )
                             }
+
                             404 -> {
                                 lessonsUiState.value = UiState(
                                     loading = false,
@@ -63,6 +79,7 @@ class LessonScreenVM @Inject constructor(
                                     errors = LessonsErrors(R.string.not_found) // "not found" resource code
                                 )
                             }
+
                             else -> {
                                 lessonsUiState.value = UiState(
                                     loading = false,
@@ -83,9 +100,11 @@ class LessonScreenVM @Inject constructor(
 
                     is CommunicationResult.Success -> {
                         if (result.data != null) {
+                            data.lesson = result.data
+
                             lessonsUiState.value = UiState(
                                 loading = false,
-                                data = result.data,
+                                data = data,
                                 errors = null
                             )
                         } else {
@@ -101,58 +120,151 @@ class LessonScreenVM @Inject constructor(
         }
     }
 
-//    fun getLessons() {
-//        launch {
+    private fun getNextNodeId() {
+        if (actualNodeId != null) {
+            launch {
+                val result = withContext(Dispatchers.IO) {
+                    remoteRepository.getNodeAfter(actualNodeId!!)
+                }
+
+                when (result) {
+                    is CommunicationResult.ConnectionError -> {
+                        lessonsUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = LessonsErrors(R.string.communication_error) // "communication error" resource code
+                        )
+                    }
+
+                    is CommunicationResult.Error -> {
+                        println(result.error)
+                        when (result.error.code) {
+                            500 -> {
+                                lessonsUiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = LessonsErrors(R.string.some_unexpected_error) // "exception" resource code
+                                )
+                            }
+
+                            404 -> {
+                                lessonsUiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = LessonsErrors(R.string.not_found) // "not found" resource code
+                                )
+                            }
+
+                            else -> {
+                                lessonsUiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = LessonsErrors(R.string.something_went_wrong_please_reload_screen)
+                                )
+                            }
+                        }
+                    }
+
+                    is CommunicationResult.Exception -> {
+                        lessonsUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = LessonsErrors(R.string.unknown_error) // "exception" resource code
+                        )
+                    }
+
+                    is CommunicationResult.Success -> {
+                        if (result.data != null) {
+                            data.linkAfter = result.data
+//                            nextNodeId = result.data.items?.getOrNull(0)?.nextNodeId
+
+                            lessonsUiState.value = UiState(
+                                loading = false,
+                                data = data,
+                                errors = null
+                            )
+                        } else {
+                            lessonsUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = LessonsErrors(R.string.no_data) // "exception" resource code
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+//    private suspend fun getNodeById(nextNodeId: Long) {
+////        launch {
 //            val result =
 //                withContext(Dispatchers.IO) {
-//                    remoteRepository.getLessons()
+//                    remoteRepository.getNodeById(nextNodeId)
 //                }
+//
 //            when (result) {
 //                is CommunicationResult.ConnectionError -> {
 //                    lessonsUiState.value = UiState(
 //                        loading = false,
 //                        data = null,
-//                        errors = LessonsErrors(R.string.communication_error) // "communication error" resource code
+//                        errors = MainErrors(R.string.communication_error) // "communication error" resource code
 //                    )
-//
 //                }
 //
 //                is CommunicationResult.Error -> {
-//                    lessonsUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = LessonsErrors(R.string.some_error) // "exception" resource code
-//                    )
+//                    println(result.error)
+//                    when (result.error.code) {
+//                        500 -> {
+//                            mainUiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = MainErrors(R.string.some_unexpected_error) // "exception" resource code
+//                            )
+//                        }
+//
+//                        404 -> {
+//                            mainUiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = MainErrors(R.string.not_found) // "not found" resource code
+//                            )
+//                        }
+//
+//                        else -> {
+//                            mainUiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = MainErrors(R.string.something_went_wrong_please_reload_screen)
+//                            )
+//                        }
+//                    }
 //                }
 //
 //                is CommunicationResult.Exception -> {
-//                    lessonsUiState.value = UiState(
+//                    mainUiState.value = UiState(
 //                        loading = false,
 //                        data = null,
-//                        errors = LessonsErrors(R.string.unknown_error) // "exception" resource code
+//                        errors = MainErrors(R.string.unknown_error) // "exception" resource code
 //                    )
 //                }
 //
 //                is CommunicationResult.Success -> {
-//                    if (result.data.items?.isNotEmpty() == true) {
-//                        // neprazdny list
-//                        lessonsUiState.value = UiState(
+//                    if (result.data != null) {
+//                        mainUiState.value = UiState(
 //                            loading = false,
 //                            data = result.data,
 //                            errors = null
 //                        )
 //                    } else {
-//                        // prazdny list
-//                        lessonsUiState.value = UiState(
+//                        mainUiState.value = UiState(
 //                            loading = false,
 //                            data = null,
-//                            errors = LessonsErrors(R.string.empty_list)
+//                            errors = MainErrors(R.string.no_data) // "exception" resource code
 //                        )
 //                    }
 //                }
 //            }
 //        }
 //    }
-
-
 }

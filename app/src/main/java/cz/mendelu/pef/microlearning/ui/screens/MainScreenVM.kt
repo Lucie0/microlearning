@@ -32,9 +32,7 @@ class MainScreenVM @Inject constructor(
         getNodeById()
     }
 
-    //  getLessons + getLesson
-    fun getNodeById() {
-//        if (lessonId != null) {
+    private fun getNodeById() {
         launch {
             val result =
                 withContext(Dispatchers.IO) {
