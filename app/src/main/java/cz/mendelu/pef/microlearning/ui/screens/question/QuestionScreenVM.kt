@@ -29,8 +29,10 @@ class QuestionScreenVM @Inject constructor(
     // mutable state kvuli radiobuttonu -- jinak se pri rekompozici zapomene :)
     val selectedOption = mutableStateOf("")
 
-//    val selectedOptions = arrayListOf<String>()
+    // selectedOptions = hashmap[zneniOtazky] = vybranaOdpoved
     val selectedOptions = hashMapOf<String, String>()
+    // correctOptions = hashmap[zneniOtazky] = spravnaOdpoved
+    val correctOptions = hashMapOf<String, String>()
 
     init {
 //        getQuestions()
@@ -105,4 +107,13 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
+    fun isTestCorrect(): Boolean {
+        var isOk = true
+        correctOptions.keys.forEach { questionText ->
+            if (selectedOptions[questionText] != correctOptions[questionText]) {
+                isOk = false
+            }
+        }
+        return isOk
+    }
 }

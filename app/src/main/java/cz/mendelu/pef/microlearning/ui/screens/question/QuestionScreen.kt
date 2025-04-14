@@ -180,6 +180,20 @@ fun QuestionScreenContent(
 ){
     val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
+    val correctAnswers = hashMapOf<String, String>()
+
+    // todo problem s ot 6 -- doplnovacka -> prepisuju moznosti tou posledni,
+    //  protoze je tam stejny klic = nerozdelena otazka, zustavaji tam znacky [[x]]
+    //  --> rozparsovat
+    options?.filter { it.correctAnswer == true}?.forEach {
+        viewModel.correctOptions[questionText] = it.text ?: ""
+        correctAnswers[questionText] = it.text ?: ""
+    }
+
+    println("opt:$options")
+    println("corr:$correctAnswers")
+    println("corrVM:${viewModel.correctOptions}")
+
     val radioOptions: List<String?> = options?.map { o -> o.text } ?: listOf()
 
     val answer = remember { mutableStateOf("") }
@@ -215,7 +229,7 @@ fun QuestionScreenContent(
                         onClickAfter = {
                             // pod klic se znenim otazky je ulozena hodnota odpovedi
                             viewModel.selectedOptions[questionText] = selectedOption.value
-//                            println(viewModel.selectedOptions)
+                            println(viewModel.selectedOptions)
                         }
                     )
 //                }
@@ -311,14 +325,31 @@ fun QuestionScreenContent(
             }
 
             Button(onClick = {
-            // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                 // pokud je test OK
                 // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
                 // presmerovat se na lekci
                 // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
 
-                navigation.navigateToLessonScreen(title = "TODO", lessonId = lessonId, nodeId = nodeId)
-                  }) {
+                if (viewModel.isTestCorrect()) {
+                    //navigate
+                    navigation.navigateToLessonScreen(
+                        title = lessonName,
+                        lessonId = lessonId,
+                        nodeId = nodeId
+                    )
+                    println("TEST IS CORRECT")
+                } else {
+                    // navigate
+                    navigation.navigateToLessonScreen(
+                        title = "TODO",
+                        lessonId = lessonId,
+                        nodeId = nodeId
+                    )
+                    println("Test is not correct")
+                }
+
+            }) {
                 Text("Submit")
             }
         }
