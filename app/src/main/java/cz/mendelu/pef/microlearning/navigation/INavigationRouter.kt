@@ -1,6 +1,7 @@
 package cz.mendelu.pef.microlearning.navigation
 
 import androidx.navigation.NavController
+import cz.mendelu.pef.microlearning.model.Node
 
 interface INavigationRouter {
     fun navigateBack()
@@ -14,6 +15,7 @@ interface INavigationRouter {
     fun navigateToQuestionScreen(title: String, nodeId: Long?)
     fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?)
     fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?)
+    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?, lessonName: String?)
 
     fun navigateToTestScreen()
     fun navigateToTestScreen(title: String)

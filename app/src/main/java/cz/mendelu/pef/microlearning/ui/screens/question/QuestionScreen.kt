@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Option
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
@@ -50,6 +51,7 @@ fun QuestionScreen(
     nodeId: Long?,// v jakem uzlu se nachazim
     testId: Long?, // jaky test mam zobrazovat
     lessonId: Long?,
+    lessonName: String?,
     navigation: INavigationRouter
 ) {
     // VM
@@ -59,7 +61,7 @@ fun QuestionScreen(
 
     // todo lesson Id je zatim null, potrebuju rozhodovani, jak dopadl test -- PREDELAT
     // lesson Id  nastaveno napevno
-    val myLessonId = 2L
+//    val myLessonId = 1L
 
     // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> =
@@ -73,6 +75,9 @@ fun QuestionScreen(
     viewModel.uiState.value.let {
         uiState.value = it
     }
+
+//    viewModel.correctOptions
+
 
     BaseScreen(
         topBarText = title,
@@ -89,6 +94,7 @@ fun QuestionScreen(
     ) {
         LazyColumn {
             item {
+                /*
                 QuestionScreenContent(
                     paddingValues = it,
                     question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
@@ -99,70 +105,74 @@ fun QuestionScreen(
                     viewModel = viewModel,
                     navigation = navigation
                 )
+
+                 */
             }
             item {
                 QuestionScreenContent(
                     paddingValues = it,
                     question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
-//                    question = uiState.value.data?.items?.get(testId),
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
+                    lessonId = lessonId,
+                    lessonName = lessonName,
                     nodeId = nodeId,
                     viewModel = viewModel,
                     navigation = navigation
                 )
             }
-            item {
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-            }
+//            item {
+//                QuestionScreenContent(
+//                    paddingValues = it,
+//                    question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!!
+////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+////            options = uiState.value.data?.items?.get(0)?.options?.items
+//                    lessonId = myLessonId,
+//                    lessonName = lessonName,
+//                    nodeId = nodeId,
+//                    viewModel = viewModel,
+//                    navigation = navigation
+//                )
+//            }
 
 
-            item {
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(6), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-            }
+//            item {
+//                QuestionScreenContent(
+//                    paddingValues = it,
+//                    question = uiState.value.data?.items?.get(6), // todo cislo je napevno!!!!
+////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+////            options = uiState.value.data?.items?.get(0)?.options?.items
+//                    lessonId = myLessonId,
+//                    lessonName = lessonName,
+//                    nodeId = nodeId,
+//                    viewModel = viewModel,
+//                    navigation = navigation
+//                )
+//            }
 
-            item {
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(8), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
-//            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-//            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-            }
+//            item {
+//                QuestionScreenContent(
+//                    paddingValues = it,
+//                    question = uiState.value.data?.items?.get(8), // todo cislo je napevno!!!!
+////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+////            options = uiState.value.data?.items?.get(0)?.options?.items
+//                    lessonId = myLessonId,
+//                    lessonName = lessonName,
+//                    nodeId = nodeId,
+//                    viewModel = viewModel,
+//                    navigation = navigation
+//                )
+//
+//                QuestionScreenContent(
+//                    paddingValues = it,
+//                    question = uiState.value.data?.items?.get(4), // todo cislo je napevno!!!!
+////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
+////            options = uiState.value.data?.items?.get(0)?.options?.items
+//                    lessonId = myLessonId,
+//                    lessonName = lessonName,
+//                    nodeId = nodeId,
+//                    viewModel = viewModel,
+//                    navigation = navigation
+//                )
+//            }
         }
     }
 }
@@ -174,6 +184,7 @@ fun QuestionScreenContent(
     paddingValues: PaddingValues,
     question: Question?,
     lessonId: Long?,
+    lessonName: String?,
     nodeId: Long?,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
@@ -313,7 +324,7 @@ fun QuestionScreenContent(
                         onValueChange = {
                             answer.value = it
                             viewModel.selectedOptions[questionText] = it
-                                        },
+                        },
                         label = { Text("Answer") },
                         modifier = Modifier
                             .padding(16.dp)

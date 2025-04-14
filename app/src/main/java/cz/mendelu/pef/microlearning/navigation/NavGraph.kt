@@ -140,6 +140,7 @@ fun NavGraph(
                 nodeId = null,
                 testId = null,
                 lessonId = null,
+                lessonName = null,
                 navigation = navigation
             )
         }
@@ -163,6 +164,7 @@ fun NavGraph(
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = null,
                 lessonId = null,
+                lessonName = null,
                 navigation = navigation
             )
         }
@@ -189,6 +191,7 @@ fun NavGraph(
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = it.arguments?.getLong("testId"),
                 lessonId = null,
+                lessonName = null,
                 navigation = navigation
             )
         }
@@ -219,6 +222,42 @@ fun NavGraph(
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = it.arguments?.getLong("testId"),
                 lessonId = it.arguments?.getLong("lessonId"),
+                lessonName = null,
+                navigation = navigation
+            )
+        }
+
+        // QuestionScreen s 5 argumenty
+        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}/{lessonId}/{lessonName}",
+            arguments = listOf(
+                navArgument("title") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("nodeId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("testId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("lessonId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("lessonName") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+            )
+        ) {
+            QuestionScreen(
+                title = it.arguments?.getString("title") ?: "",
+                nodeId = it.arguments?.getLong("nodeId"),
+                testId = it.arguments?.getLong("testId"),
+                lessonId = it.arguments?.getLong("lessonId"),
+                lessonName = it.arguments?.getString("lessonName") ?: "",
                 navigation = navigation
             )
         }

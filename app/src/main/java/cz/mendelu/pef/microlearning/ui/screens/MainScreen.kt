@@ -146,10 +146,16 @@ fun MainScreenContent(
 
         Button(
             onClick = {
-                println(uiState)
-                navigation.navigateToQuestionScreen(title = uiState.data?.content?.testName ?: "Test", nodeId = nodeId, testId = uiState.data?.content?.testId)
+//                println(uiState.data)
+                navigation.navigateToQuestionScreen(
+                    title = uiState.data?.content?.testName ?: "Test",
+                    nodeId = nodeId,
+                    testId = uiState.data?.content?.testId,
+                    lessonId = uiState.data?.content?.lessonId,
+                    lessonName = uiState.data?.content?.lessonName
+                )
 //                navigation.navigateToLessonScreen(lessonId = uiState.data?.content?.lessonId, nodeId = nodeId)
-                      },
+            },
             enabled = !uiState.loading
         ) {
             Text(text = "Start")
@@ -175,11 +181,6 @@ fun MainScreenContent(
 
 
     }
-}
-
-//todo dat do VM
-private fun onClickSuggestionChip(){
-
 }
 
 @RequiresApi(Build.VERSION_CODES.P)
