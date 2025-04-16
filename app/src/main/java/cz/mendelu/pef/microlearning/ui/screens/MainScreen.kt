@@ -161,20 +161,20 @@ fun MainScreenContent(
             Text(text = "Start")
         }
 
-        Button(
-            onClick = { navigation.navigateToLessonScreen() }
-        ) {
-            Text(text = "Lesson null")
-        }
+//        Button(
+//            onClick = { navigation.navigateToLessonScreen() }
+//        ) {
+//            Text(text = "Lesson null")
+//        }
 
-        // predtim misto last lesson id byla 1
-        Button(onClick = { navigation.navigateToLessonScreen(lastLessonId) }) {
-            Text(text = "Lesson by id")
-        }
+//        // predtim misto last lesson id byla 1
+//        Button(onClick = { navigation.navigateToLessonScreen(lastLessonId) }) {
+//            Text(text = "Lesson by id")
+//        }
 
-        Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
-            Text(text = "Question")
-        }
+//        Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
+//            Text(text = "Question")
+//        }
 
         // Html()
         // HtmlText() // zavislost v gradle

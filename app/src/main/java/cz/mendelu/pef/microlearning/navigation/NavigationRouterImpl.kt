@@ -13,17 +13,17 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.popBackStack()
     }
 
-    override fun navigateToLessonScreen() {
-        navController.navigate(Destination.LessonScreen.route)
-    }
-
-    override fun navigateToLessonScreen(lessonId: Long?) {
-        navController.navigate(Destination.LessonScreen.route + "/" + lessonId)
-    }
-
-    override fun navigateToLessonScreen(title: String?, lessonId: Long?) {
-        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId)
-    }
+//    override fun navigateToLessonScreen() {
+//        navController.navigate(Destination.LessonScreen.route)
+//    }
+//
+//    override fun navigateToLessonScreen(lessonId: Long?) {
+//        navController.navigate(Destination.LessonScreen.route + "/" + lessonId)
+//    }
+//
+//    override fun navigateToLessonScreen(title: String?, lessonId: Long?) {
+//        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId)
+//    }
 
     override fun navigateToLessonScreen(title: String?, lessonId: Long?, nodeId: Long?) {
         navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId + "/" + nodeId)
@@ -33,26 +33,26 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.navigate(Destination.MainScreen.route + "/" + lastLessonId)
     }
 
-    override fun navigateToQuestionScreen(title: String) {
-        navController.navigate(Destination.QuestionScreen.route + "/" + title)
-    }
-
-    override fun navigateToQuestionScreen(title: String, nodeId: Long?) {
-        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId)
-    }
-
-    override fun navigateToQuestionScreen(title: String, nodeId: Long?, testId: Long?) {
-        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId)
-    }
-
-    override fun navigateToQuestionScreen(
-        title: String,
-        nodeId: Long?,
-        testId: Long?,
-        lessonId: Long?
-    ) {
-        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId + "/" + lessonId)
-    }
+//    override fun navigateToQuestionScreen(title: String) {
+//        navController.navigate(Destination.QuestionScreen.route + "/" + title)
+//    }
+//
+//    override fun navigateToQuestionScreen(title: String, nodeId: Long?) {
+//        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId)
+//    }
+//
+//    override fun navigateToQuestionScreen(title: String, nodeId: Long?, testId: Long?) {
+//        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId)
+//    }
+//
+//    override fun navigateToQuestionScreen(
+//        title: String,
+//        nodeId: Long?,
+//        testId: Long?,
+//        lessonId: Long?
+//    ) {
+//        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId + "/" + lessonId)
+//    }
 
     override fun navigateToQuestionScreen(
         title: String,
