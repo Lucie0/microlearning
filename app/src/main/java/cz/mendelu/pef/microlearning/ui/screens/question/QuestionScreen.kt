@@ -336,35 +336,32 @@ fun QuestionScreenContent(
             }
 
             Button(
-                enabled = lessonId != null && nodeId != null,
+                // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
+                //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
+                enabled = lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
                 onClick = {
-                // vyhodnotit, jak dopadl test, podle toho pokracovat dal
-                // pokud je test OK
-                // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
-                // presmerovat se na lekci
-                // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
+                    // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                    // pokud je test OK
+                    // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
+                    // presmerovat se na lekci
+                    // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
 
-                if (viewModel.isTestCorrect()) {
-                    //navigate
-                    println("TEST IS CORRECT")
-                    println("$lessonId, $nodeId")
-                    navigation.navigateToLessonScreen(
-//                        title = lessonName,
-                        lessonId = lessonId,
-                        nodeId = nodeId
-                    )
-                } else {
-                    // navigate
-                     println("Test is not correct")
-                    navigation.navigateToLessonScreen(
-//                        title = "TODO",
-                        lessonId = lessonId,
-                        nodeId = nodeId
-                    )
-
-                }
-
-            }) {
+                    if (viewModel.isTestCorrect()) {
+                        //navigate
+                        println("TEST IS CORRECT")
+                        navigation.navigateToLessonScreen(
+                            lessonId = lessonId,
+                            nodeId = nodeId
+                        )
+                    } else {
+                        // navigate
+                        println("Test is not correct")
+                        navigation.navigateToLessonScreen(
+                            lessonId = lessonId,
+                            nodeId = nodeId
+                        )
+                    }
+                }) {
                 Text("Submit")
             }
         }
