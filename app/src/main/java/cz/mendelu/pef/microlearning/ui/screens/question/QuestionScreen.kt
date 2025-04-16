@@ -112,9 +112,9 @@ fun QuestionScreen(
                 QuestionScreenContent(
                     paddingValues = it,
                     question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
+                    nodeId = nodeId,
                     lessonId = lessonId,
                     lessonName = lessonName,
-                    nodeId = nodeId,
                     viewModel = viewModel,
                     navigation = navigation
                 )
@@ -183,9 +183,9 @@ fun QuestionScreen(
 fun QuestionScreenContent(
     paddingValues: PaddingValues,
     question: Question?,
+    nodeId: Long?,
     lessonId: Long?,
     lessonName: String?,
-    nodeId: Long?,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ){
@@ -335,7 +335,9 @@ fun QuestionScreenContent(
                 }
             }
 
-            Button(onClick = {
+            Button(
+                enabled = lessonName != null && lessonId != null && nodeId != null,
+                onClick = {
                 // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                 // pokud je test OK
                 // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
@@ -344,20 +346,21 @@ fun QuestionScreenContent(
 
                 if (viewModel.isTestCorrect()) {
                     //navigate
+                    println("TEST IS CORRECT")
                     navigation.navigateToLessonScreen(
                         title = lessonName,
                         lessonId = lessonId,
                         nodeId = nodeId
                     )
-                    println("TEST IS CORRECT")
                 } else {
                     // navigate
+                     println("Test is not correct")
                     navigation.navigateToLessonScreen(
                         title = "TODO",
                         lessonId = lessonId,
                         nodeId = nodeId
                     )
-                    println("Test is not correct")
+
                 }
 
             }) {
