@@ -28,7 +28,7 @@ import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreen(
-    title: String?,
+//    title: String? = null,
     lessonId: Long?, // cislo lekce, ktera se ma zobrazit
     nodeId: Long?, // cislo uzlu, ve kterem se nachazim
     navigation: INavigationRouter
@@ -55,7 +55,7 @@ fun LessonScreen(
     // je to kvuli show Loading true -- proooc?
     // --> text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
-        topBarText = title ?: "L${viewModel.lessonId}",//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
+        topBarText = "Lesson $lessonId",//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -118,13 +118,10 @@ fun LessonScreenContent(
 //                    Text("Next lesson")
 //                }
 
-
                 Button(
-                    enabled = uiState.value.data!!.nextNode?.content?.testName != null &&
-                            uiState.value.data!!.nextNode?.content?.id != null &&
+                    enabled = uiState.value.data!!.nextNode?.content?.id != null &&
                             uiState.value.data!!.nextNode?.content?.lessonId != null &&
-                            uiState.value.data!!.nextNode?.content?.testId != null &&
-                            uiState.value.data!!.nextNode?.content?.lessonName != null,
+                            uiState.value.data!!.nextNode?.content?.testId != null,
                     onClick = {
                         // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
                         // pokracovat na test v nasledujicim uzlu
@@ -132,13 +129,10 @@ fun LessonScreenContent(
                         println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
                         println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
                         navigation.navigateToQuestionScreen(
-                            title = uiState.value.data!!.nextNode?.content?.testName ?: "Test",
                             nodeId = uiState.value.data!!.nextNode?.content?.id,
                             lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
                             testId = uiState.value.data!!.nextNode?.content?.testId,
-                            lessonName = uiState.value.data!!.nextNode?.content?.lessonName
                         )
-
                     }
                 ) {
                     // todo jiny text

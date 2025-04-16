@@ -47,11 +47,11 @@ import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun QuestionScreen(
-    title: String,
+//    title: String? = null,
     nodeId: Long?,// v jakem uzlu se nachazim
     testId: Long?, // jaky test mam zobrazovat
     lessonId: Long?,
-    lessonName: String?,
+//    lessonName: String? = null,
     navigation: INavigationRouter
 ) {
     // VM
@@ -80,7 +80,7 @@ fun QuestionScreen(
 
 
     BaseScreen(
-        topBarText = title,
+        topBarText = "Test $testId",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -114,7 +114,7 @@ fun QuestionScreen(
                     question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
                     nodeId = nodeId,
                     lessonId = lessonId,
-                    lessonName = lessonName,
+//                    lessonName = lessonName,
                     viewModel = viewModel,
                     navigation = navigation
                 )
@@ -185,7 +185,7 @@ fun QuestionScreenContent(
     question: Question?,
     nodeId: Long?,
     lessonId: Long?,
-    lessonName: String?,
+//    lessonName: String?,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ){
@@ -336,7 +336,7 @@ fun QuestionScreenContent(
             }
 
             Button(
-                enabled = lessonName != null && lessonId != null && nodeId != null,
+                enabled = lessonId != null && nodeId != null,
                 onClick = {
                 // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                 // pokud je test OK
@@ -347,8 +347,9 @@ fun QuestionScreenContent(
                 if (viewModel.isTestCorrect()) {
                     //navigate
                     println("TEST IS CORRECT")
+                    println("$lessonId, $nodeId")
                     navigation.navigateToLessonScreen(
-                        title = lessonName,
+//                        title = lessonName,
                         lessonId = lessonId,
                         nodeId = nodeId
                     )
@@ -356,7 +357,7 @@ fun QuestionScreenContent(
                     // navigate
                      println("Test is not correct")
                     navigation.navigateToLessonScreen(
-                        title = "TODO",
+//                        title = "TODO",
                         lessonId = lessonId,
                         nodeId = nodeId
                     )

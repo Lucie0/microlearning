@@ -42,8 +42,8 @@ class LessonScreenVM @Inject constructor(
     fun getData(){
         getLessonById()
         getNextNodeId()
-//        if (data.linkAfter?.items?.get(0)?.nextNodeId != null) getNodeById(data.linkAfter?.items?.get(0)?.nextNodeId!!)
     }
+
     //  getLesson
     private fun getLessonById() {
         if (lessonId != null) {
@@ -178,7 +178,7 @@ class LessonScreenVM @Inject constructor(
                         if (result.data != null) {
                             data.linkAfter = result.data
                             println("ac:$actualNodeId")
-                            println(data.linkAfter?.count)
+                            println("count:" + data.linkAfter?.count)
                             if (result.data.count > 0) {
                                 getNodeById(result.data.items?.get(0)?.nextNodeId!!)
                             }

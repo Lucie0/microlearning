@@ -48,64 +48,20 @@ fun NavGraph(
             )
         }
 
-        // lesson screen bez argumentu
-        composable(route = Destination.LessonScreen.route) {
-            LessonScreen(
-                null,
-                null,
-                null,
-                navigation
-            ) // zavolani jine composable fce a jen se zavola
-        }
-
-        // lesson screen s argumenty
-        composable(
-            route = Destination.LessonScreen.route + "/{id}", // receni, ze to bude paramter v ceste
-            arguments = listOf(
-                navArgument("id") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
-            )
-        ) {
-            LessonScreen(
-                title = null,
-                lessonId = if (it.arguments?.getLong("id") != -1L) it.arguments?.getLong("id") else null,
-                nodeId = null,
-                navigation = navigation
-            )
-        }
-
-        // lesson screen s argumenty
-        composable(
-            route = Destination.LessonScreen.route + "/{title}/{id}", // receni, ze to bude parametr v ceste
-            arguments = listOf(
-                navArgument("id") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )
-        ) {
-            LessonScreen(
-                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
-                lessonId = if (it.arguments?.getLong("id") != -1L) it.arguments?.getLong("id") else null,
-                nodeId = null,
-                navigation = navigation
-            )
-        }
+//        // lesson screen bez argumentu
+//        composable(route = Destination.LessonScreen.route) {
+//            LessonScreen(
+////                null,
+//                lessonId = null,
+//                nodeId = null,
+//                navigation = navigation
+//            ) // zavolani jine composable fce a jen se zavola
+//        }
 
         // lesson screen s 2 argumenty
         composable(
-            route = Destination.LessonScreen.route + "/{title}/{lessonId}/{nodeId}", // receni, ze to bude paramter v ceste
+            route = Destination.LessonScreen.route + "/{lessonId}/{nodeId}", // receni, ze to bude paramter v ceste
             arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
                 navArgument("lessonId") {
                     type = NavType.LongType
                     defaultValue = -1L
@@ -119,90 +75,56 @@ fun NavGraph(
             val lessonId = it.arguments?.getLong("lessonId")
             val nodeId = it.arguments?.getLong("nodeId")
             LessonScreen(
-                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
+//                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
                 lessonId = if (lessonId != -1L) lessonId else null,
                 nodeId = if (nodeId != -1L) nodeId else null,
                 navigation = navigation
             )
         }
 
-        // QuestionScreen s argumenty
-        composable(route = Destination.QuestionScreen.route + "/{title}",
-            arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )
-        ) {
-            QuestionScreen(
-                title = it.arguments?.getString("title") ?: "",
-                nodeId = null,
-                testId = null,
-                lessonId = null,
-                lessonName = null,
-                navigation = navigation
-            )
-        }
+
+//        // QuestionScreen s 1 argumentem
+//        composable(
+//            route = Destination.QuestionScreen.route + "/{nodeId}",
+//            arguments = listOf(
+//                navArgument("nodeId") {
+//                    type = NavType.LongType
+//                    defaultValue = -1L
+//                },
+//            )
+//        ) {
+//            QuestionScreen(
+//                nodeId = it.arguments?.getLong("nodeId"),
+//                testId = null,
+//                lessonId = null,
+//                navigation = navigation
+//            )
+//        }
 
         // QuestionScreen s 2 argumenty
-        composable(
-            route = Destination.QuestionScreen.route + "/{title}/{nodeId}",
+        composable(route = Destination.QuestionScreen.route + "/{nodeId}/{testId}",
             arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
                 navArgument("nodeId") {
                     type = NavType.LongType
                     defaultValue = -1L
                 },
+                navArgument("testId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
             )
         ) {
             QuestionScreen(
-                title = it.arguments?.getString("title") ?: "",
                 nodeId = it.arguments?.getLong("nodeId"),
-                testId = null,
+                testId = it.arguments?.getLong("testId"),
                 lessonId = null,
-                lessonName = null,
                 navigation = navigation
             )
         }
 
         // QuestionScreen s 3 argumenty
-        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}",
+        composable(route = Destination.QuestionScreen.route + "/{nodeId}/{testId}/{lessonId}",
             arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
-                navArgument("nodeId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("testId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
-            )
-        ) {
-            QuestionScreen(
-                title = it.arguments?.getString("title") ?: "",
-                nodeId = it.arguments?.getLong("nodeId"),
-                testId = it.arguments?.getLong("testId"),
-                lessonId = null,
-                lessonName = null,
-                navigation = navigation
-            )
-        }
-
-        // QuestionScreen s 4 argumenty
-        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}/{lessonId}",
-            arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
                 navArgument("nodeId") {
                     type = NavType.LongType
                     defaultValue = -1L
@@ -218,73 +140,18 @@ fun NavGraph(
             )
         ) {
             QuestionScreen(
-                title = it.arguments?.getString("title") ?: "",
                 nodeId = it.arguments?.getLong("nodeId"),
                 testId = it.arguments?.getLong("testId"),
                 lessonId = it.arguments?.getLong("lessonId"),
-                lessonName = null,
                 navigation = navigation
             )
         }
 
-        // QuestionScreen s 5 argumenty
-        composable(route = Destination.QuestionScreen.route + "/{title}/{nodeId}/{testId}/{lessonId}/{lessonName}",
-            arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
-                navArgument("nodeId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("testId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("lessonId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("lessonName") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
-            )
-        ) {
-            QuestionScreen(
-                title = it.arguments?.getString("title") ?: "",
-                nodeId = it.arguments?.getLong("nodeId"),
-                testId = it.arguments?.getLong("testId"),
-                lessonId = it.arguments?.getLong("lessonId"),
-                lessonName = it.arguments?.getString("lessonName") ?: "",
-                navigation = navigation
-            )
-        }
 
         //TestScreen bez arg
         composable(route = Destination.TestScreen.route) {
             TestScreen(
                 title = "No name",
-                lessonId = null,
-                nodeId = null,
-                testId = null,
-                navigation = navigation
-            )
-        }
-
-        //TestScreen s 1 arg
-        composable(
-            route = Destination.TestScreen.route + "/{title}", // receni, ze to bude paramter v ceste
-            arguments = listOf(
-                navArgument("title") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )
-        ) {
-            TestScreen(
-                title = it.arguments?.getString("title") ?: "No name",
                 lessonId = null,
                 nodeId = null,
                 testId = null,

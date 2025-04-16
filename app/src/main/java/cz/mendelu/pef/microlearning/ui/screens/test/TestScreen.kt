@@ -130,7 +130,7 @@ fun TestScreenContent(
                 // presmerovat se na lekci
                 // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
 
-                navigation.navigateToLessonScreen(title = "TODO", lessonId = lessonId, nodeId = nodeId)
+                navigation.navigateToLessonScreen(lessonId = lessonId, nodeId = nodeId)
                   }) {
                 Text("Submit")
             }

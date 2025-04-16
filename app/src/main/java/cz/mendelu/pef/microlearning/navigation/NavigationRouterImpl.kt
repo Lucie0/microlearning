@@ -25,8 +25,12 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId)
 //    }
 
-    override fun navigateToLessonScreen(title: String?, lessonId: Long?, nodeId: Long?) {
-        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId + "/" + nodeId)
+//    override fun navigateToLessonScreen(title: String?, lessonId: Long?, nodeId: Long?) {
+//        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId + "/" + nodeId)
+//    }
+
+    override fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?) {
+        navController.navigate(Destination.LessonScreen.route + "/" + lessonId + "/" + nodeId)
     }
 
     override fun navigateToMainScreen(lastLessonId: Long?) {
@@ -54,23 +58,27 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId + "/" + lessonId)
 //    }
 
-    override fun navigateToQuestionScreen(
-        title: String,
-        nodeId: Long?,
-        testId: Long?,
-        lessonId: Long?,
-        lessonName: String?
-    ) {
-        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId + "/" + lessonId + "/" + lessonName)
+//    override fun navigateToQuestionScreen(
+//        title: String,
+//        nodeId: Long?,
+//        testId: Long?,
+//        lessonId: Long?,
+//        lessonName: String?
+//    ) {
+//        navController.navigate(Destination.QuestionScreen.route + "/" + title + "/" + nodeId + "/" + testId + "/" + lessonId + "/" + lessonName)
+//    }
+
+    override fun navigateToQuestionScreen(nodeId: Long?, testId: Long?, lessonId: Long?) {
+        navController.navigate(Destination.QuestionScreen.route + "/" + nodeId + "/" + testId + "/" + lessonId)
     }
 
     override fun navigateToTestScreen() {
         navController.navigate(Destination.TestScreen.route)
     }
 
-    override fun navigateToTestScreen(title: String) {
-     navController.navigate(Destination.TestScreen.route + "/" + title)
-    }
+//    override fun navigateToTestScreen(title: String) {
+//     navController.navigate(Destination.TestScreen.route + "/" + title)
+//    }
 
 
 //    override fun navigateToGameScreen() {

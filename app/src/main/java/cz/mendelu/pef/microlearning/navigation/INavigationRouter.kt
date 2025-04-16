@@ -9,16 +9,18 @@ interface INavigationRouter {
 //    fun navigateToLessonScreen()
 //    fun navigateToLessonScreen(lessonId: Long?)
 //    fun navigateToLessonScreen(title: String?, lessonId: Long?)
-    fun navigateToLessonScreen(title: String?, lessonId: Long?, nodeId: Long?)
+//    fun navigateToLessonScreen(title: String?, lessonId: Long?, nodeId: Long?)
+    fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?)
 
 //    fun navigateToQuestionScreen(title: String)
 //    fun navigateToQuestionScreen(title: String, nodeId: Long?)
 //    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?)
 //    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?)
-    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?, lessonName: String?)
+//    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?, lessonName: String?)
+    fun navigateToQuestionScreen(nodeId: Long?, testId:Long?, lessonId: Long?)
 
     fun navigateToTestScreen()
-    fun navigateToTestScreen(title: String)
+//    fun navigateToTestScreen(title: String)
 
     fun navigateToMainScreen(lastLessonId: Long?)
 
