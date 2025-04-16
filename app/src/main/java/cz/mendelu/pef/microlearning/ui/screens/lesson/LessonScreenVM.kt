@@ -28,7 +28,7 @@ class LessonScreenVM @Inject constructor(
 //    val linkAfterUiState: MutableState<UiState<ObjectResponse<LinkAfter>, LessonsErrors>> =
 //        mutableStateOf(UiState())
 
-    var data = LessonData(null, null, null)
+    var data = LessonData()
     var lessonId: Long? = null
 
     var actualNodeId: Long? = null
@@ -42,6 +42,7 @@ class LessonScreenVM @Inject constructor(
     fun getData(){
         getLessonById()
         getNextNodeId()
+//        if (data.linkAfter?.items?.get(0)?.nextNodeId != null) getNodeById(data.linkAfter?.items?.get(0)?.nextNodeId!!)
     }
     //  getLesson
     private fun getLessonById() {
@@ -176,6 +177,11 @@ class LessonScreenVM @Inject constructor(
                     is CommunicationResult.Success -> {
                         if (result.data != null) {
                             data.linkAfter = result.data
+                            println("ac:$actualNodeId")
+                            println(data.linkAfter?.count)
+                            if (result.data.count > 0) {
+                                getNodeById(result.data.items?.get(0)?.nextNodeId!!)
+                            }
 //                            nextNodeId = result.data.items?.getOrNull(0)?.nextNodeId
 
                             lessonsUiState.value = UiState(
@@ -196,75 +202,76 @@ class LessonScreenVM @Inject constructor(
         }
     }
 
-//    private suspend fun getNodeById(nextNodeId: Long) {
-////        launch {
-//            val result =
-//                withContext(Dispatchers.IO) {
-//                    remoteRepository.getNodeById(nextNodeId)
-//                }
-//
-//            when (result) {
-//                is CommunicationResult.ConnectionError -> {
-//                    lessonsUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = MainErrors(R.string.communication_error) // "communication error" resource code
-//                    )
-//                }
-//
-//                is CommunicationResult.Error -> {
-//                    println(result.error)
-//                    when (result.error.code) {
-//                        500 -> {
-//                            mainUiState.value = UiState(
-//                                loading = false,
-//                                data = null,
-//                                errors = MainErrors(R.string.some_unexpected_error) // "exception" resource code
-//                            )
-//                        }
-//
-//                        404 -> {
-//                            mainUiState.value = UiState(
-//                                loading = false,
-//                                data = null,
-//                                errors = MainErrors(R.string.not_found) // "not found" resource code
-//                            )
-//                        }
-//
-//                        else -> {
-//                            mainUiState.value = UiState(
-//                                loading = false,
-//                                data = null,
-//                                errors = MainErrors(R.string.something_went_wrong_please_reload_screen)
-//                            )
-//                        }
-//                    }
-//                }
-//
-//                is CommunicationResult.Exception -> {
-//                    mainUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = MainErrors(R.string.unknown_error) // "exception" resource code
-//                    )
-//                }
-//
-//                is CommunicationResult.Success -> {
-//                    if (result.data != null) {
-//                        mainUiState.value = UiState(
-//                            loading = false,
-//                            data = result.data,
-//                            errors = null
-//                        )
-//                    } else {
-//                        mainUiState.value = UiState(
-//                            loading = false,
-//                            data = null,
-//                            errors = MainErrors(R.string.no_data) // "exception" resource code
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private suspend fun getNodeById(nextNodeId: Long) {
+        launch {
+            val result =
+                withContext(Dispatchers.IO) {
+                    remoteRepository.getNodeById(nextNodeId)
+                }
+
+            when (result) {
+                is CommunicationResult.ConnectionError -> {
+                    lessonsUiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = LessonsErrors(R.string.communication_error) // "communication error" resource code
+                    )
+                }
+
+                is CommunicationResult.Error -> {
+                    println(result.error)
+                    when (result.error.code) {
+                        500 -> {
+                            lessonsUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = LessonsErrors(R.string.some_unexpected_error) // "exception" resource code
+                            )
+                        }
+
+                        404 -> {
+                            lessonsUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = LessonsErrors(R.string.not_found) // "not found" resource code
+                            )
+                        }
+
+                        else -> {
+                            lessonsUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = LessonsErrors(R.string.something_went_wrong_please_reload_screen)
+                            )
+                        }
+                    }
+                }
+
+                is CommunicationResult.Exception -> {
+                    lessonsUiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = LessonsErrors(R.string.unknown_error) // "exception" resource code
+                    )
+                }
+
+                is CommunicationResult.Success -> {
+                    if (result.data != null) {
+                        data.nextNode = result.data
+                        lessonsUiState.value = UiState(
+                            loading = false,
+                            data = data,
+                            errors = null
+                        )
+                    } else {
+                        lessonsUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = LessonsErrors(R.string.no_data) // "exception" resource code
+                        )
+                    }
+                }
+            }
+        }
+    }
 }

@@ -18,36 +18,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import cz.mendelu.pef.microlearning.model.Lesson
-import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.UiState
-import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
-import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun LessonScreen(
     title: String?,
-    nodeId: Long?, // cislo uzlu, ve kterem se nachazim
     lessonId: Long?, // cislo lekce, ktera se ma zobrazit
+    nodeId: Long?, // cislo uzlu, ve kterem se nachazim
     navigation: INavigationRouter
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
     viewModel.lessonId = lessonId
     viewModel.actualNodeId = nodeId
 
+    val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
+
     LaunchedEffect(key1 = 1, block = {
         viewModel.getData()
     })
-
-    val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
-//    val linkUiState: MutableState<UiState<ObjectResponse<LinkAfter>, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
 
     // poslech nad uistatem
     viewModel.lessonsUiState.value.let {
@@ -79,7 +73,7 @@ fun LessonScreen(
     ) {
         LessonScreenContent(
             paddingValues = it,
-            uiState = uiState.value,
+            uiState = uiState,
             lessonId = lessonId,
             navigation = navigation
         )
@@ -90,28 +84,27 @@ fun LessonScreen(
 @Composable
 fun LessonScreenContent(
     paddingValues: PaddingValues,
-    uiState: UiState<LessonData, LessonsErrors>,
+    uiState: MutableState<UiState<LessonData, LessonsErrors>>,
     lessonId: Long?,
     navigation: INavigationRouter
 ) {
-    if (uiState.data != null) {
+    if (uiState.value != null) {
         LazyColumn(
             modifier = Modifier
                 .padding(top = paddingValues.calculateTopPadding(), bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             item {
                 // nadpis
                 HtmlText(
-                    string = uiState.data!!.lesson?.content?.name!!,
+                    string = uiState.value.data!!.lesson?.content?.name ?: "",
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     textAlign = TextAlign.Center
                 )
             }
             item {
                 // samotny content
-                HtmlText(string = uiState.data!!.lesson?.content?.content!!.toString())
+                HtmlText(string = uiState.value.data!!.lesson?.content?.content ?: "No content")
             }
             item {
 //                // tlacitko
@@ -127,9 +120,25 @@ fun LessonScreenContent(
 
 
                 Button(
+                    enabled = uiState.value.data!!.nextNode?.content?.testName != null &&
+                            uiState.value.data!!.nextNode?.content?.id != null &&
+                            uiState.value.data!!.nextNode?.content?.lessonId != null &&
+                            uiState.value.data!!.nextNode?.content?.testId != null &&
+                            uiState.value.data!!.nextNode?.content?.lessonName != null,
                     onClick = {
-                        // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci...
+                        // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
                         // pokracovat na test v nasledujicim uzlu
+                        // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? nahodne? ...?
+                        println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
+                        println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
+                        navigation.navigateToQuestionScreen(
+                            title = uiState.value.data!!.nextNode?.content?.testName ?: "Test",
+                            nodeId = uiState.value.data!!.nextNode?.content?.id,
+                            lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
+                            testId = uiState.value.data!!.nextNode?.content?.testId,
+                            lessonName = uiState.value.data!!.nextNode?.content?.lessonName
+                        )
+
                     }
                 ) {
                     // todo jiny text
