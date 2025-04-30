@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Microlearning"
+rootProject.name = "NanoStudy"
 include(":app")
  

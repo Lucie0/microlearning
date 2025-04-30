@@ -33,14 +33,15 @@ fun BaseScreen(
 //            containerColor = Color.White,
             floatingActionButton = floatingActionButton,
             topBar = {
-                TopAppBar(
-                    title = {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(align = Alignment.CenterHorizontally)
-                        ) {
-                            if(topBarText != null) {
+                if (topBarText != null) {
+                    TopAppBar(
+                        title = {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            ) {
+//                            if(topBarText != null) {
                                 Text(
                                     text = topBarText,
                                     style = MaterialTheme.typography.titleLarge,
@@ -49,25 +50,26 @@ fun BaseScreen(
                                         .padding(start = 0.dp)
                                         .weight(1.5f)
                                 )
+//                            }
                             }
-                        }
-                    },
-                    actions = actions,
-                    navigationIcon = {
-                        if (onBackClick != null) {
-                            IconButton(onClick = onBackClick) {
-                                Icon(
-                                    imageVector = Icons.Filled.ArrowBack,
-                                    contentDescription = "Back",
+                        },
+                        actions = actions,
+                        navigationIcon = {
+                            if (onBackClick != null) {
+                                IconButton(onClick = onBackClick) {
+                                    Icon(
+                                        imageVector = Icons.Filled.ArrowBack,
+                                        contentDescription = "Back",
 //                                    tint = Color.Black
-                                )
+                                    )
+                                }
                             }
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ) // surface dark
-                )
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        ) // surface dark
+                    )
+                }
             }
         ) {
             if (placeholderScreenContent != null){
