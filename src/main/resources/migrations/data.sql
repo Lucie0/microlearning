@@ -92,7 +92,7 @@ INSERT INTO public.node (id, walk_through, successfully_completed, lesson_id, pr
 INSERT INTO public.node (id, walk_through, successfully_completed, lesson_id, pretest_id) VALUES (5, false, false, 5, 4);
 
 -- -------------------------------------------------------------------------
--- OPTION
+-- OPTION -- TODO co s otevrenymi otazkami a spravnymi odpovedmi?
 -- -------------------------------------------------------------------------
 INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (1, 'parenthesis', true, 1, 0);
 INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (2, 'curly brackets', false, 1, 0);
@@ -130,6 +130,7 @@ INSERT INTO public.option (id, text, correct_answer, question_id, group_number) 
 INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (34, 'represents the address of variable in memory.', true, 11, 0);
 INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (35, 'represents the value of variable.', false, 11, 0);
 INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (36, 'represents number of possible values.', false, 11, 0);
+INSERT INTO public.option (id, text, correct_answer, question_id, group_number) VALUES (37, '24', true, 5, 0);
 
 -- -------------------------------------------------------------------------
 -- QUESTION

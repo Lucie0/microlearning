@@ -1,10 +1,5 @@
 package cz.mendelu.xpacako1.microlearning.domain.option;
 
-import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
-import cz.mendelu.xpacako1.microlearning.domain.question.Question;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
