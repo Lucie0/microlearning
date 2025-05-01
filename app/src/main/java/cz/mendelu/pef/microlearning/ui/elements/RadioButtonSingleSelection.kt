@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
 
-// todo nefunguje prime kliknuti na text jako oznaceni dane moznosti,
+// nefunguje prime kliknuti na text jako oznaceni dane moznosti,
 // plocha kolem ano, ale samotny text nikoliv
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable

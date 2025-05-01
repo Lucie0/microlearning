@@ -125,7 +125,7 @@ fun LessonScreenContent(
                     onClick = {
                         // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
                         // pokracovat na test v nasledujicim uzlu
-                        // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? nahodne? ...?
+                        // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
                         println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
                         println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
                         navigation.navigateToQuestionScreen(

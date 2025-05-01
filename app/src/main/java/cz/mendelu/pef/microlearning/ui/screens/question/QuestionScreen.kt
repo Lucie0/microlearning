@@ -90,7 +90,10 @@ fun QuestionScreen(
         } else null,
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
-        onBackClick = { navigation.navigateBack() } // todo navigation to main screen se zapamatovanim stavu
+        onBackClick = {
+            // todo navigation to main screen  se zapamatovanim stavu
+            navigation.navigateBack()
+        }
     ) {
         LazyColumn {
             item {
@@ -111,7 +114,9 @@ fun QuestionScreen(
             item {
                 QuestionScreenContent(
                     paddingValues = it,
-                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! -- bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava v args obrazovky
+                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
+                    // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
+                    //  v args obrazovky
                     nodeId = nodeId,
                     lessonId = lessonId,
 //                    lessonName = lessonName,
@@ -297,7 +302,8 @@ fun QuestionScreenContent(
                                     selectedOption
                                 } else selectedOption,
                                 onClickAfter = {
-                                    // pod klic se znenim casti otazky otazky je ulozena hodnota odpovedi
+                                    // pod klic se znenim casti otazky otazky je ulozena hodnota
+                                    // odpovedi
                                     viewModel.selectedOptions[sentence] = selectedOption.value
                                     println(viewModel.selectedOptions)
                                 }
@@ -344,7 +350,10 @@ fun QuestionScreenContent(
                     // pokud je test OK
                     // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
                     // presmerovat se na lekci
-                    // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused rodice a tak porad dokola
+                    // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
+                    // rodice a tak porad dokola
+
+                    // TODO 1 nastait promennou v mutable state onSubmitClicked na true
 
                     if (viewModel.isTestCorrect()) {
                         //navigate
@@ -354,6 +363,7 @@ fun QuestionScreenContent(
                             nodeId = nodeId
                         )
                     } else {
+                        // todo roztrhana otazka mi nejde vyhodnotit jako correct
                         // navigate
                         println("Test is not correct")
                         navigation.navigateToLessonScreen(
@@ -364,6 +374,15 @@ fun QuestionScreenContent(
                 }) {
                 Text("Submit")
             }
+            // TODO 2 if
+//            if (isOnSubmitClicked){
+                if (viewModel.isTestCorrect()) Text("Well done!")
+                else Text("Answers are not correct.")
+
+                Button(onClick = { /*TODO 3 presunout navigaci ze Submit sem */ }) {
+                    Text("Continue")
+                }
+//            }
         }
     }
 }

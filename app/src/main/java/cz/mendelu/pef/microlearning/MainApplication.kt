@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
-// todo model Question
-// todo model Option
+// model Question
+// model Option
 
 // ngrok -- odstranit upozrnovaci stranku -- pomoci v cmd: ngrok http 8090 --request-header-add "ngrok-skip-browser-warning: 1"
 //To remove this page:
