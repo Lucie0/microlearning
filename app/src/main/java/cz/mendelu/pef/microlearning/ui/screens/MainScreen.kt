@@ -7,17 +7,33 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.text.SpannableStringBuilder
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.MainApplication
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
@@ -27,9 +43,10 @@ import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.TabScreen
 import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
+import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
 
-// todo zeptat se Landy na HTML komponentu? Elisky? Gono?
+// zeptat se Landy na HTML komponentu? Elisky? Gono?
 // cili nechat HTML ted byt
 // https://spatialhub.mendelu.cz/
 
@@ -64,14 +81,13 @@ fun MainScreen(
         viewModel.myLLId = 1
     }
 
-    // todo VM
     // ulozit prichazejici lastLessonId do VM
     // pokud zadne lastLessonId neni, nastavit na 1
     // popripade na jinou inicializacni hodnotu (zacatek grafu, nahodne cislo, ... ???)
     // pote, kdyz chci navigovat na stranku s lekci, tak predavat tam lastLessonId
 
     BaseScreen(
-        topBarText = "MainScreen",
+        topBarText = "",
         showLoading = uiState.value.loading,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
@@ -102,9 +118,23 @@ fun MainScreenContent(
     nodeId: Long
 ){
     Column {
-        HelloWorldScreen()
-
+//        HelloWorldScreen()
+//        Icons.Outlined
+//        Box(modifier = Modifier.fillMaxWidth(1f)) {
+//        item {
+        Icon(
+            imageVector = Icons.Default.AutoStories,
+            contentDescription = "NanoStudy",
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .size(126.dp),
+            tint = getPrimaryColor()
+        )
+//        }
         TabScreen()
+
+//        HelloWorldScreen()
 
         Button(
             onClick = {
@@ -122,6 +152,7 @@ fun MainScreenContent(
         ) {
             Text(text = "Start")
         }
+//        }
 
 //        Button(
 //            onClick = { navigation.navigateToLessonScreen() }
@@ -140,8 +171,6 @@ fun MainScreenContent(
 
         // Html()
         // HtmlText() // zavislost v gradle
-
-
     }
 }
 
@@ -149,10 +178,12 @@ fun MainScreenContent(
 @Composable
 fun HelloWorldScreen() {
 
+//    val spannableString = SpannableStringBuilder("<monospace>Nullam non</monospace>" +
     val spannableString = SpannableStringBuilder("<monospace>Nullam non</monospace>" +
             "<typeface>Typeface</typeface><br>" +
             "<font face='code'>Font</font>" +
-            " #include &lt;name&gt;")/*<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
+            " #include &lt;name&gt;" +
+            "<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
             " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien " +
             "faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim " +
             "lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget " +
@@ -178,7 +209,7 @@ fun HelloWorldScreen() {
             "<li>Coffee</li>" +
             "<li>Tea</li>" +
             "<li>Milk</li>" +
-            "</ol>")*/.toString()
+            "</ol>").toString()
             /*.replace("<li>", "<li>\u2022\t\t")
             */
 

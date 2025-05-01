@@ -29,8 +29,8 @@ fun TabScreen() {
             }
         }
         when (tabIndex) {
-            0 -> AllLessons(listOf())
-            1 -> MyLessons(listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI"))
+            0 -> MyLessons(listOf(), "No lessons available")
+            1 -> MyLessons(listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI"), "No lessons in progress")
         }
     }
 }
