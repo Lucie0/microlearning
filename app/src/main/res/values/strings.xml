@@ -8,4 +8,5 @@
     <string name="wrong_lesson_id">Wrong lesson ID</string>
     <string name="something_went_wrong_please_reload_screen">Something went wrong, please reload screen</string>
     <string name="not_found">Not found</string>
+    <string name="network_is_not_connected">Network is not connected</string>
 </resources>

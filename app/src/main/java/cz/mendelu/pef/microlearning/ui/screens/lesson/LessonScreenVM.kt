@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
+import cz.mendelu.pef.microlearning.communication.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Lesson
 import cz.mendelu.pef.microlearning.model.LinkAfter
@@ -40,8 +41,17 @@ class LessonScreenVM @Inject constructor(
 
 
     fun getData(){
-        getLessonById()
-        getNextNodeId()
+        if (NetworkInterceptor.isNetworkConnected()) {
+            getLessonById()
+            getNextNodeId()
+        } else {
+            println("Network not connected")
+            lessonsUiState.value = UiState(
+                loading = false,
+                data = null,
+                errors = LessonsErrors(R.string.network_is_not_connected) // "communication error" resource code
+            )
+        }
     }
 
     //  getLesson

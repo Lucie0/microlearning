@@ -1,12 +1,17 @@
 package cz.mendelu.pef.microlearning.ui.screens
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat.getSystemService
+import cz.mendelu.pef.microlearning.MainApplication
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
+import cz.mendelu.pef.microlearning.communication.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
-import cz.mendelu.pef.microlearning.model.Lesson
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
@@ -15,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 @HiltViewModel
 class MainScreenVM @Inject constructor(
@@ -28,11 +34,28 @@ class MainScreenVM @Inject constructor(
     var myLLId: Long = 1L
     var nodeId: Long = 1L
 
+//    private val context = getApplication<Application>().applicationContext
+
     init {
-        getNodeById()
+        if (NetworkInterceptor.isNetworkConnected()) {
+            getNodeById()
+        } else {
+            println("Network not connected")
+            mainUiState.value = UiState(
+                loading = false,
+                data = null,
+                errors = MainErrors(R.string.network_is_not_connected) // "communication error" resource code
+            )
+        }
     }
 
+
+    //todo fce pro overeni, ze je zapnuta wifi na zarizeni -- k tomu je potreba context,
+    // zakomentovano
+
+
     private fun getNodeById() {
+
         launch {
             val result =
                 withContext(Dispatchers.IO) {
