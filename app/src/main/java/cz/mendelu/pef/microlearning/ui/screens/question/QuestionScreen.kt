@@ -91,7 +91,7 @@ fun QuestionScreen(
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
         onBackClick = {
-            // todo navigation to main screen  se zapamatovanim stavu
+            // TODO navigation to main screen  se zapamatovanim stavu
             navigation.navigateBack()
         }
     ) {

@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.text.SpannableStringBuilder
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -88,6 +90,14 @@ fun MainScreen(
 
     BaseScreen(
         topBarText = "",
+        actions = {
+                  Icon(
+                      imageVector = Icons.Default.MoreVert,
+                      contentDescription = null,
+                      modifier = Modifier.clickable { navigation.navigateToSettingsScreen() }
+                          .padding(start = 8.dp, end = 16.dp)
+                  )
+        },
         showLoading = uiState.value.loading,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
