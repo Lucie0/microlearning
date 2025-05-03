@@ -9,11 +9,13 @@ public class NodeResponse {
     private String testName;
     private Long lessonId;
     private String lessonName;
+    private int level;
     private boolean walkThrough;
     private boolean successfullyCompleted;
 
     public NodeResponse(Node node){
         this.id = node.getId();
+        this.level = node.getLevel();
 
         // todo vyresit, pretest byva null
         if (node.getPretest() != null) {

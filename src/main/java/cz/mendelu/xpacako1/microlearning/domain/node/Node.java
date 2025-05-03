@@ -3,6 +3,7 @@ package cz.mendelu.xpacako1.microlearning.domain.node;
 import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.test.Test;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class Node {
 
     @ManyToOne
     private Lesson lesson;
+
+    @NotNull
+    private int level;
 
     // zaznam o tom, jestli byl uzel projity, neprojity, uspesne ci neuspesne absolvovan
 
