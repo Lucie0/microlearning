@@ -39,7 +39,7 @@ fun SettingsScreenContent(
             })
         ListItem(
             headlineText = { Text("Modes") },
-            supportingText = { /* todo actual mode */ },
+            supportingText = { /* todo vypsat nazev aktualniho nastaveneho modu (z DB) */ },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
     }
