@@ -9,6 +9,7 @@ public class NodeResponse {
     private String testName;
     private Long lessonId;
     private String lessonName;
+    private int lessonOrdinalNumber;
     private int level;
     private boolean walkThrough;
     private boolean successfullyCompleted;
@@ -30,9 +31,11 @@ public class NodeResponse {
         if (node.getLesson() != null) {
             this.lessonId = node.getLesson().getId();
             this.lessonName = node.getLesson().getName();
+            this.lessonOrdinalNumber = node.getLesson().getOrdinalNumber();
         } else {
             this.lessonId = 0L;
             this.lessonName = "";
+            this.lessonOrdinalNumber = 0;
         }
 
         this.walkThrough = node.isWalkThrough();
