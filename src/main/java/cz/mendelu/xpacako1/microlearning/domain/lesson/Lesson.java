@@ -1,6 +1,7 @@
 package cz.mendelu.xpacako1.microlearning.domain.lesson;
 
 import cz.mendelu.xpacako1.microlearning.domain.node.Node;
+import cz.mendelu.xpacako1.microlearning.domain.topic.Topic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,12 +29,18 @@ public class Lesson {
     @Column(columnDefinition = "text")
     private String content;
 
+    @Column(columnDefinition = "ordinal_number")
+    private int ordinalNumber;
+
 //    @OneToOne(mappedBy = "lesson")
 //    @ManyToOne//(mappedBy = "lesson")
 //    private Node node;
 
     @OneToMany(mappedBy = "lesson")
     private List<Node> nodes = new ArrayList<>();
+
+    @ManyToOne
+    private Topic topic;
 
     public Lesson(String name, String content){
         this.name = name;

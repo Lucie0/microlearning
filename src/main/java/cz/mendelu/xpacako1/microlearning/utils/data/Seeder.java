@@ -193,7 +193,7 @@ public class Seeder {
         Question q1 = new Question();
         q1.setQuestionType(QuestionType.ONE_FROM_N);
         q1.setText("Parameters of the main function are enclosed by:");
-        q1.setNumber(1);
+        q1.setOrdinalNumber(1);
         q1.setPoints(1);
 
         q1.addOption(new Option("parenthesis", true, q1));
@@ -206,7 +206,7 @@ public class Seeder {
         Question q2 = new Question();
         q2.setQuestionType(QuestionType.ONE_FROM_N);
         q2.setText("The header file is:");
-        q2.setNumber(1);
+        q2.setOrdinalNumber(1);
         q2.setPoints(1);
 
         q2.addOption(new Option("file with function declaration and/or some definition in C/C++ language.", true, q2));
@@ -220,7 +220,7 @@ public class Seeder {
         Question q3 = new Question();
         q3.setQuestionType(QuestionType.ONE_FROM_N);
         q3.setText("The header file to come with compiler or operating system is used to write:");
-        q3.setNumber(2);
+        q3.setOrdinalNumber(2);
         q3.setPoints(1);
 
         q3.addOption(new Option("#include &lt;filename&gt;", true, q3));
@@ -234,7 +234,7 @@ public class Seeder {
         Question q4 = new Question();
         q4.setQuestionType(QuestionType.ONE_FROM_N);
         q4.setText("The header file written by programmer is used to write");
-        q4.setNumber(3);
+        q4.setOrdinalNumber(3);
         q4.setPoints(1);
 
         q4.addOption(new Option("#include \"filename\"", true, q4));
@@ -251,7 +251,7 @@ public class Seeder {
                 "   <font face='code'>double A, B = 0;\n" +
                 "   float C, D=1.2E-2;</font>\n" +
                 "How much total memory do these variables take?");
-        q5.setNumber(4);
+        q5.setOrdinalNumber(4);
         q5.setPoints(2);
 
         // zadne moznosti
@@ -264,7 +264,7 @@ public class Seeder {
         q6.setText("The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, " +
                 "identifier \"main\", parameters and body. The body of main function contains statement " +
                 "for [[3]].");
-        q6.setNumber(5);
+        q6.setOrdinalNumber(5);
         q6.setPoints(2);
 
 //        (1)	whole program
@@ -288,7 +288,7 @@ public class Seeder {
         Question q7 = new Question();
         q7.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
         q7.setText("The body of main function is enclosed by parenthesis.");
-        q7.setNumber(1);
+        q7.setOrdinalNumber(1);
         q7.setPoints(1);
 
         q7.addOption(new Option("True", false, q7));
@@ -300,7 +300,7 @@ public class Seeder {
         Question q8 = new Question();
         q8.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
         q8.setText("Header files have two types: system and programmer made.");
-        q8.setNumber(1);
+        q8.setOrdinalNumber(1);
         q8.setPoints(1);
 
         q8.addOption(new Option("True", true, q8));
@@ -312,7 +312,7 @@ public class Seeder {
         Question q9 = new Question();
         q9.setQuestionType(QuestionType.ONE_FROM_N);
         q9.setText("For input/output operations in C++ we use:");
-        q9.setNumber(1);
+        q9.setOrdinalNumber(1);
         q9.setPoints(1);
 
         q9.addOption(new Option("#include &lt;iostream&gt;", true, q9));
@@ -326,7 +326,7 @@ public class Seeder {
         Question q10 = new Question();
         q10.setQuestionType(QuestionType.ONE_FROM_N);
         q10.setText("What is a variable in programming language?");
-        q10.setNumber(1);
+        q10.setOrdinalNumber(1);
         q10.setPoints(1);
 
         q10.addOption(new Option("Certain place in computer memory.", true, q10));
@@ -339,7 +339,7 @@ public class Seeder {
         Question q11 = new Question();
         q11.setQuestionType(QuestionType.ONE_FROM_N);
         q11.setText("Variable identifier in programming language");
-        q11.setNumber(1);
+        q11.setOrdinalNumber(1);
         q11.setPoints(1);
 
         q11.addOption(new Option("represents the address of variable in memory.", true, q11));
