@@ -28,8 +28,9 @@ public class Question {
     @NotNull
     private int points;
 
+    @Column(name = "ordinal_number")
     @NotNull
-    private int number;
+    private int ordinalNumber;
 
     @OneToMany(mappedBy = "question")
     private List<Option> options = new ArrayList<>();
@@ -44,10 +45,10 @@ public class Question {
         this.options.addAll(options);
     }
 
-    public Question(String text, int points, int number, List<Option> options){
+    public Question(String text, int points, int ordinalNumber, List<Option> options){
         this.text = text;
         this.points = points;
-        this.number = number;
+        this.ordinalNumber = ordinalNumber;
         this.options = options;
     }
 

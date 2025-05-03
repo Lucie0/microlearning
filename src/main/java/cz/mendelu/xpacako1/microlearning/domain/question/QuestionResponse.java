@@ -10,7 +10,7 @@ public class QuestionResponse {
     private String questionType;
     private String text;
     private int points;
-    private int number;
+    private int ordinalNumber;
 //    private List<Long> optionIds;
     private ArrayResponse<OptionResponse> options;
 
@@ -19,7 +19,7 @@ public class QuestionResponse {
         this.questionType = question.getQuestionType().name();
         this.text = question.getText();
         this.points = question.getPoints();
-        this.number = question.getNumber();
+        this.ordinalNumber = question.getOrdinalNumber();
 //        this.optionIds = question.getOptions().stream().map(Option::getId).toList();
         this.options = ArrayResponse.of(question.getOptions(), OptionResponse::new);
     }
