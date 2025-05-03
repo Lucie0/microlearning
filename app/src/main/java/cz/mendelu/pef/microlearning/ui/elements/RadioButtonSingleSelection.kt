@@ -80,6 +80,6 @@ fun RadioButtonSingleSelection(
         }
 
         // vypsani odpovedi, ciste ke kontrole
-        Text(text = selectedOption.value)
+//        Text(text = selectedOption.value)
     }
 }

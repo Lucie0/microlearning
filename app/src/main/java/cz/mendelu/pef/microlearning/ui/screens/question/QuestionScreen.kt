@@ -114,7 +114,7 @@ fun QuestionScreen(
             item {
                 QuestionScreenContent(
                     paddingValues = it,
-                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
+                    question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!! --
                     // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
                     //  v args obrazovky
                     nodeId = nodeId,

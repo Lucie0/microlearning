@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.MainScreen
+import cz.mendelu.pef.microlearning.ui.screens.ModesScreen
 import cz.mendelu.pef.microlearning.ui.screens.SettingsScreen
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen
 import cz.mendelu.pef.microlearning.ui.screens.test.TestScreen
@@ -163,6 +164,13 @@ fun NavGraph(
         //SettingsScreen bez arg
         composable(route = Destination.SettingsScreen.route) {
             SettingsScreen(
+                navigation = navigation
+            )
+        }
+
+        //SettingsScreen bez arg
+        composable(route = Destination.ModesScreen.route) {
+            ModesScreen(
                 navigation = navigation
             )
         }

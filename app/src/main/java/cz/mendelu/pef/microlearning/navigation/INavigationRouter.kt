@@ -23,6 +23,7 @@ interface INavigationRouter {
 //    fun navigateToTestScreen(title: String)
 
     fun navigateToSettingsScreen()
+    fun navigateToModesScreen()
 
     fun navigateToMainScreen(lastLessonId: Long?)
 

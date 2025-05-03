@@ -1,46 +1,51 @@
 package cz.mendelu.pef.microlearning.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import cz.mendelu.pef.microlearning.BuildConfig
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
+import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun SettingsScreen(
+fun ModesScreen(
     navigation: INavigationRouter
 ){
     BaseScreen(
-        topBarText = "Settings",
+        topBarText = "Modes",
         onBackClick = { navigation.navigateBack() },
     ) {
-        SettingsScreenContent(
+        ModesScreenContent(
             paddingValues = it,
-            navigation = navigation)
+            navigation = navigation
+        )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun SettingsScreenContent(
+fun ModesScreenContent(
     paddingValues: PaddingValues,
     navigation: INavigationRouter
 ){
+    val selectedOption = remember { mutableStateOf("") }
+
     Column {
-        ListItem(headlineText = {Text("Version")},
-            supportingText = {
-                Text(BuildConfig.VERSION_NAME)
-            })
-        ListItem(
-            headlineText = { Text("Modes") },
-            supportingText = { /* todo actual mode */ },
-            modifier = Modifier.clickable { navigation.navigateToModesScreen() }
+        RadioButtonSingleSelection(
+            radioOptions = listOf("Testing", "Revision", "Tuition"),
+            selectedOption = selectedOption
         )
     }
 

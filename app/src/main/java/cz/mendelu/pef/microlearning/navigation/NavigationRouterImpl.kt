@@ -80,6 +80,10 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.navigate(Destination.SettingsScreen.route)
     }
 
+    override fun navigateToModesScreen() {
+        navController.navigate(Destination.ModesScreen.route)
+    }
+
 //    override fun navigateToTestScreen(title: String) {
 //     navController.navigate(Destination.TestScreen.route + "/" + title)
 //    }
