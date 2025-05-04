@@ -136,11 +136,11 @@ INSERT INTO public.option (id, text, correct_answer, question_id, group_number) 
 -- QUESTION
 -- -------------------------------------------------------------------------
 INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (3, 'The header file to come with compiler or operating system is used to write:', 1, 2, 0, 0);
-INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (6, 'The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, identifier "main", parameters and body. The body of main function contains statement for [[3]].', 2, 5, 2, 0);
+INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (6, 'The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, identifier "main", parameters and body. The body of main function contains statement for [[3]].', 2, 5, 1, 0);
 INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (5, 'Assume the following variable declarations:
    <font face=''code''>double A, B = 0;
    float C, D=1.2E-2;</font>
-How much total memory do these variables take?', 2, 4, 3, 0);
+How much total memory do these variables take?', 2, 4, 2, 0);
 INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (9, 'For input/output operations in C++ we use:', 1, 1, 0, 0);
 INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (7, 'The body of main function is enclosed by parenthesis.', 1, 1, 0, 0);
 INSERT INTO public.question (id, text, points, number, question_type, ordinal_number) VALUES (10, 'What is a variable in programming language?', 1, 1, 0, 0);
