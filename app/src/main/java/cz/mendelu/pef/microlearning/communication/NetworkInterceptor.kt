@@ -7,7 +7,7 @@ import cz.mendelu.pef.microlearning.MainApplication
 class NetworkInterceptor {
     companion object {
         fun isNetworkConnected(): Boolean {
-            println("fce Network Connected")
+//            println("fce Network Connected")
             val cm =
                 MainApplication.appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork = cm.activeNetworkInfo

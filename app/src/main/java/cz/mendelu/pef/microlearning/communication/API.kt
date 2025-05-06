@@ -13,10 +13,8 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 
-// todo network / timeout interceptor?
 // nerozjet DB, pritom jedouci BE a zkusit zobrazit lekci,
 // vyhodi to SockektTimeoutException --  jak to osetrit?
-
 
 interface API {
 

@@ -49,11 +49,6 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-
-    //todo fce pro overeni, ze je zapnuta wifi na zarizeni -- k tomu je potreba context,
-    // zakomentovano
-
-
     private fun getNodeById() {
 
         launch {
