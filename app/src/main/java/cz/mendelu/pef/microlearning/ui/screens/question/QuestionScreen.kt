@@ -18,6 +18,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -86,6 +87,7 @@ fun QuestionScreen(
             navigation.navigateBack()
         }
     ) {
+        val onSubmitClicked = remember { mutableStateOf(false) }
         LazyColumn {
             item {
                 /*
@@ -105,7 +107,7 @@ fun QuestionScreen(
             item {
                 QuestionScreenContent(
                     paddingValues = it,
-                    question = uiState.value.data?.items?.get(3), // todo cislo je napevno!!!! --
+                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
                     // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
                     //  v args obrazovky
                     nodeId = nodeId,
@@ -169,6 +171,62 @@ fun QuestionScreen(
 //                    navigation = navigation
 //                )
 //            }
+            item {
+                Column (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Button(
+                        // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
+                        //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
+                        enabled = !onSubmitClicked.value && lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
+                        onClick = {
+                            // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                            // pokud je test OK
+                            // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
+                            // presmerovat se na lekci
+                            // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
+                            // rodice a tak porad dokola
+
+                            // kliknuto na Submit
+                            onSubmitClicked.value = true
+
+//                    if (viewModel.isTestCorrect()) {
+//                        navigate
+//                        println("TEST IS CORRECT")
+//                        navigation.navigateToLessonScreen(
+//                            lessonId = lessonId,
+//                            nodeId = nodeId
+//                        )
+//                    } else {
+                            // todo roztrhana otazka mi nejde vyhodnotit jako correct
+                            // navigate
+//                        println("Test is not correct")
+//                        navigation.navigateToLessonScreen(
+//                            lessonId = lessonId,
+//                            nodeId = nodeId
+//                        )
+//                    }
+                        }) {
+                        Text("Submit")
+                    }
+
+                    if (onSubmitClicked.value) {
+                        if (viewModel.isTestCorrect()) Text("Well done!", Modifier.padding(8.dp))
+                        else Text("Answers are not correct.", Modifier.padding(8.dp))
+
+                        Button(onClick = {
+                            navigation.navigateToLessonScreen(
+                                lessonId = lessonId,
+                                nodeId = nodeId
+                            )
+                        }) {
+                            Text("Continue")
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -184,7 +242,7 @@ fun QuestionScreenContent(
 //    lessonName: String?,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
-){
+) {
     val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
     val correctAnswers = hashMapOf<String, String>()
@@ -192,9 +250,22 @@ fun QuestionScreenContent(
     // todo problem s ot 6 -- doplnovacka -> prepisuju moznosti tou posledni,
     //  protoze je tam stejny klic = nerozdelena otazka, zustavaji tam znacky [[x]]
     //  --> rozparsovat
-    options?.filter { it.correctAnswer == true}?.forEach {
-        viewModel.correctOptions[questionText] = it.text ?: ""
-        correctAnswers[questionText] = it.text ?: ""
+
+    // pokud je to typ otazek jinych nez CLOZE
+    if (!options.isNullOrEmpty() && options[0].groupNumber == 0) {
+        options.filter { it.correctAnswer == true }.forEach { opt ->
+            viewModel.correctOptions[questionText] = opt.text ?: ""
+            correctAnswers[questionText] = opt.text ?: ""
+        }
+    } else if (!options.isNullOrEmpty()) { // pokud je to CLOZE
+        val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
+        val result = options.filter { it.correctAnswer == true }
+            .zip(dividedSentence.subList(0, dividedSentence.size - 1))
+        for (paar in result){
+            // uloz spravne odpovedi do VM
+            viewModel.correctOptions[paar.second] = paar.first.text ?: ""
+            correctAnswers[paar.second] = paar.first.text ?: ""
+        }
     }
 
     println("opt:$options")
@@ -331,49 +402,6 @@ fun QuestionScreenContent(
 //                    }
                 }
             }
-
-            Button(
-                // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
-                //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                enabled = lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
-                onClick = {
-                    // vyhodnotit, jak dopadl test, podle toho pokracovat dal
-                    // pokud je test OK
-                    // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
-                    // presmerovat se na lekci
-                    // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
-                    // rodice a tak porad dokola
-
-                    // TODO 1 nastait promennou v mutable state onSubmitClicked na true
-
-                    if (viewModel.isTestCorrect()) {
-                        //navigate
-                        println("TEST IS CORRECT")
-                        navigation.navigateToLessonScreen(
-                            lessonId = lessonId,
-                            nodeId = nodeId
-                        )
-                    } else {
-                        // todo roztrhana otazka mi nejde vyhodnotit jako correct
-                        // navigate
-                        println("Test is not correct")
-                        navigation.navigateToLessonScreen(
-                            lessonId = lessonId,
-                            nodeId = nodeId
-                        )
-                    }
-                }) {
-                Text("Submit")
-            }
-            // TODO 2 if
-//            if (isOnSubmitClicked){
-                if (viewModel.isTestCorrect()) Text("Well done!")
-                else Text("Answers are not correct.")
-
-                Button(onClick = { /*TODO 3 presunout navigaci ze Submit sem */ }) {
-                    Text("Continue")
-                }
-//            }
         }
     }
 }
