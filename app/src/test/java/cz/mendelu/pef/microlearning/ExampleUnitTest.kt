@@ -1,5 +1,9 @@
 package cz.mendelu.pef.microlearning
 
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import androidx.core.text.HtmlCompat
+import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 import org.junit.Test
 
 import org.junit.Assert.*

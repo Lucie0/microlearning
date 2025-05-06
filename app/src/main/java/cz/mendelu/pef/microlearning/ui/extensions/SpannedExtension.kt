@@ -41,7 +41,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 
         println("Type:$span")
         println("start:$start, end: $end")
-        println("lenght:${spanned.length}")
+        println("length:${spanned.length}")
 
         when (span) {
             is StyleSpan -> {

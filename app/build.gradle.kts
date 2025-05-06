@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     // Navigation using: https://github.com/raamcosta/compose-destinations
     id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+
 }
 
 android {
@@ -65,7 +66,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.test.ext:junit-ktx:1.2.1")
     testImplementation("junit:junit:4.13.2")
+//    testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -86,11 +89,28 @@ dependencies {
     // jitpack in setting -- https://github.com/jeziellago/compose-markdown
 //    implementation ("com.github.jeziellago:compose-markdown:{LAST-RELEASE}")
 
+    // Hilt dependencies
+//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03") // pro ViewModel s Hilt
+//    implementation("com.google.dagger:hilt-android:2.44") // základní Hilt závislost
+//    kapt("com.google.dagger:hilt-compiler:2.44") // pro generování kódu
+
+    // Hilt test dependencies
+    testImplementation("com.google.dagger:hilt-android-testing:2.44") // pro testy
+    kaptTest("com.google.dagger:hilt-compiler:2.44") // pro kapt v testech
+//
+    // Mockovací knihovny pro testy (pokud chceš mockovat závislosti)
+//    testImplementation("io.mockk:mockk:1.12.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+//    kaptTest("com.google.dagger:hilt-compiler:2.56.2")
+
+    // hilt unit
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.0")
+
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

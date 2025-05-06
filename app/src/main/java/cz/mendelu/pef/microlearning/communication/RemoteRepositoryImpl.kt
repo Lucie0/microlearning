@@ -9,6 +9,7 @@ import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
+import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -95,5 +96,4 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
             }
         )
     }
-
 }
