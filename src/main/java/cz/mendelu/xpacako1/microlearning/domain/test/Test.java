@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo tridu Folder na otazky
+//  tridu Folder na otazky
 
-// todo
+//
 //  do db budu ukladat ID testu,
 //  id slozky, ze ktere ma brat otazky,
 //  a pocet otazek, ktere z ni ma brat

@@ -6,4 +6,4 @@ public enum QuestionType {
     // dvema hr. zavorkami s cislem uvnitr
     OPEN, // otevrena otazka     2
     MORE_FROM_N, // MzN         3
-    }
+}
