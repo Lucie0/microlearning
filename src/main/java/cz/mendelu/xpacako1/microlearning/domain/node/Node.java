@@ -28,11 +28,17 @@ public class Node {
 //    @OneToMany(mappedBy = "node")
 //    private List<Lesson> lessons = new ArrayList<>();
 
-    @ManyToOne
+    @OneToOne
     private Lesson lesson;
 
     @NotNull
     private int level;
+
+    @Column(name = "question_depth")
+    private int questionDepth;
+
+    @Column(name = "level_depth")
+    private int levelDepth;
 
     // zaznam o tom, jestli byl uzel projity, neprojity, uspesne ci neuspesne absolvovan
 

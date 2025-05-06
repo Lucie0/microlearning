@@ -20,6 +20,8 @@
             </column>
             <column name="pretest_id" type="bigint"/>
             <column name="lesson_id" type="bigint"/>
+            <column name="question_depth" type="bigint"/>
+            <column name="level_depth" type="bigint"/>
             <column name="walk_through" type="boolean"/>
             <column name="successfully_completed" type="boolean"/>
         </createTable>

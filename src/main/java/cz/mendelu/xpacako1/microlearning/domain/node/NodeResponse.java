@@ -1,5 +1,6 @@
 package cz.mendelu.xpacako1.microlearning.domain.node;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
@@ -11,6 +12,8 @@ public class NodeResponse {
     private String lessonName;
     private int lessonOrdinalNumber;
     private int level;
+    private int questionDepth;
+    private int levelDepth;
     private boolean walkThrough;
     private boolean successfullyCompleted;
 
