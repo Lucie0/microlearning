@@ -1,6 +1,7 @@
 package cz.mendelu.xpacako1.microlearning.domain.lesson;
 
 import cz.mendelu.xpacako1.microlearning.domain.node.Node;
+import cz.mendelu.xpacako1.microlearning.domain.question.Question;
 import cz.mendelu.xpacako1.microlearning.domain.topic.Topic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -36,11 +37,17 @@ public class Lesson {
 //    @ManyToOne//(mappedBy = "lesson")
 //    private Node node;
 
-    @OneToMany(mappedBy = "lesson")
-    private List<Node> nodes = new ArrayList<>();
+//    @OneToMany(mappedBy = "lesson")
+    //    private List<Node> nodes = new ArrayList<>();
+
+    @OneToOne
+    private Node node;
 
     @ManyToOne
     private Topic topic;
+
+    @OneToMany(mappedBy = "lesson")
+    private List<Question> questions = new ArrayList<>();
 
     public Lesson(String name, String content){
         this.name = name;
@@ -50,6 +57,6 @@ public class Lesson {
     public Lesson(String name, String content, Node node){
         this.name = name;
         this.content = content;
-        this.nodes.add(node);
+        this.node = node;
     }
 }

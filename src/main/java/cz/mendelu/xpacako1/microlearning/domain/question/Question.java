@@ -1,5 +1,6 @@
 package cz.mendelu.xpacako1.microlearning.domain.question;
 
+import cz.mendelu.xpacako1.microlearning.domain.lesson.Lesson;
 import cz.mendelu.xpacako1.microlearning.domain.option.Option;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +36,9 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Option> options = new ArrayList<>();
 
-    // todo manytoone folder
+    @ManyToOne
+    private Lesson lesson;
+
 
     public void addOption(Option option){
         this.options.add(option);
