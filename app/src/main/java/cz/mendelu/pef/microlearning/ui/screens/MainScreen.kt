@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -92,7 +93,7 @@ fun MainScreen(
         topBarText = "",
         actions = {
                   Icon(
-                      imageVector = Icons.Default.MoreVert,
+                      imageVector = Icons.Default.Settings,
                       contentDescription = null,
                       modifier = Modifier.clickable { navigation.navigateToSettingsScreen() }
                           .padding(start = 8.dp, end = 16.dp)
