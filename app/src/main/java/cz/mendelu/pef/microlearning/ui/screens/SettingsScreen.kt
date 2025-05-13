@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cz.mendelu.pef.microlearning.BuildConfig
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 
@@ -39,7 +40,7 @@ fun SettingsScreenContent(
             })
         ListItem(
             headlineText = { Text("Modes") },
-            supportingText = { /* todo vypsat nazev aktualniho nastaveneho modu (z DB) */ },
+            supportingText = { Text(mode.value) },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
     }

@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import cz.mendelu.pef.microlearning.BuildConfig
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
@@ -40,12 +41,12 @@ fun ModesScreenContent(
     paddingValues: PaddingValues,
     navigation: INavigationRouter
 ){
-    val selectedOption = remember { mutableStateOf("") } // todo vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
+//    val selectedOption = remember { mutableStateOf(mode.value) } // todo vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
 
     Column {
         RadioButtonSingleSelection(
             radioOptions = listOf("Testing", "Revision", "Tuition"),
-            selectedOption = selectedOption // todo ukladat do DB nastaveny rezim
+            selectedOption = mode // todo ukladat do DB nastaveny rezim
         )
     }
 
