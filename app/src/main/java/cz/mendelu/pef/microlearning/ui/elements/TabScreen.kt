@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun TabScreen() {
+fun TabScreen(allLessons: List<String?>?, myLessons: List<String>?) {
     var tabIndex by remember { mutableStateOf(0) }
 
     val tabs = listOf("All Lessons", "My Lessons")
@@ -29,7 +29,7 @@ fun TabScreen() {
             }
         }
         when (tabIndex) {
-            0 -> MyLessons(listOf(), "No lessons available")
+            0 -> MyLessons(allLessons ?: listOf(), "No lessons available")
             1 -> MyLessons(listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI"), "No lessons in progress")
         }
     }

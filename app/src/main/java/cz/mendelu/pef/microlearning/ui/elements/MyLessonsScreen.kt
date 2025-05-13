@@ -18,15 +18,16 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyLessons(lessons: List<String>, placeholderText: String?) {
+fun MyLessons(lessons: List<String?>, placeholderText: String?) {
 
     if (lessons.isNotEmpty()) {
 //        Column {
             lessons.forEach { lesson ->
-
-                ListItem(headlineText = { Text(lesson) }, modifier = Modifier.clickable {
-                    println("Clicked on $lesson")
-                })
+                if (lesson != null) {
+                    ListItem(headlineText = { Text(lesson) }, modifier = Modifier.clickable {
+                        println("Clicked on $lesson")
+                    })
+                }
 
             }
 //        }
