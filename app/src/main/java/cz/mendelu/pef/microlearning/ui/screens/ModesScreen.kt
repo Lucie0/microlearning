@@ -41,11 +41,11 @@ fun ModesScreenContent(
     paddingValues: PaddingValues,
     navigation: INavigationRouter
 ){
-//    val selectedOption = remember { mutableStateOf(mode.value) } // todo vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
+//    val selectedOption = remember { mutableStateOf(mode.value) } // vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
 
     Column {
         RadioButtonSingleSelection(
-            radioOptions = listOf("Testing", "Revision", "Tuition"),
+            radioOptions = listOf("Revision", "Tuition", "Testing"),
             selectedOption = mode // todo ukladat do DB nastaveny rezim
         )
     }
