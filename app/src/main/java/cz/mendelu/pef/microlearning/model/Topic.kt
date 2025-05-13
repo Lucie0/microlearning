@@ -8,6 +8,6 @@ import java.io.Serializable
 data class Topic(
     var id: Long?,
     var name: String?,
-    var firstNode: Long?
+    var firstNodeId: Long?
 ): Serializable {
 }
