@@ -23,6 +23,11 @@ public class LessonService {
     public List<Lesson> getAllLessons(){
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+
+    public List<Lesson> getLessonsByTopicId(Long topicId){
+        return StreamSupport.stream(repository.findByTopic_Id(topicId).spliterator(), false).collect(Collectors.toList());
+    }
+
     public Optional<Lesson> getById(Long id){
         return repository.findById(id);
     }

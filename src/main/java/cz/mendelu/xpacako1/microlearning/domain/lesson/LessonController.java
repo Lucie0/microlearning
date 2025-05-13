@@ -62,4 +62,21 @@ public class LessonController {
                 LessonResponse::new
         );
     }
+
+    @Operation(
+            summary = "Get lessons with topic",
+            description = "Get all lessons with the topic in parameter."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lessons with topic"),
+    })
+    @GetMapping(value = "/byTopic/{topicId}", produces = "application/json")
+    public ArrayResponse<LessonResponse> getLessonsByTopicId(@PathVariable Long topicId) {
+        return ArrayResponse.of(
+                lessonService.getLessonsByTopicId(topicId),
+                LessonResponse::new
+        );
+    }
+
+
 }
