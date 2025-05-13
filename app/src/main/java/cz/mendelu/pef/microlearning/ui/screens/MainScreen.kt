@@ -154,7 +154,7 @@ fun MainScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = mode.value + " mode",
+                text = "${mode.value} MODE",
                 color = getPrimaryColor())
 //        }
         }

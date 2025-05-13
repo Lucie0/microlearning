@@ -13,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.toLowerCase
 import cz.mendelu.pef.microlearning.BuildConfig
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -45,7 +48,7 @@ fun ModesScreenContent(
 
     Column {
         RadioButtonSingleSelection(
-            radioOptions = listOf("Revision", "Tuition", "Testing"),
+            radioOptions = Modes.values().toList().map { it.name },//"Revision", "Tuition", "Testing"),
             selectedOption = mode // todo ukladat do DB nastaveny rezim
         )
     }
