@@ -7,6 +7,7 @@ import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
+import cz.mendelu.pef.microlearning.model.Topic
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 
@@ -67,6 +68,10 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
     }
 
     override suspend fun getTestById(id: Long): CommunicationResult<ObjectResponse<Test>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTopics(): CommunicationResult<ArrayResponse<Topic>> {
         TODO("Not yet implemented")
     }
 }

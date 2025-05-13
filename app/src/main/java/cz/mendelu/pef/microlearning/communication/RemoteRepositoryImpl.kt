@@ -7,6 +7,7 @@ import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
+import cz.mendelu.pef.microlearning.model.Topic
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import dagger.Provides
@@ -93,6 +94,14 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         return processResponse(
             withContext(Dispatchers.IO) {
                 api.getTestById(id)
+            }
+        )
+    }
+
+    override suspend fun getTopics(): CommunicationResult<ArrayResponse<Topic>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getTopics()
             }
         )
     }
