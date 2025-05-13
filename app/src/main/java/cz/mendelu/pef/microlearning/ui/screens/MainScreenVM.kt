@@ -28,9 +28,10 @@ class MainScreenVM @Inject constructor(
 ) : BaseViewModel() {
 
     // uistate
-    val mainUiState: MutableState<UiState<ObjectResponse<Node>, MainErrors>> = mutableStateOf(UiState())
+    val mainUiState: MutableState<UiState<MainData, MainErrors>> = mutableStateOf(UiState())
 //    var lessonId: Long? = null
 
+    var data = MainData()
     var myLLId: Long = 1L
     var nodeId: Long = 1L
 
@@ -39,6 +40,7 @@ class MainScreenVM @Inject constructor(
     init {
         if (NetworkInterceptor.isNetworkConnected()) {
             getNodeById()
+            getAllTopics()
         } else {
             println("Network not connected")
             mainUiState.value = UiState(
@@ -50,7 +52,6 @@ class MainScreenVM @Inject constructor(
     }
 
     private fun getNodeById() {
-
         launch {
             val result =
                 withContext(Dispatchers.IO) {
@@ -105,9 +106,12 @@ class MainScreenVM @Inject constructor(
 
                 is CommunicationResult.Success -> {
                     if (result.data != null) {
+                        println("*** Success")
+                        println(result.data)
+                        data.node = result.data
                         mainUiState.value = UiState(
                             loading = false,
-                            data = result.data,
+                            data = data,
                             errors = null
                         )
                     } else {
@@ -122,58 +126,81 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-//    fun getLessons() {
-//        launch {
-//            val result =
-//                withContext(Dispatchers.IO) {
-//                    remoteRepository.getLessons()
-//                }
-//            when (result) {
-//                is CommunicationResult.ConnectionError -> {
-//                    lessonsUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = LessonsErrors(R.string.communication_error) // "communication error" resource code
-//                    )
-//
-//                }
-//
-//                is CommunicationResult.Error -> {
-//                    lessonsUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = LessonsErrors(R.string.some_error) // "exception" resource code
-//                    )
-//                }
-//
-//                is CommunicationResult.Exception -> {
-//                    lessonsUiState.value = UiState(
-//                        loading = false,
-//                        data = null,
-//                        errors = LessonsErrors(R.string.unknown_error) // "exception" resource code
-//                    )
-//                }
-//
-//                is CommunicationResult.Success -> {
-//                    if (result.data.items?.isNotEmpty() == true) {
-//                        // neprazdny list
-//                        lessonsUiState.value = UiState(
-//                            loading = false,
-//                            data = result.data,
-//                            errors = null
-//                        )
-//                    } else {
-//                        // prazdny list
-//                        lessonsUiState.value = UiState(
-//                            loading = false,
-//                            data = null,
-//                            errors = LessonsErrors(R.string.empty_list)
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//    }
+
+    private fun getAllTopics() {
+
+        launch {
+            val result =
+                withContext(Dispatchers.IO) {
+                    remoteRepository.getTopics()
+                }
+
+            when (result) {
+                is CommunicationResult.ConnectionError -> {
+                    mainUiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = MainErrors(R.string.communication_error) // "communication error" resource code
+                    )
+                }
+
+                is CommunicationResult.Error -> {
+                    println(result.error)
+                    when (result.error.code) {
+                        500 -> {
+                            mainUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = MainErrors(R.string.some_unexpected_error) // "exception" resource code
+                            )
+                        }
+
+                        404 -> {
+                            mainUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = MainErrors(R.string.not_found) // "not found" resource code
+                            )
+                        }
+
+                        else -> {
+                            mainUiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = MainErrors(R.string.something_went_wrong_please_reload_screen)
+                            )
+                        }
+                    }
+                }
+
+                is CommunicationResult.Exception -> {
+                    mainUiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = MainErrors(R.string.unknown_error) // "exception" resource code
+                    )
+                }
+
+                is CommunicationResult.Success -> {
+                    if (result.data != null) {
+                        data.topics = result.data
+
+                        mainUiState.value = UiState(
+                            loading = false,
+                            data = data,
+                            errors = null
+                        )
+                    } else {
+                        mainUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = MainErrors(R.string.no_data) // "exception" resource code
+                        )
+                    }
+                }
+            }
+        }
+    }
 
 
 }

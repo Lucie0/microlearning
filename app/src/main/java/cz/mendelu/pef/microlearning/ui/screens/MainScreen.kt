@@ -68,12 +68,14 @@ fun MainScreen(
     val viewModel = hiltViewModel<MainScreenVM>()
     viewModel.myLLId = lastLessonId ?: 1L
 
-    val uiState: MutableState<UiState<ObjectResponse<Node>, MainErrors>> = rememberSaveable { mutableStateOf(
+    val uiState: MutableState<UiState<MainData, MainErrors>> = rememberSaveable { mutableStateOf(
         UiState()
     ) }
 
     // poslech nad uistatem
     viewModel.mainUiState.value.let {
+        println("*** uistate")
+        println(it.data?.node)
         uiState.value = it
     }
 
@@ -125,7 +127,7 @@ fun MainScreenContent(
     lastLessonId: Long,
     paddingValues: PaddingValues,
     navigation: INavigationRouter,
-    uiState: UiState<ObjectResponse<Node>, MainErrors>,
+    uiState: UiState<MainData, MainErrors>,
     nodeId: Long
 ){
     Column {
@@ -153,13 +155,13 @@ fun MainScreenContent(
                 navigation.navigateToQuestionScreen(
 //                    title = uiState.data?.content?.testName ?: "Test",
                     nodeId = nodeId,
-                    testId = uiState.data?.content?.testId,
-                    lessonId = uiState.data?.content?.lessonId,
+                    testId = uiState.data?.node?.content?.testId,
+                    lessonId = uiState.data?.node?.content?.lessonId,
 //                    lessonName = uiState.data?.content?.lessonName
                 )
 //                navigation.navigateToLessonScreen(lessonId = uiState.data?.content?.lessonId, nodeId = nodeId)
             },
-            enabled = !uiState.loading
+            enabled = uiState.data?.node?.content?.lessonId != null
         ) {
             Text(text = "Start")
         }
