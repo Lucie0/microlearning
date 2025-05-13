@@ -7,6 +7,7 @@ import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.Test
+import cz.mendelu.pef.microlearning.model.Topic
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -61,5 +62,9 @@ interface API {
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/tests/{id}")
     suspend fun getTestById(@Path("id") id: Long) : Response<ObjectResponse<Test>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/topics/")
+    suspend fun getTopics() : Response<ArrayResponse<Topic>>
 
 }
