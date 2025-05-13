@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.MainApplication
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -147,7 +149,15 @@ fun MainScreenContent(
                 .size(126.dp),
             tint = getPrimaryColor()
         )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = mode.value + " mode",
+                color = getPrimaryColor())
 //        }
+        }
         TabScreen(navigation, uiState.data?.topics?.items/*.map { i -> i.name }*/, null)
 
 //        HelloWorldScreen()
