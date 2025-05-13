@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("lessons")
@@ -71,9 +68,32 @@ public class LessonController {
             @ApiResponse(responseCode = "200", description = "Lessons with topic"),
     })
     @GetMapping(value = "/byTopic/{topicId}", produces = "application/json")
-    public ArrayResponse<LessonResponse> getLessonsByTopicId(@PathVariable Long topicId) {
+    public ArrayResponse<LessonResponse> getLessonsByTopicId(
+            @PathVariable Long topicId
+    ) {
         return ArrayResponse.of(
                 lessonService.getLessonsByTopicId(topicId),
+                LessonResponse::new
+        );
+    }
+
+    @Operation(
+            summary = "Get lesson by ordinal number",
+            description = "Get lesson by ordinal number."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lessons by ordinal number"),
+            @ApiResponse(responseCode = "404", description = "Lessons not found"),
+    })
+    @GetMapping(value = "/byTopic/{topicId}/byOrdinalNumber/{ordinalNumber}", produces = "application/json")
+    public ObjectResponse<LessonResponse> getLessonsByOrdinalNumberAndTopicId(
+            @PathVariable int ordinalNumber,
+            @PathVariable Long topicId
+    ) {
+        Lesson lesson =  lessonService.getByOrdinalNumberAndTopicId(ordinalNumber, topicId).orElseThrow(() -> new NotFoundException("Lesson not found"));
+
+        return ObjectResponse.of(
+                lesson,
                 LessonResponse::new
         );
     }

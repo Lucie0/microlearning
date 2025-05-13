@@ -31,6 +31,13 @@ public class LessonService {
     public Optional<Lesson> getById(Long id){
         return repository.findById(id);
     }
+    public Optional<Lesson> getByOrdinalNumber(int ordinalNumber){
+        return repository.findByOrdinalNumber(ordinalNumber);
+    }
+
+    public Optional<Lesson> getByOrdinalNumberAndTopicId(int ordinalNumber, Long topicId){
+        return repository.findByOrdinalNumberAndTopic_Id(ordinalNumber, topicId);
+    }
 
     public Iterable<Lesson> createLesson(List<Lesson> lessons){
         return repository.saveAll(lessons);
