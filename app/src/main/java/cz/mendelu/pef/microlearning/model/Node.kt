@@ -8,12 +8,21 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Node(
     var id: Long?,
-    var testId: Long?,
-    var testName: String?,
+
+//    var testId: Long?,
+//    var testName: String?,
+
     var lessonId: Long?,
     var lessonName: String?,
-    var walkThrough: Boolean?,
-    var successfullyCompleted: Boolean?,
+    var lessonOrdinalNumber: Int?,
+
+    var level: Int?,
+
+    var questionDepth: Int?,
+    var levelDepth: Int?,
+
+//    var walkThrough: Boolean?,
+//    var successfullyCompleted: Boolean?,
 ): Serializable {
     var countOfCorrectAnswers: Long = 0
     var countOfIncorrectAnswers: Long = 0

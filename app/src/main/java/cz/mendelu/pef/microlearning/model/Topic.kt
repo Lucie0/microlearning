@@ -7,6 +7,7 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Topic(
     var id: Long?,
-    var name: String?
+    var name: String?,
+    var firstNode: Long?
 ): Serializable {
 }

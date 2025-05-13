@@ -10,7 +10,7 @@ data class Question(
     var questionType: String?,
     var text: String?,
     var points: Int?,
-    var number: Int?,
+    var ordinalNumber: Int?,
     var options: ArrayResponse<Option>
 ): Serializable {
 }

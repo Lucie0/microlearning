@@ -156,7 +156,8 @@ fun MainScreenContent(
                 navigation.navigateToQuestionScreen(
 //                    title = uiState.data?.content?.testName ?: "Test",
                     nodeId = nodeId,
-                    testId = uiState.data?.node?.content?.testId,
+//                    testId = uiState.data?.node?.content?.testId,
+                    testId = 1, // todo
                     lessonId = uiState.data?.node?.content?.lessonId,
 //                    lessonName = uiState.data?.content?.lessonName
                 )

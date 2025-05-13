@@ -120,8 +120,8 @@ fun LessonScreenContent(
 
                 Button(
                     enabled = uiState.value.data!!.nextNode?.content?.id != null &&
-                            uiState.value.data!!.nextNode?.content?.lessonId != null &&
-                            uiState.value.data!!.nextNode?.content?.testId != null,
+                            uiState.value.data!!.nextNode?.content?.lessonId != null, //&&
+//                            uiState.value.data!!.nextNode?.content?.testId != null,
                     onClick = {
                         // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
                         // pokracovat na test v nasledujicim uzlu
@@ -131,7 +131,8 @@ fun LessonScreenContent(
                         navigation.navigateToQuestionScreen(
                             nodeId = uiState.value.data!!.nextNode?.content?.id,
                             lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
-                            testId = uiState.value.data!!.nextNode?.content?.testId,
+//                            testId = uiState.value.data!!.nextNode?.content?.testId,
+                            testId = 1 // todo
                         )
                     }
                 ) {

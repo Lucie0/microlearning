@@ -22,9 +22,13 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
             ArrayResponse(
                 items = listOf(
                     Lesson(
-                    content = null,
-                    id = null,
-                    name = null
+                        content = "Content of Lesson",
+                        id = 1,
+                        name = "Hello World",
+                        nodeId = 1,
+                        ordinalNumber = 2,
+                        questions = null,
+                        topic = "Main Topic"
                     )
                 ),
                 count = 0,
@@ -35,7 +39,7 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
 
     override suspend fun getLessonById(id: Long): CommunicationResult<ObjectResponse<Lesson>> {
         return CommunicationResult.Success(
-            ObjectResponse(Lesson(1, "lesson", "content"), version = 1)
+            ObjectResponse(Lesson(1, "lesson", 1,"content", 1, null, "Main Topic"), version = 1)
         )
     }
 
