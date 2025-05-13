@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.ui.screens.chooseLesson
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -87,7 +88,12 @@ fun ChooseLessonScreen(
         if (uiState.data?.lessons?.items?.size != 0) {
             uiState.data?.lessons?.items?.forEach {
                 item {
-                    ListItem(headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) })
+                    ListItem(
+                        headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) },
+                        modifier = Modifier.clickable {
+                            println("Clicked on lesson: " + it.id + " " + it.name)
+                        }
+                    )
                 }
             }
         } else {

@@ -103,7 +103,7 @@ class ChooseLessonVM @Inject constructor(
                     is CommunicationResult.Success -> {
                         if (result.data.items != null && result.data.items!!.isNotEmpty()) {
                             println("*** Success")
-                            println(result.data)
+//                            println(result.data)
                             data.lessons = result.data
                             uiState.value = UiState(
                                 loading = false,
