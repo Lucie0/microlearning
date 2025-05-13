@@ -97,7 +97,8 @@ fun MainScreen(
                   Icon(
                       imageVector = Icons.Default.Settings,
                       contentDescription = null,
-                      modifier = Modifier.clickable { navigation.navigateToSettingsScreen() }
+                      modifier = Modifier
+                          .clickable { navigation.navigateToSettingsScreen() }
                           .padding(start = 8.dp, end = 16.dp)
                   )
         },
@@ -164,6 +165,10 @@ fun MainScreenContent(
             enabled = uiState.data?.node?.content?.lessonId != null
         ) {
             Text(text = "Start")
+        }
+
+        Button(onClick = { navigation.navigateToChooseLessonScreen("Programming", 2) }) {
+            Text("Choose lesson")
         }
 //        }
 

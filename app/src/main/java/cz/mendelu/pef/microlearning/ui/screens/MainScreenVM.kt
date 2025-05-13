@@ -105,7 +105,7 @@ class MainScreenVM @Inject constructor(
                 }
 
                 is CommunicationResult.Success -> {
-                    if (result.data != null) {
+                    if (result.data.content.id != null) {
                         println("*** Success")
                         println(result.data)
                         data.node = result.data
@@ -182,7 +182,7 @@ class MainScreenVM @Inject constructor(
                 }
 
                 is CommunicationResult.Success -> {
-                    if (result.data != null) {
+                    if (result.data.items != null) {
                         data.topics = result.data
 
                         mainUiState.value = UiState(

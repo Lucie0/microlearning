@@ -74,4 +74,8 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
     override suspend fun getTopics(): CommunicationResult<ArrayResponse<Topic>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getLessonsByTopicId(topicId: Long): CommunicationResult<ArrayResponse<Lesson>> {
+        TODO("Not yet implemented")
+    }
 }

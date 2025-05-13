@@ -32,12 +32,20 @@ interface API {
     suspend fun getLessonById(@Path("id") id: Long) : Response<ObjectResponse<Lesson>>
 
     @Headers("ngrok-skip-browser-warning: true")
+    @GET("/lessons/byTopic/{id}")
+    suspend fun getLessonsByTopicId(@Path("id") id: Long) : Response<ArrayResponse<Lesson>>
+
+
+
+    @Headers("ngrok-skip-browser-warning: true")
     @GET("/questions")
     suspend fun getQuestions() : Response<ArrayResponse<Question>>
 
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/questions/{id}")
     suspend fun getQuestionById(@Path("id") id: Long) : Response<ObjectResponse<Question>>
+
+
 
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/nodes")
@@ -47,6 +55,8 @@ interface API {
     @GET("/nodes/{id}")
     suspend fun getNodeById(@Path("id") id: Long) : Response<ObjectResponse<Node>>
 
+
+
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/links/after/{id}")
     suspend fun getNodeAfter(@Path("id") id: Long) : Response<ArrayResponse<LinkAfter>>
@@ -55,6 +65,8 @@ interface API {
     @GET("/links/before/{id}")
     suspend fun getNodeBefore(@Path("id") id: Long) : Response<ArrayResponse<LinkBefore>>
 
+
+
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/tests")
     suspend fun getTests() : Response<ArrayResponse<Test>>
@@ -62,6 +74,8 @@ interface API {
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/tests/{id}")
     suspend fun getTestById(@Path("id") id: Long) : Response<ObjectResponse<Test>>
+
+
 
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/topics/")
