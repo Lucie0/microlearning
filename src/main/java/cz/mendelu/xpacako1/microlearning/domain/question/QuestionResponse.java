@@ -11,6 +11,7 @@ public class QuestionResponse {
     private String text;
     private int points;
     private int ordinalNumber;
+    private Long lessonId;
 //    private List<Long> optionIds;
     private ArrayResponse<OptionResponse> options;
 
@@ -20,6 +21,7 @@ public class QuestionResponse {
         this.text = question.getText();
         this.points = question.getPoints();
         this.ordinalNumber = question.getOrdinalNumber();
+        this.lessonId = question.getLesson().getId();
 //        this.optionIds = question.getOptions().stream().map(Option::getId).toList();
         this.options = ArrayResponse.of(question.getOptions(), OptionResponse::new);
     }

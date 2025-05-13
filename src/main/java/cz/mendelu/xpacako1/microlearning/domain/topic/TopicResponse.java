@@ -9,9 +9,11 @@ import lombok.Data;
 public class TopicResponse {
     private Long id;
     private String name;
+    private Long firstNodeId;
 
     public TopicResponse(Topic topic){
         this.id = topic.getId();
         this.name = topic.getName();
+        this.firstNodeId = topic.getFirstNode();
     }
 }
