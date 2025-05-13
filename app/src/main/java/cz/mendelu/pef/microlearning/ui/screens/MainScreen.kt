@@ -146,7 +146,7 @@ fun MainScreenContent(
             tint = getPrimaryColor()
         )
 //        }
-        TabScreen(uiState.data?.topics?.items?.map { i -> i.name }, null)
+        TabScreen(navigation, uiState.data?.topics?.items/*.map { i -> i.name }*/, null)
 
 //        HelloWorldScreen()
 
