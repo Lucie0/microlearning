@@ -74,7 +74,9 @@ fun MainScreen(
 
     // poslech nad uistatem
     viewModel.mainUiState.value.let {
-        println("*** uistate")
+        println("*** uistate ")
+        println(it.data)
+        println("*** uistate node")
         println(it.data?.node)
         uiState.value = it
     }

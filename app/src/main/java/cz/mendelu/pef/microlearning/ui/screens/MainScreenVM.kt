@@ -33,7 +33,7 @@ class MainScreenVM @Inject constructor(
 
     var data = MainData()
     var myLLId: Long = 1L
-    var nodeId: Long = 1L
+    var nodeId: Long = 41L
 
 //    private val context = getApplication<Application>().applicationContext
 
