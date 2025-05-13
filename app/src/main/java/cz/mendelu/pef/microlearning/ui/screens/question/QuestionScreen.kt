@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,6 +36,7 @@ import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.HtmlToNormalText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
+import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -213,8 +215,17 @@ fun QuestionScreen(
                     }
 
                     if (onSubmitClicked.value) {
-                        if (viewModel.isTestCorrect()) Text("Well done!", Modifier.padding(8.dp))
-                        else Text("Answers are not correct.", Modifier.padding(8.dp))
+                        if (viewModel.isTestCorrect()) {
+                            Text("Well done!", Modifier.padding(8.dp))
+                        } else {
+                            Text("Answers are not correct.", Modifier.padding(8.dp))
+                            Text(
+                                "Correct answers: \n ${viewModel.correctAnswers()}",
+                                Modifier.padding(8.dp),
+                                color = getCorrectAnswersColor()
+                            )
+
+                        }
 
                         Button(onClick = {
                             navigation.navigateToLessonScreen(

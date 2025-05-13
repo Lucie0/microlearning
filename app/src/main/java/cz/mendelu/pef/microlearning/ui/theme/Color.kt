@@ -18,6 +18,7 @@ val tertiaryLight = Color(0xFF725573)
 val onTertiaryLight = Color(0xFFFFFFFF)
 val tertiaryContainerLight = Color(0xFFFCD7FB)
 val onTertiaryContainerLight = Color(0xFF593E5A)
+val correctAnswersLight = Color(0xFF047F10)
 val errorLight = Color(0xFFBA1A1A)
 val onErrorLight = Color(0xFFFFFFFF)
 val errorContainerLight = Color(0xFFFFDAD6)
@@ -126,6 +127,7 @@ val tertiaryDark = Color(0xFFDFBBDE)
 val onTertiaryDark = Color(0xFF412743)
 val tertiaryContainerDark = Color(0xFF593E5A)
 val onTertiaryContainerDark = Color(0xFFFCD7FB)
+val correctAnswersDark = Color(0xFF7DDD87)
 val errorDark = Color(0xFFFFB4AB)
 val onErrorDark = Color(0xFF690005)
 val errorContainerDark = Color(0xFF93000A)
@@ -446,7 +448,8 @@ fun basicTextColor(): Color = if (isSystemInDarkTheme()) onBackgroundDark else o
 @Composable
 fun getPrimaryColor(): Color = if (isSystemInDarkTheme()) primaryDark else primaryLight
 
-
+@Composable
+fun getCorrectAnswersColor(): Color = if (isSystemInDarkTheme()) correctAnswersDark else correctAnswersLight
 
 
 

@@ -123,4 +123,15 @@ class QuestionScreenVM @Inject constructor(
         }
         return isOk
     }
+
+    fun correctAnswers(): String {
+        var string = ""
+        correctOptions.keys.forEach { questionText ->
+            if (selectedOptions[questionText] != correctOptions[questionText]) {
+                println(correctOptions[questionText])
+                string = string + questionText + " " + correctOptions[questionText] + ","
+            }
+        }
+        return string.substring(0,string.length-1)
+    }
 }
