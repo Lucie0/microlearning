@@ -7,7 +7,6 @@
     <changeSet id="1" author="LP">
         <addColumn tableName="lesson">
             <column name="ordinal_number" type="int"/>
-            <column name="node_id" type="int"/>
         </addColumn>
     </changeSet>
 
