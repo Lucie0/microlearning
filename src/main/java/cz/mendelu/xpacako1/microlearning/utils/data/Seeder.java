@@ -359,7 +359,7 @@ public class Seeder {
 
         testList.add(t1);
 
-        //todo test service, repo, response, controller
+
 
 
 

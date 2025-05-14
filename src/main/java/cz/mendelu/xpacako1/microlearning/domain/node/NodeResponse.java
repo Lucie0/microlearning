@@ -35,7 +35,7 @@ public class NodeResponse {
 //            this.testName = "";
 //        }
 //
-//         todo vyresit
+        // todo vyresit?
         if (node.getLesson() != null) {
             this.lessonId = node.getLesson().getId();
             this.lessonName = node.getLesson().getName();

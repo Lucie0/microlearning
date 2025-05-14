@@ -11,7 +11,7 @@ public class TestResponse {
     private String name;
     private List<Long> nodeIds;
 
-    // todo pridat Array of Questions, cele objekty, aby se cely test stahl najednou
+    // pridat Array of Questions, cele objekty, aby se cely test stahl najednou
 //    private ArrayResponse<QuestionResponse> questions;
 
     public TestResponse(Test test){

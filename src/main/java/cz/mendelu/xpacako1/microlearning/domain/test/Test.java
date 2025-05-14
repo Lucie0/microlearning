@@ -29,9 +29,9 @@ public class Test {
 
     // date of creation, date of modification, ...
 
-    // todo one to many slozky k testu, folders to test
+    //  one to many slozky k testu, folders to test
 
-    // todo atribut seznam otazek
+    //  atribut seznam otazek
     // pozn. test je obalka na otazky
 //    @OneToMany
 //    private List<Question> questions;
