@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("lessons")
 @Validated
@@ -36,10 +39,42 @@ public class LessonController {
             @ApiResponse(responseCode = "200", description = "List of lessons")
     })
     @GetMapping(value = {"","/"}, produces = "application/json")
-    public ArrayResponse<LessonResponse> getAllLessons() {
+    public ArrayResponse<LessonResponse> getAllLessons(
+            @RequestParam(required = false, name = "topicId") Long topicId
+    ) {
+        List<Lesson> lessons;
+        if (topicId != null) {
+            lessons = lessonService.getLessonsByTopicId(topicId);
+        } else {
+            lessons = lessonService.getAllLessons();
+        }
+
         return ArrayResponse.of(
-                lessonService.getAllLessons(),
+                lessons,
                 LessonResponse::new
+        );
+    }
+
+    @Operation(
+            summary = "Get all lessons in shorter version",
+            description = "Get all lessons in the system in shorter version."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of lessons")
+    })
+    @GetMapping(value = "/shorter", produces = "application/json")
+    public ArrayResponse<LessonShorterResponse> getAllLessonsShorter(
+            @RequestParam(required = false, name = "topicId") Long topicId
+    ) {
+        List<Lesson> lessons;
+        if (topicId != null) {
+            lessons = lessonService.getLessonsByTopicId(topicId);
+        } else {
+            lessons = lessonService.getAllLessons();
+        }
+        return ArrayResponse.of(
+                lessons,
+                LessonShorterResponse::new
         );
     }
 
@@ -60,22 +95,22 @@ public class LessonController {
         );
     }
 
-    @Operation(
-            summary = "Get lessons with topic",
-            description = "Get all lessons with the topic in parameter."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lessons with topic"),
-    })
-    @GetMapping(value = "/byTopic/{topicId}", produces = "application/json")
-    public ArrayResponse<LessonResponse> getLessonsByTopicId(
-            @PathVariable Long topicId
-    ) {
-        return ArrayResponse.of(
-                lessonService.getLessonsByTopicId(topicId),
-                LessonResponse::new
-        );
-    }
+//    @Operation(
+//            summary = "Get lessons with topic",
+//            description = "Get all lessons with the topic in parameter."
+//    )
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Lessons with topic"),
+//    })
+//    @GetMapping(value = "/byTopic/{topicId}", produces = "application/json")
+//    public ArrayResponse<LessonResponse> getLessonsByTopicId(
+//            @PathVariable Long topicId
+//    ) {
+//        return ArrayResponse.of(
+//                lessonService.getLessonsByTopicId(topicId),
+//                LessonResponse::new
+//        );
+//    }
 
     @Operation(
             summary = "Get lesson by ordinal number",
