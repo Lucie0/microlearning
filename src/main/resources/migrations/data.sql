@@ -1,14 +1,14 @@
 -- -------------------------------------------------------------------------
 -- LESSON ---------------------------------------------------------------------------
 -- -------------------------------------------------------------------------
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('1', 'Matematika', '<div align="center">
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (1, 'Matematika', '<div align="center">
 Bakalářská práce
 
 <b>Mobilní aplikace pro adaptivní mikrolearning</b>
 <br><br>
 Ukázková sada lekcí z oboru matematika pro demonstraci funkce vyvíjené mobilní aplikace.
-</div>', '0', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('2', 'Sčítání', '<b>Vysvětlení pojmu</b><br>
+</div>', 0, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (2, 'Sčítání', '<b>Vysvětlení pojmu</b><br>
 Sčítání je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich součet.
 
 <b>Symbolický zápis</b><br>
@@ -17,8 +17,8 @@ A + B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 3 a 5,
 jejich součet je 8.
-3 + 5 = 8', '1', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('3', 'Odčítání', '<b>Vysvětlení pojmu</b><br>
+3 + 5 = 8', 1, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (3, 'Odčítání', '<b>Vysvětlení pojmu</b><br>
 Odčítání je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich rozdíl.
 
 <b>Symbolický zápis</b><br>
@@ -27,8 +27,8 @@ A - B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 8 a 3,
 jejich rozdíl je 5.
-8 - 3 = 5', '2', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('4', 'Násobení', '<b>Vysvětlení pojmu</b><br>
+8 - 3 = 5', 2, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (4, 'Násobení', '<b>Vysvětlení pojmu</b><br>
 Násobení je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich součin.
 
 <b>Symbolický zápis</b><br>
@@ -37,8 +37,8 @@ A ⋅ B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 4 a 6,
 jejich součin je 24.
-4 ⋅ 6 = 24', '3', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('5', 'Dělení', '<b>Vysvětlení pojmu</b><br>
+4 ⋅ 6 = 24', 3, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (5, 'Dělení', '<b>Vysvětlení pojmu</b><br>
 Dělení je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich podíl.
 
 <b>Symbolický zápis</b><br>
@@ -47,8 +47,8 @@ A / B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 12 a 4,
 jejich podíl je 3.
-12 / 4 = 3', '4', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('6', 'Mocnina', '<b>Vysvětlení pojmu</b><br>
+12 / 4 = 3', 4, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (6, 'Mocnina', '<b>Vysvětlení pojmu</b><br>
 Mocnina je matematická operace, která povyšuje číslo (základ) na určitou mocninu (exponent).
 
 <b>Symbolický zápis</b><br>
@@ -57,8 +57,8 @@ kde A je základ a B je exponent.
 
 <b>Příklad</b><br>
 Pokud máme základ A = 2 a exponent B = 3, pak jejich mocnina je 8.
-2 ^ 3 = 2 ⋅ 2 ⋅ 2 = 8', '5', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('7', 'Odmocnina', '<b>Vysvětlení pojmu</b><br>
+2 ^ 3 = 2 ⋅ 2 ⋅ 2 = 8', 5, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (7, 'Odmocnina', '<b>Vysvětlení pojmu</b><br>
 Odmocnina je matematická operace, která hledá číslo, které při umocnění na určitý exponent dává původní číslo. Nejčastěji se používá druhá odmocnina, která hledá číslo, které při umocnění na druhou dává původní číslo.
 
 <b>Symbolický zápis</b><br>
@@ -66,8 +66,8 @@ Odmocnina je matematická operace, která hledá číslo, které při umocnění
 
 <b>Příklad</b><br>
 Pokud máme číslo A = 16, pak druhá odmocnina z A je 4.
-√16 = 4', '6', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('8', 'Priorita aritmetických operací', '<b>Vysvětlení pojmu</b><br>
+√16 = 4', 6, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (8, 'Priorita aritmetických operací', '<b>Vysvětlení pojmu</b><br>
 Priorita vyhodnocování aritmetických operací určuje, jakým způsobem se matematické výrazy vyhodnocují, když obsahují více operací různého druhu. Existují pevně daná pravidla, která určují pořadí vyhodnocení operací:
 
 <u>1. Závorky: </u> Výrazy uvnitř závorek mají nejvyšší prioritu a jsou vyhodnocovány jako první.
@@ -80,8 +80,8 @@ Příklad:  4 ⋅ 2^3 = 4 ⋅ 8 = 32
 Příklad: 1 + 6 / 2 ⋅ 3 = 1 + 3 ⋅ 3 = 1 + 9 = 10
 
 <u>4. Sčítání a odčítání: </u> Tyto operace mají nejnižší prioritu a jsou vyhodnocovány zleva doprava.
-Příklad: 5 + 3 - 2 = 8 - 2 = 6', '7', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('9', 'Komutativita', '<b>Vysvětlení pojmu</b><br>
+Příklad: 5 + 3 - 2 = 8 - 2 = 6', 7, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (9, 'Komutativita', '<b>Vysvětlení pojmu</b><br>
 Pořadí operandů při operaci nemá vliv na výsledek.
 
 Tato vlastnost platí např. pro sčítání:
@@ -92,8 +92,8 @@ Tato vlastnost platí např. pro sčítání:
 <b>Příklad</b><br>
 <ul>
 <li>3 + 5 = 5 + 3</li>
-</ul>', '8', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('10', 'Asociativita', '<b>Vysvětlení pojmu</b><br>
+</ul>', 8, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (10, 'Asociativita', '<b>Vysvětlení pojmu</b><br>
 Při operaci více operandů nezáleží na tom, jak jsou seskupeny.
 
 Tato vlastnost platí např. pro sčítání:
@@ -104,8 +104,8 @@ Tato vlastnost platí např. pro sčítání:
 <b>Příklad</b><br>
 <ul>
 <li>(2 + 3) + 4 = 2 + (3 + 4)</li>
-</ul>', '9', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('11', 'Distributivita', '<b>Vysvětlení pojmu</b><br>
+</ul>', 9, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (11, 'Distributivita', '<b>Vysvětlení pojmu</b><br>
 Distributivita je matematická vlastnost, která umožňuje distribuci („rozložení“) jedné operace přes jinou operaci.
 
 Tato vlastnost platí např. pro násobení vzhledem ke sčítání, což znamená, že násobení čísla součtem dvou čísel je stejné jako součet jednotlivých násobků.
@@ -118,8 +118,8 @@ Tato vlastnost platí např. pro násobení vzhledem ke sčítání, což znamen
 <ul>
 <li>2 ⋅ (3 + 4) = (2 ⋅ 3) + (2 ⋅ 4)</li>
 <li>(2 + 3) ⋅ 4 = (2 ⋅ 4) + (3 ⋅ 4)</li>
-</ul>', '10', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('12', 'Vlastnosti sčítání', '<b>1. Je komutativní: </b>
+</ul>', 10, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (12, 'Vlastnosti sčítání', '<b>1. Je komutativní: </b>
 <ul>
 <li>A + B = B + A</li>
 </ul>
@@ -137,8 +137,8 @@ Příklad:
 <li>(2 + 3) + 4 = 2 + (3 + 4)</li>
 </ul>
 
-<b>3. Není distributivní. </b>', '11', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('13', 'Vlastnosti odčítání', '<b>1. Není komutativní: </b>
+<b>3. Není distributivní. </b>', 11, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (13, 'Vlastnosti odčítání', '<b>1. Není komutativní: </b>
 <ul>
 <li>A - B ≠ B - A</li>
 </ul>
@@ -156,8 +156,8 @@ Příklad:
 <li>(10 - 5) - 2 ≠ 10 - (5 - 2)</li>
 </ul>
 
-<b>3. Není distributivní. </b>', '12', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('14', 'Vlastnosti násobení', '<b>1. Je komutativní: </b>
+<b>3. Není distributivní. </b>', 12, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (14, 'Vlastnosti násobení', '<b>1. Je komutativní: </b>
 <ul>
 <li>A ⋅ B = B ⋅ A</li>
 </ul>
@@ -167,9 +167,7 @@ Příklad:
 </ul>
 
 <b>2. Je asociativní: </b>
-<ul>
-<li>(A ⋅ B) ⋅ C = A ⋅ (B ⋅ C)</li>
-</ul>
+<ul><li>(A ⋅ B) ⋅ C = A ⋅ (B ⋅ C)</li></ul>
 Příklad:
 <ul>
 <li>(2 ⋅ 3) ⋅ 4 = 2 ⋅ (3 ⋅ 4)</li>
@@ -188,8 +186,8 @@ Příklad:
 <li>2 ⋅ (3 - 4) = (2 ⋅ 3) - (2 ⋅ 4)</li>
 <li>(2 + 3) ⋅ 4 = (2 ⋅ 4) + (3 ⋅ 4)</li>
 <li>(2 - 3) ⋅ 4 = (2 ⋅ 4) - (3 ⋅ 4)</li>
-</ul>', '13', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('15', 'Vlastnosti dělení', '<b>1. Není komutativní: </b>
+</ul>', 13, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (15, 'Vlastnosti dělení', '<b>1. Není komutativní: </b>
 <ul>
 <li>A / B ≠ B / A</li>
 </ul>
@@ -220,8 +218,8 @@ Příklad:
 <li>(6 - 4) / 2 = (6 / 2) - (4 / 2)</li>
 <li>ale 10 / (6 + 4) ≠ (10 / 6) + (10 / 4)</li>
 <li>ale 10 / (6 - 4) ≠ (10 / 6) - (10 / 4)</li>
-</ul>', '14', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('16', 'Vlastnosti mocniny', '<b>1. Není komutativní: </b>
+</ul>', 14, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (16, 'Vlastnosti mocniny', '<b>1. Není komutativní: </b>
 <ul>
 <li>A^B ≠ B^A</li>
 </ul>
@@ -252,8 +250,8 @@ Příklad:
 <li>(2 / 3)^2 = 2^2 / 3^2</li>
 <li>ale 2^(3 ⋅ 4) ≠ (2^3) ⋅ (2^4)</li>
 <li>ale 2^(3 / 4) ≠ (2^3) / (2^4)</li>
-</ul>', '15', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('17', 'Vlastnosti (druhé) odmocniny', '<b>1. Není komutativní: </b> Komutativní operace umožňují zaměnit pořadí čísel, aniž by se změnil výsledek. U odmocniny však nelze zaměnit pořadí čísel, protože odmocňování se provádí pouze na jednom čísle.
+</ul>', 15, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (17, 'Vlastnosti (druhé) odmocniny', '<b>1. Není komutativní: </b> Komutativní operace umožňují zaměnit pořadí čísel, aniž by se změnil výsledek. U odmocniny však nelze zaměnit pořadí čísel, protože odmocňování se provádí pouze na jednom čísle.
 
 <b>2. Není asociativní: </b> Zdůvodnění obdobné, jako v předchozím případě.
 
@@ -266,10 +264,10 @@ Příklad:
 <ul>
 <li>√(4 ⋅ 9) = √4 ⋅ √9</li>
 <li>√(16 / 4) = √16 / √4</li>
-</ul>', '16', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('18', 'Goniometrie', '<b>Vysvětlení pojmu</b><br>
-Goniometrie je odvětví matematiky, které se zabývá měřením úhlů a studiem úhlových funkcí, jako jsou sinus, kosinus, tangens a kotangens.', '17', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('19', 'Sinus', '<b>Vysvětlení pojmu</b><br>
+</ul>', 16, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (18, 'Goniometrie', '<b>Vysvětlení pojmu</b><br>
+Goniometrie je odvětví matematiky, které se zabývá měřením úhlů a studiem úhlových funkcí, jako jsou sinus, kosinus, tangens a kotangens.', 17, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (19, 'Sinus', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je sinus úhlu poměr délky protilehlé strany k délce přepony.
 
 <b>Symbolický zápis</b><br>
@@ -277,8 +275,8 @@ sin(α) = protilehlá strana / přepona
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přeponou délky 5 a protilehlou stranou délky 3, pak jeho sinus je 0,6:
-sin(α) = 3 / 5 = 0,6', '18', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('20', 'Kosinus', '<b>Vysvětlení pojmu</b><br>
+sin(α) = 3 / 5 = 0,6', 18, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (20, 'Kosinus', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je kosinus úhlu poměr délky přilehlé strany k délce přepony.
 
 <b>Symbolický zápis</b><br>
@@ -286,8 +284,8 @@ cos(α) = přilehlá strana / přepona
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přeponou délky 5 a přilehlou stranou délky 4, pak kosinus je 0,8.
-cos(α) = 4 / 5 = 0,8', '19', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('21', 'Tangens', '<b>Vysvětlení pojmu</b><br>
+cos(α) = 4 / 5 = 0,8', 19, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (21, 'Tangens', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je tangens úhlu poměr délky protilehlé strany k délce přilehlé strany.
 
 <b>Symbolický zápis</b><br>
@@ -298,8 +296,8 @@ tan(α) = protilehlá strana / přilehlá strana
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s protilehlou stranou délky 3 a přilehlou stranou délky 4, pak tangens je 0,75.
-tg(α) = 3 / 4 = 0,75', '20', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('22', 'Kotangens', '<b>Vysvětlení pojmu</b><br>
+tg(α) = 3 / 4 = 0,75', 20, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (22, 'Kotangens', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je kotangens úhlu poměr délky přilehlé strany k délce protilehlé strany.
 
 <b>Symbolický zápis</b><br>
@@ -309,36 +307,36 @@ cot(α) = přilehlá strana / protilehlá strana
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přilehlou stranou délky 5 a protilehlou stranou délky 2, pak kotangens je 2,5.
-cotg(α) = 5 / 2 = 2,5', '21', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('23', 'Goniometrické vzorce základní', 'tan(α) = sin(α) / cos(α)
+cotg(α) = 5 / 2 = 2,5', 21, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (23, 'Goniometrické vzorce základní', 'tan(α) = sin(α) / cos(α)
 
 cot(α) = cos(α) / sin(α)
 
 sin²(α) + cos²(α) = 1
 
-tan(α) ⋅ cot(α) = 1', '22', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('24', 'Goniometrické vzorce součtu a rozdílu', 'sin(α ± β) = sin(α)cos(β) ± cos(α)sin(β)
+tan(α) ⋅ cot(α) = 1', 22, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (24, 'Goniometrické vzorce součtu a rozdílu', 'sin(α ± β) = sin(α)cos(β) ± cos(α)sin(β)
 
 cos(α ± β) = cos(α)cos(β) ∓ sin(α)sin(β)
 
 tan(α ± β) = (tan(α) ± tan(β)) / (1 ∓ tan(α)tan(β))
 
-cot(α ± β) = (cot(α)cot(β) ∓ 1) / (cot(α) ± cot(β))', '23', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('25', 'Goniometrické vzorce dvojnásobného úhlu', 'sin(2α) = 2sin(α)cos(α)
+cot(α ± β) = (cot(α)cot(β) ∓ 1) / (cot(α) ± cot(β))', 23, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (25, 'Goniometrické vzorce dvojnásobného úhlu', 'sin(2α) = 2sin(α)cos(α)
 
 cos(2α) = cos²(α) - sin²(α)
 
 tan(2α) = 2tan(α) / (1 - tan²(α))
 
-cot(2α) = (cot²(α) - 1) / 2cot(α)', '24', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('26', 'Goniometrické vzorce polovičního úhlu', 'sin(α/2) = √[(1 - cos(α)) / 2]
+cot(2α) = (cot²(α) - 1) / 2cot(α)', 24, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (26, 'Goniometrické vzorce polovičního úhlu', 'sin(α/2) = √[(1 - cos(α)) / 2]
 
 cos(α/2) = √[(1 + cos(α)) / 2]
 
 tan(α/2) = √[(1 - cos(α)) / (1 + cos(α)]
 
-cot(α/2) = √[(1 + cos(α)) / (1 - cos(α)]', '25', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('27', 'Goniometrické vzorce součinu', 'sin(α)sin(β) = 1/2 [cos(α - β) - cos(α + β)]
+cot(α/2) = √[(1 + cos(α)) / (1 - cos(α)]', 25, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (27, 'Goniometrické vzorce součinu', 'sin(α)sin(β) = 1/2 [cos(α - β) - cos(α + β)]
 
 cos(α)cos(β) = 1/2 [cos(α + β) + cos(α - β)]
 
@@ -348,8 +346,8 @@ tan(α)tan(β) = (tan(α) + tan(β)) / (cot(α) + cot(β))
 
 cot(α)cot(β) = (cot(α) + cot(β)) / (tan(α) + tan(β))
 
-tan(α)cot(β) = (tan(α) + cot(β)) / (cot(α) + tan(β))', '26', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('28', 'Hodnoty goniometrických funkcí', '	     0°     30°     45°     60°     90°
+tan(α)cot(β) = (tan(α) + cot(β)) / (cot(α) + tan(β))', 26, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (28, 'Hodnoty goniometrických funkcí', '	     0°     30°     45°     60°     90°
     0      π/6      π/4     π/3     π/2
 sin     0     1/2     (√2)/2     (√3)/2     1
 cos     1     (√3)/2     (√2)/2     1/2     0
@@ -374,21 +372,22 @@ cotg     x     √3     1     (√3)/3     0
         </tr>
         <tr>
             <td>Petr</td>
-            <td>35</td>', '27', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('29', 'HOTOVO', '<div align="center">
+            <td>35</td>
+        </tr>', 27, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (29, 'HOTOVO', '<div align="center">
 <br><b>Gratulujeme!</b><br><br>
 Tvé znalosti matematiky plně dostačují na úspěšné provedení tohoto testu.
 
 🙂
-</div>', '28', '1');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('101', 'Programming', '<div align="center">
+</div>', 28, null, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (101, 'Programming', '<div align="center">
 Bachelor''s thesis
 
 <b>Mobile application for adaptive microlearning</b>
 <br><br>
 A sample set of public.lessons of programming to demonstrate the functionality of a mobile application being developed.
-</div>', '0', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('103', 'First source code', 'When you want to write your program in C you have to write so called ''main'' function.
+</div>', 0, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (103, 'First source code', 'When you want to write your program in C you have to write so called ''main'' function.
 Functions in C/C++ are a pieces of code that have own name (identificator) and body. Main function represents whole program, so it must be always written in source code.
 The general form of function is:
 <font face=''code''>data_type function_name (parameters) { body }</font>
@@ -397,28 +396,28 @@ So the main function may have following form:
  // here are statements of function body
  return 0; // so called return value of function
 }</font>
-The main function returns integer value, thus data type of function main is <b>int</b>.', '1', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('104', 'Header files', 'A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.<br>The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.<br>You request to use a header file in your program by including it with the C preprocessing directive #include. The syntax of #include has following two forms:<br><font face=''code''>#include &lt;name&gt;</span><br>This variant is for the system (compiler) files, and<br>#include ''name''<br>for files written by programmer.<br>Detailed information about preprocessing directives comes later in this course.', '2', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('105', 'Common simple input/output', 'Almost every program needs to input some values and output results. So we have to use appropriate commands for it.<br>The input and output operations depend always on operation system environment. Every system and every situation is solved differently. But the programmer – the author of program – have no information about it. The source code of program must work on many systems and programmer have to write the same commands.<br>So the input and output operations are encapsulated into functions which bodies are implemented according to operation system you actually use and their headers are always the same.<br>Every programming language have some commands for the input and output operations, but every programming language have a different approach for it.<br>We will discuss two approaches because of two different versions of C language: pure C and C++ versions.', '3', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('106', 'Standard library for simple input/output', 'In the C++ programming language, the C++ Standard Library is a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself. The C++ Standard Library provides support for some language features and functions for everyday tasks such as finding the square root of a number or simple input/output.<br>There are differences between C and C++ standard library. We prefer C++ approach, so we show C++ simple input/output and appropriate part of standard library for this.<br>We need some input values and write output in almost every program. In very simple form we have statement for input: cin (it stands for ''console input''), and statement for output: cout (i.e. ''console output'').<br>When we need mentioned commands, we have to include a standard library for this in following form:<br>#include &lt;iostream&gt;', '4', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('107', 'Simple input and output in C++', 'As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator ''&lt;&lt;'' and ''&gt;&gt;''. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator ''&gt;&gt;'' points from cin to the variable, operator ''&lt;&lt;'' points from variable or expression to cout. For example input to two variables:<br>cin &gt;&gt; Var1 &gt;&gt; Var2;<br>Output can be realized as a sequence of expressions:<br>cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; endl;<br>Note that cin, cout and endl (stands for ''end of line'') are objects in namespace std. When we use them directly, we have to open this namespace via command:<br>using namespace std;<br>If we did not specify this command, it would be necessary to write a space name for each element contained in it:<br>std::cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; std::endl;<br>Standard error output<br>Just as we can write to the standard output (stream cout), we can write to the standard error output in the same way using the stream cerr. Everything else remains the same as cout. We will always use the standard error output if we want to convey some non-standard situation or auxiliary information to the user. We never mix these auxiliary messages with data, so we don""t write them to standard output! For example:<br>double a, b;<br>cin &gt;&gt; a &gt;&gt; b; // input two non-zero numbers<br>if (a*b == 0) cerr &lt;&lt; ''invalid data!'' &lt;&lt; endl; // error!<br> else // valid data, output to stdout<br>  cout &lt;&lt; ''Contents of rectangle is '' &lt;&lt; a*b &lt;&lt; endl;', '5', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('108', 'What is a variable?', 'A variable is certain place in computer memory which can hold some values. It""s different approach than in mathematics.<br>What place does the memory variable occupy? This depends on its data type. Data types will be discussed later in this course.<br>If a variable occupies some space, we can insert certain values into it.<br>Each memory space has its address. In order not to remember the numeric form of the address, these addresses are named, so we call it a variable identifier. It represents the numeric form of the address.<br>So each variable has its address (or name in form of identifier) and its value.', '6', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('109', 'Values of variable', 'Each variable can hold some values. Because the variable occupies certain space in the computer""s memory, which is composed as a sequence of bits, each value is machine-displayed as a sequence of zeros and ones.
+The main function returns integer value, thus data type of function main is <b>int</b>.', 1, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (104, 'Header files', 'A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.<br>The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.<br>You request to use a header file in your program by including it with the C preprocessing directive #include. The syntax of #include has following two forms:<br><font face=''code''>#include &lt;name&gt;</font><br>This variant is for the system (compiler) files, and<br><font face=''code''>#include ''name''</font><br>for files written by programmer.<br>Detailed information about preprocessing directives comes later in this course.', 2, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (105, 'Common simple input/output', 'Almost every program needs to input some values and output results. So we have to use appropriate commands for it.<br>The input and output operations depend always on operation system environment. Every system and every situation is solved differently. But the programmer – the author of program – have no information about it. The source code of program must work on many systems and programmer have to write the same commands.<br>So the input and output operations are encapsulated into functions which bodies are implemented according to operation system you actually use and their headers are always the same.<br>Every programming language have some commands for the input and output operations, but every programming language have a different approach for it.<br>We will discuss two approaches because of two different versions of C language: pure C and C++ versions.', 3, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (106, 'Standard library for simple input/output', 'In the C++ programming language, the C++ Standard Library is a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself. The C++ Standard Library provides support for some language features and functions for everyday tasks such as finding the square root of a number or simple input/output.<br>There are differences between C and C++ standard library. We prefer C++ approach, so we show C++ simple input/output and appropriate part of standard library for this.<br>We need some input values and write output in almost every program. In very simple form we have statement for input: cin (it stands for ''console input''), and statement for output: cout (i.e. ''console output'').<br>When we need mentioned commands, we have to include a standard library for this in following form:<br><font face=''code''>#include &lt;iostream&gt;</font>', 4, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (107, 'Simple input and output in C++', 'As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator ''&lt;&lt;'' and ''&gt;&gt;''. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator ''&gt;&gt;'' points from cin to the variable, operator ''&lt;&lt;'' points from variable or expression to cout. For example input to two variables:<br>cin &gt;&gt; Var1 &gt;&gt; Var2;<br>Output can be realized as a sequence of expressions:<br>cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; endl;<br>Note that cin, cout and endl (stands for ''end of line'') are objects in namespace std. When we use them directly, we have to open this namespace via command:<br>using namespace std;<br>If we did not specify this command, it would be necessary to write a space name for each element contained in it:<br>std::cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; std::endl;<br>Standard error output<br>Just as we can write to the standard output (stream cout), we can write to the standard error output in the same way using the stream cerr. Everything else remains the same as cout. We will always use the standard error output if we want to convey some non-standard situation or auxiliary information to the user. We never mix these auxiliary messages with data, so we don''t write them to standard output! For example:<br>double a, b;<br>cin &gt;&gt; a &gt;&gt; b; // input two non-zero numbers<br>if (a*b == 0) cerr &lt;&lt; ''invalid data!'' &lt;&lt; endl; // error!<br> else // valid data, output to stdout<br>  cout &lt;&lt; ''Contents of rectangle is '' &lt;&lt; a*b &lt;&lt; endl;', 5, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (108, 'What is a variable?', 'A variable is certain place in computer memory which can hold some values. It''s different approach than in mathematics.<br>What place does the memory variable occupy? This depends on its data type. Data types will be discussed later in this course.<br>If a variable occupies some space, we can insert certain values into it.<br>Each memory space has its address. In order not to remember the numeric form of the address, these addresses are named, so we call it a variable identifier. It represents the numeric form of the address.<br>So each variable has its address (or name in form of identifier) and its value.', 6, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (109, 'Values of variable', 'Each variable can hold some values. Because the variable occupies certain space in the computer''s memory, which is composed as a sequence of bits, each value is machine-displayed as a sequence of zeros and ones.
 A sequence of ones and zeros can mean different values. The simplest interpretation is as a non-negative integer in the binary system.
 Suppose a variable occupies a space of two bytes. What values can be stored on this space?
 The minimum value is represented by all zeros and represents zero. The maximum value is formed by the ones themselves. Two bytes are 16 binary ones, which is a decimal number of 65,535. So a two-byte variable can hold a value between 0 and 65,535.
- Generally, a variable on a n-bit space can hold a maximum value of 2n-1.', '7', '2');
-INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES ('110', 'Variable declaration', 'Each variable you planned to use have to be declared. This means we have to tell the computer how the variable will be named and what data type it will be. According to the data type, the compiler creates the appropriate space for this variable in computer memory. The declaration must always precede the use of the variable.
+ Generally, a variable on a n-bit space can hold a maximum value of 2n-1.', 7, null, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (110, 'Variable declaration', 'Each variable you planned to use have to be declared. This means we have to tell the computer how the variable will be named and what data type it will be. According to the data type, the compiler creates the appropriate space for this variable in computer memory. The declaration must always precede the use of the variable.
 The declaration in C/C++ language is written as follows scheme:
-data_type variable_identifier;
-For example (int is identifier for integer data type):
-int Count;
+<font face=''code''>data_type variable_identifier;</font>
+For example (<b>int<b/> is identifier for integer data type):
+<font face=''code''>int Count;</font>
 Now we can use the variable Count which can hold some integer value.
 If we need more variables of the same type, we can use the notation where we specify a data type and a list of variables of this type divided by commas:
-int suma, current_value, count;
+<font face=''code''>int suma, current_value, count;</font>
 After the declaration, the value of the variable is undefined. If we want the variable to have its initial value along with the declaration, we can write it directly into the declaration statement. In one declaration statement, we can combine variables without and with an initial value. For example:
-int suma=0, current_value, count=1;
-The variable current_value has undefined value, but suma has value zero and count has value 1.', '8', '2');
+<font face=''code''>int suma=0, current_value, count=1;</font>
+The variable current_value has undefined value, but suma has value zero and count has value 1.', 8, null, 2);
 
 -- -------------------------------------------------------------------------
 -- TEST
@@ -705,92 +704,6 @@ INSERT INTO public.option (id, text, correct_answer, group_number, question_id) 
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('235', '(a + b) / c = a / c + b / c', 'False', '0', '110');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('236', '(a - b) / c = a / c - b / c', 'False', '0', '110');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('237', '(a ⋅ b) + c = a ⋅ (b + c)', 'True', '0', '110');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('243', '0', 'False', '0', '112');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('244', '1', 'True', '0', '112');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('245', '-1', 'False', '0', '112');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('246', '2', 'False', '0', '112');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('247', '10', 'False', '0', '112');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('248', '1', 'False', '0', '113');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('249', '0', 'True', '0', '113');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('250', '-1', 'False', '0', '113');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('251', '2', 'False', '0', '113');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('252', '10', 'False', '0', '113');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('253', '0', 'False', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('254', '1', 'True', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('255', '-1', 'False', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('256', '2', 'False', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('257', '10', 'False', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('258', 'Správná odpověď: b) 1', 'False', '0', '114');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('259', '0', 'False', '0', '115');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('260', '1', 'True', '0', '115');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('261', '-1', 'False', '0', '115');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('262', '2', 'False', '0', '115');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('263', '10', 'False', '0', '115');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('264', '0', 'False', '0', '116');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('265', '1', 'True', '0', '116');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('266', '-1', 'False', '0', '116');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('267', '2', 'False', '0', '116');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('268', '10', 'False', '0', '116');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('269', 'Prvek, který při operaci s jiným prvkem nezmění jeho hodnotu', 'True', '0', '117');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('270', 'Prvek, který při operaci s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '117');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('271', 'Prvek, který při operaci s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '117');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('272', 'Prvek, který při operaci s jiným prvkem změní jeho znaménko', 'False', '0', '117');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('273', 'Prvek, který při operaci s jiným prvkem vždy dává nulu', 'False', '0', '117');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('274', 'Inverzní prvek', 'False', '0', '118');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('275', 'Neutrální prvek', 'True', '0', '118');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('276', 'Identický prvek', 'False', '0', '118');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('277', 'Komutativní prvek', 'False', '0', '118');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('278', 'Asociativní prvek', 'False', '0', '118');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('279', 'Prvek, který při násobení s jiným prvkem dává vždy nulu', 'False', '0', '119');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('280', 'Prvek, který při násobení s jiným prvkem nezmění jeho hodnotu', 'True', '0', '119');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('281', 'Prvek, který při násobení s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '119');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('282', 'Prvek, který při násobení s jiným prvkem změní jeho znaménko', 'False', '0', '119');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('283', 'Prvek, který při násobení s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '119');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('284', 'Prvek, který při operaci s jiným prvkem nezmění jeho hodnotu', 'True', '0', '141');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('285', 'Prvek, který při operaci s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '141');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('286', 'Prvek, který při operaci s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '141');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('287', 'Prvek, který při operaci s jiným prvkem změní jeho znaménko', 'False', '0', '141');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('288', 'Prvek, který při operaci s jiným prvkem vždy dává nulu', 'False', '0', '141');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('289', 'Identita je prvek, který při operaci s jiným prvkem nezmění jeho hodnotu, zatímco neutrální prvek mění hodnotu prvku na jeho inverzní hodnotu.', 'False', '0', '142');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('290', 'Identita je prvek, který při operaci s jiným prvkem zdvojnásobí jeho hodnotu, zatímco neutrální prvek zmenší hodnotu prvku na polovinu.', 'False', '0', '142');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('291', 'U aritmetických operací jde o synonyma, protože oba termíny označují prvek, který při operaci s jiným prvkem nezmění jeho hodnotu.', 'True', '0', '142');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('292', 'Identita je prvek, který při operaci s jiným prvkem změní jeho znaménko, zatímco neutrální prvek nemění hodnotu prvku.', 'False', '0', '142');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('293', 'Identita je prvek, který při operaci s jiným prvkem vždy dává nulu, zatímco neutrální prvek vždy dává jednu.', 'False', '0', '142');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('294', 'Prvek, který při operaci s jiným prvkem nezmění jeho hodnotu', 'False', '0', '151');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('295', 'Prvek, který při operaci s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '151');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('296', 'Prvek, který při operaci s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '151');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('297', 'Prvek, který při operaci s jiným prvkem dává neutrální prvek', 'True', '0', '151');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('298', 'Prvek, který při operaci s jiným prvkem vždy dává nulu', 'False', '0', '151');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('299', 'Neutrální prvek', 'False', '0', '152');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('300', 'Identita', 'False', '0', '152');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('301', 'Inverzní prvek', 'True', '0', '152');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('302', 'Komutativní prvek', 'False', '0', '152');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('303', 'Asociativní prvek', 'False', '0', '152');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('311', 'Prvek, který při sčítání s jiným prvkem dává vždy nulu', 'False', '0', '153');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('312', 'Prvek, který při sčítání s jiným prvkem nezmění jeho hodnotu', 'False', '0', '153');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('313', 'Prvek, který při sčítání s jiným prvkem dává neutrální prvek', 'True', '0', '153');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('314', 'Prvek, který při sčítání s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '153');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('315', 'Prvek, který při sčítání s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '153');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('316', 'Prvek, který při sčítání s jiným prvkem dává vždy nulu', 'False', '0', '154');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('317', 'Prvek, který při sčítání s jiným prvkem nezmění jeho hodnotu', 'False', '0', '154');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('318', 'Prvek, který při sčítání s jiným prvkem dává neutrální prvek', 'True', '0', '154');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('319', 'Prvek, který při sčítání s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '154');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('320', 'Prvek, který při sčítání s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '154');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('321', 'Prvek, který při násobení s jiným prvkem dává vždy nulu', 'False', '0', '155');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('322', 'Prvek, který při násobení s jiným prvkem nezmění jeho hodnotu', 'False', '0', '155');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('323', 'Prvek, který při násobení s jiným prvkem dává neutrální prvek', 'True', '0', '155');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('324', 'Prvek, který při násobení s jiným prvkem zdvojnásobí jeho hodnotu', 'False', '0', '155');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('325', 'Prvek, který při násobení s jiným prvkem zmenší jeho hodnotu na polovinu', 'False', '0', '155');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('326', 'Umožňuje operaci, při které se hodnota prvku nemění', 'False', '0', '156');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('327', 'Umožňuje operaci, při které se hodnota prvku zdvojnásobí', 'False', '0', '156');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('328', 'Umožňuje operaci, při které se hodnota prvku zmenší na polovinu', 'False', '0', '156');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('329', 'Umožňuje operaci, při které se hodnota prvku změní na opačné znaménko', 'False', '0', '156');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('330', 'Umožňuje operaci, při které se hodnota prvku vrátí k neutrálnímu prvku', 'True', '0', '156');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('331', 'Inverzní prvek nemění hodnotu prvku, neutrální prvek mění hodnotu prvku na opačné znaménko', 'False', '0', '157');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('332', 'Neutrální prvek nemění hodnotu prvku, inverzní prvek mění hodnotu prvku na opačné znaménko', 'False', '0', '157');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('333', 'Inverzní prvek zdvojnásobí hodnotu prvku, neutrální prvek zmenší hodnotu prvku na polovinu', 'False', '0', '157');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('334', 'Neutrální prvek zdvojnásobí hodnotu prvku, inverzní prvek zmenší hodnotu prvku na polovinu', 'False', '0', '157');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('335', 'Inverzní prvek mění hodnotu prvku na jeho inverzní hodnotu, neutrální prvek nemění hodnotu prvku', 'True', '0', '157');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('336', 'Asociativní vlastnost', 'False', '0', '171');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('337', 'Komutativní vlastnost', 'True', '0', '171');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('338', 'Distributivní vlastnost', 'False', '0', '171');
@@ -811,36 +724,6 @@ INSERT INTO public.option (id, text, correct_answer, group_number, question_id) 
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('360', '3 + (5 + 2) = (3 + 5) + 2', 'True', '0', '174');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('361', '3 + 0 = 3', 'False', '0', '174');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('362', '3 + (-3) = 0', 'False', '0', '174');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('363', 'Asociativní vlastnost', 'False', '0', '175');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('364', 'Komutativní vlastnost', 'False', '0', '175');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('365', 'Distributivní vlastnost', 'False', '0', '175');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('366', 'Identitní vlastnost', 'False', '0', '175');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('367', 'Inverzní vlastnost', 'False', '0', '175');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('368', '3 + 5 = 5 + 3', 'False', '0', '176');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('369', '3 + 5 = 8', 'False', '0', '176');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('370', '3 + (5 + 2) = (3 + 5) + 2', 'False', '0', '176');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('371', '3 + 0 = 3', 'True', '0', '176');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('372', '3 + (-3) = 0', 'False', '0', '176');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('373', 'Asociativní vlastnost', 'False', '0', '177');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('374', 'Komutativní vlastnost', 'False', '0', '177');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('375', 'Distributivní vlastnost', 'False', '0', '177');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('376', 'Identitní vlastnost', 'False', '0', '177');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('377', 'Inverzní vlastnost', 'True', '0', '177');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('378', '3 + 5 = 5 + 3', 'False', '0', '178');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('379', '3 + 5 = 8', 'False', '0', '178');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('380', '3 + (5 + 2) = (3 + 5) + 2', 'False', '0', '178');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('381', '3 + 0 = 3', 'False', '0', '178');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('382', '3 + (-3) = 0', 'True', '0', '178');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('383', '1', 'False', '0', '179');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('384', '0', 'True', '0', '179');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('385', '-1', 'False', '0', '179');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('386', '2', 'False', '0', '179');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('387', '10', 'False', '0', '179');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('388', '8', 'False', '0', '180');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('389', '-8', 'True', '0', '180');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('390', '0', 'False', '0', '180');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('391', '1', 'False', '0', '180');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('392', '-1', 'False', '0', '180');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('393', 'Která vlastnost násobení říká, že pořadí činitelů nemění výsledek?', 'False', '0', '191');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('394', '', 'False', '0', '191');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('395', 'Asociativní vlastnost', 'False', '0', '191');
@@ -863,81 +746,6 @@ INSERT INTO public.option (id, text, correct_answer, group_number, question_id) 
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('412', '3 ⋅ (5 ⋅ 2) = (3 ⋅ 5) ⋅ 2', 'True', '0', '194');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('413', '3 ⋅ 1 = 3', 'False', '0', '194');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('414', '3 ⋅ 1/3 = 1', 'False', '0', '194');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('415', 'Asociativní vlastnost', 'False', '0', '195');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('416', 'Komutativní vlastnost', 'False', '0', '195');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('417', 'Distributivní vlastnost', 'False', '0', '195');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('418', 'Identitní vlastnost', 'True', '0', '195');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('419', 'Inverzní vlastnost', 'False', '0', '195');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('420', '3 ⋅ 5 = 5 ⋅ 3', 'False', '0', '196');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('421', '3 ⋅ 5 = 15', 'False', '0', '196');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('422', '3 ⋅ (5 ⋅ 2) = (3 ⋅ 5) ⋅ 2', 'False', '0', '196');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('423', '3 ⋅ 1 = 3', 'True', '0', '196');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('424', '3 ⋅ 1/3 = 1', 'False', '0', '196');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('425', 'Asociativní vlastnost', 'False', '0', '197');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('426', 'Komutativní vlastnost', 'False', '0', '197');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('427', 'Distributivní vlastnost', 'False', '0', '197');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('428', 'Identitní vlastnost', 'False', '0', '197');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('429', 'Inverzní vlastnost', 'True', '0', '197');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('430', '3 ⋅ 5 = 5 ⋅ 3', 'False', '0', '198');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('431', '3 ⋅ 5 = 15', 'False', '0', '198');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('432', '3 ⋅ (5 ⋅ 2) = (3 ⋅ 5) ⋅ 2', 'False', '0', '198');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('433', '3 ⋅ 1 = 3', 'False', '0', '198');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('434', '3 ⋅ 1/3 = 1', 'True', '0', '198');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('435', 'Asociativní vlastnost', 'False', '0', '199');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('436', 'Komutativní vlastnost', 'False', '0', '199');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('437', 'Distributivní vlastnost', 'False', '0', '199');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('438', 'Identitní vlastnost', 'False', '0', '199');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('439', 'Inverzní vlastnost', 'True', '0', '199');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('440', '3 ⋅ 5 = 5 ⋅ 3', 'False', '0', '200');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('441', '3 ⋅ 5 = 15', 'False', '0', '200');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('442', '3 ⋅ (5 ⋅ 2) = (3 ⋅ 5) ⋅ 2', 'False', '0', '200');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('443', '3 ⋅ 1 = 3', 'False', '0', '200');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('444', '3 ⋅ 1/3 = 1', 'True', '0', '200');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('445', 'Asociativní vlastnost', 'False', '0', '201');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('446', 'Komutativní vlastnost', 'False', '0', '201');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('447', 'Distributivní vlastnost', 'False', '0', '201');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('448', 'Identitní vlastnost', 'True', '0', '201');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('449', 'Inverzní vlastnost', 'False', '0', '201');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('450', '5 - 3 = 3 - 5', 'False', '0', '202');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('451', '5 - 3 = 2', 'False', '0', '202');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('452', '(5 - 3) - 2 = 5 - (3 - 2)', 'False', '0', '202');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('453', '5 - 0 = 5', 'True', '0', '202');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('454', '5 - 5 = 0', 'False', '0', '202');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('455', 'Asociativní vlastnost', 'False', '0', '203');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('456', 'Komutativní vlastnost', 'False', '0', '203');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('457', 'Distributivní vlastnost', 'False', '0', '203');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('458', 'Identitní vlastnost', 'False', '0', '203');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('459', 'Inverzní vlastnost', 'True', '0', '203');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('460', '5 - 3 = 3 - 5', 'False', '0', '204');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('461', '5 - 3 = 2', 'False', '0', '204');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('462', '(5 - 3) - 2 = 5 - (3 - 2)', 'False', '0', '204');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('463', '5 - 0 = 5', 'False', '0', '204');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('464', '5 - 5 = 0', 'True', '0', '204');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('465', '1', 'False', '0', '205');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('466', '0', 'True', '0', '205');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('467', '-1', 'False', '0', '205');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('468', '2', 'False', '0', '205');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('469', '10', 'False', '0', '205');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('475', '10 / 2 = 2 / 10', 'False', '0', '181');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('476', '10 / 2 = 5', 'False', '0', '181');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('477', '(10 / 2) / 2 = 10 / (2 / 2)', 'False', '0', '181');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('478', '10 / 1 = 10', 'True', '0', '181');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('479', '10 / 10 = 1', 'False', '0', '181');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('480', '10 / 2 = 2 / 10', 'False', '0', '182');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('481', '10 / 2 = 5', 'False', '0', '182');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('482', '(10 / 2) / 2 = 10 / (2 / 2)', 'False', '0', '182');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('483', '10 / 1 = 10', 'False', '0', '182');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('484', '10 / 10 = 1', 'True', '0', '182');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('485', '0', 'False', '0', '183');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('486', '1', 'True', '0', '183');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('487', '-1', 'False', '0', '183');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('488', '2', 'False', '0', '183');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('489', '10', 'False', '0', '183');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('490', '8', 'False', '0', '184');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('491', '\frac{1}{8}', 'True', '0', '184');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('492', '0', 'False', '0', '184');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('493', '1', 'False', '0', '184');
-INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('494', '-1', 'False', '0', '184');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('500', 'sin(2α) = sin²(α) + cos²(α) ', 'False', '0', '311');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('501', 'sin(2α) = 2sin(α)cos(α)', 'True', '0', '311');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('502', 'sin(2α) = cos²(α) - sin²(α)', 'False', '0', '311');
@@ -1342,7 +1150,6 @@ INSERT INTO public.option (id, text, correct_answer, group_number, question_id) 
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('1050', 'cout &gt;&gt; "Contents "&gt;&gt; A*B &gt;&gt; ", perimeter " &gt;&gt; (A+B)*2 &gt;&gt;"."&gt;&gt;endl;', 'False', '2', '1012');
 INSERT INTO public.option (id, text, correct_answer, group_number, question_id) VALUES ('1051', 'cout &gt;&gt; "Contents " cout &gt;&gt; A*B &lt;&lt; cout &gt;&gt; ", perimeter " cout &gt;&gt; (A+B)*2 cout &gt;&gt; "." &lt;&lt; endl;', 'False', '2', '1012');
 
-
 -- -------------------------------------------------------------------------
 -- QUESTION
 -- -------------------------------------------------------------------------
@@ -1530,8 +1337,6 @@ int main(){
    [[2]]
    return 0;
 }', '0', '0', '0', '107');
-
-
 -- -------------------------------------------------------------------------
 -- LINKS
 -- -------------------------------------------------------------------------
