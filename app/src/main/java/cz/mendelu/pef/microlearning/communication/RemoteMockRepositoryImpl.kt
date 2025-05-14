@@ -26,7 +26,7 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
                         content = "Content of Lesson",
                         id = 1,
                         name = "Hello World",
-                        nodeId = 1,
+//                        nodeId = 1,
                         ordinalNumber = 2,
 //                        questions = null,
                         topic = "Main Topic"
@@ -48,7 +48,7 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
 
     override suspend fun getLessonById(id: Long): CommunicationResult<ObjectResponse<Lesson>> {
         return CommunicationResult.Success(
-            ObjectResponse(Lesson(1, "lesson", 1,"content", 1,  "Main Topic"), version = 1)
+            ObjectResponse(Lesson(1, "lesson", 1,"content",  "Main Topic"), version = 1)
         )
     }
 
