@@ -71,9 +71,8 @@ fun LessonScreen(
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
         onBackClick = {
-//            navigation.navigateBack()
-            // lessonId = k zapamatovani stavu
-            navigation.navigateToMainScreen(lessonId)
+            // todo save aktualni stav pred vracenim se
+                navigation.navigateToMainScreen()
         }
     ) {
         LessonScreenContent(
@@ -130,8 +129,10 @@ fun LessonScreenContent(
 //                }
                 // button pro REVISION mode
                 if (mode.value == Modes.REVISION.name && lessonOrdinalNumber != null && topicId != null) {
+                    println("lessonList>$lessonList")
                     Row {
                         Button(
+                            modifier = Modifier.padding(8.dp),
                             enabled = lessonList.containsKey(lessonOrdinalNumber - 1),
                             onClick = {
                                 navigation.navigateToLessonScreen(
@@ -144,8 +145,9 @@ fun LessonScreenContent(
                         ) {
                             Text("Previous lesson")
                         }
-                        Spacer(modifier = Modifier.padding(16.dp))
+//                        Spacer(modifier = Modifier.padding(16.dp))
                         Button(
+                            modifier = Modifier.padding(8.dp),
                             enabled = lessonList.containsKey(lessonOrdinalNumber + 1),
                             onClick = {
                                 navigation.navigateToLessonScreen(

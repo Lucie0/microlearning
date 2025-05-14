@@ -254,7 +254,7 @@ fun QuestionScreenContent(
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ) {
-    val questionText: String = question?.text ?: "No data"
+    val questionText: String = question?.qText ?: "No data"
     val options: List<Option>? = question?.options?.items
     val correctAnswers = hashMapOf<String, String>()
 
@@ -265,8 +265,8 @@ fun QuestionScreenContent(
     // pokud je to typ otazek jinych nez CLOZE
     if (!options.isNullOrEmpty() && options[0].groupNumber == 0) {
         options.filter { it.correctAnswer == true }.forEach { opt ->
-            viewModel.correctOptions[questionText] = opt.text ?: ""
-            correctAnswers[questionText] = opt.text ?: ""
+            viewModel.correctOptions[questionText] = opt.oText ?: ""
+            correctAnswers[questionText] = opt.oText ?: ""
         }
     } else if (!options.isNullOrEmpty()) { // pokud je to CLOZE
         val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
@@ -274,8 +274,8 @@ fun QuestionScreenContent(
             .zip(dividedSentence.subList(0, dividedSentence.size - 1))
         for (paar in result){
             // uloz spravne odpovedi do VM
-            viewModel.correctOptions[paar.second] = paar.first.text ?: ""
-            correctAnswers[paar.second] = paar.first.text ?: ""
+            viewModel.correctOptions[paar.second] = paar.first.oText ?: ""
+            correctAnswers[paar.second] = paar.first.oText ?: ""
         }
     }
 
@@ -283,7 +283,7 @@ fun QuestionScreenContent(
     println("corr:$correctAnswers")
     println("corrVM:${viewModel.correctOptions}")
 
-    val radioOptions: List<String?> = options?.map { o -> o.text } ?: listOf()
+    val radioOptions: List<String?> = options?.map { o -> o.oText } ?: listOf()
 
     val answer = remember { mutableStateOf("") }
 
@@ -346,7 +346,7 @@ fun QuestionScreenContent(
 //                    val listOptions: List<Option?>? = question.options.items
 
                     // rozdeli vetu, v mistech vynechavky vypise dropdown
-                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
+                    val dividedSentence = question.qText?.split("""\[\[[0-9]+\]\]""".toRegex())
 
                     for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
                         val selectedOption = remember { mutableStateOf("") }
@@ -364,7 +364,7 @@ fun QuestionScreenContent(
                         // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
                         val listStrings = // listOptions. ...
                             question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
-                                ?.map { opt -> opt.text }
+                                ?.map { opt -> opt.oText }
 
                         // okenko pro vyberovy seznam
                         if (listStrings != null)
