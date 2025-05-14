@@ -58,11 +58,10 @@ fun ChooseLessonScreen(
         drawFullScreenContent = true
     ) {
         ChooseLessonScreen(
-//            lastLessonId = viewModel.myLLId,
             paddingValues = it,
-//            navigation = navigation,
             uiState = uiState.value,
-//            nodeId = viewModel.nodeId
+            topicId = topicId,
+            navigation = navigation,
         )
     }
 }
@@ -70,17 +69,14 @@ fun ChooseLessonScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChooseLessonScreen(
-//    lastLessonId: Long,
     paddingValues: PaddingValues,
-//    navigation: INavigationRouter,
     uiState: UiState<ChooseLessonData, ChooseLessonErrors>,
-//    nodeId: Long
-//    list: List<String>
+    topicId: Long?,
+    navigation: INavigationRouter
 ) {
 
-    println("***uistate:" + uiState.data?.lessons)
+//    println("***uistate:" + uiState.data?.lessons)
 
-//    val list: List<String> = listOf("tema1", "tema2", "tema3", "tema4")
     // vypsat vsechny lekce z uistate
     LazyColumn(
         modifier = Modifier.padding(paddingValues)
@@ -92,6 +88,10 @@ fun ChooseLessonScreen(
                         headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) },
                         modifier = Modifier.clickable {
                             println("Clicked on lesson: " + it.id + " " + it.name)
+                            navigation.navigateToLessonScreen(
+                                lessonOrdinalNumber = it.ordinalNumber,
+                                topicId = topicId
+                            ) // todo topic id  gettnout z it po vytvoreni modelu LessonNAMES?
                         }
                     )
                 }

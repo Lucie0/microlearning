@@ -1,20 +1,16 @@
 package cz.mendelu.pef.microlearning.ui.screens.chooseLesson
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.ContextCompat.getSystemService
-import cz.mendelu.pef.microlearning.MainApplication
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
-import cz.mendelu.pef.microlearning.model.Node
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
-import cz.mendelu.pef.microlearning.model.response.ObjectResponse
+import cz.mendelu.pef.microlearning.model.lessonList
+import cz.mendelu.pef.microlearning.model.mode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +32,8 @@ class ChooseLessonVM @Inject constructor(
     fun getData() {
         if (NetworkInterceptor.isNetworkConnected()) {
             getLessonsByTopic()
+            // nacist graf
+//            getGraph()
         } else {
             println("Network not connected")
             uiState.value = UiState(
@@ -105,6 +103,7 @@ class ChooseLessonVM @Inject constructor(
                             println("*** Success")
 //                            println(result.data)
                             data.lessons = result.data
+                            getGraph()
                             uiState.value = UiState(
                                 loading = false,
                                 data = data,
@@ -121,6 +120,18 @@ class ChooseLessonVM @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun getGraph(){
+        if (mode.value == Modes.REVISION.name && lessonList.isEmpty()) {
+            data.lessons?.items?.forEach {
+                lessonList[it.ordinalNumber!!] = it
+            }
+        } else {
+            // vynulovani mapy
+            lessonList = mutableMapOf()
+        }
+        println(lessonList)
     }
 //
 //    private fun getNodeById() {
