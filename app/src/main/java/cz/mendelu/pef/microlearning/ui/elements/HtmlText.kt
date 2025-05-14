@@ -50,7 +50,8 @@ fun HtmlText(
     val html = HtmlCompat.fromHtml(
         string
             .replace("<li>", "<li>\u2022\t\t") // bullets
-            .replace("\n", "<br>") // new line
+//            .replace("\n", "<br>") // new line
+            .replace("<ul>", "")
             .replace("  ", "\t"), // tabs
         HtmlCompat.FROM_HTML_MODE_COMPACT
     ).toAnnotatedString()
