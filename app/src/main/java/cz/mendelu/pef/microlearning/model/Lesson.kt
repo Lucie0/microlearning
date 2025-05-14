@@ -11,7 +11,7 @@ data class Lesson(
     var ordinalNumber: Int?,
     var content: String?,
 
-    var nodeId: Long?,
+//    var nodeId: Long?,
 //    var questions: ArrayResponse<Question>?,
     var topic: String?
 ): Serializable {
