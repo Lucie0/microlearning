@@ -45,9 +45,14 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.navigate(Destination.ChooseLessonScreen.route + "/" + topicName + "/" + topicId)
     }
 
-    override fun navigateToMainScreen(lastLessonId: Long?) {
-        navController.navigate(Destination.MainScreen.route + "/" + lastLessonId)
+//    override fun navigateToMainScreen(lastLessonId: Long?) {
+//        navController.navigate(Destination.MainScreen.route + "/" + lastLessonId)
+//    }
+
+    override fun navigateToMainScreen() {
+        navController.navigate(Destination.MainScreen.route)
     }
+
 
 //    override fun navigateToQuestionScreen(title: String) {
 //        navController.navigate(Destination.QuestionScreen.route + "/" + title)
@@ -95,6 +100,7 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
     override fun navigateToModesScreen() {
         navController.navigate(Destination.ModesScreen.route)
     }
+
 
 //    override fun navigateToTestScreen(title: String) {
 //     navController.navigate(Destination.TestScreen.route + "/" + title)

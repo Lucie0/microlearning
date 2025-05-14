@@ -27,7 +27,8 @@ interface INavigationRouter {
     fun navigateToSettingsScreen()
     fun navigateToModesScreen()
 
-    fun navigateToMainScreen(lastLessonId: Long?)
+    fun navigateToMainScreen()
+//    fun navigateToMainScreen(lastLessonId: Long?)
 
     fun getNavController(): NavController
 
