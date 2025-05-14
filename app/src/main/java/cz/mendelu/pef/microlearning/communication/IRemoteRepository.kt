@@ -4,6 +4,7 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.architecture.IBaseRemoteRepository
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LessonShorter
 import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
@@ -18,6 +19,8 @@ import retrofit2.http.Path
 interface IRemoteRepository : IBaseRemoteRepository {
 
     suspend fun getLessons() : CommunicationResult<ArrayResponse<Lesson>>
+    suspend fun getLessonsShorter() : CommunicationResult<ArrayResponse<LessonShorter>>
+
     suspend fun getLessonById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Lesson>>
     suspend fun getLessonsByTopicId(@Path("id") topicId: Long): CommunicationResult<ArrayResponse<Lesson>>
 

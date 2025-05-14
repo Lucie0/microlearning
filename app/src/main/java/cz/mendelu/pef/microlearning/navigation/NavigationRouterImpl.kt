@@ -13,6 +13,14 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
         navController.popBackStack()
     }
 
+    override fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?) {
+        navController.navigate(Destination.LessonScreen.route + "/" + lessonId + "/" + nodeId)
+    }
+
+    override fun navigateToLessonScreen(lessonOrdinalNumber: Int?, topicId: Long?) {
+        navController.navigate(Destination.LessonScreen.route + "/" + lessonOrdinalNumber + "/" + topicId)
+    }
+
 //    override fun navigateToLessonScreen() {
 //        navController.navigate(Destination.LessonScreen.route)
 //    }
@@ -29,9 +37,9 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //        navController.navigate(Destination.LessonScreen.route + "/" + title + "/" + lessonId + "/" + nodeId)
 //    }
 
-    override fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?) {
-        navController.navigate(Destination.LessonScreen.route + "/" + lessonId + "/" + nodeId)
-    }
+//    override fun navigateToLessonScreen(lessonId: Long?, nodeId: Long?) {
+//        return TODO("not yet implemented")
+//    }
 
     override fun navigateToChooseLessonScreen(topicName: String?, topicId: Long?) {
         navController.navigate(Destination.ChooseLessonScreen.route + "/" + topicName + "/" + topicId)

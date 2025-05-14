@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LessonShorter
 import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
@@ -21,6 +22,14 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         return processResponse(
             withContext(Dispatchers.IO) { // zpracovani bude bezet na vlakne pro zbracovani veci na pozadi -- DB, ....
                 api.getLessons()
+            }
+        )
+    }
+
+    override suspend fun getLessonsShorter(): CommunicationResult<ArrayResponse<LessonShorter>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getLessonsShorter()
             }
         )
     }

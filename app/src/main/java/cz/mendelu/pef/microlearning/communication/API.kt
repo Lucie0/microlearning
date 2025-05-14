@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LessonShorter
 import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
@@ -26,6 +27,10 @@ interface API {
     @Headers("ngrok-skip-browser-warning: 1")
     @GET("/lessons")
     suspend fun getLessons() : Response<ArrayResponse<Lesson>>
+
+    @Headers("ngrok-skip-browser-warning: 1")
+    @GET("/lessons/shorter")
+    suspend fun getLessonsShorter() : Response<ArrayResponse<LessonShorter>>
 
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/lessons/{id}")

@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.communication
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.model.Lesson
+import cz.mendelu.pef.microlearning.model.LessonShorter
 import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.LinkBefore
 import cz.mendelu.pef.microlearning.model.Node
@@ -27,7 +28,7 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
                         name = "Hello World",
                         nodeId = 1,
                         ordinalNumber = 2,
-                        questions = null,
+//                        questions = null,
                         topic = "Main Topic"
                     )
                 ),
@@ -37,9 +38,13 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
         )
     }
 
+    override suspend fun getLessonsShorter(): CommunicationResult<ArrayResponse<LessonShorter>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getLessonById(id: Long): CommunicationResult<ObjectResponse<Lesson>> {
         return CommunicationResult.Success(
-            ObjectResponse(Lesson(1, "lesson", 1,"content", 1, null, "Main Topic"), version = 1)
+            ObjectResponse(Lesson(1, "lesson", 1,"content", 1,  "Main Topic"), version = 1)
         )
     }
 
