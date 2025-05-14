@@ -12,7 +12,7 @@ data class Lesson(
     var content: String?,
 
     var nodeId: Long?,
-    var questions: ArrayResponse<Question>?,
+//    var questions: ArrayResponse<Question>?,
     var topic: String?
 ): Serializable {
 }
