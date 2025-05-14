@@ -123,13 +123,14 @@ class ChooseLessonVM @Inject constructor(
     }
 
     private fun getGraph(){
-        if (mode.value == Modes.REVISION.name && lessonList.isEmpty()) {
+        if (mode.value == Modes.REVISION.name) {// && lessonList.isEmpty()) {
+            lessonList = mutableMapOf()
             data.lessons?.items?.forEach {
                 lessonList[it.ordinalNumber!!] = it.id!!
             }
-        } else {
+//        } else if (mode.value == Modes.REVISION.name) {
             // vynulovani mapy
-            lessonList = mutableMapOf()
+
         }
         println("lessonList:$lessonList")
     }
