@@ -25,7 +25,7 @@ public class LessonService {
     }
 
     public List<Lesson> getLessonsByTopicId(Long topicId){
-        return StreamSupport.stream(repository.findByTopic_Id(topicId).spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(repository.findByTopic_IdOrderByOrdinalNumberAsc(topicId).spliterator(), false).collect(Collectors.toList());
     }
 
     public Optional<Lesson> getById(Long id){
