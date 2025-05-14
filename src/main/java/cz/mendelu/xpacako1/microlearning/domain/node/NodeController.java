@@ -62,4 +62,21 @@ public class NodeController {
                 NodeResponse::new
         );
     }
+
+    @Operation(
+            summary = "Get nodes by topicId",
+            description = "Get nodes by topic ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of nodes with topic ID"),
+//            @ApiResponse(responseCode = "404", description = "Node not found"),
+    })
+    @GetMapping(value = "/byTopic/{topicId}", produces = "application/json")
+    public ArrayResponse<NodeResponse> getNodesByTopic(@PathVariable Long topicId) {
+//        Node node = nodeService.getById(id).orElseThrow(() -> new NotFoundException("Node not found"));
+        return ArrayResponse.of(
+                nodeService.getByTopicId(topicId),
+                NodeResponse::new
+        );
+    }
 }

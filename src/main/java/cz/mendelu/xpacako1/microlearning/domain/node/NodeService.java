@@ -23,6 +23,11 @@ public class NodeService {
     public List<Node> getAllNodes(){
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+    public List<Node> getByTopicId(Long topicId){
+        return StreamSupport.stream(repository.findByLesson_Topic_Id(topicId).spliterator(), false).collect(Collectors.toList());
+    }
+
+
 
     public Optional<Node> getById(Long id){
         return repository.findById(id);

@@ -6,14 +6,20 @@ import lombok.Data;
 @Data
 public class NodeResponse {
     private Long id;
+
+    // todo smazat
     private Long testId;
     private String testName;
+
     private Long lessonId;
     private String lessonName;
     private int lessonOrdinalNumber;
+
     private int level;
+
     private int questionDepth;
     private int levelDepth;
+
     private boolean walkThrough;
     private boolean successfullyCompleted;
 
@@ -41,6 +47,8 @@ public class NodeResponse {
             this.lessonOrdinalNumber = 0;
         }
 
+        this.levelDepth = node.getLevelDepth();
+        this.questionDepth = node.getQuestionDepth();
         this.walkThrough = node.isWalkThrough();
         this.successfullyCompleted = node.isSuccessfullyCompleted();
     }
