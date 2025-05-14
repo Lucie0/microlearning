@@ -99,7 +99,7 @@ class MainScreenVM @Inject constructor(
 
                 is CommunicationResult.Success -> {
                     if (result.data.content.id != null) {
-                        println("*** Success")
+                        println("*** Success MSVM")
                         println(result.data)
                         data.node = result.data
                         mainUiState.value = UiState(

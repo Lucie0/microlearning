@@ -20,9 +20,15 @@ interface IRemoteRepository : IBaseRemoteRepository {
 
     suspend fun getLessons() : CommunicationResult<ArrayResponse<Lesson>>
     suspend fun getLessonsShorter() : CommunicationResult<ArrayResponse<LessonShorter>>
+    suspend fun getLessonsShorterByTopicId(@Path("topicId") topicId: Long) : CommunicationResult<ArrayResponse<LessonShorter>>
 
     suspend fun getLessonById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Lesson>>
     suspend fun getLessonsByTopicId(@Path("id") topicId: Long): CommunicationResult<ArrayResponse<Lesson>>
+    suspend fun getLessonsByTopicIdAndOrdinalNumber(
+        @Path("topicId") topicId: Long,
+        @Path("ordinalNumber") ordinalNumber: Int
+    ): CommunicationResult<ObjectResponse<Lesson>>
+
 
     suspend fun getQuestions() : CommunicationResult<ArrayResponse<Question>>
     suspend fun getQuestionById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Question>>

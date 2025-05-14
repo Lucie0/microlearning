@@ -42,6 +42,10 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getLessonsShorterByTopicId(topicId: Long): CommunicationResult<ArrayResponse<LessonShorter>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getLessonById(id: Long): CommunicationResult<ObjectResponse<Lesson>> {
         return CommunicationResult.Success(
             ObjectResponse(Lesson(1, "lesson", 1,"content", 1,  "Main Topic"), version = 1)
@@ -85,6 +89,13 @@ class RemoteMockRepositoryImpl() : IRemoteRepository {
     }
 
     override suspend fun getLessonsByTopicId(topicId: Long): CommunicationResult<ArrayResponse<Lesson>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLessonsByTopicIdAndOrdinalNumber(
+        topicId: Long,
+        ordinalNumber: Int
+    ): CommunicationResult<ObjectResponse<Lesson>> {
         TODO("Not yet implemented")
     }
 }

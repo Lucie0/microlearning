@@ -34,6 +34,14 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         )
     }
 
+    override suspend fun getLessonsShorterByTopicId(topicId: Long): CommunicationResult<ArrayResponse<LessonShorter>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getLessonsShorterByTopicId(topicId);
+            }
+        )
+    }
+
     override suspend fun getLessonById(id: Long): CommunicationResult<ObjectResponse<Lesson>> {
         return processResponse(
             withContext(Dispatchers.IO) { // zpracovani bude bezet na vlakne pro zbracovani veci na pozadi -- DB, ....
@@ -46,6 +54,17 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         return processResponse(
             withContext(Dispatchers.IO) {
                 api.getLessonsByTopicId(topicId)
+            }
+        )
+    }
+
+    override suspend fun getLessonsByTopicIdAndOrdinalNumber(
+        topicId: Long,
+        ordinalNumber: Int
+    ): CommunicationResult<ObjectResponse<Lesson>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getLessonByIdByTopicIdAndOrdinalNumber(topicId, ordinalNumber)
             }
         )
     }

@@ -14,6 +14,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 // nerozjet DB, pritom jedouci BE a zkusit zobrazit lekci,
 // vyhodi to SockektTimeoutException --  jak to osetrit?
@@ -42,9 +43,19 @@ interface API {
     @GET("/lessons/{id}")
     suspend fun getLessonById(@Path("id") id: Long) : Response<ObjectResponse<Lesson>>
 
+
     @Headers("ngrok-skip-browser-warning: true")
-    @GET("/lessons/byTopic/{id}")
-    suspend fun getLessonsByTopicId(@Path("id") id: Long) : Response<ArrayResponse<Lesson>>
+    @GET("/lessons/byTopic/{topicId}/byOrdinalNumber/{ordinalNumber}")
+    suspend fun getLessonByIdByTopicIdAndOrdinalNumber(
+        @Path("topicId") topicId: Long,
+        @Path("ordinalNumber") ordinalNumber: Int
+    ) : Response<ObjectResponse<Lesson>>
+
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/lessons")
+    suspend fun getLessonsByTopicId(
+        @Query("topicId") topicId: Long
+    ) : Response<ArrayResponse<Lesson>>
 
 
 

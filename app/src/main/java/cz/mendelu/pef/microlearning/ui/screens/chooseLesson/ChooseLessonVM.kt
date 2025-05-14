@@ -49,7 +49,7 @@ class ChooseLessonVM @Inject constructor(
             launch {
                 val result =
                     withContext(Dispatchers.IO) {
-                        remoteRepository.getLessonsByTopicId(topicId)
+                        remoteRepository.getLessonsShorterByTopicId(topicId)
                     }
 
                 when (result) {
@@ -100,7 +100,7 @@ class ChooseLessonVM @Inject constructor(
 
                     is CommunicationResult.Success -> {
                         if (result.data.items != null && result.data.items!!.isNotEmpty()) {
-                            println("*** Success")
+                            println("*** Success ChLVM")
 //                            println(result.data)
                             data.lessons = result.data
                             getGraph()
@@ -125,13 +125,13 @@ class ChooseLessonVM @Inject constructor(
     private fun getGraph(){
         if (mode.value == Modes.REVISION.name && lessonList.isEmpty()) {
             data.lessons?.items?.forEach {
-                lessonList[it.ordinalNumber!!] = it
+                lessonList[it.ordinalNumber!!] = it.id!!
             }
         } else {
             // vynulovani mapy
             lessonList = mutableMapOf()
         }
-        println(lessonList)
+        println("lessonList:$lessonList")
     }
 //
 //    private fun getNodeById() {

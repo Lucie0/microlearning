@@ -41,6 +41,7 @@ fun LessonScreen(
     navigation: INavigationRouter
 ){
     val viewModel = hiltViewModel<LessonScreenVM>()
+
     viewModel.lessonId = lessonId
     viewModel.actualNodeId = nodeId
     viewModel.lessonOrdinalNumber = lessonOrdinalNumber
@@ -135,7 +136,9 @@ fun LessonScreenContent(
                             onClick = {
                                 navigation.navigateToLessonScreen(
                                     lessonOrdinalNumber = lessonOrdinalNumber - 1,
-                                    topicId = topicId
+                                    topicId = topicId,
+                                    lessonId = -1L,
+                                    nodeId = -1L
                                 )
                             }
                         ) {
@@ -147,7 +150,9 @@ fun LessonScreenContent(
                             onClick = {
                                 navigation.navigateToLessonScreen(
                                     lessonOrdinalNumber = lessonOrdinalNumber + 1,
-                                    topicId = topicId
+                                    topicId = topicId,
+                                    lessonId = -1L,
+                                    nodeId = -1L
                                 )
                             }
                         ) {
