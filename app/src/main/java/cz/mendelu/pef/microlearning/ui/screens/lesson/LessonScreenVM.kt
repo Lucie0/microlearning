@@ -33,8 +33,10 @@ class LessonScreenVM @Inject constructor(
 
     var data = LessonData()
     var lessonId: Long? = null
-
     var actualNodeId: Long? = null
+    var lessonOrdinalNumber: Int? = null
+    var topicId: Long? = null
+
     var nextNodeId: Long? = null
 
 //    init {
@@ -43,8 +45,14 @@ class LessonScreenVM @Inject constructor(
 
     fun getData(){
         if (NetworkInterceptor.isNetworkConnected()) {
-            getLessonById()
-            getNextNodeId()
+            if (lessonId != null) {
+                // Tuition a testing mode -- kombinace lessonId a nodeId
+                getLessonById()
+                getNextNodeId()
+            }
+            if (lessonOrdinalNumber != null){
+                // todo kdyz je revision mode -- stahnout lekci dle kobinace ordinalNumber--topicId
+            }
         } else {
             println("Network not connected")
             lessonsUiState.value = UiState(
@@ -56,7 +64,7 @@ class LessonScreenVM @Inject constructor(
     }
 
     //  getLesson
-    fun getLessonById() {
+    private fun getLessonById() {
         if (lessonId != null) {
             launch {
                 sGetLessonById()

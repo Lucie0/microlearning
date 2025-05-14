@@ -81,6 +81,34 @@ fun NavGraph(
 //                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
                 lessonId = if (lessonId != -1L) lessonId else null,
                 nodeId = if (nodeId != -1L) nodeId else null,
+                lessonOrdinalNumber = null,
+                topicId = null,
+                navigation = navigation
+            )
+        }
+
+        // lesson screen s jinimi 2 argumenty
+        composable(
+            route = Destination.LessonScreen.route + "/{lessonOrdinalNumber}/{topicId}", // receni, ze to bude paramter v ceste
+            arguments = listOf(
+                navArgument("lessonOrdinalNumber") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                },
+                navArgument("topicId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            val lessonOrdinalNumber = it.arguments?.getInt("lessonOrdinalNumber")
+            val topicId = it.arguments?.getLong("topicId")
+            LessonScreen(
+//                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
+                lessonOrdinalNumber = if (lessonOrdinalNumber != -1) lessonOrdinalNumber else null,
+                topicId = if (topicId != -1L) topicId else null,
+                lessonId = null,
+                nodeId = null,
                 navigation = navigation
             )
         }
