@@ -1,14 +1,14 @@
 -- -------------------------------------------------------------------------
 -- LESSON ---------------------------------------------------------------------------
 -- -------------------------------------------------------------------------
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (1, 'Matematika', '<div align="center">
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (1, 'Matematika', '<div align="center">
 Bakalářská práce
 
 <b>Mobilní aplikace pro adaptivní mikrolearning</b>
 <br><br>
 Ukázková sada lekcí z oboru matematika pro demonstraci funkce vyvíjené mobilní aplikace.
-</div>', 0, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (2, 'Sčítání', '<b>Vysvětlení pojmu</b><br>
+</div>', 0, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (2, 'Sčítání', '<b>Vysvětlení pojmu</b><br>
 Sčítání je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich součet.
 
 <b>Symbolický zápis</b><br>
@@ -17,8 +17,8 @@ A + B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 3 a 5,
 jejich součet je 8.
-3 + 5 = 8', 1, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (3, 'Odčítání', '<b>Vysvětlení pojmu</b><br>
+3 + 5 = 8', 1, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (3, 'Odčítání', '<b>Vysvětlení pojmu</b><br>
 Odčítání je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich rozdíl.
 
 <b>Symbolický zápis</b><br>
@@ -27,8 +27,8 @@ A - B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 8 a 3,
 jejich rozdíl je 5.
-8 - 3 = 5', 2, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (4, 'Násobení', '<b>Vysvětlení pojmu</b><br>
+8 - 3 = 5', 2, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (4, 'Násobení', '<b>Vysvětlení pojmu</b><br>
 Násobení je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich součin.
 
 <b>Symbolický zápis</b><br>
@@ -37,8 +37,8 @@ A ⋅ B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 4 a 6,
 jejich součin je 24.
-4 ⋅ 6 = 24', 3, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (5, 'Dělení', '<b>Vysvětlení pojmu</b><br>
+4 ⋅ 6 = 24', 3, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (5, 'Dělení', '<b>Vysvětlení pojmu</b><br>
 Dělení je aritmetická operace, která přiřazuje každé dvojici čísel A a B třetí číslo C, které se nazývá jejich podíl.
 
 <b>Symbolický zápis</b><br>
@@ -47,8 +47,8 @@ A / B = C
 <b>Příklad</b><br>
 Pokud máme dvě čísla, například 12 a 4,
 jejich podíl je 3.
-12 / 4 = 3', 4, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (6, 'Mocnina', '<b>Vysvětlení pojmu</b><br>
+12 / 4 = 3', 4, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (6, 'Mocnina', '<b>Vysvětlení pojmu</b><br>
 Mocnina je matematická operace, která povyšuje číslo (základ) na určitou mocninu (exponent).
 
 <b>Symbolický zápis</b><br>
@@ -57,8 +57,8 @@ kde A je základ a B je exponent.
 
 <b>Příklad</b><br>
 Pokud máme základ A = 2 a exponent B = 3, pak jejich mocnina je 8.
-2 ^ 3 = 2 ⋅ 2 ⋅ 2 = 8', 5, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (7, 'Odmocnina', '<b>Vysvětlení pojmu</b><br>
+2 ^ 3 = 2 ⋅ 2 ⋅ 2 = 8', 5, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (7, 'Odmocnina', '<b>Vysvětlení pojmu</b><br>
 Odmocnina je matematická operace, která hledá číslo, které při umocnění na určitý exponent dává původní číslo. Nejčastěji se používá druhá odmocnina, která hledá číslo, které při umocnění na druhou dává původní číslo.
 
 <b>Symbolický zápis</b><br>
@@ -66,8 +66,8 @@ Odmocnina je matematická operace, která hledá číslo, které při umocnění
 
 <b>Příklad</b><br>
 Pokud máme číslo A = 16, pak druhá odmocnina z A je 4.
-√16 = 4', 6, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (8, 'Priorita aritmetických operací', '<b>Vysvětlení pojmu</b><br>
+√16 = 4', 6, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (8, 'Priorita aritmetických operací', '<b>Vysvětlení pojmu</b><br>
 Priorita vyhodnocování aritmetických operací určuje, jakým způsobem se matematické výrazy vyhodnocují, když obsahují více operací různého druhu. Existují pevně daná pravidla, která určují pořadí vyhodnocení operací:
 
 <u>1. Závorky: </u> Výrazy uvnitř závorek mají nejvyšší prioritu a jsou vyhodnocovány jako první.
@@ -80,8 +80,8 @@ Příklad:  4 ⋅ 2^3 = 4 ⋅ 8 = 32
 Příklad: 1 + 6 / 2 ⋅ 3 = 1 + 3 ⋅ 3 = 1 + 9 = 10
 
 <u>4. Sčítání a odčítání: </u> Tyto operace mají nejnižší prioritu a jsou vyhodnocovány zleva doprava.
-Příklad: 5 + 3 - 2 = 8 - 2 = 6', 7, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (9, 'Komutativita', '<b>Vysvětlení pojmu</b><br>
+Příklad: 5 + 3 - 2 = 8 - 2 = 6', 7, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (9, 'Komutativita', '<b>Vysvětlení pojmu</b><br>
 Pořadí operandů při operaci nemá vliv na výsledek.
 
 Tato vlastnost platí např. pro sčítání:
@@ -92,8 +92,8 @@ Tato vlastnost platí např. pro sčítání:
 <b>Příklad</b><br>
 <ul>
 <li>3 + 5 = 5 + 3</li>
-</ul>', 8, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (10, 'Asociativita', '<b>Vysvětlení pojmu</b><br>
+</ul>', 8, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (10, 'Asociativita', '<b>Vysvětlení pojmu</b><br>
 Při operaci více operandů nezáleží na tom, jak jsou seskupeny.
 
 Tato vlastnost platí např. pro sčítání:
@@ -104,8 +104,8 @@ Tato vlastnost platí např. pro sčítání:
 <b>Příklad</b><br>
 <ul>
 <li>(2 + 3) + 4 = 2 + (3 + 4)</li>
-</ul>', 9, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (11, 'Distributivita', '<b>Vysvětlení pojmu</b><br>
+</ul>', 9, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (11, 'Distributivita', '<b>Vysvětlení pojmu</b><br>
 Distributivita je matematická vlastnost, která umožňuje distribuci („rozložení“) jedné operace přes jinou operaci.
 
 Tato vlastnost platí např. pro násobení vzhledem ke sčítání, což znamená, že násobení čísla součtem dvou čísel je stejné jako součet jednotlivých násobků.
@@ -118,8 +118,8 @@ Tato vlastnost platí např. pro násobení vzhledem ke sčítání, což znamen
 <ul>
 <li>2 ⋅ (3 + 4) = (2 ⋅ 3) + (2 ⋅ 4)</li>
 <li>(2 + 3) ⋅ 4 = (2 ⋅ 4) + (3 ⋅ 4)</li>
-</ul>', 10, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (12, 'Vlastnosti sčítání', '<b>1. Je komutativní: </b>
+</ul>', 10, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (12, 'Vlastnosti sčítání', '<b>1. Je komutativní: </b>
 <ul>
 <li>A + B = B + A</li>
 </ul>
@@ -137,8 +137,8 @@ Příklad:
 <li>(2 + 3) + 4 = 2 + (3 + 4)</li>
 </ul>
 
-<b>3. Není distributivní. </b>', 11, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (13, 'Vlastnosti odčítání', '<b>1. Není komutativní: </b>
+<b>3. Není distributivní. </b>', 11, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (13, 'Vlastnosti odčítání', '<b>1. Není komutativní: </b>
 <ul>
 <li>A - B ≠ B - A</li>
 </ul>
@@ -156,8 +156,8 @@ Příklad:
 <li>(10 - 5) - 2 ≠ 10 - (5 - 2)</li>
 </ul>
 
-<b>3. Není distributivní. </b>', 12, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (14, 'Vlastnosti násobení', '<b>1. Je komutativní: </b>
+<b>3. Není distributivní. </b>', 12, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (14, 'Vlastnosti násobení', '<b>1. Je komutativní: </b>
 <ul>
 <li>A ⋅ B = B ⋅ A</li>
 </ul>
@@ -186,8 +186,8 @@ Příklad:
 <li>2 ⋅ (3 - 4) = (2 ⋅ 3) - (2 ⋅ 4)</li>
 <li>(2 + 3) ⋅ 4 = (2 ⋅ 4) + (3 ⋅ 4)</li>
 <li>(2 - 3) ⋅ 4 = (2 ⋅ 4) - (3 ⋅ 4)</li>
-</ul>', 13, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (15, 'Vlastnosti dělení', '<b>1. Není komutativní: </b>
+</ul>', 13, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (15, 'Vlastnosti dělení', '<b>1. Není komutativní: </b>
 <ul>
 <li>A / B ≠ B / A</li>
 </ul>
@@ -218,8 +218,8 @@ Příklad:
 <li>(6 - 4) / 2 = (6 / 2) - (4 / 2)</li>
 <li>ale 10 / (6 + 4) ≠ (10 / 6) + (10 / 4)</li>
 <li>ale 10 / (6 - 4) ≠ (10 / 6) - (10 / 4)</li>
-</ul>', 14, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (16, 'Vlastnosti mocniny', '<b>1. Není komutativní: </b>
+</ul>', 14, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (16, 'Vlastnosti mocniny', '<b>1. Není komutativní: </b>
 <ul>
 <li>A^B ≠ B^A</li>
 </ul>
@@ -250,8 +250,8 @@ Příklad:
 <li>(2 / 3)^2 = 2^2 / 3^2</li>
 <li>ale 2^(3 ⋅ 4) ≠ (2^3) ⋅ (2^4)</li>
 <li>ale 2^(3 / 4) ≠ (2^3) / (2^4)</li>
-</ul>', 15, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (17, 'Vlastnosti (druhé) odmocniny', '<b>1. Není komutativní: </b> Komutativní operace umožňují zaměnit pořadí čísel, aniž by se změnil výsledek. U odmocniny však nelze zaměnit pořadí čísel, protože odmocňování se provádí pouze na jednom čísle.
+</ul>', 15, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (17, 'Vlastnosti (druhé) odmocniny', '<b>1. Není komutativní: </b> Komutativní operace umožňují zaměnit pořadí čísel, aniž by se změnil výsledek. U odmocniny však nelze zaměnit pořadí čísel, protože odmocňování se provádí pouze na jednom čísle.
 
 <b>2. Není asociativní: </b> Zdůvodnění obdobné, jako v předchozím případě.
 
@@ -264,10 +264,10 @@ Příklad:
 <ul>
 <li>√(4 ⋅ 9) = √4 ⋅ √9</li>
 <li>√(16 / 4) = √16 / √4</li>
-</ul>', 16, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (18, 'Goniometrie', '<b>Vysvětlení pojmu</b><br>
-Goniometrie je odvětví matematiky, které se zabývá měřením úhlů a studiem úhlových funkcí, jako jsou sinus, kosinus, tangens a kotangens.', 17, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (19, 'Sinus', '<b>Vysvětlení pojmu</b><br>
+</ul>', 16, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (18, 'Goniometrie', '<b>Vysvětlení pojmu</b><br>
+Goniometrie je odvětví matematiky, které se zabývá měřením úhlů a studiem úhlových funkcí, jako jsou sinus, kosinus, tangens a kotangens.', 17, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (19, 'Sinus', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je sinus úhlu poměr délky protilehlé strany k délce přepony.
 
 <b>Symbolický zápis</b><br>
@@ -275,8 +275,8 @@ sin(α) = protilehlá strana / přepona
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přeponou délky 5 a protilehlou stranou délky 3, pak jeho sinus je 0,6:
-sin(α) = 3 / 5 = 0,6', 18, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (20, 'Kosinus', '<b>Vysvětlení pojmu</b><br>
+sin(α) = 3 / 5 = 0,6', 18, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (20, 'Kosinus', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je kosinus úhlu poměr délky přilehlé strany k délce přepony.
 
 <b>Symbolický zápis</b><br>
@@ -284,8 +284,8 @@ cos(α) = přilehlá strana / přepona
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přeponou délky 5 a přilehlou stranou délky 4, pak kosinus je 0,8.
-cos(α) = 4 / 5 = 0,8', 19, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (21, 'Tangens', '<b>Vysvětlení pojmu</b><br>
+cos(α) = 4 / 5 = 0,8', 19, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (21, 'Tangens', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je tangens úhlu poměr délky protilehlé strany k délce přilehlé strany.
 
 <b>Symbolický zápis</b><br>
@@ -296,8 +296,8 @@ tan(α) = protilehlá strana / přilehlá strana
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s protilehlou stranou délky 3 a přilehlou stranou délky 4, pak tangens je 0,75.
-tg(α) = 3 / 4 = 0,75', 20, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (22, 'Kotangens', '<b>Vysvětlení pojmu</b><br>
+tg(α) = 3 / 4 = 0,75', 20, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (22, 'Kotangens', '<b>Vysvětlení pojmu</b><br>
 V pravoúhlém trojúhelníku je kotangens úhlu poměr délky přilehlé strany k délce protilehlé strany.
 
 <b>Symbolický zápis</b><br>
@@ -307,36 +307,36 @@ cot(α) = přilehlá strana / protilehlá strana
 
 <b>Příklad</b><br>
 Pokud máme pravoúhlý trojúhelník s přilehlou stranou délky 5 a protilehlou stranou délky 2, pak kotangens je 2,5.
-cotg(α) = 5 / 2 = 2,5', 21, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (23, 'Goniometrické vzorce základní', 'tan(α) = sin(α) / cos(α)
+cotg(α) = 5 / 2 = 2,5', 21, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (23, 'Goniometrické vzorce základní', 'tan(α) = sin(α) / cos(α)
 
 cot(α) = cos(α) / sin(α)
 
 sin²(α) + cos²(α) = 1
 
-tan(α) ⋅ cot(α) = 1', 22, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (24, 'Goniometrické vzorce součtu a rozdílu', 'sin(α ± β) = sin(α)cos(β) ± cos(α)sin(β)
+tan(α) ⋅ cot(α) = 1', 22, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (24, 'Goniometrické vzorce součtu a rozdílu', 'sin(α ± β) = sin(α)cos(β) ± cos(α)sin(β)
 
 cos(α ± β) = cos(α)cos(β) ∓ sin(α)sin(β)
 
 tan(α ± β) = (tan(α) ± tan(β)) / (1 ∓ tan(α)tan(β))
 
-cot(α ± β) = (cot(α)cot(β) ∓ 1) / (cot(α) ± cot(β))', 23, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (25, 'Goniometrické vzorce dvojnásobného úhlu', 'sin(2α) = 2sin(α)cos(α)
+cot(α ± β) = (cot(α)cot(β) ∓ 1) / (cot(α) ± cot(β))', 23, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (25, 'Goniometrické vzorce dvojnásobného úhlu', 'sin(2α) = 2sin(α)cos(α)
 
 cos(2α) = cos²(α) - sin²(α)
 
 tan(2α) = 2tan(α) / (1 - tan²(α))
 
-cot(2α) = (cot²(α) - 1) / 2cot(α)', 24, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (26, 'Goniometrické vzorce polovičního úhlu', 'sin(α/2) = √[(1 - cos(α)) / 2]
+cot(2α) = (cot²(α) - 1) / 2cot(α)', 24, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (26, 'Goniometrické vzorce polovičního úhlu', 'sin(α/2) = √[(1 - cos(α)) / 2]
 
 cos(α/2) = √[(1 + cos(α)) / 2]
 
 tan(α/2) = √[(1 - cos(α)) / (1 + cos(α)]
 
-cot(α/2) = √[(1 + cos(α)) / (1 - cos(α)]', 25, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (27, 'Goniometrické vzorce součinu', 'sin(α)sin(β) = 1/2 [cos(α - β) - cos(α + β)]
+cot(α/2) = √[(1 + cos(α)) / (1 - cos(α)]', 25, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (27, 'Goniometrické vzorce součinu', 'sin(α)sin(β) = 1/2 [cos(α - β) - cos(α + β)]
 
 cos(α)cos(β) = 1/2 [cos(α + β) + cos(α - β)]
 
@@ -346,8 +346,8 @@ tan(α)tan(β) = (tan(α) + tan(β)) / (cot(α) + cot(β))
 
 cot(α)cot(β) = (cot(α) + cot(β)) / (tan(α) + tan(β))
 
-tan(α)cot(β) = (tan(α) + cot(β)) / (cot(α) + tan(β))', 26, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (28, 'Hodnoty goniometrických funkcí', '	     0°     30°     45°     60°     90°
+tan(α)cot(β) = (tan(α) + cot(β)) / (cot(α) + tan(β))', 26, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (28, 'Hodnoty goniometrických funkcí', '	     0°     30°     45°     60°     90°
     0      π/6      π/4     π/3     π/2
 sin     0     1/2     (√2)/2     (√3)/2     1
 cos     1     (√3)/2     (√2)/2     1/2     0
@@ -373,21 +373,21 @@ cotg     x     √3     1     (√3)/3     0
         <tr>
             <td>Petr</td>
             <td>35</td>
-        </tr>', 27, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (29, 'HOTOVO', '<div align="center">
+        </tr>', 27, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (29, 'HOTOVO', '<div align="center">
 <br><b>Gratulujeme!</b><br><br>
 Tvé znalosti matematiky plně dostačují na úspěšné provedení tohoto testu.
 
 🙂
-</div>', 28, null, 1);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (101, 'Programming', '<div align="center">
+</div>', 28, 1);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (101, 'Programming', '<div align="center">
 Bachelor''s thesis
 
 <b>Mobile application for adaptive microlearning</b>
 <br><br>
 A sample set of public.lessons of programming to demonstrate the functionality of a mobile application being developed.
-</div>', 0, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (103, 'First source code', 'When you want to write your program in C you have to write so called ''main'' function.
+</div>', 0, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (103, 'First source code', 'When you want to write your program in C you have to write so called ''main'' function.
 Functions in C/C++ are a pieces of code that have own name (identificator) and body. Main function represents whole program, so it must be always written in source code.
 The general form of function is:
 <font face=''code''>data_type function_name (parameters) { body }</font>
@@ -396,18 +396,18 @@ So the main function may have following form:
  // here are statements of function body
  return 0; // so called return value of function
 }</font>
-The main function returns integer value, thus data type of function main is <b>int</b>.', 1, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (104, 'Header files', 'A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.<br>The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.<br>You request to use a header file in your program by including it with the C preprocessing directive #include. The syntax of #include has following two forms:<br><font face=''code''>#include &lt;name&gt;</font><br>This variant is for the system (compiler) files, and<br><font face=''code''>#include ''name''</font><br>for files written by programmer.<br>Detailed information about preprocessing directives comes later in this course.', 2, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (105, 'Common simple input/output', 'Almost every program needs to input some values and output results. So we have to use appropriate commands for it.<br>The input and output operations depend always on operation system environment. Every system and every situation is solved differently. But the programmer – the author of program – have no information about it. The source code of program must work on many systems and programmer have to write the same commands.<br>So the input and output operations are encapsulated into functions which bodies are implemented according to operation system you actually use and their headers are always the same.<br>Every programming language have some commands for the input and output operations, but every programming language have a different approach for it.<br>We will discuss two approaches because of two different versions of C language: pure C and C++ versions.', 3, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (106, 'Standard library for simple input/output', 'In the C++ programming language, the C++ Standard Library is a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself. The C++ Standard Library provides support for some language features and functions for everyday tasks such as finding the square root of a number or simple input/output.<br>There are differences between C and C++ standard library. We prefer C++ approach, so we show C++ simple input/output and appropriate part of standard library for this.<br>We need some input values and write output in almost every program. In very simple form we have statement for input: cin (it stands for ''console input''), and statement for output: cout (i.e. ''console output'').<br>When we need mentioned commands, we have to include a standard library for this in following form:<br><font face=''code''>#include &lt;iostream&gt;</font>', 4, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (107, 'Simple input and output in C++', 'As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator ''&lt;&lt;'' and ''&gt;&gt;''. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator ''&gt;&gt;'' points from cin to the variable, operator ''&lt;&lt;'' points from variable or expression to cout. For example input to two variables:<br>cin &gt;&gt; Var1 &gt;&gt; Var2;<br>Output can be realized as a sequence of expressions:<br>cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; endl;<br>Note that cin, cout and endl (stands for ''end of line'') are objects in namespace std. When we use them directly, we have to open this namespace via command:<br>using namespace std;<br>If we did not specify this command, it would be necessary to write a space name for each element contained in it:<br>std::cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; std::endl;<br>Standard error output<br>Just as we can write to the standard output (stream cout), we can write to the standard error output in the same way using the stream cerr. Everything else remains the same as cout. We will always use the standard error output if we want to convey some non-standard situation or auxiliary information to the user. We never mix these auxiliary messages with data, so we don''t write them to standard output! For example:<br>double a, b;<br>cin &gt;&gt; a &gt;&gt; b; // input two non-zero numbers<br>if (a*b == 0) cerr &lt;&lt; ''invalid data!'' &lt;&lt; endl; // error!<br> else // valid data, output to stdout<br>  cout &lt;&lt; ''Contents of rectangle is '' &lt;&lt; a*b &lt;&lt; endl;', 5, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (108, 'What is a variable?', 'A variable is certain place in computer memory which can hold some values. It''s different approach than in mathematics.<br>What place does the memory variable occupy? This depends on its data type. Data types will be discussed later in this course.<br>If a variable occupies some space, we can insert certain values into it.<br>Each memory space has its address. In order not to remember the numeric form of the address, these addresses are named, so we call it a variable identifier. It represents the numeric form of the address.<br>So each variable has its address (or name in form of identifier) and its value.', 6, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (109, 'Values of variable', 'Each variable can hold some values. Because the variable occupies certain space in the computer''s memory, which is composed as a sequence of bits, each value is machine-displayed as a sequence of zeros and ones.
+The main function returns integer value, thus data type of function main is <b>int</b>.', 1, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (104, 'Header files', 'A header file is a file with extension .h which contains declarations and definitions to be shared between several source files. There are two types of header files: the files that the programmer writes and the files that comes with your compiler.<br>The use of header file is necessary in almost every program. One of the most useful header file which come with compiler (or operating system) is file with declaration of input/output operations.<br>You request to use a header file in your program by including it with the C preprocessing directive #include. The syntax of #include has following two forms:<br><font face=''code''>#include &lt;name&gt;</font><br>This variant is for the system (compiler) files, and<br><font face=''code''>#include ''name''</font><br>for files written by programmer.<br>Detailed information about preprocessing directives comes later in this course.', 2, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (105, 'Common simple input/output', 'Almost every program needs to input some values and output results. So we have to use appropriate commands for it.<br>The input and output operations depend always on operation system environment. Every system and every situation is solved differently. But the programmer – the author of program – have no information about it. The source code of program must work on many systems and programmer have to write the same commands.<br>So the input and output operations are encapsulated into functions which bodies are implemented according to operation system you actually use and their headers are always the same.<br>Every programming language have some commands for the input and output operations, but every programming language have a different approach for it.<br>We will discuss two approaches because of two different versions of C language: pure C and C++ versions.', 3, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (106, 'Standard library for simple input/output', 'In the C++ programming language, the C++ Standard Library is a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself. The C++ Standard Library provides support for some language features and functions for everyday tasks such as finding the square root of a number or simple input/output.<br>There are differences between C and C++ standard library. We prefer C++ approach, so we show C++ simple input/output and appropriate part of standard library for this.<br>We need some input values and write output in almost every program. In very simple form we have statement for input: cin (it stands for ''console input''), and statement for output: cout (i.e. ''console output'').<br>When we need mentioned commands, we have to include a standard library for this in following form:<br><font face=''code''>#include &lt;iostream&gt;</font>', 4, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (107, 'Simple input and output in C++', 'As mentioned earlier, cin and cout are available for input and output. Their use is supplemented by a special operator ''&lt;&lt;'' and ''&gt;&gt;''. Multiple items can be read or written with one cin command and one cout command. Small hint: Operator ''&gt;&gt;'' points from cin to the variable, operator ''&lt;&lt;'' points from variable or expression to cout. For example input to two variables:<br>cin &gt;&gt; Var1 &gt;&gt; Var2;<br>Output can be realized as a sequence of expressions:<br>cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; endl;<br>Note that cin, cout and endl (stands for ''end of line'') are objects in namespace std. When we use them directly, we have to open this namespace via command:<br>using namespace std;<br>If we did not specify this command, it would be necessary to write a space name for each element contained in it:<br>std::cout &lt;&lt; ''The value is '' &lt;&lt; Var1 + Var2*5 &lt;&lt; ''.'' &lt;&lt; std::endl;<br>Standard error output<br>Just as we can write to the standard output (stream cout), we can write to the standard error output in the same way using the stream cerr. Everything else remains the same as cout. We will always use the standard error output if we want to convey some non-standard situation or auxiliary information to the user. We never mix these auxiliary messages with data, so we don''t write them to standard output! For example:<br>double a, b;<br>cin &gt;&gt; a &gt;&gt; b; // input two non-zero numbers<br>if (a*b == 0) cerr &lt;&lt; ''invalid data!'' &lt;&lt; endl; // error!<br> else // valid data, output to stdout<br>  cout &lt;&lt; ''Contents of rectangle is '' &lt;&lt; a*b &lt;&lt; endl;', 5, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (108, 'What is a variable?', 'A variable is certain place in computer memory which can hold some values. It''s different approach than in mathematics.<br>What place does the memory variable occupy? This depends on its data type. Data types will be discussed later in this course.<br>If a variable occupies some space, we can insert certain values into it.<br>Each memory space has its address. In order not to remember the numeric form of the address, these addresses are named, so we call it a variable identifier. It represents the numeric form of the address.<br>So each variable has its address (or name in form of identifier) and its value.', 6, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (109, 'Values of variable', 'Each variable can hold some values. Because the variable occupies certain space in the computer''s memory, which is composed as a sequence of bits, each value is machine-displayed as a sequence of zeros and ones.
 A sequence of ones and zeros can mean different values. The simplest interpretation is as a non-negative integer in the binary system.
 Suppose a variable occupies a space of two bytes. What values can be stored on this space?
 The minimum value is represented by all zeros and represents zero. The maximum value is formed by the ones themselves. Two bytes are 16 binary ones, which is a decimal number of 65,535. So a two-byte variable can hold a value between 0 and 65,535.
- Generally, a variable on a n-bit space can hold a maximum value of 2n-1.', 7, null, 2);
-INSERT INTO public.lesson (id, name, content, ordinal_number, node_id, topic_id) VALUES (110, 'Variable declaration', 'Each variable you planned to use have to be declared. This means we have to tell the computer how the variable will be named and what data type it will be. According to the data type, the compiler creates the appropriate space for this variable in computer memory. The declaration must always precede the use of the variable.
+ Generally, a variable on a n-bit space can hold a maximum value of 2n-1.', 7, 2);
+INSERT INTO public.lesson (id, name, content, ordinal_number, topic_id) VALUES (110, 'Variable declaration', 'Each variable you planned to use have to be declared. This means we have to tell the computer how the variable will be named and what data type it will be. According to the data type, the compiler creates the appropriate space for this variable in computer memory. The declaration must always precede the use of the variable.
 The declaration in C/C++ language is written as follows scheme:
 <font face=''code''>data_type variable_identifier;</font>
 For example (<b>int<b/> is identifier for integer data type):
@@ -417,7 +417,7 @@ If we need more variables of the same type, we can use the notation where we spe
 <font face=''code''>int suma, current_value, count;</font>
 After the declaration, the value of the variable is undefined. If we want the variable to have its initial value along with the declaration, we can write it directly into the declaration statement. In one declaration statement, we can combine variables without and with an initial value. For example:
 <font face=''code''>int suma=0, current_value, count=1;</font>
-The variable current_value has undefined value, but suma has value zero and count has value 1.', 8, null, 2);
+The variable current_value has undefined value, but suma has value zero and count has value 1.', 8, 2);
 
 -- -------------------------------------------------------------------------
 -- TEST
@@ -430,44 +430,44 @@ INSERT INTO public.test (id, name) VALUES (4, 'Test 3');
 -- -------------------------------------------------------------------------
 -- NODE
 -- -------------------------------------------------------------------------
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('1', '0', '1', '1', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('2', '1', '2', '2', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('3', '1', '3', '3', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('4', '1', '3', '4', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('5', '1', '4', '5', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('6', '2', '6', '6', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('7', '2', '7', '7', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('8', '3', '8', '8', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('9', '4', '9', '9', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('10', '4', '10', '10', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('11', '4', '11', '11', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('12', '5', '12', '12', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('13', '5', '13', '13', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('14', '5', '14', '14', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('15', '5', '15', '15', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('16', '6', '16', '16', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('17', '6', '17', '17', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('18', '7', '18', '18', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('19', '8', '19', '19', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('20', '8', '20', '20', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('21', '8', '21', '21', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('22', '8', '22', '22', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('23', '9', '23', '23', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('24', '10', '24', '24', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('25', '10', '25', '25', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('26', '10', '26', '26', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('27', '10', '27', '27', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('28', '11', '28', '28', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('29', '100', '29', '29', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('101', '0', '101', '101', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('103', '1', '103', '103', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('104', '2', '104', '104', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('105', '3', '105', '105', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('106', '4', '106', '106', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('107', '5', '107', '107', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('108', '6', '108', '108', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('109', '7', '109', '109', 'False', 'False', '1', '1');
-INSERT INTO public.node (id, level, lesson_id, pretest_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('110', '8', '110', '110', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('1', '0', '1', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('2', '1', '2', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('3', '1', '3', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('4', '1', '4', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('5', '1', '5', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('6', '2', '6', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('7', '2', '7', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('8', '3', '8', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('9', '4', '9', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('10', '4', '10', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('11', '4', '11', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('12', '5', '12', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('13', '5', '13', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('14', '5', '14', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('15', '5', '15', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('16', '6', '16', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('17', '6', '17', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('18', '7', '18', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('19', '8', '19', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('20', '8', '20', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('21', '8', '21', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('22', '8', '22', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('23', '9', '23', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('24', '10', '24', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('25', '10', '25', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('26', '10', '26', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('27', '10', '27', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('28', '11', '28', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('29', '100', '29', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('101', '0', '101', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('103', '1', '103', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('104', '2', '104', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('105', '3', '105', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('106', '4', '106', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('107', '5', '107', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('108', '6', '108', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('109', '7', '109', 'False', 'False', '1', '1');
+INSERT INTO public.node (id, level, lesson_id, walk_through, successfully_completed, level_depth, question_depth) VALUES ('110', '8', '110', 'False', 'False', '1', '1');
 
 -- -------------------------------------------------------------------------
 -- OPTION -- TODO co s otevrenymi otazkami a spravnymi odpovedmi?
@@ -1329,7 +1329,8 @@ INSERT INTO public.question (id, text, question_type, points, ordinal_number, le
 INSERT INTO public.question (id, text, question_type, points, ordinal_number, lesson_id) VALUES ('1009', 'For input/output operations in C++ we use:', '0', '1', '0', '106');
 INSERT INTO public.question (id, text, question_type, points, ordinal_number, lesson_id) VALUES ('1010', 'What is a variable in programming language?', '0', '1', '0', '108');
 INSERT INTO public.question (id, text, question_type, points, ordinal_number, lesson_id) VALUES ('1011', 'Variable identifier in programming language', '0', '1', '0', '110');
-INSERT INTO public.question (id, text, question_type, points, ordinal_number, lesson_id) VALUES ('1012', 'We want to read two values of A and B. These values represent the sides of the rectangle. We should write to output the contents and perimeter of this rectangle. Fill in appropriate parts into following code: #include <iostream>
+INSERT INTO public.question (id, text, question_type, points, ordinal_number, lesson_id) VALUES ('1012', 'the contents and perimeter of this rectangle. :
+#include <iostream>
 using namespace std;
 int main(){
    float A, B;
