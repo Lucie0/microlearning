@@ -87,8 +87,10 @@ fun ChooseLessonScreen(
                     ListItem(
                         headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) },
                         modifier = Modifier.clickable {
-                            println("Clicked on lesson: " + it.id + " " + it.name)
+                            println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                             navigation.navigateToLessonScreen(
+                                lessonId = -1L,
+                                nodeId = -1L,
                                 lessonOrdinalNumber = it.ordinalNumber,
                                 topicId = topicId
                             ) // todo topic id  gettnout z it po vytvoreni modelu LessonNAMES?
