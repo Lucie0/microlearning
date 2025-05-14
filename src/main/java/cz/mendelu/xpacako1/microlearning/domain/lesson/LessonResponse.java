@@ -20,7 +20,7 @@ public class LessonResponse {
     private int ordinalNumber;
     private String content;
 
-    private Long nodeId;
+//    private Long nodeId;
     private ArrayResponse<QuestionResponse> questions;
     private String topic;
 
@@ -29,11 +29,11 @@ public class LessonResponse {
         this.name = lesson.getName();
 
         this.ordinalNumber = lesson.getOrdinalNumber();
-        if (lesson.getNode() != null) {
-            this.nodeId = lesson.getNode().getId(); //.stream().map(Node::getId).toList();
-        } else {
-            this.nodeId = 0L;
-        }
+//        if (lesson.getNode() != null) {
+//            this.nodeId = lesson.getNode().getId(); //.stream().map(Node::getId).toList();
+//        } else {
+//            this.nodeId = 0L;
+//        }
 
         this.questions = ArrayResponse.of(lesson.getQuestions(), QuestionResponse::new);
 

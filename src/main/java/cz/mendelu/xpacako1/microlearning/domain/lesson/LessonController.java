@@ -85,12 +85,16 @@ public class LessonController {
             @ApiResponse(responseCode = "200", description = "Lessons by ordinal number"),
             @ApiResponse(responseCode = "404", description = "Lessons not found"),
     })
-    @GetMapping(value = "/byTopic/{topicId}/byOrdinalNumber/{ordinalNumber}", produces = "application/json")
+    @GetMapping(
+            value = "/byTopic/{topicId}/byOrdinalNumber/{ordinalNumber}",
+            produces = "application/json"
+    )
     public ObjectResponse<LessonResponse> getLessonsByOrdinalNumberAndTopicId(
             @PathVariable int ordinalNumber,
             @PathVariable Long topicId
     ) {
-        Lesson lesson =  lessonService.getByOrdinalNumberAndTopicId(ordinalNumber, topicId).orElseThrow(() -> new NotFoundException("Lesson not found"));
+        Lesson lesson =  lessonService.getByOrdinalNumberAndTopicId(ordinalNumber, topicId)
+                .orElseThrow(() -> new NotFoundException("Lesson not found"));
 
         return ObjectResponse.of(
                 lesson,

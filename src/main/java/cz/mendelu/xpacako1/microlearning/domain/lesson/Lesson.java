@@ -40,8 +40,8 @@ public class Lesson {
 //    @OneToMany(mappedBy = "lesson")
     //    private List<Node> nodes = new ArrayList<>();
 
-    @OneToOne
-    private Node node;
+//    @OneToOne/
+//    private Node node;
 
     @ManyToOne
     private Topic topic;
@@ -57,6 +57,6 @@ public class Lesson {
     public Lesson(String name, String content, Node node){
         this.name = name;
         this.content = content;
-        this.node = node;
+//        this.node = node;
     }
 }
