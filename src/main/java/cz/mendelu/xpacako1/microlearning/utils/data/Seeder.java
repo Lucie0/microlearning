@@ -47,8 +47,9 @@ public class Seeder {
     }
 
     private boolean shouldSeedData() {
+        return false;
         // return
-        return lessonService.getAllLessons().isEmpty();
+//        return lessonService.getAllLessons().isEmpty();
     }
 
     @PostConstruct
