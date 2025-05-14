@@ -32,6 +32,12 @@ interface API {
     @GET("/lessons/shorter")
     suspend fun getLessonsShorter() : Response<ArrayResponse<LessonShorter>>
 
+    @Headers("ngrok-skip-browser-warning: 1")
+    @GET("/lessons/shorter")
+    suspend fun getLessonsShorterByTopicId(
+        @Query("topicId") topicId: Long
+    ) : Response<ArrayResponse<LessonShorter>>
+
     @Headers("ngrok-skip-browser-warning: true")
     @GET("/lessons/{id}")
     suspend fun getLessonById(@Path("id") id: Long) : Response<ObjectResponse<Lesson>>
