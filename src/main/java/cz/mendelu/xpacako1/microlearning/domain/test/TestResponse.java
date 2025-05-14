@@ -19,6 +19,6 @@ public class TestResponse {
         this.name = test.getName();
 //        this.questions = ArrayResponse.of(test.getQuestions, QuestionResponse::new);
 
-        this.nodeIds = test.getNodes().stream().map(Node::getId).toList();
+//        this.nodeIds = test.getNodes().stream().map(Node::getId).toList();
     }
 }

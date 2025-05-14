@@ -18,7 +18,6 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="pretest_id" type="bigint"/>
             <column name="lesson_id" type="bigint"/>
             <column name="question_depth" type="bigint"/>
             <column name="level_depth" type="bigint"/>

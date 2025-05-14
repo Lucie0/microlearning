@@ -36,10 +36,10 @@ public class Test {
 //    @OneToMany
 //    private List<Question> questions;
 //
-    @OneToMany(mappedBy = "pretest")
-    private List<Node> nodes = new ArrayList<>();
-//    @ManyToOne//(mappedBy = "pretest")
-//    private Node node;
+//    @OneToMany(mappedBy = "pretest")
+//    private List<Node> nodes = new ArrayList<>();
+////    @ManyToOne//(mappedBy = "pretest")
+////    private Node node;
 
     public Test(String name){
         this.name = name;

@@ -7,9 +7,9 @@ import lombok.Data;
 public class NodeResponse {
     private Long id;
 
-    // todo smazat
-    private Long testId;
-    private String testName;
+    //  smazat
+//    private Long testId;
+//    private String testName;
 
     private Long lessonId;
     private String lessonName;
@@ -27,14 +27,13 @@ public class NodeResponse {
         this.id = node.getId();
         this.level = node.getLevel();
 
-        // todo vyresit, pretest byva null
-        if (node.getPretest() != null) {
-            this.testId = node.getPretest().getId();
-            this.testName = node.getPretest().getName();
-        } else {
-            this.testId = 0L;
-            this.testName = "";
-        }
+//        if (node.getPretest() != null) {
+//            this.testId = node.getPretest().getId();
+//            this.testName = node.getPretest().getName();
+//        } else {
+//            this.testId = 0L;
+//            this.testName = "";
+//        }
 //
 //         todo vyresit
         if (node.getLesson() != null) {

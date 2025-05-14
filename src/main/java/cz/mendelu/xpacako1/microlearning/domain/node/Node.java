@@ -21,9 +21,9 @@ public class Node {
 //    @OneToMany(mappedBy = "node")
 //    private List<Test> pretests = new ArrayList<>();
 
-    // todo smazat
-    @ManyToOne
-    private Test pretest;
+    //  smazat
+//    @ManyToOne
+//    private Test pretest;
 
 //    @OneToOne(mappedBy = "node")
 //    @OneToMany(mappedBy = "node")
