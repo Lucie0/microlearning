@@ -12,7 +12,7 @@ public class OptionResponse {
 
     public OptionResponse(Option option){
         this.id = option.getId();
-        this.text = option.getText();
+        this.text = option.getOText();
         this.correctAnswer = option.isCorrectAnswer();
         this.groupNumber = option.getGroupNumber();
         this.questionId = option.getQuestion().getId();

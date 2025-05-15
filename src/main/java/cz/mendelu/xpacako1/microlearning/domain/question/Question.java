@@ -24,7 +24,8 @@ public class Question {
     private QuestionType questionType;
 
     @NotNull
-    private String text;
+    @Column(columnDefinition = "text", name = "q_text")
+    private String qText;
 
     @NotNull
     private int points;
@@ -49,7 +50,7 @@ public class Question {
     }
 
     public Question(String text, int points, int ordinalNumber, List<Option> options){
-        this.text = text;
+        this.qText = text;
         this.points = points;
         this.ordinalNumber = ordinalNumber;
         this.options = options;

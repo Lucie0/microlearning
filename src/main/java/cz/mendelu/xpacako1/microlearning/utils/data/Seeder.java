@@ -193,7 +193,7 @@ public class Seeder {
         // ------------------------------------ Q1 ------------------------------------
         Question q1 = new Question();
         q1.setQuestionType(QuestionType.ONE_FROM_N);
-        q1.setText("Parameters of the main function are enclosed by:");
+//        q1.setText("Parameters of the main function are enclosed by:");
         q1.setOrdinalNumber(1);
         q1.setPoints(1);
 
@@ -206,7 +206,7 @@ public class Seeder {
         // ------------------------------------ Q2 ------------------------------------
         Question q2 = new Question();
         q2.setQuestionType(QuestionType.ONE_FROM_N);
-        q2.setText("The header file is:");
+//        q2.setText("The header file is:");
         q2.setOrdinalNumber(1);
         q2.setPoints(1);
 
@@ -220,7 +220,7 @@ public class Seeder {
         // ------------------------------------ q3 ------------------------------------
         Question q3 = new Question();
         q3.setQuestionType(QuestionType.ONE_FROM_N);
-        q3.setText("The header file to come with compiler or operating system is used to write:");
+//        q3.setText("The header file to come with compiler or operating system is used to write:");
         q3.setOrdinalNumber(2);
         q3.setPoints(1);
 
@@ -234,7 +234,7 @@ public class Seeder {
         // ------------------------------------ q4 ------------------------------------
         Question q4 = new Question();
         q4.setQuestionType(QuestionType.ONE_FROM_N);
-        q4.setText("The header file written by programmer is used to write");
+//        q4.setText("The header file written by programmer is used to write");
         q4.setOrdinalNumber(3);
         q4.setPoints(1);
 
@@ -248,10 +248,10 @@ public class Seeder {
         // ------------------------------------ q5 ------------------------------------
         Question q5 = new Question();
         q5.setQuestionType(QuestionType.OPEN);
-        q5.setText("Assume the following variable declarations:\n" +
-                "   <font face='code'>double A, B = 0;\n" +
-                "   float C, D=1.2E-2;</font>\n" +
-                "How much total memory do these variables take?");
+//        q5.setText("Assume the following variable declarations:\n" +
+//                "   <font face='code'>double A, B = 0;\n" +
+//                "   float C, D=1.2E-2;</font>\n" +
+//                "How much total memory do these variables take?");
         q5.setOrdinalNumber(4);
         q5.setPoints(2);
 
@@ -262,9 +262,9 @@ public class Seeder {
         // ------------------------------------ q6 ------------------------------------
         Question q6 = new Question();
         q6.setQuestionType(QuestionType.CLOZE);
-        q6.setText("The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, " +
-                "identifier \"main\", parameters and body. The body of main function contains statement " +
-                "for [[3]].");
+//        q6.setText("The main function represents [[1]] of C-program. Its declaration consists of [[2]] type, " +
+//                "identifier \"main\", parameters and body. The body of main function contains statement " +
+//                "for [[3]].");
         q6.setOrdinalNumber(5);
         q6.setPoints(2);
 
@@ -288,7 +288,7 @@ public class Seeder {
         // ------------------------------------ Q7 ------------------------------------
         Question q7 = new Question();
         q7.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
-        q7.setText("The body of main function is enclosed by parenthesis.");
+//        q7.setText("The body of main function is enclosed by parenthesis.");
         q7.setOrdinalNumber(1);
         q7.setPoints(1);
 
@@ -300,7 +300,7 @@ public class Seeder {
         // ------------------------------------ Q8 ------------------------------------
         Question q8 = new Question();
         q8.setQuestionType(QuestionType.ONE_FROM_N); // jako true/false
-        q8.setText("Header files have two types: system and programmer made.");
+//        q8.setText("Header files have two types: system and programmer made.");
         q8.setOrdinalNumber(1);
         q8.setPoints(1);
 
@@ -312,7 +312,7 @@ public class Seeder {
         // ------------------------------------ Q9 ------------------------------------
         Question q9 = new Question();
         q9.setQuestionType(QuestionType.ONE_FROM_N);
-        q9.setText("For input/output operations in C++ we use:");
+//        q9.setText("For input/output operations in C++ we use:");
         q9.setOrdinalNumber(1);
         q9.setPoints(1);
 
@@ -326,7 +326,7 @@ public class Seeder {
         // ------------------------------------ q10 ------------------------------------
         Question q10 = new Question();
         q10.setQuestionType(QuestionType.ONE_FROM_N);
-        q10.setText("What is a variable in programming language?");
+//        q10.setText("What is a variable in programming language?");
         q10.setOrdinalNumber(1);
         q10.setPoints(1);
 
@@ -339,7 +339,7 @@ public class Seeder {
         // ------------------------------------ q11 ------------------------------------
         Question q11 = new Question();
         q11.setQuestionType(QuestionType.ONE_FROM_N);
-        q11.setText("Variable identifier in programming language");
+//        q11.setText("Variable identifier in programming language");
         q11.setOrdinalNumber(1);
         q11.setPoints(1);
 

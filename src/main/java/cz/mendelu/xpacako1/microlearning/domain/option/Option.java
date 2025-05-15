@@ -21,7 +21,8 @@ public class Option implements Serializable {
     private Long id;
 
     @NotNull
-    private String text;
+    @Column(name = "o_text")
+    private String oText;
 
     @Column(name = "correct_answer")
     private boolean correctAnswer;
@@ -36,21 +37,21 @@ public class Option implements Serializable {
     private Question question;
 
     public Option(String text, boolean correctAnswer, int groupNumber, Question question){
-        this.text = text;
+        this.oText = text;
         this.correctAnswer = correctAnswer;
         this.groupNumber = groupNumber;
         this.question = question;
     }
 
     public Option(String text, boolean correctAnswer, Question question){
-        this.text = text;
+        this.oText = text;
         this.correctAnswer = correctAnswer;
         this.groupNumber = 0;
         this.question = question;
     }
 
     public String toString(){
-        return " Option("+ this.id + "," + this.text + "," + this.correctAnswer + "," + this.groupNumber + ")";
+        return " Option("+ this.id + "," + this.oText + "," + this.correctAnswer + "," + this.groupNumber + ")";
     }
 
 }

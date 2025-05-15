@@ -18,7 +18,7 @@ public class QuestionResponse {
     public QuestionResponse(Question question){
         this.id = question.getId();
         this.questionType = question.getQuestionType().name();
-        this.text = question.getText();
+        this.text = question.getQText();
         this.points = question.getPoints();
         this.ordinalNumber = question.getOrdinalNumber();
         this.lessonId = question.getLesson().getId();
