@@ -1,7 +1,6 @@
 package cz.mendelu.pef.microlearning.model
 
 import com.squareup.moshi.JsonClass
-import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import java.io.Serializable
 
 
@@ -21,17 +20,17 @@ data class Node(
     var questionDepth: Int?,
     var levelDepth: Int?,
 
-//    var walkThrough: Boolean?,
-//    var successfullyCompleted: Boolean?,
+    var walkThrough: Boolean?,
+    var successfullyCompleted: Boolean?,
 ): Serializable {
     var countOfCorrectAnswers: Long = 0
     var countOfIncorrectAnswers: Long = 0
 
     // predci
-    var previousNodes: List<Long> = listOf()
+    var previousNodesIds: List<Long> = mutableListOf()
 
     // naslednici
-    var subsequentNode: List<Long> = listOf()
+    var subsequentNodeIds: List<Long> = mutableListOf()
 
 //    fun setCount(count: Long) {
 //        countOfCorrectAnswers = count

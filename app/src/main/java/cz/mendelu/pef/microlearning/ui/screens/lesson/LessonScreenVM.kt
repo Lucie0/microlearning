@@ -7,13 +7,7 @@ import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.NetworkInterceptor
-import cz.mendelu.pef.microlearning.communication.RemoteMockRepositoryImpl
-import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
-import cz.mendelu.pef.microlearning.model.Lesson
-import cz.mendelu.pef.microlearning.model.LinkAfter
 import cz.mendelu.pef.microlearning.model.UiState
-import cz.mendelu.pef.microlearning.model.response.ObjectResponse
-import cz.mendelu.pef.microlearning.ui.screens.MainErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -231,7 +225,7 @@ class LessonScreenVM @Inject constructor(
             println("getnextnodeid(): actualnodeid: $actualNodeId")
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    remoteRepository.getNodeAfter(actualNodeId!!)
+                    remoteRepository.getNodesAfter(actualNodeId!!)
                 }
 
                 when (result) {

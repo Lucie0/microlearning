@@ -11,7 +11,6 @@ import cz.mendelu.pef.microlearning.model.Test
 import cz.mendelu.pef.microlearning.model.Topic
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
-import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -37,7 +36,7 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
     override suspend fun getLessonsShorterByTopicId(topicId: Long): CommunicationResult<ArrayResponse<LessonShorter>> {
         return processResponse(
             withContext(Dispatchers.IO) {
-                api.getLessonsShorterByTopicId(topicId);
+                api.getLessonsShorterByTopicId(topicId)
             }
         )
     }
@@ -101,7 +100,7 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         )
     }
 
-    override suspend fun getNodeAfter(id: Long): CommunicationResult<ArrayResponse<LinkAfter>> {
+    override suspend fun getNodesAfter(id: Long): CommunicationResult<ArrayResponse<LinkAfter>> {
         return processResponse(
             withContext(Dispatchers.IO) {
                 api.getNodeAfter(id)
@@ -109,10 +108,18 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         )
     }
 
-    override suspend fun getNodeBefore(id: Long): CommunicationResult<ArrayResponse<LinkBefore>> {
+    override suspend fun getNodesBefore(id: Long): CommunicationResult<ArrayResponse<LinkBefore>> {
         return processResponse(
             withContext(Dispatchers.IO) {
                 api.getNodeBefore(id)
+            }
+        )
+    }
+
+    override suspend fun getNodesByTopic(topicId: Long): CommunicationResult<ArrayResponse<Node>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getNodesByTopic(topicId)
             }
         )
     }
