@@ -14,7 +14,7 @@ import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.MainScreen
 import cz.mendelu.pef.microlearning.ui.screens.ModesScreen
 import cz.mendelu.pef.microlearning.ui.screens.SettingsScreen
-import cz.mendelu.pef.microlearning.ui.screens.chooseLesson.ChooseLessonScreen
+import cz.mendelu.pef.microlearning.ui.screens.chooseLesson.ChooseNameOfLessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen
 import cz.mendelu.pef.microlearning.ui.screens.test.TestScreen
 
@@ -125,7 +125,7 @@ fun NavGraph(
 
         // choose lesson scren s 2 args
         composable(
-            route = Destination.ChooseLessonScreen.route + "/{topicName}/{topicId}", // receni, ze to bude paramter v ceste
+            route = Destination.ChooseNameOfLessonScreen.route + "/{topicName}/{topicId}", // receni, ze to bude paramter v ceste
             arguments = listOf(
                 navArgument("topicName") {
                     type = NavType.StringType
@@ -139,7 +139,7 @@ fun NavGraph(
         ) {
             val topicName = it.arguments?.getString("topicName")
             val topicId = it.arguments?.getLong("topicId")
-            ChooseLessonScreen(
+            ChooseNameOfLessonScreen(
 //                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
                 topicName = topicName ?: "",
                 topicId = if (topicId != -1L) topicId else null,

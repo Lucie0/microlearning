@@ -1,9 +1,6 @@
 package cz.mendelu.pef.microlearning.navigation
 
 import androidx.navigation.NavController
-import cz.mendelu.pef.microlearning.model.Node
-import cz.mendelu.pef.microlearning.navigation.Destination
-import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 
 class NavigationRouterImpl(private val navController: NavController) : INavigationRouter {
 
@@ -41,8 +38,8 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //        return TODO("not yet implemented")
 //    }
 
-    override fun navigateToChooseLessonScreen(topicName: String?, topicId: Long?) {
-        navController.navigate(Destination.ChooseLessonScreen.route + "/" + topicName + "/" + topicId)
+    override fun navigateToChooseNameOfLessonScreen(topicName: String?, topicId: Long?) {
+        navController.navigate(Destination.ChooseNameOfLessonScreen.route + "/" + topicName + "/" + topicId)
     }
 
 //    override fun navigateToMainScreen(lastLessonId: Long?) {

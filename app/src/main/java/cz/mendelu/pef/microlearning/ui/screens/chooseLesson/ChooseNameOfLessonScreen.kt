@@ -17,14 +17,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun ChooseLessonScreen(
+fun ChooseNameOfLessonScreen(
     topicName: String,
     topicId: Long?,
     navigation: INavigationRouter
@@ -57,7 +59,7 @@ fun ChooseLessonScreen(
         } else null,
         drawFullScreenContent = true
     ) {
-        ChooseLessonScreen(
+        ChooseNameOfLessonScreenContent(
             paddingValues = it,
             uiState = uiState.value,
             topicId = topicId,
@@ -68,15 +70,12 @@ fun ChooseLessonScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChooseLessonScreen(
+fun ChooseNameOfLessonScreenContent(
     paddingValues: PaddingValues,
     uiState: UiState<ChooseLessonData, ChooseLessonErrors>,
     topicId: Long?,
     navigation: INavigationRouter
 ) {
-
-//    println("***uistate:" + uiState.data?.lessons)
-
     // vypsat vsechny lekce z uistate
     LazyColumn(
         modifier = Modifier.padding(paddingValues)
@@ -87,13 +86,20 @@ fun ChooseLessonScreen(
                     ListItem(
                         headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) },
                         modifier = Modifier.clickable {
-                            println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
-                            navigation.navigateToLessonScreen(
-                                lessonId = -1L,
-                                nodeId = -1L,
-                                lessonOrdinalNumber = it.ordinalNumber,
-                                topicId = topicId
-                            ) // todo topic id  gettnout z it po vytvoreni modelu LessonNAMES?
+                            if (mode.value == Modes.REVISION.name) {
+                                println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
+                                navigation.navigateToLessonScreen(
+                                    lessonId = -1L,
+                                    nodeId = -1L,
+                                    lessonOrdinalNumber = it.ordinalNumber,
+                                    topicId = topicId
+                                ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
+                            } else if (mode.value == Modes.TESTING.name) {
+                                //  todo navigate to test 1 apod...
+                            } else {
+                                // TUITION MODE
+                                // todo navigate to lesson, then test apod...
+                            }
                         }
                     )
                 }

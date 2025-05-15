@@ -8,40 +8,29 @@ import android.os.Build
 import android.text.SpannableStringBuilder
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import cz.mendelu.pef.microlearning.MainApplication
-import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.mode
-import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
@@ -162,46 +151,23 @@ fun MainScreenContent(
 
 //        HelloWorldScreen()
 
-        Button(
-            onClick = {
-//                println(uiState.data)
-                navigation.navigateToQuestionScreen(
-//                    title = uiState.data?.content?.testName ?: "Test",
-                    nodeId = nodeId,
-//                    testId = uiState.data?.node?.content?.testId,
-                    testId = 1, // todo
-                    lessonId = uiState.data?.node?.content?.lessonId,
-//                    lessonName = uiState.data?.content?.lessonName
-                )
-//                navigation.navigateToLessonScreen(lessonId = uiState.data?.content?.lessonId, nodeId = nodeId)
-            },
-            enabled = uiState.data?.node?.content?.lessonId != null
-        ) {
-            Text(text = "Start")
-        }
-
-        Button(onClick = { navigation.navigateToChooseLessonScreen("Programming", 2) }) {
-            Text("Choose lesson")
-        }
-//        }
-
 //        Button(
-//            onClick = { navigation.navigateToLessonScreen() }
+//            onClick = {
+//                navigation.navigateToQuestionScreen(
+//                    nodeId = nodeId,
+//                    testId = 1, // todo
+//                    lessonId = uiState.data?.node?.content?.lessonId,
+//                )
+//            },
+//            enabled = uiState.data?.node?.content?.lessonId != null
 //        ) {
-//            Text(text = "Lesson null")
+//            Text(text = "Start")
 //        }
-
-//        // predtim misto last lesson id byla 1
-//        Button(onClick = { navigation.navigateToLessonScreen(lastLessonId) }) {
-//            Text(text = "Lesson by id")
+//
+//        Button(onClick = { navigation.navigateToChooseNameOfLessonScreen("Programming", 2) }) {
+//            Text("Choose lesson")
 //        }
-
-//        Button(onClick = { navigation.navigateToQuestionScreen("Title") }) {
-//            Text(text = "Question")
-//        }
-
-        // Html()
-        // HtmlText() // zavislost v gradle
+//
     }
 }
 

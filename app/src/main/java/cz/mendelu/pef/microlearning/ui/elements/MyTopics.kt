@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cz.mendelu.pef.microlearning.model.Topic
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
-import cz.mendelu.pef.microlearning.navigation.NavigationRouterImpl
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +24,7 @@ fun MyTopics(
                 if (topic != null) {
                     ListItem(headlineText = { Text(topic.name ?: ("Lesson" + topic.id))}, modifier = Modifier.clickable {
                         println("Clicked on ${topic.name}")
-                        navigation.navigateToChooseLessonScreen(topic.name, topic.id)
+                        navigation.navigateToChooseNameOfLessonScreen(topic.name, topic.id)
                     })
                 }
 

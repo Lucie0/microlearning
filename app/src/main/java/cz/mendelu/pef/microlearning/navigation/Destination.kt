@@ -7,5 +7,5 @@ sealed class Destination(val route: String) {
     object TestScreen: Destination(route = "test")
     object SettingsScreen: Destination(route = "settings")
     object ModesScreen: Destination(route = "modes")
-    object ChooseLessonScreen: Destination(route = "chooseLesson")
+    object ChooseNameOfLessonScreen: Destination(route = "chooseLesson")
 }
