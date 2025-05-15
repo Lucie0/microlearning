@@ -8,7 +8,7 @@ import java.io.Serializable
 data class Question(
     var id: Long?,
     var questionType: String?,
-    var qText: String?,
+    var text: String?,
     var points: Int?,
     var ordinalNumber: Int?,
     var options: ArrayResponse<Option>

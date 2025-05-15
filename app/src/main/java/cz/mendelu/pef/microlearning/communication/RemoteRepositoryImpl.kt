@@ -84,6 +84,14 @@ class RemoteRepositoryImpl @Inject constructor(private val api: API) : IRemoteRe
         )
     }
 
+    override suspend fun getQuestionsByLessonId(lessonId: Long): CommunicationResult<ArrayResponse<Question>> {
+        return processResponse(
+            withContext(Dispatchers.IO) {
+                api.getQuestionsByLessonId(lessonId)
+            }
+        )
+    }
+
     override suspend fun getNodes(): CommunicationResult<ArrayResponse<Node>> {
         return processResponse(
             withContext(Dispatchers.IO) {

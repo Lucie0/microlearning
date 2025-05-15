@@ -103,9 +103,9 @@ fun TestScreenContent(
 //    viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ){
-    val questionText: String = question?.qText ?: "No data"
+    val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
-    val radioOptions: List<String?> = options?.map { o -> o.oText } ?: listOf()
+    val radioOptions: List<String?> = options?.map { o -> o.text } ?: listOf()
 
     val answer = remember { mutableStateOf("") }
 

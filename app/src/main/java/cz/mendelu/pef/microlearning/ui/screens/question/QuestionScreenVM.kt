@@ -23,6 +23,7 @@ class QuestionScreenVM @Inject constructor(
 
     // uistate
     val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> = mutableStateOf(UiState())
+    var lessonId = -1L
 
     // mutable state kvuli radiobuttonu -- jinak se pri rekompozici zapomene :)
     val selectedOption = mutableStateOf("")
@@ -45,73 +46,8 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
-    fun getQuestions() {
-        launch {
-            val result = withContext(Dispatchers.IO) {
-                remoteRepository.getQuestions()
-            }
-            when(result) {
-                is CommunicationResult.ConnectionError -> {
-                    uiState.value = UiState(
-                        loading = false,
-                        data = null,
-                        errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
-                    )
-                }
-
-                is CommunicationResult.Error -> {
-                    println(result.error)
-                    when (result.error.code) {
-                        500 -> {
-                            uiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
-                            )
-                        }
-                        404 -> {
-                            uiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = QuestionsErrors(R.string.not_found) // "not found" resource code
-                            )
-                        }
-                        else -> {
-                            uiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
-                            )
-                            println(result.error.message)
-                        }
-                    }
-                }
-
-                is CommunicationResult.Exception -> {
-                    uiState.value = UiState(
-                        loading = false,
-                        data = null,
-                        errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
-                    )
-                }
-
-                is CommunicationResult.Success -> {
-                    if (result.data != null) {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = result.data,
-                            errors = null
-                        )
-                    } else {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = QuestionsErrors(R.string.no_data) // "exception" resource code
-                        )
-                    }
-                }
-            }
-        }
+    fun getData(){
+        getQuestionsByLessonId()
     }
 
     fun isTestCorrect(): Boolean {
@@ -134,4 +70,149 @@ class QuestionScreenVM @Inject constructor(
         }
         return string.substring(0,string.length-1)
     }
+
+    private fun getQuestionsByLessonId() {
+        if (lessonId != -1L) {
+            launch {
+                val result = withContext(Dispatchers.IO) {
+                    remoteRepository.getQuestionsByLessonId(lessonId)
+                }
+                when (result) {
+                    is CommunicationResult.ConnectionError -> {
+                        uiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
+                        )
+                    }
+
+                    is CommunicationResult.Error -> {
+                        println(result.error)
+                        when (result.error.code) {
+                            500 -> {
+                                uiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
+                                )
+                            }
+
+                            404 -> {
+                                uiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = QuestionsErrors(R.string.not_found) // "not found" resource code
+                                )
+                            }
+
+                            else -> {
+                                uiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
+                                )
+                                println(result.error.message)
+                            }
+                        }
+                    }
+
+                    is CommunicationResult.Exception -> {
+                        uiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
+                        )
+                    }
+
+                    is CommunicationResult.Success -> {
+                        if (result.data.items != null) {
+                            uiState.value = UiState(
+                                loading = false,
+                                data = result.data,
+                                errors = null
+                            )
+                        } else {
+                            uiState.value = UiState(
+                                loading = false,
+                                data = null,
+                                errors = QuestionsErrors(R.string.no_data) // "exception" resource code
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+//
+//    fun getQuestions() {
+//        launch {
+//            val result = withContext(Dispatchers.IO) {
+//                remoteRepository.getQuestions()
+//            }
+//            when(result) {
+//                is CommunicationResult.ConnectionError -> {
+//                    uiState.value = UiState(
+//                        loading = false,
+//                        data = null,
+//                        errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
+//                    )
+//                }
+//
+//                is CommunicationResult.Error -> {
+//                    println(result.error)
+//                    when (result.error.code) {
+//                        500 -> {
+//                            uiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
+//                            )
+//                        }
+//                        404 -> {
+//                            uiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = QuestionsErrors(R.string.not_found) // "not found" resource code
+//                            )
+//                        }
+//                        else -> {
+//                            uiState.value = UiState(
+//                                loading = false,
+//                                data = null,
+//                                errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
+//                            )
+//                            println(result.error.message)
+//                        }
+//                    }
+//                }
+//
+//                is CommunicationResult.Exception -> {
+//                    uiState.value = UiState(
+//                        loading = false,
+//                        data = null,
+//                        errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
+//                    )
+//                }
+//
+//                is CommunicationResult.Success -> {
+//                    if (result.data != null) {
+//                        uiState.value = UiState(
+//                            loading = false,
+//                            data = result.data,
+//                            errors = null
+//                        )
+//                    } else {
+//                        uiState.value = UiState(
+//                            loading = false,
+//                            data = null,
+//                            errors = QuestionsErrors(R.string.no_data) // "exception" resource code
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
 }

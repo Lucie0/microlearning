@@ -73,6 +73,11 @@ interface API {
     suspend fun getQuestionById(@Path("id") id: Long) : Response<ObjectResponse<Question>>
 
 
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/questions")
+    suspend fun getQuestionsByLessonId(@Query("forLessonId") lessonId: Long) : Response<ArrayResponse<Question>>
+
+
 //  ------------------------------------------------------------------------------------------------
 //    NODES
 //  ------------------------------------------------------------------------------------------------

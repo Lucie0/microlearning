@@ -7,7 +7,7 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Option(
     var id: Long?,
-    var oText: String?,
+    var text: String?,
     var correctAnswer: Boolean?,
     var groupNumber: Int?,
     var questionId: Long?

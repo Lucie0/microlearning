@@ -49,8 +49,9 @@ fun QuestionScreen(
 ) {
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
+    viewModel.lessonId = lessonId!!
 
-    LaunchedEffect(key1 = 1, block = { viewModel.getQuestions() })
+    LaunchedEffect(key1 = 1, block = { viewModel.getData() })
 
     // todo lesson Id je zatim null, potrebuju rozhodovani, jak dopadl test -- PREDELAT
     // lesson Id  nastaveno napevno
@@ -115,11 +116,10 @@ fun QuestionScreenContent(
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ) {
-
-
     val onSubmitClicked = remember { mutableStateOf(false) }
+
     LazyColumn {
-        item {
+//        item {
             /*
             QuestionScreenContent(
                 paddingValues = it,
@@ -133,19 +133,19 @@ fun QuestionScreenContent(
             )
 
              */
-        }
-        item {
-            QuestionItem(
-                paddingValues = paddingValues,
-                question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
-                // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
-                //  v args obrazovky
-                nodeId = nodeId,
-                lessonId = lessonId,
-//                    lessonName = lessonName,
-                viewModel = viewModel,
-                navigation = navigation
-            )
+//        }
+        uiState.value.data?.items?.forEach {
+            // todo omezit na pocet 3 otazky na uzel
+            item {
+                QuestionItem(
+                    paddingValues = paddingValues,
+                    question = it,
+                    nodeId = nodeId,
+                    lessonId = lessonId,
+                    viewModel = viewModel,
+                    navigation = navigation
+                )
+            }
         }
 //            item {
 //                QuestionScreenContent(
@@ -207,10 +207,34 @@ fun QuestionScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                if (onSubmitClicked.value) {
+                    if (viewModel.isTestCorrect()) {
+                        Text("Well done!", Modifier.padding(8.dp))
+                    } else {
+                        Text("Answers are not correct.", Modifier.padding(8.dp))
+                        Text(
+                            "Correct answers: \n ${viewModel.correctAnswers()}",
+                            Modifier.padding(8.dp),
+                            color = getCorrectAnswersColor()
+                        )
+
+                    }
+
+//                    Button(onClick = {
+//                        navigation.navigateToLessonScreen(
+//                            lessonId = lessonId,
+//                            nodeId = nodeId
+//                        )
+//                    }) {
+//                        Text("Continue")
+//                    }
+                }
+
                 Button(
+                    modifier = Modifier.padding(8.dp),
                     // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
                     //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                    enabled = !onSubmitClicked.value && lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
+                    enabled = /*!onSubmitClicked.value && */ lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
                     onClick = {
                         // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                         // pokud je test OK
@@ -219,8 +243,15 @@ fun QuestionScreenContent(
                         // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
                         // rodice a tak porad dokola
 
-                        // kliknuto na Submit
-                        onSubmitClicked.value = true
+                        if (!onSubmitClicked.value) {
+                            // kliknuto na Submit
+                            onSubmitClicked.value = true
+                        } else {
+                            navigation.navigateToLessonScreen(
+                                lessonId = lessonId,
+                                nodeId = nodeId
+                            )
+                        }
 
 //                    if (viewModel.isTestCorrect()) {
 //                        navigate
@@ -239,31 +270,14 @@ fun QuestionScreenContent(
 //                        )
 //                    }
                     }) {
-                    Text("Submit")
-                }
-
-                if (onSubmitClicked.value) {
-                    if (viewModel.isTestCorrect()) {
-                        Text("Well done!", Modifier.padding(8.dp))
-                    } else {
-                        Text("Answers are not correct.", Modifier.padding(8.dp))
-                        Text(
-                            "Correct answers: \n ${viewModel.correctAnswers()}",
-                            Modifier.padding(8.dp),
-                            color = getCorrectAnswersColor()
-                        )
-
-                    }
-
-                    Button(onClick = {
-                        navigation.navigateToLessonScreen(
-                            lessonId = lessonId,
-                            nodeId = nodeId
-                        )
-                    }) {
+                    if (!onSubmitClicked.value) {
+                        Text("Submit")
+                    } else  {
                         Text("Continue")
                     }
                 }
+
+
             }
         }
     }
@@ -277,11 +291,10 @@ fun QuestionItem(
     question: Question?,
     nodeId: Long?,
     lessonId: Long?,
-//    lessonName: String?,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ) {
-    val questionText: String = question?.qText ?: "No data"
+    val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
     val correctAnswers = hashMapOf<String, String>()
 
@@ -290,10 +303,12 @@ fun QuestionItem(
     //  --> rozparsovat
 
     // pokud je to typ otazek jinych nez CLOZE
+//    if (question?.questionType != "CLOZE") {
     if (!options.isNullOrEmpty() && options[0].groupNumber == 0) {
+        println("jiny nez cloze")
         options.filter { it.correctAnswer == true }.forEach { opt ->
-            viewModel.correctOptions[questionText] = opt.oText ?: ""
-            correctAnswers[questionText] = opt.oText ?: ""
+            viewModel.correctOptions[questionText] = opt.text ?: ""
+            correctAnswers[questionText] = opt.text ?: ""
         }
     } else if (!options.isNullOrEmpty()) { // pokud je to CLOZE
         val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
@@ -301,8 +316,8 @@ fun QuestionItem(
             .zip(dividedSentence.subList(0, dividedSentence.size - 1))
         for (paar in result){
             // uloz spravne odpovedi do VM
-            viewModel.correctOptions[paar.second] = paar.first.oText ?: ""
-            correctAnswers[paar.second] = paar.first.oText ?: ""
+            viewModel.correctOptions[paar.second] = paar.first.text ?: ""
+            correctAnswers[paar.second] = paar.first.text ?: ""
         }
     }
 
@@ -310,7 +325,7 @@ fun QuestionItem(
     println("corr:$correctAnswers")
     println("corrVM:${viewModel.correctOptions}")
 
-    val radioOptions: List<String?> = options?.map { o -> o.oText } ?: listOf()
+    val radioOptions: List<String?> = options?.map { o -> o.text } ?: listOf()
 
     val answer = remember { mutableStateOf("") }
 
@@ -362,7 +377,6 @@ fun QuestionItem(
 
                     //moznosti
                     CheckBoxMultipleSelection()
-//                    }
                 }
 
                 "CLOZE" -> {
@@ -373,7 +387,7 @@ fun QuestionItem(
 //                    val listOptions: List<Option?>? = question.options.items
 
                     // rozdeli vetu, v mistech vynechavky vypise dropdown
-                    val dividedSentence = question.qText?.split("""\[\[[0-9]+\]\]""".toRegex())
+                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
 
                     for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
                         val selectedOption = remember { mutableStateOf("") }
@@ -391,7 +405,7 @@ fun QuestionItem(
                         // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
                         val listStrings = // listOptions. ...
                             question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
-                                ?.map { opt -> opt.oText }
+                                ?.map { opt -> opt.text }
 
                         // okenko pro vyberovy seznam
                         if (listStrings != null)
