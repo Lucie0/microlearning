@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface NodeRepository extends CrudRepository<Node, Long> {
 
-    Iterable<Node> findByLesson_Topic_Id(Long topicId);
+    Iterable<Node> findByLesson_Topic_IdOrderByLesson_OrdinalNumber(Long topicId);
 
 }
