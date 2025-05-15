@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -164,9 +165,15 @@ fun MainScreenContent(
 //            Text(text = "Start")
 //        }
 //
-//        Button(onClick = { navigation.navigateToChooseNameOfLessonScreen("Programming", 2) }) {
-//            Text("Choose lesson")
-//        }
+        Button(onClick = {
+//            navigation.navigateToChooseNameOfLessonScreen("Programming", 2)
+            navigation.navigateToQuestionScreen(
+                nodeId = 2,
+                lessonId = 2
+            )
+        }) {
+            Text("Question screen")
+        }
 //
     }
 }

@@ -178,7 +178,7 @@ fun LessonScreenContent(
                                 nodeId = uiState.value.data!!.nextNode?.content?.id,
                                 lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
 //                            testId = uiState.value.data!!.nextNode?.content?.testId,
-                                testId = 1 // todo
+//                                testId = 1
                             )
                         }
                     ) {

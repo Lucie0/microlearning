@@ -95,9 +95,11 @@ fun ChooseNameOfLessonScreenContent(
                                     topicId = topicId
                                 ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
                             } else if (mode.value == Modes.TESTING.name) {
+                                println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                 //  todo navigate to test 1 apod...
                             } else {
                                 // TUITION MODE
+                                println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                 // todo navigate to lesson, then test apod...
                             }
                         }

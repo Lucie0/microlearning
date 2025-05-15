@@ -167,34 +167,26 @@ fun NavGraph(
 //        }
 
         // QuestionScreen s 2 argumenty
-        composable(route = Destination.QuestionScreen.route + "/{nodeId}/{testId}",
+        composable(route = Destination.QuestionScreen.route + "/{nodeId}/",
             arguments = listOf(
                 navArgument("nodeId") {
                     type = NavType.LongType
                     defaultValue = -1L
                 },
-                navArgument("testId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
             )
         ) {
             QuestionScreen(
                 nodeId = it.arguments?.getLong("nodeId"),
-                testId = it.arguments?.getLong("testId"),
+//                testId = it.arguments?.getLong("testId"),
                 lessonId = null,
                 navigation = navigation
             )
         }
 
         // QuestionScreen s 3 argumenty
-        composable(route = Destination.QuestionScreen.route + "/{nodeId}/{testId}/{lessonId}",
+        composable(route = Destination.QuestionScreen.route + "/{nodeId}/{lessonId}",
             arguments = listOf(
                 navArgument("nodeId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                },
-                navArgument("testId") {
                     type = NavType.LongType
                     defaultValue = -1L
                 },
@@ -206,7 +198,7 @@ fun NavGraph(
         ) {
             QuestionScreen(
                 nodeId = it.arguments?.getLong("nodeId"),
-                testId = it.arguments?.getLong("testId"),
+//                testId = it.arguments?.getLong("testId"),
                 lessonId = it.arguments?.getLong("lessonId"),
                 navigation = navigation
             )

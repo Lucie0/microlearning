@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,7 +42,7 @@ import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 fun QuestionScreen(
 //    title: String? = null,
     nodeId: Long?,// v jakem uzlu se nachazim
-    testId: Long?, // jaky test mam zobrazovat
+//    testId: Long?, // jaky test mam zobrazovat
     lessonId: Long?,
 //    lessonName: String? = null,
     navigation: INavigationRouter
@@ -74,11 +73,10 @@ fun QuestionScreen(
 
 
     BaseScreen(
-        topBarText = "Test $testId",
+        topBarText = "Test nodu $nodeId",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
-//                image = R.drawable.undraw_warning,
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
         } else null,
@@ -89,36 +87,66 @@ fun QuestionScreen(
             navigation.navigateBack()
         }
     ) {
-        val onSubmitClicked = remember { mutableStateOf(false) }
-        LazyColumn {
-            item {
-                /*
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
+        QuestionScreenContent(
+            paddingValues = it,
+//            question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
+            // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
+            //  v args obrazovky
+            nodeId = nodeId,
+            lessonId = lessonId,
+//                    lessonName = lessonName,
+            uiState = uiState,
+            viewModel = viewModel,
+            navigation = navigation
+        )
+
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.P)
+@Composable
+fun QuestionScreenContent(
+    paddingValues: PaddingValues,
+//    question: Question?,
+    nodeId: Long?,
+    lessonId: Long?,
+//    lessonName: String?,
+    uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>>,
+    viewModel: QuestionScreenVM,
+    navigation: INavigationRouter,
+) {
+
+
+    val onSubmitClicked = remember { mutableStateOf(false) }
+    LazyColumn {
+        item {
+            /*
+            QuestionScreenContent(
+                paddingValues = it,
+                question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
 //            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
 //            options = uiState.value.data?.items?.get(0)?.options?.items
-                    lessonId = myLessonId,
-                    nodeId = nodeId,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
+                lessonId = myLessonId,
+                nodeId = nodeId,
+                viewModel = viewModel,
+                navigation = navigation
+            )
 
-                 */
-            }
-            item {
-                QuestionScreenContent(
-                    paddingValues = it,
-                    question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
-                    // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
-                    //  v args obrazovky
-                    nodeId = nodeId,
-                    lessonId = lessonId,
+             */
+        }
+        item {
+            QuestionItem(
+                paddingValues = paddingValues,
+                question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
+                // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
+                //  v args obrazovky
+                nodeId = nodeId,
+                lessonId = lessonId,
 //                    lessonName = lessonName,
-                    viewModel = viewModel,
-                    navigation = navigation
-                )
-            }
+                viewModel = viewModel,
+                navigation = navigation
+            )
+        }
 //            item {
 //                QuestionScreenContent(
 //                    paddingValues = it,
@@ -173,26 +201,26 @@ fun QuestionScreen(
 //                    navigation = navigation
 //                )
 //            }
-            item {
-                Column (
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+        item {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-                    Button(
-                        // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
-                        //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                        enabled = !onSubmitClicked.value && lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
-                        onClick = {
-                            // vyhodnotit, jak dopadl test, podle toho pokracovat dal
-                            // pokud je test OK
-                            // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
-                            // presmerovat se na lekci
-                            // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
-                            // rodice a tak porad dokola
+                Button(
+                    // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
+                    //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
+                    enabled = !onSubmitClicked.value && lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
+                    onClick = {
+                        // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                        // pokud je test OK
+                        // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
+                        // presmerovat se na lekci
+                        // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
+                        // rodice a tak porad dokola
 
-                            // kliknuto na Submit
-                            onSubmitClicked.value = true
+                        // kliknuto na Submit
+                        onSubmitClicked.value = true
 
 //                    if (viewModel.isTestCorrect()) {
 //                        navigate
@@ -202,39 +230,38 @@ fun QuestionScreen(
 //                            nodeId = nodeId
 //                        )
 //                    } else {
-                            // todo roztrhana otazka mi nejde vyhodnotit jako correct
-                            // navigate
+                        // todo roztrhana otazka mi nejde vyhodnotit jako correct
+                        // navigate
 //                        println("Test is not correct")
 //                        navigation.navigateToLessonScreen(
 //                            lessonId = lessonId,
 //                            nodeId = nodeId
 //                        )
 //                    }
-                        }) {
-                        Text("Submit")
+                    }) {
+                    Text("Submit")
+                }
+
+                if (onSubmitClicked.value) {
+                    if (viewModel.isTestCorrect()) {
+                        Text("Well done!", Modifier.padding(8.dp))
+                    } else {
+                        Text("Answers are not correct.", Modifier.padding(8.dp))
+                        Text(
+                            "Correct answers: \n ${viewModel.correctAnswers()}",
+                            Modifier.padding(8.dp),
+                            color = getCorrectAnswersColor()
+                        )
+
                     }
 
-                    if (onSubmitClicked.value) {
-                        if (viewModel.isTestCorrect()) {
-                            Text("Well done!", Modifier.padding(8.dp))
-                        } else {
-                            Text("Answers are not correct.", Modifier.padding(8.dp))
-                            Text(
-                                "Correct answers: \n ${viewModel.correctAnswers()}",
-                                Modifier.padding(8.dp),
-                                color = getCorrectAnswersColor()
-                            )
-
-                        }
-
-                        Button(onClick = {
-                            navigation.navigateToLessonScreen(
-                                lessonId = lessonId,
-                                nodeId = nodeId
-                            )
-                        }) {
-                            Text("Continue")
-                        }
+                    Button(onClick = {
+                        navigation.navigateToLessonScreen(
+                            lessonId = lessonId,
+                            nodeId = nodeId
+                        )
+                    }) {
+                        Text("Continue")
                     }
                 }
             }
@@ -245,7 +272,7 @@ fun QuestionScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun QuestionScreenContent(
+fun QuestionItem(
     paddingValues: PaddingValues,
     question: Question?,
     nodeId: Long?,
