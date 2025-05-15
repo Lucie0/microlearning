@@ -27,6 +27,12 @@ public class QuestionService {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
+    public List<Question> getAllQuestionsByLessonId(Long lessonId){
+        return StreamSupport.stream(repository.findAllByLessonId(lessonId).spliterator(), false).collect(Collectors.toList());
+    }
+
+
+
     public Optional<Question> getById(Long id){
         return repository.findById(id);
     }
