@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
-import cz.mendelu.pef.microlearning.model.lessonList
 import cz.mendelu.pef.microlearning.model.mode
+import cz.mendelu.pef.microlearning.model.revisionLessonList
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
@@ -130,11 +130,11 @@ fun LessonScreenContent(
 //                }
                 // button pro REVISION mode
                 if (mode.value == Modes.REVISION.name && lessonOrdinalNumber != null && topicId != null) {
-                    println("lessonList>$lessonList")
+                    println("lessonList>$revisionLessonList")
                     Row {
                         Button(
                             modifier = Modifier.padding(8.dp),
-                            enabled = lessonList.containsKey(lessonOrdinalNumber - 1),
+                            enabled = revisionLessonList.containsKey(lessonOrdinalNumber - 1),
                             onClick = {
                                 navigation.navigateToLessonScreen(
                                     lessonOrdinalNumber = lessonOrdinalNumber - 1,
@@ -149,7 +149,7 @@ fun LessonScreenContent(
 //                        Spacer(modifier = Modifier.padding(16.dp))
                         Button(
                             modifier = Modifier.padding(8.dp),
-                            enabled = lessonList.containsKey(lessonOrdinalNumber + 1),
+                            enabled = revisionLessonList.containsKey(lessonOrdinalNumber + 1),
                             onClick = {
                                 navigation.navigateToLessonScreen(
                                     lessonOrdinalNumber = lessonOrdinalNumber + 1,

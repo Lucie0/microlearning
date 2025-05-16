@@ -14,4 +14,4 @@ var walkThroughNodes = listOf<Long>()
 
 // REVISION
 // ordinal number, lesson_id
-var lessonList = mutableMapOf<Int, Long>()
+var revisionLessonList = mutableMapOf<Int, Long>()

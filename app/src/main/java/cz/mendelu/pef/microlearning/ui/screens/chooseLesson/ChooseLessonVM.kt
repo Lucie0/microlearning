@@ -12,8 +12,8 @@ import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.Node
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.graph
-import cz.mendelu.pef.microlearning.model.lessonList
 import cz.mendelu.pef.microlearning.model.mode
+import cz.mendelu.pef.microlearning.model.revisionLessonList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -136,15 +136,15 @@ class ChooseLessonVM @Inject constructor(
 
     private fun getGraph(){
         if (mode.value == Modes.REVISION.name) {// && lessonList.isEmpty()) {
-            lessonList = mutableMapOf()
+            revisionLessonList = mutableMapOf()
             data.lessons?.items?.forEach {
-                lessonList[it.ordinalNumber!!] = it.id!!
+                revisionLessonList[it.ordinalNumber!!] = it.id!!
             }
 //        } else if (mode.value == Modes.REVISION.name) {
             // vynulovani mapy
 
         }
-        println("lessonList:$lessonList")
+        println("revisionLessonList:$revisionLessonList")
     }
 
     private fun getNodesByTopic() {
@@ -287,5 +287,10 @@ class ChooseLessonVM @Inject constructor(
                 is CommunicationResult.Exception -> TODO()
             }
         }
+    }
+
+    fun getNodeFromGraphByLesson(lessonId: Long) : Long {
+        println(graph)
+        return graph.map.values.filter { it.lessonId == lessonId }[0].id!!
     }
 }
