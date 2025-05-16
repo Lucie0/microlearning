@@ -23,9 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.Option
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -50,6 +52,7 @@ fun QuestionScreen(
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
     viewModel.lessonId = lessonId!!
+//    viewModel.nodeId = nodeId!!
 
     LaunchedEffect(key1 = 1, block = { viewModel.getData() })
 
@@ -57,8 +60,10 @@ fun QuestionScreen(
     // lesson Id  nastaveno napevno
 //    val myLessonId = 1L
 
-    // uistate
-    val uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>> =
+//    val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
+// uistate
+
+    val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
         rememberSaveable {
             mutableStateOf(
                 UiState()
@@ -112,7 +117,7 @@ fun QuestionScreenContent(
     nodeId: Long?,
     lessonId: Long?,
 //    lessonName: String?,
-    uiState: MutableState<UiState<ArrayResponse<Question>, QuestionsErrors>>,
+    uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
 ) {
@@ -134,7 +139,7 @@ fun QuestionScreenContent(
 
              */
 //        }
-        uiState.value.data?.items?.forEach {
+        uiState.value.data?.questions?.items?.forEach {
             // todo omezit na pocet 3 otazky na uzel
             item {
                 QuestionItem(
@@ -247,28 +252,29 @@ fun QuestionScreenContent(
                             // kliknuto na Submit
                             onSubmitClicked.value = true
                         } else {
-                            navigation.navigateToLessonScreen(
-                                lessonId = lessonId,
-                                nodeId = nodeId
-                            )
+                            when (mode.value) {
+                                Modes.TESTING.name -> {
+                                    if (viewModel.isTestCorrect()) {
+                                        // testovani je ukonceno a je zobrazen vysledek
+                                        // todo
+                                    } else {
+                                        // pokracovani na rodicovske uzly s otazkami
+                                        navigation.navigateToQuestionScreen(
+                                            nodeId = nodeId,
+                                            lessonId = lessonId
+                                        )
+                                    }
+                                }
+                                Modes.TUITION.name -> {
+                                    navigation.navigateToLessonScreen(
+                                        nodeId = nodeId,
+                                        lessonId = lessonId
+                                    )
+                                }
+                            }
+
                         }
 
-//                    if (viewModel.isTestCorrect()) {
-//                        navigate
-//                        println("TEST IS CORRECT")
-//                        navigation.navigateToLessonScreen(
-//                            lessonId = lessonId,
-//                            nodeId = nodeId
-//                        )
-//                    } else {
-                        // todo roztrhana otazka mi nejde vyhodnotit jako correct
-                        // navigate
-//                        println("Test is not correct")
-//                        navigation.navigateToLessonScreen(
-//                            lessonId = lessonId,
-//                            nodeId = nodeId
-//                        )
-//                    }
                     }) {
                     if (!onSubmitClicked.value) {
                         Text("Submit")
@@ -305,7 +311,7 @@ fun QuestionItem(
     // pokud je to typ otazek jinych nez CLOZE
 //    if (question?.questionType != "CLOZE") {
     if (!options.isNullOrEmpty() && options[0].groupNumber == 0) {
-        println("jiny nez cloze")
+//        println("jiny nez cloze")
         options.filter { it.correctAnswer == true }.forEach { opt ->
             viewModel.correctOptions[questionText] = opt.text ?: ""
             correctAnswers[questionText] = opt.text ?: ""
@@ -315,7 +321,7 @@ fun QuestionItem(
         val result = options.filter { it.correctAnswer == true }
             .zip(dividedSentence.subList(0, dividedSentence.size - 1))
         var count = 1
-        for (paar in result){
+        for (paar in result) {
             // uloz spravne odpovedi do VM
             viewModel.correctOptions[paar.second + "[[$count"] = paar.first.text ?: ""
             correctAnswers[paar.second + "[[$count"] = paar.first.text ?: ""
@@ -443,14 +449,18 @@ fun QuestionItem(
                     )
 
                     OutlinedTextField(
-                        value = answer.value,
+                        value = if (viewModel.selectedOptions.keys.contains(questionText)) {
+                            answer.value = viewModel.selectedOptions[questionText]!!
+                            answer.value
+                        } else answer.value,
                         onValueChange = {
+                            println("it: $it")
                             answer.value = it
                             viewModel.selectedOptions[questionText] = it
                         },
                         label = { Text("Answer") },
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         minLines = 1
                     )
