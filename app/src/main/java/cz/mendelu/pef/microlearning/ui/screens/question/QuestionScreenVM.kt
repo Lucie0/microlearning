@@ -51,7 +51,12 @@ class QuestionScreenVM @Inject constructor(
     }
 
     fun isTestCorrect(): Boolean {
+        // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
+        //{Seřaďte podle pořadí vyhodnocování: [1]=Závorky, Vyřešte výraz: 9 / 3 × (2 - 1)² - 4 = ...=-1,  [2]=Mocniny a odmocniny, Jakou operaci vyhodnocujeme jako poslední v matematickém výrazu?=Sčítání a odčítání, Jakou operaci vyhodnocujeme po závorkách?=Mocniny a odmocniny, Vyřešte výraz:  (8 / 2) × (4 - 2)² = ...=16,  [3]=Násobení a dělení, Jakou operaci vyhodnocujeme jako první v matematickém výrazu?=Závorky, Vyřešte výraz: 8 / 4 × 2² - 4 = ...=4,  [4]=Sčítání a odčítání, Vyřešte výraz:  5 × 6 / 2 - 8 ²/ 4 = ...=-1}
         var isOk = true
+//        println("* IsTestCorrect()")
+//        println(correctOptions)
+//        println(selectedOptions)
         correctOptions.keys.forEach { questionText ->
             if (selectedOptions[questionText] != correctOptions[questionText]) {
                 isOk = false
@@ -65,7 +70,7 @@ class QuestionScreenVM @Inject constructor(
         correctOptions.keys.forEach { questionText ->
             if (selectedOptions[questionText] != correctOptions[questionText]) {
                 println(correctOptions[questionText])
-                string = string + questionText + " " + correctOptions[questionText] + ","
+                string = string + questionText + " " + correctOptions[questionText] + ",\n"
             }
         }
         return string.substring(0,string.length-1)

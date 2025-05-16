@@ -314,10 +314,12 @@ fun QuestionItem(
         val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
         val result = options.filter { it.correctAnswer == true }
             .zip(dividedSentence.subList(0, dividedSentence.size - 1))
+        var count = 1
         for (paar in result){
             // uloz spravne odpovedi do VM
-            viewModel.correctOptions[paar.second] = paar.first.text ?: ""
-            correctAnswers[paar.second] = paar.first.text ?: ""
+            viewModel.correctOptions[paar.second + "[[$count"] = paar.first.text ?: ""
+            correctAnswers[paar.second + "[[$count"] = paar.first.text ?: ""
+            count += 1
         }
     }
 
@@ -387,7 +389,8 @@ fun QuestionItem(
 //                    val listOptions: List<Option?>? = question.options.items
 
                     // rozdeli vetu, v mistech vynechavky vypise dropdown
-                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
+//                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
+                    val dividedSentence = question.text?.split("]]")
 
                     for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
                         val selectedOption = remember { mutableStateOf("") }
