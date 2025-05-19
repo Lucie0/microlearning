@@ -121,7 +121,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             is TypefaceSpan -> {
                 println("code:" + span.family)
                 when(span.family){
-                    "code" -> addStyle(SpanStyle(fontFamily = FontFamily.Monospace), start, end)
+                    "code" ->  addStyle(SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.8.em), start, end)
                 }
 
 //                println("Code: " + spanned.subSequence(start, end))
