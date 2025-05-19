@@ -19,6 +19,7 @@ interface INavigationRouter {
 //    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?)
 //    fun navigateToQuestionScreen(title: String, nodeId: Long?, testId:Long?, lessonId: Long?, lessonName: String?)
     fun navigateToQuestionScreen(nodeId: Long?, lessonId: Long?)
+    fun navigateToQuestionScreen1(nodeId: Long?, lessonId: Long?)
 
     fun navigateToTestScreen()
 //    fun navigateToTestScreen(title: String)

@@ -16,6 +16,7 @@ import cz.mendelu.pef.microlearning.ui.screens.ModesScreen
 import cz.mendelu.pef.microlearning.ui.screens.SettingsScreen
 import cz.mendelu.pef.microlearning.ui.screens.chooseLesson.ChooseNameOfLessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen
+import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen1
 import cz.mendelu.pef.microlearning.ui.screens.test.TestScreen
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -197,6 +198,27 @@ fun NavGraph(
             )
         ) {
             QuestionScreen(
+                nodeId = it.arguments?.getLong("nodeId"),
+//                testId = it.arguments?.getLong("testId"),
+                lessonId = it.arguments?.getLong("lessonId"),
+                navigation = navigation
+            )
+        }
+
+        // QuestionScreen s 3 argumenty
+        composable(route = Destination.QuestionScreen1.route + "/{nodeId}/{lessonId}",
+            arguments = listOf(
+                navArgument("nodeId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                },
+                navArgument("lessonId") {
+                    type = NavType.LongType
+                    defaultValue = -1L
+                }
+            )
+        ) {
+            QuestionScreen1(
                 nodeId = it.arguments?.getLong("nodeId"),
 //                testId = it.arguments?.getLong("testId"),
                 lessonId = it.arguments?.getLong("lessonId"),
