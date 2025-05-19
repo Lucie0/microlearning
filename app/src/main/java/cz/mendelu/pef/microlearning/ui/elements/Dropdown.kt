@@ -66,7 +66,11 @@ fun Dropdown(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    modifier = Modifier.clickable { expanded.value = !expanded.value }
+                    modifier = Modifier.clickable {
+                        if (enabled) {
+                            expanded.value = !expanded.value
+                        }
+                    }
                 )
             })
 

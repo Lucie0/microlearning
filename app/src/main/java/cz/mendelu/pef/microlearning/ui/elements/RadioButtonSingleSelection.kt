@@ -31,6 +31,7 @@ fun RadioButtonSingleSelection(
     modifier: Modifier = Modifier,
     radioOptions: List<String?>,
     selectedOption: MutableState<String>,
+    enabled: Boolean = true,
     onClickBefore: () -> Unit = {},
     onClickAfter: () -> Unit = {}
 ) {
@@ -43,16 +44,18 @@ fun RadioButtonSingleSelection(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+//                    .height(56.dp)
                     .selectable(
                         selected = (text == selectedOption.value),
                         onClick = {
-                            onClickBefore()
-                            if (text != null) {
+                            if (enabled) {
+                                onClickBefore()
+                                if (text != null) {
 //                                onOptionSelected(text)
-                                selectedOption.value = text
+                                    selectedOption.value = text
+                                }
+                                onClickAfter()
                             }
-                            onClickAfter()
                         },
                         role = Role.RadioButton
                     )
@@ -60,12 +63,14 @@ fun RadioButtonSingleSelection(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
+                    enabled = enabled,
                     selected = (text == selectedOption.value),
                     onClick = null // null recommended for accessibility with screen readers
                 )
-                HtmlToNormalText(
-                    text = text ?: "null",
-                    style = MaterialTheme.typography.bodyLarge,
+                //htmltonormaltext
+                HtmlText(
+                    string = text ?: "null",
+                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                     modifier = Modifier.padding(start = 16.dp)
                 )
 

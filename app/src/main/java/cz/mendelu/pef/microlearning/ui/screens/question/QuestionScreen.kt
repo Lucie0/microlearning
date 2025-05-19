@@ -148,6 +148,7 @@ fun QuestionScreenContent(
                     nodeId = nodeId,
                     lessonId = lessonId,
                     viewModel = viewModel,
+                    onSubmitClicked = onSubmitClicked,
                     navigation = navigation
                 )
             }
@@ -299,6 +300,7 @@ fun QuestionItem(
     nodeId: Long?,
     lessonId: Long?,
     viewModel: QuestionScreenVM,
+    onSubmitClicked: MutableState<Boolean>,
     navigation: INavigationRouter,
 ) {
     val questionText: String = question?.text ?: "No data"
@@ -356,6 +358,7 @@ fun QuestionItem(
 
                     //moznosti
                     RadioButtonSingleSelection(
+                        enabled = !onSubmitClicked.value,
                         radioOptions = radioOptions,
                         // popis:
                         // pokud uz je klic obsazen v hashmape, tak do MutableStatu uloz jeho
@@ -463,7 +466,8 @@ fun QuestionItem(
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),
-                        minLines = 1
+                        minLines = 1,
+                        readOnly = onSubmitClicked.value
                     )
 //                    }
                 }
