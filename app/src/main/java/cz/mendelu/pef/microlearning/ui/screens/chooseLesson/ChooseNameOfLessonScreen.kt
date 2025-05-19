@@ -64,6 +64,7 @@ fun ChooseNameOfLessonScreen(
             uiState = uiState.value,
             topicId = topicId,
             navigation = navigation,
+            viewModel = viewModel
         )
     }
 }
@@ -74,7 +75,8 @@ fun ChooseNameOfLessonScreenContent(
     paddingValues: PaddingValues,
     uiState: UiState<ChooseLessonData, ChooseLessonErrors>,
     topicId: Long?,
-    navigation: INavigationRouter
+    navigation: INavigationRouter,
+    viewModel: ChooseLessonVM
 ) {
     // vypsat vsechny lekce z uistate
     LazyColumn(
@@ -97,6 +99,12 @@ fun ChooseNameOfLessonScreenContent(
                             } else if (mode.value == Modes.TESTING.name) {
                                 println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                 //  todo navigate to test 1 apod...
+                                if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+                                    navigation.navigateToQuestionScreen(
+                                        lessonId = it.id,
+                                        nodeId = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                    )
+                                }
                             } else {
                                 // TUITION MODE
                                 println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)

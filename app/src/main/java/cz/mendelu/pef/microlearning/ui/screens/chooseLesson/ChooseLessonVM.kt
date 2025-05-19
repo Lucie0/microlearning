@@ -135,14 +135,18 @@ class ChooseLessonVM @Inject constructor(
     }
 
     private fun getGraph(){
-        if (mode.value == Modes.REVISION.name) {// && lessonList.isEmpty()) {
-            revisionLessonList = mutableMapOf()
-            data.lessons?.items?.forEach {
-                revisionLessonList[it.ordinalNumber!!] = it.id!!
+        when (mode.value) {
+            Modes.REVISION.name -> {// && lessonList.isEmpty()) {
+                revisionLessonList = mutableMapOf()
+                data.lessons?.items?.forEach {
+                    revisionLessonList[it.ordinalNumber!!] = it.id!!
+                }
             }
-//        } else if (mode.value == Modes.REVISION.name) {
-            // vynulovani mapy
+            Modes.TESTING.name -> {
+                println("Testing mode, graph:$graph")
+            }
 
+            Modes.TUITION.name -> TODO("Tuition mode -> not yet implemented")
         }
         println("revisionLessonList:$revisionLessonList")
     }
@@ -291,6 +295,8 @@ class ChooseLessonVM @Inject constructor(
 
     fun getNodeFromGraphByLesson(lessonId: Long) : Long {
         println(graph)
+        if (graph.map.values.filter { it.lessonId == lessonId }.isNotEmpty())
         return graph.map.values.filter { it.lessonId == lessonId }[0].id!!
+        else return -1L
     }
 }
