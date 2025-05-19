@@ -19,7 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.mode
+import cz.mendelu.pef.microlearning.model.startingNode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
@@ -100,9 +102,12 @@ fun ChooseNameOfLessonScreenContent(
                                 println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                 //  todo navigate to test 1 apod...
                                 if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+                                    startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                    actualNodeInGraph = viewModel.getNodeFromGraphByLesson(it.id!!)
+
                                     navigation.navigateToQuestionScreen(
                                         lessonId = it.id,
-                                        nodeId = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                        nodeId = startingNode
                                     )
                                 }
                             } else {

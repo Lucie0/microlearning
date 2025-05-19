@@ -43,7 +43,7 @@ class ChooseLessonVM @Inject constructor(
                 // pokud testing mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
-                getPreviousAndSubsequentNodes()
+//                getPreviousAndSubsequentNodes()
             }
         } else {
             println("Network not connected")
@@ -232,14 +232,14 @@ class ChooseLessonVM @Inject constructor(
     }
 
     private fun getPreviousAndSubsequentNodes() {
+        println(data.nodes?.items?.size)
         data.nodes?.items?.forEach{
-            getPreviousNodes(it)
-            getSubsequentNodes(it)
+            getPrevAndSubNodes(it)
         }
         println(graph)
     }
 
-    private fun getPreviousNodes(actualNode: Node){
+    private fun getPrevAndSubNodes(actualNode: Node){
         launch {
             val result =
                 withContext(Dispatchers.IO) {
@@ -248,15 +248,17 @@ class ChooseLessonVM @Inject constructor(
 
             when(result) {
                 is CommunicationResult.Success -> {
-                    println("Comm. res Prev SUCCESS")
+                    println("Comm. res Prev SUCCESS ${actualNode.id}")
                     if (result.data.count != 0 && result.data.items != null) {
                         actualNode.previousNodesIds = result.data.items!!.map { link -> link.beforeNodeId }
-                        graph.map[actualNode.id!!] = actualNode
-
-//                        println("prev:${actualNode.previousNodesIds}")
-//                        println("Graph[${actualNode.id}]: ${graph[actualNode.id!!]}")
                     } else {
+                        println("EMPTY LIST prev")
                         actualNode.previousNodesIds = listOf()
+                    }
+
+                    if (graph.map.containsKey(actualNode.id!!)) {
+                        graph.map[actualNode.id!!]!!.previousNodesIds = actualNode.previousNodesIds
+                    } else {
                         graph.map[actualNode.id!!] = actualNode
                     }
                 }
@@ -265,23 +267,29 @@ class ChooseLessonVM @Inject constructor(
                 is CommunicationResult.Error -> TODO()
                 is CommunicationResult.Exception -> TODO()
             }
-        }
-    }
-
-    private fun getSubsequentNodes(actualNode: Node) {
-        launch {
-            val result =
+//        }
+//    }
+//
+//    private fun getSubsequentNodes(actualNode: Node) {
+//        launch {
+            val result2 =
                 withContext(Dispatchers.IO) {
                     remoteRepository.getNodesAfter(actualNode.id!!)
                 }
 
-            when (result) {
+            when (result2) {
                 is CommunicationResult.Success -> {
-                    println("Comm.res SUB SUCCESS")
-                    if (result.data.count != 0 && result.data.items != null) {
-                        graph.map[actualNode.id]?.subsequentNodeIds = result.data.items!!.map { link -> link.nextNodeId }
+                    println("Comm.res SUB SUCCESS ${actualNode.id}")
+                    if (result2.data.count != 0 && result2.data.items != null) {
+                        graph.map[actualNode.id]?.subsequentNodeIds = result2.data.items!!.map { link -> link.nextNodeId }
                     } else {
-                        actualNode.previousNodesIds = listOf()
+                        println("EMPTY LIST sub")
+                        actualNode.subsequentNodeIds = listOf()
+                    }
+
+                    if (graph.map.containsKey(actualNode.id!!)) {
+                        graph.map[actualNode.id!!]!!.subsequentNodeIds = actualNode.subsequentNodeIds
+                    } else {
                         graph.map[actualNode.id!!] = actualNode
                     }
                 }
