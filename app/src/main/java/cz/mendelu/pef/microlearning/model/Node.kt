@@ -32,13 +32,15 @@ data class Node(
     // naslednici
     var subsequentNodeIds: List<Long> = mutableListOf()
 
-//    fun setCount(count: Long) {
-//        countOfCorrectAnswers = count
-//    }
+    override fun toString(): String {
+        return "Node{id=$id, lessonId=$lessonId, lessonName=$lessonName, lessonOrdinalNumber=$lessonOrdinalNumber,\n" +
+                "walkThrough=$walkThrough\n" +
+                "countOfCorrectAnswers=$countOfCorrectAnswers, countOfIncorrectAnswers= $countOfIncorrectAnswers, " +
+                "previousNodesIds=$previousNodesIds, subsequentNodeIds=$subsequentNodeIds"
+    }
 
-//    fun getId(): Long? {
-//        return id
-//    }
-
+    fun result(): String {
+        return "Node{id=$id, lessonName=$lessonName}"
+    }
 }
 

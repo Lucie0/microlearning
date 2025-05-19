@@ -17,6 +17,7 @@ import cz.mendelu.pef.microlearning.ui.screens.SettingsScreen
 import cz.mendelu.pef.microlearning.ui.screens.chooseLesson.ChooseNameOfLessonScreen
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreen1
+import cz.mendelu.pef.microlearning.ui.screens.showResults.ResultScreen
 import cz.mendelu.pef.microlearning.ui.screens.test.TestScreen
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -245,9 +246,16 @@ fun NavGraph(
             )
         }
 
-        //SettingsScreen bez arg
+        //ModesScreen bez arg
         composable(route = Destination.ModesScreen.route) {
             ModesScreen(
+                navigation = navigation
+            )
+        }
+
+        //resultscreen
+        composable(route = Destination.ResultScreen.route) {
+            ResultScreen(
                 navigation = navigation
             )
         }

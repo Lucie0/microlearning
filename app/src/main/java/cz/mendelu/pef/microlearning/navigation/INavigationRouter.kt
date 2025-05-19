@@ -22,6 +22,7 @@ interface INavigationRouter {
     fun navigateToQuestionScreen1(nodeId: Long?, lessonId: Long?)
 
     fun navigateToTestScreen()
+    fun navigateToResultScreen()
 //    fun navigateToTestScreen(title: String)
 
     fun navigateToSettingsScreen()

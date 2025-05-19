@@ -11,6 +11,7 @@ var mode = mutableStateOf(Modes.TESTING.name)
 var graph: Graph = Graph(0, mutableMapOf())
 var todoNodes = mutableListOf<Long>()
 var actualNodeInGraph: Long = -1L
+var startingNode: Long = -1L
 var lessonsToStudy = mutableListOf<Long>()
 var walkThroughNodes = listOf<Long>()
 

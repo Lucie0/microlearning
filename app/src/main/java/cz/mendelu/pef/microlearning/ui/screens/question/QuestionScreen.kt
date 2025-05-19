@@ -27,6 +27,7 @@ import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.Option
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -278,8 +279,10 @@ fun QuestionScreenContent(
                                 Modes.TESTING.name -> {
                                     if (viewModel.isTestCorrect()) {
                                         // todo testovani je ukonceno a je zobrazen vysledek
+                                        navigation.navigateToResultScreen()
                                     } else {
                                         // pokracovani na rodicovske uzly s otazkami
+                                        actualNodeInGraph = nodeId!!
                                         navigation.navigateToQuestionScreen(
                                             nodeId = nodeId,
                                             lessonId = lessonId
@@ -304,8 +307,6 @@ fun QuestionScreenContent(
                         Text("Continue")
                     }
                 }
-
-
             }
         }
     }

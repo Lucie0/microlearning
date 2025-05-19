@@ -184,6 +184,10 @@ fun MainScreenContent(
         }) {
             Text("All questions")
         }
+
+        Button(onClick =  { navigation.navigateToResultScreen() }) {
+            Text(text = "ResultScreen")
+        }
     }
 }
 

@@ -9,4 +9,5 @@ sealed class Destination(val route: String) {
     object SettingsScreen: Destination(route = "settings")
     object ModesScreen: Destination(route = "modes")
     object ChooseNameOfLessonScreen: Destination(route = "chooseLesson")
+    object ResultScreen: Destination(route = "results")
 }
