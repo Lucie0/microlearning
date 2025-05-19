@@ -28,13 +28,11 @@ import cz.mendelu.pef.microlearning.model.Option
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.mode
-import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
-import cz.mendelu.pef.microlearning.ui.elements.HtmlToNormalText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
@@ -154,6 +152,7 @@ fun QuestionScreenContent(
                     lessonId = lessonId,
                     viewModel = viewModel,
                     onSubmitClicked = onSubmitClicked,
+                    showCorrectAnswers = false,
                     navigation = navigation
                 )
             }
@@ -217,20 +216,36 @@ fun QuestionScreenContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 if (onSubmitClicked.value) {
                     if (viewModel.isTestCorrect()) {
                         Text("Well done!", Modifier.padding(8.dp))
                     } else {
-                        Text("Answers are not correct.", Modifier.padding(8.dp),
-                            color = getErrorColor())
                         Text(
-                            "Correct answers: \n ${viewModel.correctAnswers()}",
-                            Modifier.padding(8.dp),
-                            color = getCorrectAnswersColor()
+                            "Answers are not correct.", Modifier.padding(8.dp),
+                            color = getErrorColor()
                         )
+//                        Text(
+//                            "Correct answers: \n ${viewModel.correctAnswers()}",
+//                            Modifier.padding(8.dp),
+//                            color = getCorrectAnswersColor()
+//                        )
 
-                    }
+                        uiState.value.data?.questions?.items?.forEach {
+//                            if (viewModel.correctAnswers().contains(it.text)) {
+//                        viewModel.correctAnswers().forEach{
+                                QuestionItem(
+                                    paddingValues = paddingValues,
+                                    question = it,
+                                    nodeId = nodeId,
+                                    lessonId = lessonId,
+                                    viewModel = viewModel,
+                                    onSubmitClicked = onSubmitClicked,
+                                    showCorrectAnswers = true,
+                                    navigation = navigation
+                                )
+                            }
+                        }
+//                    }
 
 //                    Button(onClick = {
 //                        navigation.navigateToLessonScreen(
@@ -311,7 +326,7 @@ fun QuestionItem(
 ) {
     val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
-    val correctAnswers = hashMapOf<String, String>()
+//    val correctAnswers = hashMapOf<String, String>()
 
     // todo problem s ot 6 -- doplnovacka -> prepisuju moznosti tou posledni,
     //  protoze je tam stejny klic = nerozdelena otazka, zustavaji tam znacky [[x]]
@@ -319,12 +334,17 @@ fun QuestionItem(
 
     // pokud je to typ otazek jinych nez CLOZE
 //    if (question?.questionType != "CLOZE") {
-    if (!options.isNullOrEmpty() && options[0].groupNumber == 0) {
+    if (!options.isNullOrEmpty()) {// && options[0].groupNumber == 0) {
 //        println("jiny nez cloze")
         options.filter { it.correctAnswer == true }.forEach { opt ->
-            viewModel.correctOptions[questionText] = opt.text ?: ""
-            correctAnswers[questionText] = opt.text ?: ""
+//            viewModel.correctOptions[questionText] = opt.text ?: ""
+            viewModel.correctOptions["${question.id}.${opt.groupNumber}"] = opt.text ?: ""
+
+//            correctAnswers[questionText] = opt.text ?: ""
+//            correctAnswers["${question.id}.${opt.groupNumber}"] = opt.text ?: ""
         }
+        println("VM correctOptions:${viewModel.correctOptions}")
+        // todo nasledne else by se nemelo vubec provadet a byt potreba -- SMAZAT
     } else if (!options.isNullOrEmpty()) { // pokud je to CLOZE
         val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
         val result = options.filter { it.correctAnswer == true }
@@ -333,13 +353,13 @@ fun QuestionItem(
         for (paar in result) {
             // uloz spravne odpovedi do VM
             viewModel.correctOptions[paar.second + "[[$count"] = paar.first.text ?: ""
-            correctAnswers[paar.second + "[[$count"] = paar.first.text ?: ""
+//            correctAnswers[paar.second + "[[$count"] = paar.first.text ?: ""
             count += 1
         }
     }
 
     println("opt:$options")
-    println("corr:$correctAnswers")
+//    println("corr:$correctAnswers")
     println("corrVM:${viewModel.correctOptions}")
 
     val radioOptions: List<String?> = options?.map { o -> o.text } ?: listOf()
@@ -359,6 +379,7 @@ fun QuestionItem(
                     // otazka
                     HtmlText(
                         string = questionText,
+                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
                         fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
@@ -371,13 +392,16 @@ fun QuestionItem(
                         // hodnotu, pokud ne, nic nedelej, kazdopadne odesli do fce RadioButton
                         // promennou selectedOption
                         // FUNGUJE !!!
-                        selectedOption = if (viewModel.selectedOptions.keys.contains(questionText)) {
-                            selectedOption.value = viewModel.selectedOptions[questionText]!!
+                        selectedOption = if (showCorrectAnswers) {
+                            selectedOption.value = viewModel.correctOptions["${question.id}.0"]!!
+                            selectedOption
+                        } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
+                            selectedOption.value = viewModel.selectedOptions["${question.id}.0"]!!
                             selectedOption
                         } else selectedOption,
                         onClickAfter = {
                             // pod klic se znenim otazky je ulozena hodnota odpovedi
-                            viewModel.selectedOptions[questionText] = selectedOption.value
+                            viewModel.selectedOptions["${question.id}.0"] = selectedOption.value
                             println(viewModel.selectedOptions)
                         }
                     )
@@ -390,6 +414,7 @@ fun QuestionItem(
                     // otazka
                     HtmlText(
                         string = questionText,
+                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
                         fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
@@ -415,9 +440,10 @@ fun QuestionItem(
 //                                string = sentence,
 //                                fontSize = MaterialTheme.typography.titleLarge.fontSize
 //                            )
-                        HtmlToNormalText(
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                            text = sentence,
+                        HtmlText(
+//                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                            string = sentence,
+                            textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
                             fontSize = MaterialTheme.typography.titleLarge.fontSize
                         )
 
@@ -431,14 +457,17 @@ fun QuestionItem(
                             Dropdown(
                                 enabled = !onSubmitClicked.value,
                                 options = listStrings,
-                                selected = if (viewModel.selectedOptions.keys.contains(sentence)) {
-                                    selectedOption.value = viewModel.selectedOptions[sentence]!!
+                                selected = if (showCorrectAnswers) {
+                                    selectedOption.value = viewModel.correctOptions["${question.id}.${sentence.substringAfter("[[")}"]!!
+                                    selectedOption
+                                } else if (viewModel.selectedOptions.keys.contains("${question.id}.${sentence.substringAfter("[[")}")) {
+                                    selectedOption.value = viewModel.selectedOptions["${question.id}.${sentence.substringAfter("[[")}"]!!
                                     selectedOption
                                 } else selectedOption,
                                 onClickAfter = {
                                     // pod klic se znenim casti otazky otazky je ulozena hodnota
                                     // odpovedi
-                                    viewModel.selectedOptions[sentence] = selectedOption.value
+                                    viewModel.selectedOptions["${question.id}.${sentence.substringAfter("[[")}"] = selectedOption.value
                                     println(viewModel.selectedOptions)
                                 }
                             )
@@ -456,20 +485,24 @@ fun QuestionItem(
 //                    item {
                     HtmlText(
                         string = questionText,
+                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
                         fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
                     OutlinedTextField(
-                        value = if (viewModel.selectedOptions.keys.contains(questionText)) {
-                            answer.value = viewModel.selectedOptions[questionText]!!
+                        value = if (showCorrectAnswers) {
+                            answer.value = viewModel.correctOptions["${question.id}.0"]!!
+                            answer.value
+                        } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
+                            answer.value = viewModel.selectedOptions["${question.id}.0"]!!
                             answer.value
                         } else answer.value,
                         onValueChange = {
                             println("it: $it")
                             answer.value = it
-                            viewModel.selectedOptions[questionText] = it
+                            viewModel.selectedOptions["${question.id}.0"] = it
                         },
-                        label = { Text("Answer") },
+                        label = { if (showCorrectAnswers) Text("Correct answer") else Text("Answer") },
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),

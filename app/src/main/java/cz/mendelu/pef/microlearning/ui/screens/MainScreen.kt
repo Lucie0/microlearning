@@ -168,8 +168,8 @@ fun MainScreenContent(
         Button(onClick = {
 //            navigation.navigateToChooseNameOfLessonScreen("Programming", 2)
             navigation.navigateToQuestionScreen(
-                nodeId = 2,
-                lessonId = 2
+                nodeId = 6,
+                lessonId = 6
             )
         }) {
             Text("Question screen")
