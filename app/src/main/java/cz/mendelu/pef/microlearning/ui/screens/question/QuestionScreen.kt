@@ -37,7 +37,14 @@ import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.HtmlToNormalText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
 import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
+import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
+import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
+
+
+// todo: Ve VM stahuju questions a questionList. V prtipade, ze jsem v testing modu, tak stahuju questionList...*
+// TODO zkontrolovat, jestli to predavam do uistate ve when....
+// todo *... tak stahuju questionlist, a proto tady musim udelat osetreni, jestli jsem v testing modu, tak zobrazovat otazky z questionList, nikolv z obycejnych questions.
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -52,7 +59,7 @@ fun QuestionScreen(
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
     viewModel.lessonId = lessonId!!
-//    viewModel.nodeId = nodeId!!
+    viewModel.nodeId = nodeId!!
 
     LaunchedEffect(key1 = 1, block = { viewModel.getData() })
 
@@ -61,8 +68,7 @@ fun QuestionScreen(
 //    val myLessonId = 1L
 
 //    val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
-// uistate
-
+    // uistate
     val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
         rememberSaveable {
             mutableStateOf(
@@ -89,7 +95,6 @@ fun QuestionScreen(
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
         onBackClick = {
-            // TODO navigation to main screen  se zapamatovanim stavu
             navigation.navigateBack()
         }
     ) {
@@ -125,7 +130,7 @@ fun QuestionScreenContent(
 
     LazyColumn {
 //        item {
-            /*
+        /*
             QuestionScreenContent(
                 paddingValues = it,
                 question = uiState.value.data?.items?.get(5), // todo cislo je napevno!!!!
@@ -257,8 +262,7 @@ fun QuestionScreenContent(
                             when (mode.value) {
                                 Modes.TESTING.name -> {
                                     if (viewModel.isTestCorrect()) {
-                                        // testovani je ukonceno a je zobrazen vysledek
-                                        // todo
+                                        // todo testovani je ukonceno a je zobrazen vysledek
                                     } else {
                                         // pokracovani na rodicovske uzly s otazkami
                                         navigation.navigateToQuestionScreen(
@@ -267,6 +271,7 @@ fun QuestionScreenContent(
                                         )
                                     }
                                 }
+
                                 Modes.TUITION.name -> {
                                     navigation.navigateToLessonScreen(
                                         nodeId = nodeId,
@@ -280,7 +285,7 @@ fun QuestionScreenContent(
                     }) {
                     if (!onSubmitClicked.value) {
                         Text("Submit")
-                    } else  {
+                    } else {
                         Text("Continue")
                     }
                 }
@@ -301,6 +306,7 @@ fun QuestionItem(
     lessonId: Long?,
     viewModel: QuestionScreenVM,
     onSubmitClicked: MutableState<Boolean>,
+    showCorrectAnswers: Boolean = false,
     navigation: INavigationRouter,
 ) {
     val questionText: String = question?.text ?: "No data"
@@ -423,6 +429,7 @@ fun QuestionItem(
                         // okenko pro vyberovy seznam
                         if (listStrings != null)
                             Dropdown(
+                                enabled = !onSubmitClicked.value,
                                 options = listStrings,
                                 selected = if (viewModel.selectedOptions.keys.contains(sentence)) {
                                     selectedOption.value = viewModel.selectedOptions[sentence]!!

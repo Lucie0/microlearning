@@ -1,5 +1,7 @@
 package cz.mendelu.pef.microlearning.ui.elements
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,11 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 
 
+@RequiresApi(Build.VERSION_CODES.P)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dropdown(
     options: List<String?>,
     selected: MutableState<String>,
+    enabled: Boolean = true,
     onClickBefore: () -> Unit = {},
     onClickAfter: () -> Unit = {},
 ){
@@ -52,6 +56,7 @@ fun Dropdown(
 //        IconButton(onClick = { expanded = !expanded }) {
 //            Icon(Icons.Default.MoreVert, contentDescription = null)
 //        }
+        // todo v selected.value promenit vsechny html znaky na normal znaky
         OutlinedTextField(
             value = selected.value,
             onValueChange = { selected.value = it },
@@ -80,7 +85,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { HtmlToNormalText(it ?: "none") }, onClick = {
+                DropdownMenuItem(text = { HtmlText(it ?: "none") }, onClick = {
                     onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value
