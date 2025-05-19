@@ -9,4 +9,5 @@
     <string name="something_went_wrong_please_reload_screen">Something went wrong, please reload screen</string>
     <string name="not_found">Not found</string>
     <string name="network_is_not_connected">Network is not connected</string>
+    <string name="no_testing_questions_for_this_domain">No testing questions for this domain</string>
 </resources>
