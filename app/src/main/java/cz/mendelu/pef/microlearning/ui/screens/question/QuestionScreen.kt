@@ -216,7 +216,8 @@ fun QuestionScreenContent(
                     if (viewModel.isTestCorrect()) {
                         Text("Well done!", Modifier.padding(8.dp))
                     } else {
-                        Text("Answers are not correct.", Modifier.padding(8.dp))
+                        Text("Answers are not correct.", Modifier.padding(8.dp),
+                            color = getErrorColor())
                         Text(
                             "Correct answers: \n ${viewModel.correctAnswers()}",
                             Modifier.padding(8.dp),

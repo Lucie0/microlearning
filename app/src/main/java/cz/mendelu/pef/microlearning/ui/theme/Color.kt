@@ -451,5 +451,9 @@ fun getPrimaryColor(): Color = if (isSystemInDarkTheme()) primaryDark else prima
 @Composable
 fun getCorrectAnswersColor(): Color = if (isSystemInDarkTheme()) correctAnswersDark else correctAnswersLight
 
+@Composable
+fun getErrorColor(): Color = if (isSystemInDarkTheme()) errorDark else errorLight
+
+
 
 
