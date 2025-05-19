@@ -174,7 +174,16 @@ fun MainScreenContent(
         }) {
             Text("Question screen")
         }
-//
+
+        Button(onClick = {
+//            navigation.navigateToChooseNameOfLessonScreen("Programming", 2)
+            navigation.navigateToQuestionScreen1(
+                nodeId = 6,
+                lessonId = 6
+            )
+        }) {
+            Text("All questions")
+        }
     }
 }
 
