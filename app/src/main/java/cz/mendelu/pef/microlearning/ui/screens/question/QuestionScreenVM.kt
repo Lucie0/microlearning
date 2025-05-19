@@ -10,6 +10,7 @@ import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
@@ -345,5 +346,18 @@ class QuestionScreenVM @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getNextNodeId(): Long {
+        val ids = graph.map[actualNodeInGraph]?.previousNodesIds
+        var nextNodeId = -1L
+
+        if (!ids.isNullOrEmpty()) {
+            nextNodeId = ids[0]
+            if (ids.size > 1) todoNodes = ids.subList(1, ids.size - 1).toMutableList()
+        }
+
+        return nextNodeId
+
     }
 }

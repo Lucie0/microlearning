@@ -28,7 +28,9 @@ import cz.mendelu.pef.microlearning.model.Option
 import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
+import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
@@ -231,7 +233,8 @@ fun QuestionScreenContent(
 //                            color = getCorrectAnswersColor()
 //                        )
 
-                        uiState.value.data?.questions?.items?.forEach {
+                        if (mode.value == Modes.TUITION.name) {
+                            uiState.value.data?.questions?.items?.forEach {
 //                            if (viewModel.correctAnswers().contains(it.text)) {
 //                        viewModel.correctAnswers().forEach{
                                 QuestionItem(
@@ -246,6 +249,7 @@ fun QuestionScreenContent(
                                 )
                             }
                         }
+                    }
 //                    }
 
 //                    Button(onClick = {
@@ -278,14 +282,24 @@ fun QuestionScreenContent(
                             when (mode.value) {
                                 Modes.TESTING.name -> {
                                     if (viewModel.isTestCorrect()) {
-                                        // todo testovani je ukonceno a je zobrazen vysledek
-                                        navigation.navigateToResultScreen()
+                                        if (todoNodes.isEmpty()) {
+                                            // testovani je ukonceno a je zobrazen vysledek
+                                            navigation.navigateToResultScreen()
+                                        } else {
+                                            actualNodeInGraph = todoNodes.removeAt(0)
+
+                                            navigation.navigateToQuestionScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                            )
+                                        }
                                     } else {
                                         // pokracovani na rodicovske uzly s otazkami
-                                        actualNodeInGraph = nodeId!!
+                                        actualNodeInGraph = viewModel.getNextNodeId()
+
                                         navigation.navigateToQuestionScreen(
-                                            nodeId = nodeId,
-                                            lessonId = lessonId
+                                            nodeId = actualNodeInGraph,
+                                            lessonId = graph.map[actualNodeInGraph]?.lessonId
                                         )
                                     }
                                 }
