@@ -23,8 +23,8 @@ data class Node(
     var walkThrough: Boolean?,
     var successfullyCompleted: Boolean?,
 ): Serializable {
-    var countOfCorrectAnswers: Long = 0
-    var countOfIncorrectAnswers: Long = 0
+    var countOfCorrectAnswers: Int = 0
+    var countOfIncorrectAnswers: Int = 0
 
     // predci
     var previousNodesIds: List<Long> = mutableListOf()
