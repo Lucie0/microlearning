@@ -44,6 +44,14 @@ class ChooseLessonVM @Inject constructor(
                 getNodesByTopic()
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
 //                getPreviousAndSubsequentNodes()
+            } else if (mode.value == Modes.TESTING.name) {
+                // promazat graf co se tyce poctu odpovedi, walkthrough, succesfully completed
+                graph.map.values.forEach {
+                    it.walkThrough = false
+                    it.successfullyCompleted = false
+                    it.countOfCorrectAnswers = 0
+                    it.countOfIncorrectAnswers = 0
+                }
             }
         } else {
             println("Network not connected")
