@@ -110,10 +110,19 @@ fun ChooseNameOfLessonScreenContent(
                                         nodeId = startingNode
                                     )
                                 }
-                            } else {
+                            } else if (mode.value == Modes.TUITION.name) {
                                 // TUITION MODE
                                 println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                 // todo navigate to lesson, then test apod...
+                                if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+                                    startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                    actualNodeInGraph = viewModel.getNodeFromGraphByLesson(it.id!!)
+
+                                    navigation.navigateToQuestionScreen(
+                                        lessonId = it.id,
+                                        nodeId = startingNode
+                                    )
+                                }
                             }
                         }
                     )

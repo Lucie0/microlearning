@@ -29,6 +29,7 @@ import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.graph
+import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -41,11 +42,6 @@ import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
-
-
-// todo: Ve VM stahuju questions a questionList. V prtipade, ze jsem v testing modu, tak stahuju questionList...*
-// TODO zkontrolovat, jestli to predavam do uistate ve when....
-// todo *... tak stahuju questionlist, a proto tady musim udelat osetreni, jestli jsem v testing modu, tak zobrazovat otazky z questionList, nikolv z obycejnych questions.
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -64,11 +60,6 @@ fun QuestionScreen(
 
     LaunchedEffect(key1 = 1, block = { viewModel.getData() })
 
-    // todo lesson Id je zatim null, potrebuju rozhodovani, jak dopadl test -- PREDELAT
-    // lesson Id  nastaveno napevno
-//    val myLessonId = 1L
-
-//    val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
     // uistate
     val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
         rememberSaveable {
@@ -82,11 +73,8 @@ fun QuestionScreen(
         uiState.value = it
     }
 
-//    viewModel.correctOptions
-
-
     BaseScreen(
-        topBarText = "Test nodu $nodeId",
+        topBarText = "Test of node $nodeId",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -101,17 +89,12 @@ fun QuestionScreen(
     ) {
         QuestionScreenContent(
             paddingValues = it,
-//            question = uiState.value.data?.items?.get(1), // todo cislo je napevno!!!! --
-            // todo bude to id otazky, ktera bude prirazena k danemu testu, ktery se predava
-            //  v args obrazovky
             nodeId = nodeId,
-            lessonId = lessonId,
-//                    lessonName = lessonName,
+//            lessonId = lessonId,
             uiState = uiState,
             viewModel = viewModel,
             navigation = navigation
         )
-
     }
 }
 
@@ -121,7 +104,7 @@ fun QuestionScreenContent(
     paddingValues: PaddingValues,
 //    question: Question?,
     nodeId: Long?,
-    lessonId: Long?,
+//    lessonId: Long?,
 //    lessonName: String?,
     uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
@@ -152,7 +135,7 @@ fun QuestionScreenContent(
                     paddingValues = paddingValues,
                     question = it,
                     nodeId = nodeId,
-                    lessonId = lessonId,
+//                    lessonId = lessonId,
                     viewModel = viewModel,
                     onSubmitClicked = onSubmitClicked,
                     showCorrectAnswers = false,
@@ -234,6 +217,7 @@ fun QuestionScreenContent(
 //                        )
 
                         if (mode.value == Modes.TUITION.name) {
+                            // zobrazeni spravnych odpovedi
                             uiState.value.data?.questions?.items?.forEach {
 //                            if (viewModel.correctAnswers().contains(it.text)) {
 //                        viewModel.correctAnswers().forEach{
@@ -241,7 +225,7 @@ fun QuestionScreenContent(
                                     paddingValues = paddingValues,
                                     question = it,
                                     nodeId = nodeId,
-                                    lessonId = lessonId,
+//                                    lessonId = lessonId,
                                     viewModel = viewModel,
                                     onSubmitClicked = onSubmitClicked,
                                     showCorrectAnswers = true,
@@ -266,7 +250,7 @@ fun QuestionScreenContent(
                     modifier = Modifier.padding(8.dp),
                     // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
                     //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                    enabled = /*!onSubmitClicked.value && */ lessonId != null && nodeId != null,// viewModel.selectedOptions.size == 1
+                    enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
                     onClick = {
                         // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                         // pokud je test OK
@@ -306,15 +290,41 @@ fun QuestionScreenContent(
                                 }
 
                                 Modes.TUITION.name -> {
-                                    navigation.navigateToLessonScreen(
-                                        nodeId = nodeId,
-                                        lessonId = lessonId
-                                    )
+                                    if (viewModel.isTestCorrect()) {
+                                        if (todoNodes.isEmpty()) {
+                                            // todo  pokracuje se niz v grafu
+                                            println("todo pokracuje se niz v grafu")
+
+//                                            if (graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null)
+//                                                actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)!!
+
+                                            navigation.navigateToLessonScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                            )
+
+                                        } else {
+                                            println("todoNodes:$todoNodes")
+                                            actualNodeInGraph = todoNodes.removeAt(0)
+
+                                            navigation.navigateToLessonScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                            )
+                                        }
+                                    } else {
+                                        // todo kdyz test neni vyplnen spravne
+                                        // todo navigovat na lekci, na jejiz otazky bylo zodpovezeno chybne
+                                        val lesson = lessonsToStudy.removeAt(0)
+
+                                        navigation.navigateToLessonScreen(
+                                            nodeId = -1L,
+                                            lessonId = lesson
+                                        )
+                                    }
                                 }
                             }
-
                         }
-
                     }) {
                     if (!onSubmitClicked.value) {
                         Text("Submit")
@@ -334,7 +344,7 @@ fun QuestionItem(
     paddingValues: PaddingValues,
     question: Question?,
     nodeId: Long?,
-    lessonId: Long?,
+//    lessonId: Long?,
     viewModel: QuestionScreenVM,
     onSubmitClicked: MutableState<Boolean>,
     showCorrectAnswers: Boolean = false,
@@ -343,10 +353,6 @@ fun QuestionItem(
     val questionText: String = question?.text ?: "No data"
     val options: List<Option>? = question?.options?.items
 //    val correctAnswers = hashMapOf<String, String>()
-
-    // todo problem s ot 6 -- doplnovacka -> prepisuju moznosti tou posledni,
-    //  protoze je tam stejny klic = nerozdelena otazka, zustavaji tam znacky [[x]]
-    //  --> rozparsovat
 
     // pokud je to typ otazek jinych nez CLOZE
 //    if (question?.questionType != "CLOZE") {
@@ -458,7 +464,7 @@ fun QuestionItem(
 //                            )
                         HtmlText(
 //                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                            string = sentence,
+                            string = sentence.substring(0,sentence.length-3-1),
                             textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
                             fontSize = MaterialTheme.typography.titleLarge.fontSize
                         )

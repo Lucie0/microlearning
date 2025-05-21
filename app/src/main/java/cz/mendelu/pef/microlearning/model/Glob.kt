@@ -2,7 +2,7 @@ package cz.mendelu.pef.microlearning.model
 
 import androidx.compose.runtime.mutableStateOf
 
-var mode = mutableStateOf(Modes.TESTING.name)
+var mode = mutableStateOf(Modes.TUITION.name)
 
 
 
@@ -12,8 +12,10 @@ var graph: Graph = Graph(0, mutableMapOf())
 var todoNodes = mutableListOf<Long>()
 var actualNodeInGraph: Long = -1L
 var startingNode: Long = -1L
+
+// TUITION
 var lessonsToStudy = mutableListOf<Long>()
-var walkThroughNodes = listOf<Long>()
+//var walkThroughNodes = listOf<Long>()
 
 // REVISION
 // ordinal number, lesson_id

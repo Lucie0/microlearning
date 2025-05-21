@@ -12,6 +12,7 @@ import cz.mendelu.pef.microlearning.model.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.graph
+import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.todoNodes
@@ -61,8 +62,8 @@ class QuestionScreenVM @Inject constructor(
     }
 
     fun getData() {
-        if (mode.value == Modes.TESTING.name) {
-            getQuestionsByLessonIdTestingMode()
+        if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
+            getQuestionsByLessonIdsTestingMode()
         } else {
             getQuestionsByLessonId()
         }
@@ -87,10 +88,12 @@ class QuestionScreenVM @Inject constructor(
         if (mode.value == Modes.TESTING.name) {
             // zapsat do graphu
             graph.map[nodeId]?.countOfCorrectAnswers = (graph.map[nodeId]?.countOfCorrectAnswers ?: 0) + countOfCorrect
-            graph.map[nodeId]?.countOfIncorrectAnswers = (graph.map[nodeId]?.countOfIncorrectAnswers ?: 0 ) + countOfIncorrect
+            graph.map[nodeId]?.countOfIncorrectAnswers = (graph.map[nodeId]?.countOfIncorrectAnswers ?: 0) + countOfIncorrect
             graph.map[nodeId]?.walkThrough = true
             graph.map[nodeId]?.successfullyCompleted = isOk && countOfCorrect != 0
             println("Graph[$nodeId]:${graph.map[nodeId]}")
+        } else if (mode.value == Modes.TUITION.name){
+            graph.map[nodeId]?.previousNodesIds?.let { lessonsToStudy.addAll(it) }
         }
 
         return isOk && countOfCorrect != 0
@@ -143,71 +146,24 @@ class QuestionScreenVM @Inject constructor(
         return list
     }
 
-    private fun getQuestionsByLessonIdTestingMode() {
+    private fun getQuestionsByLessonIdsTestingMode() {
 //        // aktualni node -- jeho prechoduci -- pro kazdy
-        println("Graph:${graph}")
+//        println("Graph:${graph}")
         var count = graph.map[nodeId]?.previousNodesIds?.size ?: 0
-        println("count:$count")
-        println("Graph[102]:${graph.map[102]?.previousNodesIds}")
+//        println("count previousNodesIds:$count")
+//        println("Graph[102]:${graph.map[102]?.previousNodesIds}")
 
         if (count > 0) {
             graph.map[nodeId]?.previousNodesIds?.forEach { id ->
-                println("ID:$id")
+                println("nodeID:$id")
                 if (graph.map[id] != null && graph.map[id]!!.lessonId != null) {
-                    println("!!" + graph.map[id])
+//                    println("!!!" + graph.map[id])
                     launch {
                         val result = withContext(Dispatchers.IO) {
                             remoteRepository.getQuestionsByLessonId(graph.map[id]!!.lessonId!!)
                         }
 
                         when (result) {
-
-////                        is CommunicationResult.ConnectionError -> {
-////                            uiState.value = UiState(
-////                                loading = false,
-////                                data = null,
-////                                errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
-////                            )
-////                        }
-////
-////                        is CommunicationResult.Error -> {
-////                            println(result.error)
-////                            when (result.error.code) {
-////                                500 -> {
-////                                    uiState.value = UiState(
-////                                        loading = false,
-////                                        data = null,
-////                                        errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
-////                                    )
-////                                }
-////
-////                                404 -> {
-////                                    uiState.value = UiState(
-////                                        loading = false,
-////                                        data = null,
-////                                        errors = QuestionsErrors(R.string.not_found) // "not found" resource code
-////                                    )
-////                                }
-////
-////                                else -> {
-////                                    uiState.value = UiState(
-////                                        loading = false,
-////                                        data = null,
-////                                        errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
-////                                    )
-////                                    println(result.error.message)
-////                                }
-////                            }
-////                        }
-////
-////                        is CommunicationResult.Exception -> {
-////                            uiState.value = UiState(
-////                                loading = false,
-////                                data = null,
-////                                errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
-////                            )
-////                        }
-
                             is CommunicationResult.Success -> {
                                 if (result.data.items != null) {
 //                                data.items.addAll(result.data.items)
@@ -363,6 +319,5 @@ class QuestionScreenVM @Inject constructor(
         println("todoNodes:$todoNodes")
 
         return nextNodeId
-
     }
 }

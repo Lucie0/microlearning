@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -163,10 +165,11 @@ fun LessonScreenContent(
                         }
                     }
                 } else {
-                    // button pro testing a tuition mode
+                    // button pro TUITION mode
                     Button(
                         enabled = uiState.value.data!!.nextNode?.content?.id != null &&
                                 uiState.value.data!!.nextNode?.content?.lessonId != null, //&&
+
 //                            uiState.value.data!!.nextNode?.content?.testId != null,
                         onClick = {
                             // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
@@ -174,6 +177,12 @@ fun LessonScreenContent(
                             // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
                             println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
                             println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
+
+                            if (mode.value == Modes.TUITION.name) {
+//                                actualNodeInGraph = uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId!!
+                                actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)!!
+                            }
+
                             navigation.navigateToQuestionScreen(
                                 nodeId = uiState.value.data!!.nextNode?.content?.id,
                                 lessonId = uiState.value.data!!.nextNode?.content?.lessonId,

@@ -52,6 +52,11 @@ class ChooseLessonVM @Inject constructor(
                     it.countOfCorrectAnswers = 0
                     it.countOfIncorrectAnswers = 0
                 }
+            } else if (mode.value == Modes.TUITION.name && graph.topicId != topicId){
+                // vynulovani graphu
+                graph = Graph(this.topicId, mutableMapOf())
+                // pokud tuition mode -> nacist graf: Nody dle topicu
+                getNodesByTopic()
             }
         } else {
             println("Network not connected")
@@ -154,7 +159,9 @@ class ChooseLessonVM @Inject constructor(
                 println("Testing mode, graph:$graph")
             }
 
-            Modes.TUITION.name -> TODO("Tuition mode -> not yet implemented")
+            Modes.TUITION.name -> {
+                println("Tuition mode, graph:$graph")
+            }
         }
         println("revisionLessonList:$revisionLessonList")
     }
