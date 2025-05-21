@@ -21,7 +21,7 @@ public class Option implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "o_text")
+    @Column(columnDefinition = "text", name = "o_text")
     private String oText;
 
     @Column(name = "correct_answer")
