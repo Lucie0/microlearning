@@ -286,6 +286,7 @@ fun QuestionScreenContent(
                                             // testovani je ukonceno a je zobrazen vysledek
                                             navigation.navigateToResultScreen()
                                         } else {
+                                            println("todoNodes:$todoNodes")
                                             actualNodeInGraph = todoNodes.removeAt(0)
 
                                             navigation.navigateToQuestionScreen(

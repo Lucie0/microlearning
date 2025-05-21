@@ -85,9 +85,9 @@ class QuestionScreenVM @Inject constructor(
         }
 
         if (mode.value == Modes.TESTING.name) {
-            // todo zapsat do graphu
-            graph.map[nodeId]?.countOfCorrectAnswers = countOfCorrect
-            graph.map[nodeId]?.countOfIncorrectAnswers = countOfIncorrect
+            // zapsat do graphu
+            graph.map[nodeId]?.countOfCorrectAnswers = (graph.map[nodeId]?.countOfCorrectAnswers ?: 0) + countOfCorrect
+            graph.map[nodeId]?.countOfIncorrectAnswers = (graph.map[nodeId]?.countOfIncorrectAnswers ?: 0 ) + countOfIncorrect
             graph.map[nodeId]?.walkThrough = true
             graph.map[nodeId]?.successfullyCompleted = isOk && countOfCorrect != 0
             println("Graph[$nodeId]:${graph.map[nodeId]}")
@@ -353,9 +353,14 @@ class QuestionScreenVM @Inject constructor(
         var nextNodeId = -1L
 
         if (!ids.isNullOrEmpty()) {
-            nextNodeId = ids[0]
-            if (ids.size > 1) todoNodes = ids.subList(1, ids.size - 1).toMutableList()
+
+            todoNodes.addAll(ids)
+            nextNodeId = todoNodes.removeAt(0)
+            println("todoNodes:$todoNodes")
+            println("ids:$ids")
         }
+
+        println("todoNodes:$todoNodes")
 
         return nextNodeId
 

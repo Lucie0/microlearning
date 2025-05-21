@@ -152,6 +152,7 @@ fun MainScreenContent(
 
 //        HelloWorldScreen()
 
+
 //        Button(
 //            onClick = {
 //                navigation.navigateToQuestionScreen(
@@ -200,7 +201,7 @@ fun HelloWorldScreen() {
             "<typeface>Typeface</typeface><br>" +
             "<font face='code'>Font</font>" +
             " #include &lt;name&gt;" +
-            "<h2>HELLO <a href=\"https://google.com/\"> Google</a></h2> <br>" +
+            "<h2>HELLO <a href=\"https://pcx.wz.cz/ML/graph_with_pie_nodes5_moje.html?nodes=10&outline=1&fill1=0:0&fill2=0:0&fill3=3:0&fill4=2:1&fill5=1:2&fill6=3:17&fill7=0:3\"> Google</a></h2> <br>" +
             " <p>Diam quis enim lobortis <b>scelerisque</b> fermentum dui. <a href=\"https://medium.com/\">Medium</a> <strong>Massa sapien " +
             "faucibus</strong> et molestie ac. Nullam non nisi est sit amet facilisis magna. Facilisi etiam dignissim diam quis enim " +
             "lobortis scelerisque fermentum dui. Risus nullam eget felis eget nunc. Erat imperdiet sed euismod nisi. Eget " +

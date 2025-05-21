@@ -34,7 +34,7 @@ data class Node(
 
     override fun toString(): String {
         return "Node{id=$id, lessonId=$lessonId, lessonName=$lessonName, lessonOrdinalNumber=$lessonOrdinalNumber,\n" +
-                "walkThrough=$walkThrough\n" +
+                "walkThrough=$walkThrough, successfullyCompleted=$successfullyCompleted\n" +
                 "countOfCorrectAnswers=$countOfCorrectAnswers, countOfIncorrectAnswers= $countOfIncorrectAnswers, " +
                 "previousNodesIds=$previousNodesIds, subsequentNodeIds=$subsequentNodeIds"
     }
