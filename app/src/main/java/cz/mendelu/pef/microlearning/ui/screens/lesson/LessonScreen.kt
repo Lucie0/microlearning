@@ -24,6 +24,7 @@ import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.graph
+import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -49,6 +50,10 @@ fun LessonScreen(
     viewModel.actualNodeId = nodeId
     viewModel.lessonOrdinalNumber = lessonOrdinalNumber
     viewModel.topicId = topicId
+
+    println("---* ACTUAL NODE Ls:$actualNodeInGraph")
+    println("lessonId=$lessonId,nodeId=$nodeId")
+
 
     val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
 

@@ -68,10 +68,10 @@ fun RadioButtonSingleSelection(
                     onClick = null // null recommended for accessibility with screen readers
                 )
                 //htmltonormaltext
-                HtmlText(
-                    string = text ?: "null",
+                Text(
+                    text = text ?: "null",
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier.padding(16.dp)
                 )
 
 //                HtmlText(

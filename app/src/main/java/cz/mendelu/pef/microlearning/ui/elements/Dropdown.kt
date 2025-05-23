@@ -40,7 +40,7 @@ fun Dropdown(
     onClickBefore: () -> Unit = {},
     onClickAfter: () -> Unit = {},
 ){
-    var expanded = remember { mutableStateOf(false) }
+    val expanded = remember { mutableStateOf(false) }
 //    var selected = remember { mutableStateOf("") }
 
 //        .sorted() // dle abecedy
@@ -85,7 +85,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { HtmlText(it ?: "none") }, onClick = {
+                DropdownMenuItem(text = { Text(it ?: "none") }, onClick = {
                     onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value

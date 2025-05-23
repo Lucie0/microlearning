@@ -5,8 +5,6 @@ import cz.mendelu.pef.microlearning.model.api.Graph
 
 var mode = mutableStateOf(Modes.TUITION.name)
 
-
-
 //TESTING + TUITION
 // node_id, node
 var graph: Graph = Graph(0, mutableMapOf())
@@ -15,7 +13,7 @@ var actualNodeInGraph: Long = -1L
 var startingNode: Long = -1L
 
 // TUITION
-var lessonsToStudy = mutableListOf<Long>()
+var lessonsToStudy = mutableSetOf<Long>()
 //var walkThroughNodes = listOf<Long>()
 
 // REVISION

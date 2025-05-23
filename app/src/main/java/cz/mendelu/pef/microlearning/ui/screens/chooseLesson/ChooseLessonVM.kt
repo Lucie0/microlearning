@@ -149,7 +149,7 @@ class ChooseLessonVM @Inject constructor(
 
     private fun getGraph(){
         when (mode.value) {
-            Modes.REVISION.name -> {// && lessonList.isEmpty()) {
+            Modes.REVISION.name -> {
                 revisionLessonList = mutableMapOf()
                 data.lessons?.items?.forEach {
                     revisionLessonList[it.ordinalNumber!!] = it.id!!

@@ -11,9 +11,6 @@ import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.startingNode
-import cz.mendelu.pef.microlearning.ui.screens.chooseLesson.ChooseLessonErrors
-import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreenData
-import cz.mendelu.pef.microlearning.ui.screens.question.QuestionsErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,6 +30,7 @@ class ResultVM @Inject constructor(
     var topicId = graph.topicId
 
     // map[lessonId] = nodeId
+    // pod id lekce je id nodu pro rychlejsi vyhledavani
     val mapOfLesson: MutableMap<Long, Long> = mutableMapOf()
 
 

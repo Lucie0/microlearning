@@ -8,14 +8,12 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.database.IMicrolearningRepository
-import cz.mendelu.pef.microlearning.database.MicrolearningRepositoryImpl
 import cz.mendelu.pef.microlearning.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 
 @HiltViewModel
 class MainScreenVM @Inject constructor(
@@ -34,7 +32,7 @@ class MainScreenVM @Inject constructor(
 
     init {
         if (NetworkInterceptor.isNetworkConnected()) {
-            getNodeById()
+//            getNodeById()
             getAllTopics()
         } else {
             println("Network not connected")
