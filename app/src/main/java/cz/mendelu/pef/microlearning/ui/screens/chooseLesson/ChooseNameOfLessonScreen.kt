@@ -90,38 +90,45 @@ fun ChooseNameOfLessonScreenContent(
                     ListItem(
                         headlineText = { Text(text = it.name ?: ("Lesson" + it.id)) },
                         modifier = Modifier.clickable {
-                            if (mode.value == Modes.REVISION.name) {
-                                println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
-                                navigation.navigateToLessonScreen(
-                                    lessonId = -1L,
-                                    nodeId = -1L,
-                                    lessonOrdinalNumber = it.ordinalNumber,
-                                    topicId = topicId
-                                ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
-                            } else if (mode.value == Modes.TESTING.name) {
-                                println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
-                                //  todo navigate to test 1 apod...
-                                if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
-                                    startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
-                                    actualNodeInGraph = viewModel.getNodeFromGraphByLesson(it.id!!)
-
-                                    navigation.navigateToQuestionScreen(
-                                        lessonId = it.id,
-                                        nodeId = startingNode
-                                    )
+                            when (mode.value) {
+                                Modes.REVISION.name -> {
+                                    println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
+                                    navigation.navigateToLessonScreen(
+                                        lessonId = -1L,
+                                        nodeId = -1L,
+                                        lessonOrdinalNumber = it.ordinalNumber,
+                                        topicId = topicId
+                                    ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
                                 }
-                            } else if (mode.value == Modes.TUITION.name) {
-                                // TUITION MODE
-                                println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
-                                // todo navigate to lesson, then test apod...
-                                if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
-                                    startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
-                                    actualNodeInGraph = viewModel.getNodeFromGraphByLesson(it.id!!)
 
-                                    navigation.navigateToQuestionScreen(
-                                        lessonId = it.id,
-                                        nodeId = startingNode
-                                    )
+                                Modes.TESTING.name -> {
+                                    println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
+                                    //  todo navigate to test 1 apod...
+                                    if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+                                        startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                        actualNodeInGraph =
+                                            viewModel.getNodeFromGraphByLesson(it.id!!)
+
+                                        navigation.navigateToQuestionScreen(
+                                            lessonId = it.id,
+                                            nodeId = startingNode
+                                        )
+                                    }
+                                }
+
+                                Modes.TUITION.name -> {
+                                    // TUITION MODE
+                                    println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
+                                    // todo navigate to lesson, then test apod...
+                                    if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+                                        startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
+                                        actualNodeInGraph = startingNode
+
+                                        navigation.navigateToQuestionScreen(
+                                            lessonId = it.id,
+                                            nodeId = startingNode
+                                        )
+                                    }
                                 }
                             }
                         }
