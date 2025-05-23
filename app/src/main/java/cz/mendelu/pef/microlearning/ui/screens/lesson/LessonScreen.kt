@@ -125,79 +125,87 @@ fun LessonScreenContent(
                 HtmlText(string = uiState.value.data!!.lesson?.content?.content ?: "No content")
             }
             item {
-//                // tlacitko
-//                Button(
-//                    onClick = {
-//                        if (lessonId != null) {
-//                            navigation.navigateToLessonScreen(lessonId = lessonId + 1L)
-//                        }
-//                    }
-//                ) {
-//                    Text("Next lesson")
-//                }
                 // button pro REVISION mode
-                if (mode.value == Modes.REVISION.name && lessonOrdinalNumber != null && topicId != null) {
-                    println("lessonList>$revisionLessonList")
-                    Row {
-                        Button(
-                            modifier = Modifier.padding(8.dp),
-                            enabled = revisionLessonList.containsKey(lessonOrdinalNumber - 1),
-                            onClick = {
-                                navigation.navigateToLessonScreen(
-                                    lessonOrdinalNumber = lessonOrdinalNumber - 1,
-                                    topicId = topicId,
-                                    lessonId = -1L,
-                                    nodeId = -1L
-                                )
+                when (mode.value) {
+                    Modes.REVISION.name -> {
+                        if (lessonOrdinalNumber != null && topicId != null) {
+                            println("lessonList>$revisionLessonList")
+                            Row {
+                                Button(
+                                    modifier = Modifier.padding(8.dp),
+                                    enabled = revisionLessonList.containsKey(lessonOrdinalNumber - 1),
+                                    onClick = {
+                                        navigation.navigateToLessonScreen(
+                                            lessonOrdinalNumber = lessonOrdinalNumber - 1,
+                                            topicId = topicId,
+                                            lessonId = -1L,
+                                            nodeId = -1L
+                                        )
+                                    }
+                                ) {
+                                    Text("Previous lesson")
+                                }
+
+                                Button(
+                                    modifier = Modifier.padding(8.dp),
+                                    enabled = revisionLessonList.containsKey(lessonOrdinalNumber + 1),
+                                    onClick = {
+                                        navigation.navigateToLessonScreen(
+                                            lessonOrdinalNumber = lessonOrdinalNumber + 1,
+                                            topicId = topicId,
+                                            lessonId = -1L,
+                                            nodeId = -1L
+                                        )
+                                    }
+                                ) {
+                                    Text("Next lesson")
+                                }
                             }
-                        ) {
-                            Text("Previous lesson")
-                        }
-//                        Spacer(modifier = Modifier.padding(16.dp))
-                        Button(
-                            modifier = Modifier.padding(8.dp),
-                            enabled = revisionLessonList.containsKey(lessonOrdinalNumber + 1),
-                            onClick = {
-                                navigation.navigateToLessonScreen(
-                                    lessonOrdinalNumber = lessonOrdinalNumber + 1,
-                                    topicId = topicId,
-                                    lessonId = -1L,
-                                    nodeId = -1L
-                                )
-                            }
-                        ) {
-                            Text("Next lesson")
                         }
                     }
-                } else {
-                    // button pro TUITION mode
-                    Button(
-                        enabled = uiState.value.data!!.nextNode?.content?.id != null &&
-                                uiState.value.data!!.nextNode?.content?.lessonId != null, //&&
 
-//                            uiState.value.data!!.nextNode?.content?.testId != null,
-                        onClick = {
-                            // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
-                            // pokracovat na test v nasledujicim uzlu
-                            // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
-                            println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
-                            println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
+                    Modes.TUITION.name -> {
+                        // button pro TUITION mode
+                        Button(
+//                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&
+//                                    uiState.value.data!!.nextNode?.content?.lessonId != null)
+//                                    || lessonsToStudy.isNotEmpty(), //&&
+                            onClick = {
+                                // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
+                                // pokracovat na test v nasledujicim uzlu
+                                // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
+                                println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
+                                println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
 
-                            if (mode.value == Modes.TUITION.name) {
+                                if (lessonsToStudy.isNotEmpty()) {
+                                    val l = lessonsToStudy.iterator().next()
+                                    lessonsToStudy.remove(l)
+
+                                    navigation.navigateToLessonScreen(
+                                        nodeId = actualNodeInGraph, // -1
+                                        lessonId = l
+                                    )
+                                } else {
 //                                actualNodeInGraph = uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId!!
-                                actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)!!
-                            }
+                                    if (nodeId != null) { // pokud by byl nodeId null -- tak je tato lekce posledni z tech k dostudovani, vratime se znovu na test, na ktery jsme klikli na zacatku
+//                                        jinak se posunujeme dale
+                                        actualNodeInGraph =
+                                            graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)!!
+                                    }
 
-                            navigation.navigateToQuestionScreen(
-                                nodeId = uiState.value.data!!.nextNode?.content?.id,
-                                lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
+                                    navigation.navigateToQuestionScreen(
+//                                        nodeId = uiState.value.data!!.nextNode?.content?.id,
+                                        nodeId = actualNodeInGraph,
+//                                        lessonId = uiState.value.data!!.nextNode?.content?.lessonId,
+                                        lessonId = graph.map[actualNodeInGraph]?.lessonId,
 //                            testId = uiState.value.data!!.nextNode?.content?.testId,
 //                                testId = 1
-                            )
+                                    )
+                                }
+                            }
+                        ) {
+                            Text("Continue")
                         }
-                    ) {
-                        // todo jiny text
-                        Text("Continue")
                     }
                 }
             }
