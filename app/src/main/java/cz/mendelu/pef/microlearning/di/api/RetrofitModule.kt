@@ -1,4 +1,4 @@
-package cz.mendelu.pef.microlearning.di
+package cz.mendelu.pef.microlearning.di.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

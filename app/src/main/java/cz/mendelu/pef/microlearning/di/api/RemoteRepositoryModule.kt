@@ -1,9 +1,9 @@
-package cz.mendelu.pef.microlearning.di
+package cz.mendelu.pef.microlearning.di.api
 
-import cz.mendelu.pef.microlearning.communication.API
-import cz.mendelu.pef.microlearning.communication.IRemoteRepository
-import cz.mendelu.pef.microlearning.communication.RemoteMockRepositoryImpl
-import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
+import cz.mendelu.pef.microlearning.communication.api.API
+import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
+import cz.mendelu.pef.microlearning.communication.api.RemoteMockRepositoryImpl
+import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

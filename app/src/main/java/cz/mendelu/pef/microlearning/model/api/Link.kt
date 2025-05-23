@@ -1,4 +1,4 @@
-package cz.mendelu.pef.microlearning.model
+package cz.mendelu.pef.microlearning.model.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

@@ -1,13 +1,15 @@
-package cz.mendelu.pef.microlearning.model
+package cz.mendelu.pef.microlearning.model.api
 
 import com.squareup.moshi.JsonClass
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
-data class Test(
+data class Option(
     var id: Long?,
-    var name: String?,
-    var nodes: ArrayResponse<Long>
+    var text: String?,
+    var correctAnswer: Boolean?,
+    var groupNumber: Int?,
+    var questionId: Long?
 ): Serializable {
 }

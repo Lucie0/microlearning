@@ -1,14 +1,14 @@
-package cz.mendelu.pef.microlearning.communication
+package cz.mendelu.pef.microlearning.communication.api
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
-import cz.mendelu.pef.microlearning.model.Lesson
-import cz.mendelu.pef.microlearning.model.LessonShorter
-import cz.mendelu.pef.microlearning.model.LinkAfter
-import cz.mendelu.pef.microlearning.model.LinkBefore
-import cz.mendelu.pef.microlearning.model.Node
-import cz.mendelu.pef.microlearning.model.Question
-import cz.mendelu.pef.microlearning.model.Test
-import cz.mendelu.pef.microlearning.model.Topic
+import cz.mendelu.pef.microlearning.model.api.Lesson
+import cz.mendelu.pef.microlearning.model.api.LessonShorter
+import cz.mendelu.pef.microlearning.model.api.LinkAfter
+import cz.mendelu.pef.microlearning.model.api.LinkBefore
+import cz.mendelu.pef.microlearning.model.api.Node
+import cz.mendelu.pef.microlearning.model.api.Question
+import cz.mendelu.pef.microlearning.model.api.Test
+import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 import kotlinx.coroutines.Dispatchers

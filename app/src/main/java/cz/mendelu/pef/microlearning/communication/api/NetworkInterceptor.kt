@@ -1,4 +1,4 @@
-package cz.mendelu.pef.microlearning.communication
+package cz.mendelu.pef.microlearning.communication.api
 
 import android.content.Context
 import android.net.ConnectivityManager

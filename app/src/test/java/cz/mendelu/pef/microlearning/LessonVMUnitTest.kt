@@ -1,7 +1,7 @@
 package cz.mendelu.pef.microlearning
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
-import cz.mendelu.pef.microlearning.communication.RemoteMockRepositoryImpl
+import cz.mendelu.pef.microlearning.communication.api.RemoteMockRepositoryImpl
 import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreenVM
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

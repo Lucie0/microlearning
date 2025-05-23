@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
-import cz.mendelu.pef.microlearning.communication.RemoteRepositoryImpl
-import cz.mendelu.pef.microlearning.model.LessonShorter
+import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
+import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse

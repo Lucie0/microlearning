@@ -1,7 +1,7 @@
-package cz.mendelu.pef.microlearning.di
+package cz.mendelu.pef.microlearning.di.api
 
 
-import cz.mendelu.pef.microlearning.communication.API
+import cz.mendelu.pef.microlearning.communication.api.API
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

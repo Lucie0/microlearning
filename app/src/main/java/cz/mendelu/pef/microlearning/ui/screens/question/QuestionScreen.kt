@@ -24,8 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
-import cz.mendelu.pef.microlearning.model.Option
-import cz.mendelu.pef.microlearning.model.Question
+import cz.mendelu.pef.microlearning.model.api.Option
+import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.graph

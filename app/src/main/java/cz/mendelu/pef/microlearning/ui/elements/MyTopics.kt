@@ -7,7 +7,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cz.mendelu.pef.microlearning.model.Topic
+import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 
 @OptIn(ExperimentalMaterial3Api::class)

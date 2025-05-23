@@ -1,9 +1,8 @@
 package cz.mendelu.pef.microlearning.ui.screens.lesson
 
-import cz.mendelu.pef.microlearning.model.Lesson
-import cz.mendelu.pef.microlearning.model.LinkAfter
-import cz.mendelu.pef.microlearning.model.LinkBefore
-import cz.mendelu.pef.microlearning.model.Node
+import cz.mendelu.pef.microlearning.model.api.Lesson
+import cz.mendelu.pef.microlearning.model.api.LinkAfter
+import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
 
