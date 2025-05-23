@@ -55,8 +55,11 @@ fun QuestionScreen(
 ) {
     // VM
     val viewModel = hiltViewModel<QuestionScreenVM>()
-    viewModel.lessonId = lessonId!!
-    viewModel.nodeId = nodeId!!
+    viewModel.lessonId = lessonId ?: graph.map[actualNodeInGraph]?.lessonId!!
+    viewModel.nodeId = nodeId ?: actualNodeInGraph
+
+    println("---* ACTUAL NODE Qs:$actualNodeInGraph")
+    println("lessonId=$lessonId,nodeId=$nodeId")
 
     LaunchedEffect(key1 = 1, block = { viewModel.getData() })
 
@@ -74,7 +77,7 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = "Test of node $nodeId",
+        topBarText = "Pretest of node $nodeId",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -290,8 +293,13 @@ fun QuestionScreenContent(
                                 }
 
                                 Modes.TUITION.name -> {
+                                    println("actualNodeInGraph=$actualNodeInGraph\n" +
+                                            "graph[actual].lessonId=${graph.map[actualNodeInGraph]?.lessonId}\n" +
+                                            "lessonsToStudy=$lessonsToStudy\n" +
+                                            "todoNodes=$todoNodes")
+
                                     if (viewModel.isTestCorrect()) {
-                                        if (todoNodes.isEmpty()) {
+                                        if (lessonsToStudy.isEmpty()) {
                                             // todo  pokracuje se niz v grafu
                                             println("todo pokracuje se niz v grafu")
 
@@ -304,22 +312,28 @@ fun QuestionScreenContent(
                                             )
 
                                         } else {
-                                            println("todoNodes:$todoNodes")
-                                            actualNodeInGraph = todoNodes.removeAt(0)
+                                            println("TEST NOT OK, lessonsToStudy:$lessonsToStudy")
+                                            val lessonToStudy = lessonsToStudy.iterator().next()
+                                            lessonsToStudy.remove(lessonToStudy)
+//                                            actualNodeInGraph = lessonsToStudy.removeAt(0)
 
                                             navigation.navigateToLessonScreen(
+//                                                nodeId = actualNodeInGraph,
                                                 nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+//                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                lessonId = lessonToStudy
                                             )
                                         }
                                     } else {
                                         // todo kdyz test neni vyplnen spravne
-                                        // todo navigovat na lekci, na jejiz otazky bylo zodpovezeno chybne
-                                        val lesson = lessonsToStudy.removeAt(0)
+                                        // todo navigovat na lekce rodicovskych uzlu
+                                        val lessonToStudy = lessonsToStudy.iterator().next()
+                                        lessonsToStudy.remove(lessonToStudy)
+                                        println("Removing lessonToStudy:$lessonToStudy from $lessonsToStudy")
 
                                         navigation.navigateToLessonScreen(
-                                            nodeId = -1L,
-                                            lessonId = lesson
+                                            nodeId = -1L, // node je null -- debugger ok
+                                            lessonId = lessonToStudy
                                         )
                                     }
                                 }
