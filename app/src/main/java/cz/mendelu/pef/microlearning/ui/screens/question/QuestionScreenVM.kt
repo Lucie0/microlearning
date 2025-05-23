@@ -34,6 +34,7 @@ class QuestionScreenVM @Inject constructor(
     var lessonId = -1L
     var nodeId = -1L
 
+    var testOk = 0
     //
     var data: QuestionScreenData = QuestionScreenData()
 
@@ -72,31 +73,42 @@ class QuestionScreenVM @Inject constructor(
     fun isTestCorrect(): Boolean {
         // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
         //{Seřaďte podle pořadí vyhodnocování: [1]=Závorky, Vyřešte výraz: 9 / 3 × (2 - 1)² - 4 = ...=-1,  [2]=Mocniny a odmocniny, Jakou operaci vyhodnocujeme jako poslední v matematickém výrazu?=Sčítání a odčítání, Jakou operaci vyhodnocujeme po závorkách?=Mocniny a odmocniny, Vyřešte výraz:  (8 / 2) × (4 - 2)² = ...=16,  [3]=Násobení a dělení, Jakou operaci vyhodnocujeme jako první v matematickém výrazu?=Závorky, Vyřešte výraz: 8 / 4 × 2² - 4 = ...=4,  [4]=Sčítání a odčítání, Vyřešte výraz:  5 × 6 / 2 - 8 ²/ 4 = ...=-1}
-        var isOk = true
-        var countOfCorrect = 0
-        var countOfIncorrect = 0
+        if (testOk == 0) {
+            var isOk = true
+            testOk = 1
+            var countOfCorrect = 0
+            var countOfIncorrect = 0
 //        println("* IsTestCorrect()")
 //        println(correctOptions)
 //        println(selectedOptions)
-        correctOptions.keys.forEach { key ->
-            if (selectedOptions[key] != correctOptions[key]) {
-                countOfIncorrect += 1
-                isOk = false
-            } else countOfCorrect += 1
-        }
+            correctOptions.keys.forEach { key ->
+                if (selectedOptions[key] != correctOptions[key]) {
+                    countOfIncorrect += 1
+                    isOk = false
+                    testOk = -1
+                } else countOfCorrect += 1
+            }
 
-        if (mode.value == Modes.TESTING.name) {
-            // zapsat do graphu
-            graph.map[nodeId]?.countOfCorrectAnswers = (graph.map[nodeId]?.countOfCorrectAnswers ?: 0) + countOfCorrect
-            graph.map[nodeId]?.countOfIncorrectAnswers = (graph.map[nodeId]?.countOfIncorrectAnswers ?: 0) + countOfIncorrect
-            graph.map[nodeId]?.walkThrough = true
-            graph.map[nodeId]?.successfullyCompleted = isOk && countOfCorrect != 0
-            println("Graph[$nodeId]:${graph.map[nodeId]}")
-        } else if (mode.value == Modes.TUITION.name){
-            graph.map[nodeId]?.previousNodesIds?.let { lessonsToStudy.addAll(it) }
-        }
+            if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
+                // zapsat do graphu
+                graph.map[nodeId]?.countOfCorrectAnswers =
+                    (graph.map[nodeId]?.countOfCorrectAnswers ?: 0) + countOfCorrect
+                graph.map[nodeId]?.countOfIncorrectAnswers =
+                    (graph.map[nodeId]?.countOfIncorrectAnswers ?: 0) + countOfIncorrect
+                graph.map[nodeId]?.walkThrough = true
+                graph.map[nodeId]?.successfullyCompleted = isOk && countOfCorrect != 0
+                println("Graph[$nodeId]:${graph.map[nodeId]}")
 
-        return isOk && countOfCorrect != 0
+                if (mode.value == Modes.TUITION.name && !isOk) {
+//            graph.map[nodeId]?.previousNodesIds?.let { lessonsToStudy.addAll(it) }
+                    // pridej do seznamu lekce k dostudovani
+                    lessonsToStudy.addAll(graph.map[actualNodeInGraph]?.previousNodesIds!!)
+                    println("VM, lessonsToStudy:$lessonsToStudy")
+                }
+            }
+
+            return isOk && countOfCorrect != 0
+        } else return testOk == 1
     }
 
     fun getNodeIdToContinue(actualNodeId: Long): Long {
