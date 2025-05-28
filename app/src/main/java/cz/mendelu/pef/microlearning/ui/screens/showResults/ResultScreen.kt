@@ -85,6 +85,7 @@ fun ResultScreenContent(
 
 ){
 
+    var points = 0
     Column(  modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
         uiState.value.data?.items?.forEach {
             ListItem(
@@ -92,18 +93,20 @@ fun ResultScreenContent(
                     Text(
                         text = it.name ?: "",
                         color = if (graph.map[viewModel.mapOfLesson[it.id]]?.walkThrough == true &&
-                            graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0)
+                            graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0) {
+                            points += 1
                             getCorrectAnswersColor()
-                        else if (graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers != 0)
+                        } else if (graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers != 0) {
+                            points -= 1
                             getErrorColor()
-                        else
+                        } else
                             basicTextColor(),
                         fontWeight = if (graph.map[viewModel.mapOfLesson[it.id]]?.successfullyCompleted == true) FontWeight.Bold else FontWeight.Normal
                     )
                 },
             )
         }
-        Text("Points: ${viewModel.getScalarResult()}")
+        Text("Points: $points ${viewModel.getScalarResult()}")
 
         Text(text = viewModel.getGraphResult())
 
