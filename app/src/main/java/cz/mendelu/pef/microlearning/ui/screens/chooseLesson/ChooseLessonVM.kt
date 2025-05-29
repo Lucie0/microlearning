@@ -31,6 +31,7 @@ class ChooseLessonVM @Inject constructor(
 
     var data = ChooseLessonData()
     var topicId = 0L
+    var topicName = "no name"
 
     fun getData() {
         if (NetworkInterceptor.isNetworkConnected()) {
@@ -39,7 +40,7 @@ class ChooseLessonVM @Inject constructor(
 //            getGraph()
             if (mode.value == Modes.TESTING.name && graph.topicId != topicId) {
                 // vynulovani graphu
-                graph = Graph(this.topicId, mutableMapOf())
+                graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud testing mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
@@ -54,7 +55,7 @@ class ChooseLessonVM @Inject constructor(
                 }
             } else if (mode.value == Modes.TUITION.name && graph.topicId != topicId){
                 // vynulovani graphu
-                graph = Graph(this.topicId, mutableMapOf())
+                graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud tuition mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
             }

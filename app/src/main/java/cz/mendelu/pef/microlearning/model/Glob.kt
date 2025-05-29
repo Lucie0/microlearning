@@ -7,7 +7,8 @@ var mode = mutableStateOf(Modes.TUITION.name)
 
 //TESTING + TUITION
 // node_id, node
-var graph: Graph = Graph(0, mutableMapOf())
+var graph: Graph = Graph(0, "no name", mutableMapOf())
+// todo predelat todoNodes na mutableSet?
 var todoNodes = mutableListOf<Long>()
 var actualNodeInGraph: Long = -1L
 var startingNode: Long = -1L

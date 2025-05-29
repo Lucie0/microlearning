@@ -25,7 +25,7 @@ object RetrofitModule {
     @Singleton
     fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://a4a6-46-135-91-29.ngrok-free.app")
+            .baseUrl("https://7a48-185-233-20-77.ngrok-free.app")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }

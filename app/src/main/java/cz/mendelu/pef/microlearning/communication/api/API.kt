@@ -121,4 +121,8 @@ interface API {
     @GET("/topics/")
     suspend fun getTopics() : Response<ArrayResponse<Topic>>
 
+    @Headers("ngrok-skip-browser-warning: true")
+    @GET("/topics/{id}")
+    suspend fun getTopicById(@Path("id") id: Long) : Response<ObjectResponse<Topic>>
+
 }

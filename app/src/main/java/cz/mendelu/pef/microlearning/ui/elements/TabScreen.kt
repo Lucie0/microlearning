@@ -19,7 +19,7 @@ import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 fun TabScreen(
     navigation: INavigationRouter,
     allTopics: List<Topic?>?,
-    myTopics: List<String>?,
+    myTopics: List<Topic>?,
     ) {
     var tabIndex by remember { mutableStateOf(0) }
 
@@ -42,7 +42,7 @@ fun TabScreen(
             )
             1 -> MyTopics(
                 navigation,
-                listOf()/*listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI")*/,
+                myTopics ?: listOf()/*listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI")*/,
                 "No lessons in progress"
             )
         }

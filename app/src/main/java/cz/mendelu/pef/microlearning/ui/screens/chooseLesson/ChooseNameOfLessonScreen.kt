@@ -35,6 +35,7 @@ fun ChooseNameOfLessonScreen(
 ) {
     val viewModel = hiltViewModel<ChooseLessonVM>()
     viewModel.topicId = topicId!!
+    viewModel.topicName = topicName
 
     val uiState: MutableState<UiState<ChooseLessonData, ChooseLessonErrors>> = rememberSaveable { mutableStateOf(
         UiState()

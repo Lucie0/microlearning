@@ -43,6 +43,7 @@ interface IRemoteRepository : IBaseRemoteRepository {
     suspend fun getTestById(@Path("id") id: Long) : CommunicationResult<ObjectResponse<Test>>
 
     suspend fun getTopics() : CommunicationResult<ArrayResponse<Topic>>
+    suspend fun getTopicById(id: Long) : CommunicationResult<ObjectResponse<Topic>>
 
 
 }

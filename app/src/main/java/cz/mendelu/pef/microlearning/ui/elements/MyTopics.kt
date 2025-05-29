@@ -22,9 +22,9 @@ fun MyTopics(
 //        Column {
             topics.forEach { topic ->
                 if (topic != null) {
-                    ListItem(headlineText = { Text(topic.name ?: ("Lesson" + topic.id))}, modifier = Modifier.clickable {
+                    ListItem(headlineText = { Text(topic.name ?: ("Topic " + topic.id))}, modifier = Modifier.clickable {
                         println("Clicked on ${topic.name}")
-                        navigation.navigateToChooseNameOfLessonScreen(topic.name, topic.id)
+                        navigation.navigateToChooseNameOfLessonScreen(topic.name ?: "Topic ${topic.id}", topic.id)
                     })
                 }
 
