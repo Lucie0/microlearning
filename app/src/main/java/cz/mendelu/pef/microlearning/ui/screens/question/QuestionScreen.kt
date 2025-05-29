@@ -206,9 +206,9 @@ fun QuestionScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (onSubmitClicked.value) {
-                    if (viewModel.isTestCorrect()) {
+                    if (viewModel.testOk == 1) {
                         Text("Well done!", Modifier.padding(8.dp))
-                    } else {
+                    } else if (viewModel.testOk == -1) {
                         Text(
                             "Answers are not correct.", Modifier.padding(8.dp),
                             color = getErrorColor()
@@ -265,6 +265,7 @@ fun QuestionScreenContent(
                         if (!onSubmitClicked.value) {
                             // kliknuto na Submit
                             onSubmitClicked.value = true
+                            viewModel.isTestCorrect()
                         } else {
                             when (mode.value) {
                                 Modes.TESTING.name -> {

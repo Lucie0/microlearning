@@ -47,6 +47,7 @@ class ChooseLessonVM @Inject constructor(
 //                getPreviousAndSubsequentNodes()
             } else if (mode.value == Modes.TESTING.name) {
                 // promazat graf co se tyce poctu odpovedi, walkthrough, succesfully completed
+                println("Cisteni grafu")
                 graph.map.values.forEach {
                     it.walkThrough = false
                     it.successfullyCompleted = false
