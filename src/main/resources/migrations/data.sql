@@ -1966,7 +1966,7 @@ INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('81', 'Na dalším vyhodnocování nezáleží', 'False', '0', '73');
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('82', 'Závorky jako poslední', 'False', '0', '73');
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('83', '4', 'True', '0', '74');
-INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('84', '21', 'True', '0', '75');
+INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('84', '17', 'True', '0', '75');
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('85', '16', 'True', '0', '76');
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('86', '-1', 'True', '0', '77');
 INSERT INTO public.option (id, o_text, correct_answer, group_number, question_id) VALUES ('87', '-1', 'True', '0', '78');
