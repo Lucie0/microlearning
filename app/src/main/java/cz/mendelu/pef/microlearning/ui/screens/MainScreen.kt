@@ -148,7 +148,11 @@ fun MainScreenContent(
                 color = getPrimaryColor())
 //        }
         }
-        TabScreen(navigation, uiState.data?.topics?.items/*.map { i -> i.name }*/, null)
+        TabScreen(
+            navigation = navigation,
+            allTopics = uiState.data?.topics?.items/*.map { i -> i.name }*/,
+            myTopics = uiState.data?.myTopics
+        )
 
 //        HelloWorldScreen()
 
@@ -260,4 +264,14 @@ fun HelloWorldScreen() {
     HtmlText(string = spannableString)
 
 }
+
+//@Composable
+//fun DbData(
+//    uiState: UiState<MainData, MainErrors>
+//) {
+//    Column {
+//        Text(text = uiState.data?.myLessons.toString())
+//    }
+//
+//}
 

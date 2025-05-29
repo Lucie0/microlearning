@@ -204,6 +204,7 @@ fun LessonScreenContent(
                     Modes.TUITION.name -> {
                         // button pro TUITION mode
                         Button(
+//                            enabled = (uiState.value.data!!.linkAfter?.items?.size != null) ?: false,
 //                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&
 //                                    uiState.value.data!!.nextNode?.content?.lessonId != null)
 //                                    || lessonsToStudy.isNotEmpty(), //&&

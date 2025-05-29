@@ -9,6 +9,7 @@ import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.database.IMicrolearningRepository
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.api.Topic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenVM @Inject constructor(
-    private val remoteRepository: RemoteRepositoryImpl
+    private val remoteRepository: RemoteRepositoryImpl,
+    private val localRepository: IMicrolearningRepository
 ) : BaseViewModel() {
 
     // uistate
@@ -31,6 +33,7 @@ class MainScreenVM @Inject constructor(
 //    private val context = getApplication<Application>().applicationContext
 
     init {
+        getFromDB()
         if (NetworkInterceptor.isNetworkConnected()) {
 //            getNodeById()
             getAllTopics()
@@ -119,7 +122,6 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-
     private fun getAllTopics() {
 
         launch {
@@ -195,5 +197,25 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-
+    private fun getFromDB(){
+        launch {
+            localRepository.getAllSavedTopics().collect {
+                println("localRepo: $it")
+                val list = mutableListOf<Topic>()
+                it.forEach {st ->
+                    list.add(Topic(
+                        id = st.topicId,
+                        name = st.name,
+                        firstNodeId = null)
+                    )
+                }
+                data.myTopics = list
+                mainUiState.value = UiState(
+                    loading = false,
+                    data = data,
+                    errors = null
+                )
+            }
+        }
+    }
 }
