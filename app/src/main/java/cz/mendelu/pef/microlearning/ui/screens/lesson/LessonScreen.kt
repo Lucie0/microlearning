@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Save
+import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +61,8 @@ fun LessonScreen(
 
 
     val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
+    val openAlertDialog = remember { mutableStateOf(false) }
+
 
     LaunchedEffect(key1 = 1, block = {
         viewModel.getData()
@@ -79,8 +86,7 @@ fun LessonScreen(
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
         onBackClick = {
-            // todo save aktualni stav pred vracenim se
-                navigation.navigateToMainScreen()
+            openAlertDialog.value = true
         }
     ) {
         LessonScreenContent(
@@ -90,6 +96,8 @@ fun LessonScreen(
             nodeId = nodeId,
             lessonOrdinalNumber = lessonOrdinalNumber,
             topicId = topicId,
+            viewModel = viewModel,
+            openAlertDialog = openAlertDialog,
             navigation = navigation
         )
     }
@@ -104,8 +112,37 @@ fun LessonScreenContent(
     nodeId: Long?,
     lessonOrdinalNumber: Int?,
     topicId: Long?,
+    viewModel: LessonScreenVM,
+    openAlertDialog: MutableState<Boolean>,
     navigation: INavigationRouter
 ) {
+
+    when {
+        // ...
+        openAlertDialog.value -> {
+
+            AlertDialog(
+                onDismissRequest = {
+                    openAlertDialog.value = false
+                    println("DISMISS: Progress not saved")
+                    navigation.navigateToMainScreen()
+                },
+                onConfirmation = {
+                    openAlertDialog.value = false
+                    // todo save aktualni stav do db
+                    viewModel.saveActualStateToLocalDB()
+
+                    println("CONFIRM: Progress saved")
+
+                    navigation.navigateToMainScreen()
+                },
+                dialogTitle = "Progress not saved",
+                dialogText = "Progress is yet not saved. Do you want to save progress?",
+                icon = Icons.Default.Info
+            )
+        }
+    }
+
     if (uiState.value.data != null) {
         LazyColumn(
             modifier = Modifier

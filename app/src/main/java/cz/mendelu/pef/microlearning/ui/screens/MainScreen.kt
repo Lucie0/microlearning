@@ -189,6 +189,15 @@ fun MainScreenContent(
         Button(onClick =  { navigation.navigateToResultScreen() }) {
             Text(text = "ResultScreen")
         }
+
+//        val open = remember { mutableStateOf(false) }
+//
+//        Dialog(openAlertDialog = open)
+//
+//        Button(onClick = { open.value = !open.value }) {
+//
+//        }
+//        DbData(uiState = uiState)
     }
 }
 
