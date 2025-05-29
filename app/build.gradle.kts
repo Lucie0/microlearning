@@ -138,4 +138,14 @@ dependencies {
     //fonts
 //    implementation("androidx.compose.ui:ui-text-google-fonts:1.7.0")
 
+    // Room
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.room:room-ktx:2.5.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    ksp("androidx.room:room-compiler:2.5.0")
+    implementation("androidx.room:room-runtime:2.5.0")
+    // End room
+
+
 }
