@@ -86,14 +86,15 @@ fun ResultScreenContent(
 ){
 
     var points = 0
-    Column(  modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
         uiState.value.data?.items?.forEach {
             ListItem(
                 headlineText = {
                     Text(
                         text = it.name ?: "",
                         color = if (graph.map[viewModel.mapOfLesson[it.id]]?.walkThrough == true &&
-                            graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0) {
+                            graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0
+                        ) {
                             points += 1
                             getCorrectAnswersColor()
                         } else if (graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers != 0) {
@@ -110,7 +111,7 @@ fun ResultScreenContent(
 
         Text(text = viewModel.getGraphResult())
 
-    Pok()
+        Pok()
     }
 }
 

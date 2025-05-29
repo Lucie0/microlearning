@@ -168,6 +168,9 @@ class ResultVM @Inject constructor(
         }
 
         return if (graph.map[nodeId]?.walkThrough != true) {
+            // todo po resetu v choose lesson VM to v result screene zobrazuje porad projite uzly,
+            //  i kdyz byly nastaveny walkThrough na false -- prepisou se na true nasledujicim prikazem
+            //  netusim proc -- je to kvuli mapOfLesson, ale nechapu
             graph.map[nodeId]?.walkThrough = true
             count
         } else {
