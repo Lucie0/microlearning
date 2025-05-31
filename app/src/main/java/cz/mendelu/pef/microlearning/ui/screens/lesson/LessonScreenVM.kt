@@ -386,42 +386,49 @@ class LessonScreenVM @Inject constructor(
     fun saveActualStateToLocalDB() {
         var savedTopicId = 0L
         // projit graf
-        launch {
-            graph.map.values.forEach {
-                // zjistit, jestli se nejaka hodnota lisi od defaultni (pocty spravnych/spatnych, projiti, uspesne dokonceno)
-                if (it.walkThrough != false || it.successfullyCompleted != false || it.countOfCorrectAnswers != 0 || it.countOfIncorrectAnswers != 0) {
-                    // pokud se lisi
-                    if (savedTopicId == 0L) {
-                        // save topic to db
-                        //      tak ulozit nejdriv polozku savedTopic do db, ziskat jeho id vytvorene DB a pote ho pouzivat na nalinkovani
-                        //          u jednotlivych uzlu -- ale pouze poprve, zjistovat, ukladat to do lokalni promenne
+        when (mode.value) {
+            Modes.REVISION.name -> {
 
-                        savedTopicId = localRepository.insertSavedTopic(
-                            SavedTopic(
-                                topicId = graph.topicId,
-                                name = graph.topicName,
-                                actualNodeId = actualNodeInGraph,
-                                modeNumber = Modes.valueOf(mode.value).ordinal
-                            )
-                        )
-                        println("SavedTopicId z DB: $savedTopicId")
-                    }
-                    //      dale ulozit ten node s vracenym id saveTopicu, jen s id jako construktor a pak ho naplnit hodndotami pomoci metody NodeDB.fromNode
-                    val nodeDb = NodeDB(-1, savedTopicId)
-                    println("NodeDb po init: $nodeDb")
-                    nodeDb.fromNode(it)
-                    println("Filling NodeDb: $nodeDb")
-
-                    //      nasledne ulozit do DB (nebo do nejakeho listu, ktery se pak cely posle do DB na ulozeni?)
-                    localRepository.insertNode(nodeDb)
-
-                } else {
-                    // pokud se nelisi
-                    //      pokracovat dal -- nic nedelat
-                    println("Node v puvodnim stavu: ${it.id}, neuklada se do DB")
-
-                }
             }
+             Modes.TUITION.name -> {
+                 launch {
+                     graph.map.values.forEach {
+                         // zjistit, jestli se nejaka hodnota lisi od defaultni (pocty spravnych/spatnych, projiti, uspesne dokonceno)
+                         if (it.walkThrough != false || it.successfullyCompleted != false || it.countOfCorrectAnswers != 0 || it.countOfIncorrectAnswers != 0) {
+                             // pokud se lisi
+                             if (savedTopicId == 0L) {
+                                 // save topic to db
+                                 //      tak ulozit nejdriv polozku savedTopic do db, ziskat jeho id vytvorene DB a pote ho pouzivat na nalinkovani
+                                 //          u jednotlivych uzlu -- ale pouze poprve, zjistovat, ukladat to do lokalni promenne
+
+                                 savedTopicId = localRepository.insertSavedTopic(
+                                     SavedTopic(
+                                         topicId = graph.topicId,
+                                         name = graph.topicName,
+                                         actualNodeId = actualNodeInGraph,
+                                         modeNumber = Modes.valueOf(mode.value).ordinal
+                                     )
+                                 )
+                                 println("SavedTopicId z DB: $savedTopicId")
+                             }
+                             //      dale ulozit ten node s vracenym id saveTopicu, jen s id jako construktor a pak ho naplnit hodndotami pomoci metody NodeDB.fromNode
+                             val nodeDb = NodeDB(-1, savedTopicId)
+                             println("NodeDb po init: $nodeDb")
+                             nodeDb.fromNode(it)
+                             println("Filling NodeDb: $nodeDb")
+
+                             //      nasledne ulozit do DB (nebo do nejakeho listu, ktery se pak cely posle do DB na ulozeni?)
+                             localRepository.insertNode(nodeDb)
+
+                         } else {
+                             // pokud se nelisi
+                             //      pokracovat dal -- nic nedelat
+                             println("Node v puvodnim stavu: ${it.id}, neuklada se do DB")
+                         }
+                     }
+                 }
+             }
         }
+
     }
 }
