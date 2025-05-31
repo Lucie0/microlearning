@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface IMicrolearningRepository {
 
     fun getAllSavedTopics(): Flow<List<SavedTopic>>
+    fun getAllSavedTopicsByMode(modeNumber: Int): Flow<List<SavedTopic>>
     suspend fun insertSavedTopic(item: SavedTopic): Long
     suspend fun deleteSavedTopic(item: SavedTopic)
 

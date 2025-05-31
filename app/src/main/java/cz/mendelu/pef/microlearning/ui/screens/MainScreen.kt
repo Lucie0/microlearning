@@ -64,12 +64,17 @@ fun MainScreen(
         UiState()
     ) }
 
+    // pri zmene rezimu znovu nacti z DB
+    mode.value.let {
+        viewModel.getFromDB()
+    }
+
     // poslech nad uistatem
     viewModel.mainUiState.value.let {
-        println("*** uistate ")
-        println(it.data)
-        println("*** uistate node")
-        println(it.data?.node)
+//        println("*** uistate ")
+//        println(it.data)
+//        println("*** uistate node")
+//        println(it.data?.node)
         uiState.value = it
     }
 
@@ -250,7 +255,7 @@ fun HelloWorldScreen() {
 //    HtmlText(
 //        html = spannableString,
 //        linkColor = Color.Red,
-//        textColor = Color.Blue,  // todo dynamicky barva
+//        textColor = Color.Blue,
 ////        fontSize = 16.sp
 //    )
 

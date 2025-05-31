@@ -8,8 +8,10 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.database.IMicrolearningRepository
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.Topic
+import cz.mendelu.pef.microlearning.model.mode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -197,16 +199,17 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-    private fun getFromDB(){
+    fun getFromDB(){
         launch {
-            localRepository.getAllSavedTopics().collect {
+            localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value).ordinal).collect {
                 println("localRepo: $it")
                 val list = mutableListOf<Topic>()
                 it.forEach {st ->
                     list.add(Topic(
                         id = st.topicId,
                         name = st.name,
-                        firstNodeId = null)
+                        firstNodeId = null,
+                        dbActualNode = st.actualNodeId)
                     )
                 }
                 data.myTopics = list

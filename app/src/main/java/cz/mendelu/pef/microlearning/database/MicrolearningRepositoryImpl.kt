@@ -28,6 +28,10 @@ class MicrolearningRepositoryImpl(private val dao: MicrolearningDao) : IMicrolea
         return dao.getAllSavedTopics()
     }
 
+    override fun getAllSavedTopicsByMode(modeNumber: Int): Flow<List<SavedTopic>> {
+        return dao.getAllSavedTopicsByMode(modeNumber)
+    }
+
     override suspend fun insertSavedTopic(item: SavedTopic): Long {
         return dao.insertSavedTopic(item)
     }

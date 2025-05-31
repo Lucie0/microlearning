@@ -28,6 +28,9 @@ interface MicrolearningDao {
     @Query("SELECT * FROM saved_topic")
     fun getAllSavedTopics(): Flow<List<SavedTopic>>
 
+    @Query("SELECT * FROM saved_topic WHERE mode_number = :modeNumber")
+    fun getAllSavedTopicsByMode(modeNumber: Int): Flow<List<SavedTopic>>
+
     @Insert
     suspend fun insertSavedTopic(item: SavedTopic): Long
 
