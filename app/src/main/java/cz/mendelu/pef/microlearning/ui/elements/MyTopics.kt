@@ -22,10 +22,27 @@ fun MyTopics(
 //        Column {
             topics.forEach { topic ->
                 if (topic != null) {
-                    ListItem(headlineText = { Text(topic.name ?: ("Topic " + topic.id))}, modifier = Modifier.clickable {
-                        println("Clicked on ${topic.name}")
-                        navigation.navigateToChooseNameOfLessonScreen(topic.name ?: "Topic ${topic.id}", topic.id)
-                    })
+                    if (topic.dbActualNode != null) {
+                        // jestli je to zalozka my lesson --> zobrazeni nazvu + cislo aktulani lekce
+                        ListItem(
+                            headlineText = { Text("${topic.name} (${topic.dbActualNode})") },
+                            modifier = Modifier.clickable {
+                                println("Clicked on ${topic.name}")
+
+                                navigation.navigateToChooseNameOfLessonScreen(
+                                    topic.name ?: "Topic ${topic.id}", topic.id
+                                )
+                            })
+                    } else {
+                        ListItem(
+                            headlineText = { Text(topic.name ?: ("Topic " + topic.id)) },
+                            modifier = Modifier.clickable {
+                                println("Clicked on ${topic.name}")
+                                navigation.navigateToChooseNameOfLessonScreen(
+                                    topic.name ?: "Topic ${topic.id}", topic.id
+                                )
+                            })
+                    }
                 }
 
             }
