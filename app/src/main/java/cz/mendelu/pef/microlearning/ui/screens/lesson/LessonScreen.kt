@@ -129,7 +129,6 @@ fun LessonScreenContent(
                 },
                 onConfirmation = {
                     openAlertDialog.value = false
-                    // todo save aktualni stav do db
                     viewModel.saveActualStateToLocalDB()
 
                     println("CONFIRM: Progress saved")
@@ -138,7 +137,9 @@ fun LessonScreenContent(
                 },
                 dialogTitle = "Progress not saved",
                 dialogText = "Progress is yet not saved. Do you want to save progress?",
-                icon = Icons.Default.Info
+                icon = null
+//                icon = Icons.Default.Info
+
             )
         }
     }

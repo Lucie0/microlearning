@@ -43,11 +43,11 @@ fun AlertDialog(
     onConfirmation: () -> Unit,
     dialogTitle: String,
     dialogText: String,
-    icon: ImageVector,
+    icon: ImageVector?,
 ) {
     AlertDialog(
         icon = {
-            Icon(icon, contentDescription = "Example Icon")
+            if (icon != null) Icon(icon, contentDescription = "Example Icon")
         },
         title = {
             Text(text = dialogTitle)
