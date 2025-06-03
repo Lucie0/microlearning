@@ -141,7 +141,8 @@ class QuestionScreenVM @Inject constructor(
 
         if (!ids.isNullOrEmpty()) {
             todoNodes.addAll(ids)
-            nextNodeId = todoNodes.removeAt(0)
+            nextNodeId = todoNodes.iterator().next()
+            todoNodes.remove(nextNodeId)
             println("todoNodes:$todoNodes")
             println("ids:$ids")
         }
@@ -305,7 +306,9 @@ class QuestionScreenVM @Inject constructor(
             // projit todoNodes, jestli je prazdny
             if (todoNodes.size > 0) {
                 // kdyz neni, vyber prvni v seznamu, odstran ho a vrat jako navratovou hodnotu
-                return todoNodes.removeAt(0)
+                val item = todoNodes.iterator().next()
+                todoNodes.remove(item)
+                return item
             } else {
                 // kdyz je todoNodes prazdny
                 // dosazeno prvniho nodu

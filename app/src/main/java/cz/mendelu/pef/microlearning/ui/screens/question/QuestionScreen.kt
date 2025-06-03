@@ -276,7 +276,8 @@ fun QuestionScreenContent(
                                             navigation.navigateToResultScreen()
                                         } else {
                                             println("todoNodes:$todoNodes")
-                                            actualNodeInGraph = todoNodes.removeAt(0)
+                                            actualNodeInGraph = todoNodes.iterator().next()
+                                            todoNodes.remove(actualNodeInGraph)
 
                                             navigation.navigateToQuestionScreen(
                                                 nodeId = actualNodeInGraph,
@@ -296,10 +297,13 @@ fun QuestionScreenContent(
 
                                 Modes.TUITION.name -> {
                                     if (viewModel.isTestCorrect()) {
-                                        if (todoNodes.isNotEmpty() && graph.map[todoNodes[0]]?.lessonOrdinalNumber == 0) {
-                                            // pokud list obsahuje na prvnim indexu korenovy uzel
-                                            // odstranit ho
-                                            todoNodes.removeAt(0)
+                                        if (todoNodes.isNotEmpty()) {
+                                            val item = todoNodes.iterator().next()
+                                            if (graph.map[item]?.lessonOrdinalNumber == 0) {
+                                                // pokud list obsahuje na prvnim indexu korenovy uzel
+                                                // odstranit ho
+                                                todoNodes.remove(item)
+                                            }
                                         }
 
                                         if (todoNodes.isEmpty()) {
@@ -337,7 +341,8 @@ fun QuestionScreenContent(
 
                                             //  zobrazeni dalsiho uzlu z todoNodes, resp. pretestu
                                                 //// navigation.navigateToQuestionScreen()
-                                            actualNodeInGraph = todoNodes.removeAt(0)
+                                            actualNodeInGraph = todoNodes.iterator().next()
+                                            todoNodes.remove(actualNodeInGraph)
 //                                            if (graph.map[actualNodeInGraph]?.lessonOrdinalNumber == 0){
 //                                                // pokud by nasledny uzel mel byt korenovy -- preskoc na dalsi uzel
 //                                                actualNodeInGraph = todoNodes.removeAt(0)

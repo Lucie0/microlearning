@@ -213,11 +213,16 @@ fun LessonScreenContent(
 //                                    || lessonsToStudy.isNotEmpty(), //&&
                             enabled = graph.map[nodeId]?.subsequentNodeIds?.isNotEmpty() ?: false,
                             onClick = {
-                                if (todoNodes.isNotEmpty() && graph.map[todoNodes[0]]?.lessonOrdinalNumber == 0) {
+
+                                if (todoNodes.isNotEmpty()) {
+                                    val item = todoNodes.iterator().next()
+                                    if (graph.map[item]?.lessonOrdinalNumber == 0) {
                                     // pokud list obsahuje na prvnim indexu korenovy uzel
                                     // odstranit ho
-                                    todoNodes.removeAt(0)
+                                    todoNodes.remove(item)
+//                                    todoNodes.removeAt(0)
                                 }
+                            }
 
                                 //---------------------------------------------------------------
                                 //  kdyz lessonsToStudy neni prazdny, navigovat na lekci z nej
@@ -236,7 +241,8 @@ fun LessonScreenContent(
                                     )
                                 } else if (todoNodes.isNotEmpty()) {// pokud lessonsToStudy je prazdny, zkontrolovat, jestli todoNodes neni prazdny
                                 // a navigovat na pretest prvniho nodu
-                                    actualNodeInGraph = todoNodes.removeAt(0)
+                                    actualNodeInGraph = todoNodes.iterator().next()
+                                    todoNodes.remove(actualNodeInGraph)
 
                                     navigation.navigateToQuestionScreen(
                                         nodeId = actualNodeInGraph,
