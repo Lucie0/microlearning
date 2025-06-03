@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.educationalNode
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.startingNode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -122,8 +123,10 @@ fun ChooseNameOfLessonScreenContent(
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     // todo navigate to lesson, then test apod...
                                     if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
+
                                         startingNode = viewModel.getNodeFromGraphByLesson(it.id!!)
                                         actualNodeInGraph = startingNode
+                                        educationalNode = startingNode
 
                                         navigation.navigateToQuestionScreen(
                                             lessonId = it.id,

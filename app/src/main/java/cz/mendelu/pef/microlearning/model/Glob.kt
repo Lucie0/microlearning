@@ -11,9 +11,13 @@ var graph: Graph = Graph(0, "no name", mutableMapOf())
 // todo predelat todoNodes na mutableSet?
 var todoNodes = mutableListOf<Long>()
 var actualNodeInGraph: Long = -1L
+// uzel, ktery byl vybran na zacatku
 var startingNode: Long = -1L
+// uzel, do ktereho se vratit pri zasmyckovani
+var educationalNode = -1L
 
 // TUITION
+// set of lessonIds
 var lessonsToStudy = mutableSetOf<Long>()
 //var walkThroughNodes = listOf<Long>()
 
