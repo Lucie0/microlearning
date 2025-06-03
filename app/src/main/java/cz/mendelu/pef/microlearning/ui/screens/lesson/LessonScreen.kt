@@ -32,6 +32,7 @@ import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
+import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
@@ -163,8 +164,9 @@ fun LessonScreenContent(
                 HtmlText(string = uiState.value.data!!.lesson?.content?.content ?: "No content")
             }
             item {
-                // button pro REVISION mode
+
                 when (mode.value) {
+                    // button pro REVISION mode
                     Modes.REVISION.name -> {
                         if (lessonOrdinalNumber != null && topicId != null) {
                             println("lessonList>$revisionLessonList")
@@ -202,20 +204,65 @@ fun LessonScreenContent(
                         }
                     }
 
+                    // button pro TUITION mode
                     Modes.TUITION.name -> {
-                        // button pro TUITION mode
                         Button(
 //                            enabled = (uiState.value.data!!.linkAfter?.items?.size != null) ?: false,
 //                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&
 //                                    uiState.value.data!!.nextNode?.content?.lessonId != null)
 //                                    || lessonsToStudy.isNotEmpty(), //&&
+                            enabled = graph.map[nodeId]?.subsequentNodeIds?.isNotEmpty() ?: false,
                             onClick = {
-                                // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... todo tak co?
-                                // pokracovat na test v nasledujicim uzlu
-                                // todo co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
-                                println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
-                                println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
+                                if (todoNodes.isNotEmpty() && graph.map[todoNodes[0]]?.lessonOrdinalNumber == 0) {
+                                    // pokud list obsahuje na prvnim indexu korenovy uzel
+                                    // odstranit ho
+                                    todoNodes.removeAt(0)
+                                }
 
+                                //---------------------------------------------------------------
+                                //  kdyz lessonsToStudy neni prazdny, navigovat na lekci z nej
+                                //    odstranit ji ze seznamu a predat do paramentru v LessonScreen()
+                                if (lessonsToStudy.isNotEmpty()) {
+                                    val lId = lessonsToStudy.iterator().next()
+                                    lessonsToStudy.remove(lId)
+
+                                    graph.map.values.forEach {
+                                        if (it.lessonId == lId) viewModel.actualNodeId = it.id
+                                    }
+
+                                    navigation.navigateToLessonScreen(
+                                        nodeId = viewModel.actualNodeId, // bylo -1L misto null, zajima me jen lekce
+                                        lessonId = lId
+                                    )
+                                } else if (todoNodes.isNotEmpty()) {// pokud lessonsToStudy je prazdny, zkontrolovat, jestli todoNodes neni prazdny
+                                // a navigovat na pretest prvniho nodu
+                                    actualNodeInGraph = todoNodes.removeAt(0)
+
+                                    navigation.navigateToQuestionScreen(
+                                        nodeId = actualNodeInGraph,
+                                        lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                    )
+                                } else {
+                                    // jinak se posunuju dale na dalsi uzel v graphu -- pretest toho uzlu
+                                    actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) ?: -1L// -1L jako uzel nenalezen
+                                    /*.get(
+                                        Random.nextInt(0, graph.map[actualNodeInGraph]?.subsequentNodeIds?.size ?: 0)) ?: -1L // -1L jako uzel nenalezen*/
+                                    println("ActualNode=$actualNodeInGraph (posun z lessonSc dale v graphu do QuestionSc")
+
+                                    navigation.navigateToQuestionScreen(
+                                        nodeId = actualNodeInGraph,
+                                        lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                    )
+                                }
+                                //---------------------------------------------------------------
+
+                                // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... to do tak co?
+                                // pokracovat na test v nasledujicim uzlu
+                                // to do co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
+//                                println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
+//                                println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
+
+                                /*
                                 if (lessonsToStudy.isNotEmpty()) {
                                     val l = lessonsToStudy.iterator().next()
                                     lessonsToStudy.remove(l)
@@ -241,6 +288,7 @@ fun LessonScreenContent(
 //                                testId = 1
                                     )
                                 }
+                                */
                             }
                         ) {
                             Text("Continue")
