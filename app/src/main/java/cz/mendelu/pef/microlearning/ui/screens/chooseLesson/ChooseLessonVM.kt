@@ -35,6 +35,7 @@ class ChooseLessonVM @Inject constructor(
     var topicId = 0L
     var topicName = "no name"
 
+    //vola suspend
     fun getData() {
         // vycisteni seznamu
         todoNodes = mutableListOf()
@@ -78,6 +79,7 @@ class ChooseLessonVM @Inject constructor(
         }
     }
 
+    // suspend do remote repo
     private fun getLessonsByTopic() {
         println("Fun get LESSON ByTOPIC()")
         if (topicId != 0L) {
@@ -157,6 +159,10 @@ class ChooseLessonVM @Inject constructor(
         }
     }
 
+    // neni suspend
+    // naplneni grafu v revision
+    // revisionLessonList
+    // data.lessons
     private fun getGraph(){
         when (mode.value) {
             Modes.REVISION.name -> {
@@ -176,6 +182,7 @@ class ChooseLessonVM @Inject constructor(
         println("revisionLessonList:$revisionLessonList")
     }
 
+    // suspend do remote repo
     private fun getNodesByTopic() {
         if (topicId != 0L) {
 //            graph.topicId = topicId
@@ -256,6 +263,8 @@ class ChooseLessonVM @Inject constructor(
         }
     }
 
+    // vola suspend
+    // data.nodes potreba
     private fun getPreviousAndSubsequentNodes() {
         println(data.nodes?.items?.size)
         data.nodes?.items?.forEach{
@@ -264,6 +273,7 @@ class ChooseLessonVM @Inject constructor(
         println(graph)
     }
 
+    //suspend do remote repo
     private fun getPrevAndSubNodes(actualNode: Node){
         launch {
             val result =
@@ -326,6 +336,8 @@ class ChooseLessonVM @Inject constructor(
         }
     }
 
+    // neni suspend
+    // graph, lessonId (v parametru)
     fun getNodeFromGraphByLesson(lessonId: Long) : Long {
         println(graph)
         if (graph.map.values.filter { it.lessonId == lessonId }.isNotEmpty())

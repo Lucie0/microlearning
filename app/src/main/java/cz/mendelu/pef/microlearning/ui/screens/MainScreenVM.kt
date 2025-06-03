@@ -34,7 +34,10 @@ class MainScreenVM @Inject constructor(
 
 //    private val context = getApplication<Application>().applicationContext
 
-    init {
+
+    // app context
+    // vola suspend fce
+    fun getData(){
         getFromDB()
         if (NetworkInterceptor.isNetworkConnected()) {
 //            getNodeById()
@@ -49,83 +52,7 @@ class MainScreenVM @Inject constructor(
         }
     }
 
-    /*
-    private fun getNodeById() {
-        launch {
-            val result =
-                withContext(Dispatchers.IO) {
-                    remoteRepository.getNodeById(nodeId)
-                }
-
-            when (result) {
-                is CommunicationResult.ConnectionError -> {
-                    mainUiState.value = UiState(
-                        loading = false,
-                        data = null,
-                        errors = MainErrors(R.string.communication_error) // "communication error" resource code
-                    )
-                }
-
-                is CommunicationResult.Error -> {
-                    println(result.error)
-                    when (result.error.code) {
-                        500 -> {
-                            mainUiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = MainErrors(R.string.some_unexpected_error) // "exception" resource code
-                            )
-                        }
-
-                        404 -> {
-                            mainUiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = MainErrors(R.string.not_found) // "not found" resource code
-                            )
-                        }
-
-                        else -> {
-                            mainUiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = MainErrors(R.string.something_went_wrong_please_reload_screen)
-                            )
-                        }
-                    }
-                }
-
-                is CommunicationResult.Exception -> {
-                    mainUiState.value = UiState(
-                        loading = false,
-                        data = null,
-                        errors = MainErrors(R.string.unknown_error) // "exception" resource code
-                    )
-                }
-
-                is CommunicationResult.Success -> {
-                    if (result.data.content.id != null) {
-                        println("*** Success MSVM")
-                        println(result.data)
-                        data.node = result.data
-                        mainUiState.value = UiState(
-                            loading = false,
-                            data = data,
-                            errors = null
-                        )
-                    } else {
-                        mainUiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = MainErrors(R.string.no_data) // "exception" resource code
-                        )
-                    }
-                }
-            }
-        }
-    }
-     */
-
+    // suspend do remote repo
     private fun getAllTopics() {
 
         launch {
@@ -201,6 +128,7 @@ class MainScreenVM @Inject constructor(
         }
     }
 
+    // suspned do local repo
     fun getFromDB(){
         launch {
             localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value).ordinal).collect {
@@ -223,4 +151,82 @@ class MainScreenVM @Inject constructor(
             }
         }
     }
+
+
+    /*
+private fun getNodeById() {
+    launch {
+        val result =
+            withContext(Dispatchers.IO) {
+                remoteRepository.getNodeById(nodeId)
+            }
+
+        when (result) {
+            is CommunicationResult.ConnectionError -> {
+                mainUiState.value = UiState(
+                    loading = false,
+                    data = null,
+                    errors = MainErrors(R.string.communication_error) // "communication error" resource code
+                )
+            }
+
+            is CommunicationResult.Error -> {
+                println(result.error)
+                when (result.error.code) {
+                    500 -> {
+                        mainUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = MainErrors(R.string.some_unexpected_error) // "exception" resource code
+                        )
+                    }
+
+                    404 -> {
+                        mainUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = MainErrors(R.string.not_found) // "not found" resource code
+                        )
+                    }
+
+                    else -> {
+                        mainUiState.value = UiState(
+                            loading = false,
+                            data = null,
+                            errors = MainErrors(R.string.something_went_wrong_please_reload_screen)
+                        )
+                    }
+                }
+            }
+
+            is CommunicationResult.Exception -> {
+                mainUiState.value = UiState(
+                    loading = false,
+                    data = null,
+                    errors = MainErrors(R.string.unknown_error) // "exception" resource code
+                )
+            }
+
+            is CommunicationResult.Success -> {
+                if (result.data.content.id != null) {
+                    println("*** Success MSVM")
+                    println(result.data)
+                    data.node = result.data
+                    mainUiState.value = UiState(
+                        loading = false,
+                        data = data,
+                        errors = null
+                    )
+                } else {
+                    mainUiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = MainErrors(R.string.no_data) // "exception" resource code
+                    )
+                }
+            }
+        }
+    }
+}
+ */
 }

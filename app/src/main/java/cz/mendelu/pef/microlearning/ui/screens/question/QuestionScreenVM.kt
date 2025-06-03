@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
+import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
-import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.UiState
@@ -25,7 +25,7 @@ import kotlin.random.Random
 
 @HiltViewModel
 class QuestionScreenVM @Inject constructor(
-    private val remoteRepository: RemoteRepositoryImpl
+    private val remoteRepository: IRemoteRepository
 ) : BaseViewModel() {
 
     // uistate
@@ -43,15 +43,22 @@ class QuestionScreenVM @Inject constructor(
 
     // selectedOptions = hashmap[zneniOtazky] = vybranaOdpoved    
     // selectedOptions = hashmap[question_id.option_group_id] = vybranaOdpoved
-    val selectedOptions = hashMapOf<String, String>()
+    var selectedOptions = hashMapOf<String, String>()
 
     // correctOptions = hashmap[zneniOtazky] = spravnaOdpoved
     // correctOptions = hashmap[question_id.option_group_id] = spravnaOdpoved
-    val correctOptions = hashMapOf<String, String>()
+    var correctOptions = hashMapOf<String, String>()
 
-    init {
+    // app context -- nemam
+    // suspend fce
+    fun getData() {
         if (NetworkInterceptor.isNetworkConnected()) {
 //        getQuestions()
+            if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
+                getQuestionsByLessonIdsTestingMode()
+            } else {
+                getQuestionsByLessonId()
+            }
         } else {
             println("Network not connected")
             uiState.value = UiState(
@@ -62,14 +69,7 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
-    fun getData() {
-        if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
-            getQuestionsByLessonIdsTestingMode()
-        } else {
-            getQuestionsByLessonId()
-        }
-    }
-
+    // neni suspend
     fun isTestCorrect(): Boolean {
         // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
         //{Seřaďte podle pořadí vyhodnocování: [1]=Závorky, Vyřešte výraz: 9 / 3 × (2 - 1)² - 4 = ...=-1,  [2]=Mocniny a odmocniny, Jakou operaci vyhodnocujeme jako poslední v matematickém výrazu?=Sčítání a odčítání, Jakou operaci vyhodnocujeme po závorkách?=Mocniny a odmocniny, Vyřešte výraz:  (8 / 2) × (4 - 2)² = ...=16,  [3]=Násobení a dělení, Jakou operaci vyhodnocujeme jako první v matematickém výrazu?=Závorky, Vyřešte výraz: 8 / 4 × 2² - 4 = ...=4,  [4]=Sčítání a odčítání, Vyřešte výraz:  5 × 6 / 2 - 8 ²/ 4 = ...=-1}
@@ -111,53 +111,47 @@ class QuestionScreenVM @Inject constructor(
         } else return testOk == 1
     }
 
-    private fun getNodeIdToContinue(actualNodeId: Long): Long {
-        val previous = graph.map[actualNodeId]?.previousNodesIds
+    // neni suspend
+    private fun reduceQuestions(){
+        val listArrayResponses = mutableListOf<Question>()
 
-        if (previous?.size!! > 0) {
-            // pokud jsou rodice
-            todoNodes.addAll(previous.subList(1, previous.size - 1))
-            // vrat prvniho na rada
-            return previous[0]
-        } else {
-            // pokuid nejsou rodicovske uzly
-            // projit todoNodes, jestli je prazdny
-            if (todoNodes.size > 0) {
-                // kdyz neni, vyber prvni v seznamu, odstran ho a vrat jako navratovou hodnotu
-                return todoNodes.removeAt(0)
-            } else {
-                // kdyz je todoNodes prazdny
-                // dosazeno prvniho nodu
-                // todo predelat, vracet nejake presmerovani jinam
-                return actualNodeId
+        data.questionsList.forEach{
+            val arrayResponse = it.items!!.toMutableList()
+            while (arrayResponse.size > 3) {
+                val random = Random.nextInt(0,arrayResponse.size - 1)
+                arrayResponse.removeAt(random)
             }
+            listArrayResponses.addAll(arrayResponse)//, arrayResponse.size, it.version))
         }
+
+        data.questions = ArrayResponse(listArrayResponses, listArrayResponses.size, 1)
+
+        println("listArrayResponses:$listArrayResponses")
+//        data.questions?.items = data.questionsList[0].items
     }
 
-//    fun correctAnswers(): String {
-//        var string = ""
-//        correctOptions.keys.forEach { questionText ->
-//            if (selectedOptions[questionText] != correctOptions[questionText]) {
-//                println(correctOptions[questionText])
-//                string = string + questionText + " " + correctOptions[questionText] + ",\n"
-//            }
-//        }
-//        return string.substring(0, string.length - 1)
-//    }
+    // neni suspend
+    // graph.previousNodeIds, todonodes
+    fun getNextNodeId(): Long {
+        // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
+        // jinak vrat -1
 
-    fun correctAnswers(): List<String> {
-        val list = mutableListOf<String>()
+        val ids = graph.map[actualNodeInGraph]?.previousNodesIds
+        var nextNodeId = -1L
 
-        correctOptions.keys.forEach { key ->
-            if (selectedOptions[key] != correctOptions[key]) {
-                println(correctOptions[key])
-                list.add(key) //= string + questionText + " " + correctOptions[questionText] + ",\n"
-            }
+        if (!ids.isNullOrEmpty()) {
+            todoNodes.addAll(ids)
+            nextNodeId = todoNodes.removeAt(0)
+            println("todoNodes:$todoNodes")
+            println("ids:$ids")
         }
-        println("list:$list")
-        return list
+
+        println("todoNodes:$todoNodes")
+
+        return nextNodeId
     }
 
+    // suspend do remote repo
     private fun getQuestionsByLessonIdsTestingMode() {
 //        // aktualni node -- jeho prechoduci -- pro kazdy
 //        println("Graph:${graph}")
@@ -223,25 +217,7 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
-
-    private fun reduceQuestions(){
-        val listArrayResponses = mutableListOf<Question>()
-
-        data.questionsList.forEach{
-            val arrayResponse = it.items!!.toMutableList()
-            while (arrayResponse.size > 3) {
-                val random = Random.nextInt(0,arrayResponse.size - 1)
-                arrayResponse.removeAt(random)
-            }
-            listArrayResponses.addAll(arrayResponse)//, arrayResponse.size, it.version))
-        }
-
-        data.questions = ArrayResponse(listArrayResponses, listArrayResponses.size, 1)
-
-        println("listArrayResponses:$listArrayResponses")
-//        data.questions?.items = data.questionsList[0].items
-    }
-
+    // suspend fce do remote repo
     private fun getQuestionsByLessonId() {
         if (lessonId != -1L) {
             launch {
@@ -316,22 +292,39 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
-    fun getNextNodeId(): Long {
-        // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
-        // jinak vrat -1
+    private fun getNodeIdToContinue(actualNodeId: Long): Long {
+        val previous = graph.map[actualNodeId]?.previousNodesIds
 
-        val ids = graph.map[actualNodeInGraph]?.previousNodesIds
-        var nextNodeId = -1L
-
-        if (!ids.isNullOrEmpty()) {
-            todoNodes.addAll(ids)
-            nextNodeId = todoNodes.removeAt(0)
-            println("todoNodes:$todoNodes")
-            println("ids:$ids")
+        if (previous?.size!! > 0) {
+            // pokud jsou rodice
+            todoNodes.addAll(previous.subList(1, previous.size - 1))
+            // vrat prvniho na rada
+            return previous[0]
+        } else {
+            // pokuid nejsou rodicovske uzly
+            // projit todoNodes, jestli je prazdny
+            if (todoNodes.size > 0) {
+                // kdyz neni, vyber prvni v seznamu, odstran ho a vrat jako navratovou hodnotu
+                return todoNodes.removeAt(0)
+            } else {
+                // kdyz je todoNodes prazdny
+                // dosazeno prvniho nodu
+                // todo predelat, vracet nejake presmerovani jinam
+                return actualNodeId
+            }
         }
+    }
 
-        println("todoNodes:$todoNodes")
+    fun correctAnswers(): List<String> {
+        val list = mutableListOf<String>()
 
-        return nextNodeId
+        correctOptions.keys.forEach { key ->
+            if (selectedOptions[key] != correctOptions[key]) {
+                println(correctOptions[key])
+                list.add(key) //= string + questionText + " " + correctOptions[questionText] + ",\n"
+            }
+        }
+        println("list:$list")
+        return list
     }
 }

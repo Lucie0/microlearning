@@ -33,12 +33,13 @@ class ResultVM @Inject constructor(
     // pod id lekce je id nodu pro rychlejsi vyhledavani
     val mapOfLesson: MutableMap<Long, Long> = mutableMapOf()
 
-
+    // vola suspend fci
     fun getData() {
         getLessonsByTopic()
         getMap()
     }
 
+    // suspend fce do remote repo
     private fun getLessonsByTopic() {
         if (topicId != 0L) {
             launch {
@@ -115,13 +116,16 @@ class ResultVM @Inject constructor(
         }
     }
 
+    // neni suspend
+    // graph, mapofLessons
     private fun getMap(){
         graph.map.values.forEach{
             mapOfLesson[it.lessonId!!] = it.id!!
         }
     }
 
-
+    // neni suspend
+    // graph, starting node
     fun getScalarResult(): Int {
         var points = 0
 //        graph.map.keys.forEach {key ->
@@ -146,6 +150,9 @@ class ResultVM @Inject constructor(
         return points
     }
 
+    // neni suspend
+    // graph, nodeId (v parametru)
+    // provazana count of nodes
     private fun getCountOfNodesIf(nodeId: Long): Int {
         var count = 0
         if (graph.map[nodeId]?.countOfIncorrectAnswers == 0) {
@@ -158,6 +165,8 @@ class ResultVM @Inject constructor(
         return count
     }
 
+    // neni suspend, provazana s count of nodesIf
+    // graph.previousNodeIds, nodeId (v parametru)
     private fun getCountOfNodes(nodeId: Long): Int {
         var count = 0
         count += graph.map[nodeId]?.previousNodesIds?.size ?: 0
@@ -178,6 +187,8 @@ class ResultVM @Inject constructor(
         }
     }
 
+    // neni suspend
+    // graph.previousNodeIds, graph.countOfIncorrectAnswers startingNode
     fun getGraphResult(): String {
         var result = ""
 
@@ -192,6 +203,8 @@ class ResultVM @Inject constructor(
         return result
     }
 
+    // neni suspend
+    // graph, .previousNodeIds, nodeId (v parametru)
     private fun getWalkThroughGraph(nodeId: Long): MutableSet<String> {
         val result = mutableSetOf<String>()
         result.add(graph.map[nodeId]?.result() ?: "")
