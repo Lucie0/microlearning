@@ -78,7 +78,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             // is URLSpan
             is URLSpan -> {
                 println(span.url)
-                addStyle(SpanStyle(color = Color.Red, textDecoration = TextDecoration.Underline), start, end)
+                addStyle(SpanStyle(color = Color.Cyan, textDecoration = TextDecoration.Underline), start, end)
                 // todo add onclick -- htmltext to dela pomoci elementu clickable text v composu
                 addStringAnnotation(
                     tag = "URL",

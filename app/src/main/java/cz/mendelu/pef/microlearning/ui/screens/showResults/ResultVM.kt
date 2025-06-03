@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
+import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
 import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.UiState
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ResultVM @Inject constructor(
-    private val remoteRepository: RemoteRepositoryImpl
+    private val remoteRepository: IRemoteRepository
 ) : BaseViewModel() {
 
     // uistate
