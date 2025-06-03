@@ -41,11 +41,6 @@ import cz.mendelu.pef.microlearning.ui.elements.TabScreen
 import cz.mendelu.pef.microlearning.ui.extensions.toAnnotatedString
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
-
-// zeptat se Landy na HTML komponentu? Elisky? Gono?
-// cili nechat HTML ted byt
-// https://spatialhub.mendelu.cz/
-
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun MainScreen(
@@ -53,7 +48,6 @@ fun MainScreen(
     navigation: INavigationRouter
 ) {
 
-    // kdyz se vracim z lesson null stranky, tak to sleti na IllegalArgExc pro mainScreenu?
     // pri vynute wifi i z lesson by id
     // TODO VYRESIT
     // java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}                                                                                                    java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}
@@ -65,10 +59,14 @@ fun MainScreen(
         UiState()
     ) }
 
-    // znovu nacti z DB
-    LaunchedEffect(key1 = mode, block = {
-        viewModel.getFromDB()
+    LaunchedEffect(key1 = 1, block = {
+        viewModel.getData()
     })
+
+    // znovu nacti z DB
+//    LaunchedEffect(key1 = mode, block = {
+//        viewModel.getFromDB()
+//    })
 
     // poslech nad uistatem
     viewModel.mainUiState.value.let {

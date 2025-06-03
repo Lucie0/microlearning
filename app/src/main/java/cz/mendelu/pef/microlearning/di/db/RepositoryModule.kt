@@ -2,6 +2,7 @@ package cz.mendelu.pef.microlearning.di.db
 
 import cz.mendelu.pef.microlearning.database.IMicrolearningRepository
 import cz.mendelu.pef.microlearning.database.MicrolearningDao
+import cz.mendelu.pef.microlearning.database.MicrolearningMockRepositoryImpl
 import cz.mendelu.pef.microlearning.database.MicrolearningRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -17,5 +18,11 @@ object RepositoryModule {
     @Singleton
     fun provideRepository(dao: MicrolearningDao): IMicrolearningRepository {
         return MicrolearningRepositoryImpl(dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMockRepository(): MicrolearningMockRepositoryImpl {
+        return MicrolearningMockRepositoryImpl()
     }
 }
