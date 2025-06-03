@@ -21,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -58,16 +59,16 @@ fun MainScreen(
     // java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}                                                                                                    java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}
 
     val viewModel = hiltViewModel<MainScreenVM>()
-    viewModel.myLLId = lastLessonId ?: 1L
+//    viewModel.myLLId = lastLessonId ?: 1L
 
     val uiState: MutableState<UiState<MainData, MainErrors>> = rememberSaveable { mutableStateOf(
         UiState()
     ) }
 
-    // pri zmene rezimu znovu nacti z DB
-    mode.value.let {
+    // znovu nacti z DB
+    LaunchedEffect(key1 = mode, block = {
         viewModel.getFromDB()
-    }
+    })
 
     // poslech nad uistatem
     viewModel.mainUiState.value.let {
@@ -81,9 +82,9 @@ fun MainScreen(
     // todo hodit do VM
 //    var myLLId: Long = lastLessonId ?: 1L
     // moje osetreni pro nepreteceni
-    if (viewModel.myLLId > 8) {
-        viewModel.myLLId = 1
-    }
+//    if (viewModel.myLLId > 8) {
+//        viewModel.myLLId = 1
+//    }
 
     // ulozit prichazejici lastLessonId do VM
     // pokud zadne lastLessonId neni, nastavit na 1
@@ -111,11 +112,11 @@ fun MainScreen(
         } else null
     ) {
         MainScreenContent(
-            lastLessonId = viewModel.myLLId,
+//            lastLessonId = viewModel.myLLId,
             paddingValues = it,
             navigation = navigation,
             uiState = uiState.value,
-            nodeId = viewModel.nodeId
+//            nodeId = viewModel.nodeId
         )
     }
 }
@@ -124,11 +125,11 @@ fun MainScreen(
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun MainScreenContent(
-    lastLessonId: Long,
+//    lastLessonId: Long,
     paddingValues: PaddingValues,
     navigation: INavigationRouter,
     uiState: UiState<MainData, MainErrors>,
-    nodeId: Long
+//    nodeId: Long
 ){
     Column {
 //        HelloWorldScreen()

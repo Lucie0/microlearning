@@ -111,7 +111,7 @@ class QuestionScreenVM @Inject constructor(
         } else return testOk == 1
     }
 
-    fun getNodeIdToContinue(actualNodeId: Long): Long {
+    private fun getNodeIdToContinue(actualNodeId: Long): Long {
         val previous = graph.map[actualNodeId]?.previousNodesIds
 
         if (previous?.size!! > 0) {
@@ -317,11 +317,13 @@ class QuestionScreenVM @Inject constructor(
     }
 
     fun getNextNodeId(): Long {
+        // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
+        // jinak vrat -1
+
         val ids = graph.map[actualNodeInGraph]?.previousNodesIds
         var nextNodeId = -1L
 
         if (!ids.isNullOrEmpty()) {
-
             todoNodes.addAll(ids)
             nextNodeId = todoNodes.removeAt(0)
             println("todoNodes:$todoNodes")

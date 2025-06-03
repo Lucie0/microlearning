@@ -12,8 +12,10 @@ import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.graph
+import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
+import cz.mendelu.pef.microlearning.model.todoNodes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,6 +36,10 @@ class ChooseLessonVM @Inject constructor(
     var topicName = "no name"
 
     fun getData() {
+        // vycisteni seznamu
+        todoNodes = mutableListOf()
+        lessonsToStudy = mutableSetOf()
+
         if (NetworkInterceptor.isNetworkConnected()) {
             getLessonsByTopic()
             // nacist graf
@@ -59,6 +65,8 @@ class ChooseLessonVM @Inject constructor(
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud tuition mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
+            } else if (mode.value == Modes.REVISION.name) {
+                graph = Graph(this.topicId, this.topicName, mutableMapOf())
             }
         } else {
             println("Network not connected")

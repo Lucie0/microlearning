@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import cz.mendelu.pef.microlearning.model.Modes
+import cz.mendelu.pef.microlearning.model.api.Graph
+import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -18,7 +20,10 @@ fun ModesScreen(
 ){
     BaseScreen(
         topBarText = "Modes",
-        onBackClick = { navigation.navigateBack() },
+        onBackClick = {
+            graph = Graph(0, "no name", mutableMapOf())
+            navigation.navigateBack()
+        },
     ) {
         ModesScreenContent(
             paddingValues = it,
@@ -38,7 +43,7 @@ fun ModesScreenContent(
     Column {
         RadioButtonSingleSelection(
             radioOptions = Modes.values().toList().map { it.name },//"Revision", "Tuition", "Testing"),
-            selectedOption = mode // todo ukladat do DB nastaveny rezim
+            selectedOption = mode // todo ukladat do DB nastaveny rezim?
         )
     }
 

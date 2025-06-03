@@ -29,8 +29,8 @@ class MainScreenVM @Inject constructor(
 //    var lessonId: Long? = null
 
     var data = MainData()
-    var myLLId: Long = 1L
-    var nodeId: Long = 101L
+//    var myLLId: Long = 1L
+//    var nodeId: Long = 101L
 
 //    private val context = getApplication<Application>().applicationContext
 
@@ -49,6 +49,7 @@ class MainScreenVM @Inject constructor(
         }
     }
 
+    /*
     private fun getNodeById() {
         launch {
             val result =
@@ -123,6 +124,7 @@ class MainScreenVM @Inject constructor(
             }
         }
     }
+     */
 
     private fun getAllTopics() {
 
