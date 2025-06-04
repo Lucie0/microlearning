@@ -24,16 +24,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.model.Modes
-import cz.mendelu.pef.microlearning.model.api.Option
-import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.api.Option
+import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.educationalNode
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
+import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
@@ -43,6 +44,7 @@ import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
+import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -58,6 +60,8 @@ fun QuestionScreen(
     val viewModel = hiltViewModel<QuestionScreenVM>()
     viewModel.lessonId = lessonId ?: graph.map[actualNodeInGraph]?.lessonId!!
     viewModel.nodeId = nodeId ?: actualNodeInGraph
+
+    val openAlertDialog = remember { mutableStateOf(false) }
 
     println("---* ACTUAL NODE Qs:$actualNodeInGraph")
     println("lessonId=$lessonId,nodeId=$nodeId")
@@ -78,7 +82,7 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = "Pretest of node $nodeId",
+        topBarText = "Pretest of lesson ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -88,16 +92,23 @@ fun QuestionScreen(
         showLoading = uiState.value.loading,
         drawFullScreenContent = true,
         onBackClick = {
-            navigation.navigateBack()
+            openAlertDialog.value = true
+//            navigation.navigateBack()
         }
     ) {
+//        BackHandler(enabled = true) {
+//            // Zde můžete definovat vlastní akci při stisknutí tlačítka Zpět
+//            println("Tlačítko Zpět bylo stisknuto!")
+//        }
+
         QuestionScreenContent(
             paddingValues = it,
             nodeId = nodeId,
 //            lessonId = lessonId,
             uiState = uiState,
             viewModel = viewModel,
-            navigation = navigation
+            navigation = navigation,
+            openAlertDialog = openAlertDialog
         )
     }
 }
@@ -113,10 +124,35 @@ fun QuestionScreenContent(
     uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
+    openAlertDialog: MutableState<Boolean>
 ) {
     val onSubmitClicked = remember { mutableStateOf(false) }
 
-    LazyColumn {
+    when {
+        // ...
+        openAlertDialog.value -> {
+
+            AlertDialog(
+                onDismissRequest = {
+                    openAlertDialog.value = false
+                    println("DISMISS: Staying in tests")
+//                    navigation.navigateToMainScreen()
+                },
+                onConfirmation = {
+                    openAlertDialog.value = false
+                    println("CONFIRM: Testing left")
+                    navigation.navigateToMainScreen()
+                },
+                dialogTitle = "Testing will be ended",
+                dialogText = "Do you really want to leave testing?",
+                icon = null
+//                icon = Icons.Default.Info
+
+            )
+        }
+    }
+
+    LazyColumn (modifier = Modifier.padding(paddingValues)) {
 //        item {
         /*
             QuestionScreenContent(
