@@ -23,14 +23,22 @@ fun MyTopics(
             topics.forEach { topic ->
                 if (topic != null) {
                     if (topic.dbActualNode != null) {
-                        // jestli je to zalozka my lesson --> zobrazeni nazvu + cislo aktulani lekce
+                        // jestli je to zalozka my lesson --> zobrazeni nazvu + cislo aktualni lekce / nodu
                         ListItem(
                             headlineText = { Text("${topic.name} (${topic.dbActualNode})") },
                             modifier = Modifier.clickable {
                                 println("Clicked on ${topic.name}")
 
                                 navigation.navigateToChooseNameOfLessonScreen(
-                                    topic.name ?: "Topic ${topic.id}", topic.id
+                                    topicName = topic.name ?: "Topic ${topic.id}",
+                                    topicId = topic.id
+                                )
+                                // todo revision mode nacitani z db pridano vvv
+                                navigation.navigateToLessonScreen(
+                                    lessonId = -1L,
+                                    nodeId = -1L,
+                                    lessonOrdinalNumber = topic.dbActualNode!!.toInt(),
+                                    topicId = topic.id
                                 )
                             })
                     } else {
