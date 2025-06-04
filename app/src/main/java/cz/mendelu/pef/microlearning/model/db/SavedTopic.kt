@@ -17,6 +17,9 @@ data class SavedTopic(
     // id nodu, ze ktereho mam pokracovat dale
     var actualNodeId: Long,
 
+    // todo name of lesson
+    // todo date of saving
+
     @ColumnInfo(name = "mode_number")
     // cislo modu, ke kteremu se rozpracovany graf vaze
     var modeNumber: Int
