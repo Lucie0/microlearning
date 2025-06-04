@@ -112,6 +112,7 @@ class QuestionScreenVM @Inject constructor(
     }
 
     // neni suspend
+    // data questionsList
     private fun reduceQuestions(){
         val listArrayResponses = mutableListOf<Question>()
 
@@ -131,7 +132,7 @@ class QuestionScreenVM @Inject constructor(
     }
 
     // neni suspend
-    // graph.previousNodeIds, todonodes
+    // graph.previousNodeIds, todonodes, actualNodeInGraph
     fun getNextNodeId(): Long {
         // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
         // jinak vrat -1
