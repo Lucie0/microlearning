@@ -47,7 +47,12 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //    }
 
     override fun navigateToMainScreen() {
+        println("navcontroller=${navController.previousBackStackEntry?.arguments}")
+//        navController.setOnBackPressedDispatcher()
         navController.navigate(Destination.MainScreen.route)
+//        {
+//            popUpTo(Destination.MainScreen.route)
+//        }
     }
 
 
