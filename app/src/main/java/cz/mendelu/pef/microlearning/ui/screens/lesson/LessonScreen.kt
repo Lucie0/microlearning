@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Save
-import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +30,7 @@ import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
 import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
+import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
@@ -130,7 +127,7 @@ fun LessonScreenContent(
                 },
                 onConfirmation = {
                     openAlertDialog.value = false
-                    viewModel.saveActualStateToLocalDB()
+                    viewModel.saveActualStateToLocalDB(lessonOrdinalNumber ?: -1)
 
                     println("CONFIRM: Progress saved")
 
@@ -297,7 +294,7 @@ fun LessonScreenContent(
                                 */
                             }
                         ) {
-                            Text("Continue")
+                            Text("Continue to next part")
                         }
                     }
                 }
