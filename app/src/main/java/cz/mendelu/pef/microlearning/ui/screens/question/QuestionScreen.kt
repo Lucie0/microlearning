@@ -258,6 +258,10 @@ fun QuestionScreenContent(
 
                         if (mode.value == Modes.TUITION.name) {
                             // zobrazeni spravnych odpovedi
+                            Text(
+                                text = "List of correct answers is following",
+                                color = getPrimaryColor()
+                            )
                             uiState.value.data?.questions?.items?.forEach {
 //                            if (viewModel.correctAnswers().contains(it.text)) {
 //                        viewModel.correctAnswers().forEach{
@@ -272,6 +276,10 @@ fun QuestionScreenContent(
                                     navigation = navigation
                                 )
                             }
+                            Text(
+                                text = "Prerequisites are not sufficient.\nPrevious lessons need to be reviewed.",
+                                color = getPrimaryColor()
+                            )
                         }
                     }
 //                    }
@@ -358,7 +366,8 @@ fun QuestionScreenContent(
                                                 // navigateToQuestionScreen()
                                                 navigation.navigateToQuestionScreen(
                                                     nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId)
+                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                )
                                             } else {
                                                 // jinak (pravdepodobne, ze se rovnaji)
                                                 println("actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) >= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})")
@@ -567,7 +576,7 @@ fun QuestionItem(
 
     // LazyColumn()
     Column(
-        modifier = Modifier.padding(paddingValues)
+        modifier = Modifier.padding(8.dp)
     ) {
         if (question != null) {
             when (question.questionType) {
@@ -579,7 +588,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
                     )
 
                     //moznosti
@@ -614,7 +623,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
                     )
 
                     //moznosti
@@ -643,7 +652,7 @@ fun QuestionItem(
 //                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                             string = sentence.substring(0,sentence.length-3-1),
                             textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
+                            fontSize = MaterialTheme.typography.bodyLarge.fontSize
                         )
 
                         // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
@@ -685,7 +694,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
                     )
 
                     OutlinedTextField(
@@ -714,4 +723,3 @@ fun QuestionItem(
         }
     }
 }
-
