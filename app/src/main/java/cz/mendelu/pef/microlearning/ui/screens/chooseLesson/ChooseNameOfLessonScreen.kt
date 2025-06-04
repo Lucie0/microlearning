@@ -90,7 +90,11 @@ fun ChooseNameOfLessonScreenContent(
             uiState.data?.lessons?.items?.forEach {
                 item {
                     ListItem(
-                        headlineText = { Text(text = if (it.name != null) "${it.id}. ${it.name}" else "Lesson" + it.id) },
+                        headlineText = {
+//                            if (mode.value == Modes.REVISION.name) {
+                                Text(text = if (it.name != null) "${it.ordinalNumber}. ${it.name}" else "Lesson" + it.ordinalNumber)
+//                            } else Text(text = if (it.name != null) "${it.id}. ${it.name}" else "Lesson" + it.id)
+                        },
                         modifier = Modifier.clickable {
                             when (mode.value) {
                                 Modes.REVISION.name -> {
