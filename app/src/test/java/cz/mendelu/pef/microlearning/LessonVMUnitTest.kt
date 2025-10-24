@@ -2,6 +2,9 @@ package cz.mendelu.pef.microlearning
 
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.RemoteMockRepositoryImpl
+import cz.mendelu.pef.microlearning.database.MicrolearningMockRepositoryImpl
+import cz.mendelu.pef.microlearning.model.Modes
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreenVM
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -17,19 +20,36 @@ import org.junit.Test
  */
 
 class LessonVMUnitTest {
-    lateinit var remoteRepository: RemoteMockRepositoryImpl
-    lateinit var viewModel: LessonScreenVM
+    private lateinit var remoteRepository: RemoteMockRepositoryImpl
+    private lateinit var localRepository: MicrolearningMockRepositoryImpl
+    private lateinit var viewModel: LessonScreenVM
 
     @Before
     fun setup() {
-        println("xxxxxxxxxxxxxxxx")
+        println("Setup")
         remoteRepository = RemoteMockRepositoryImpl()
+        localRepository = MicrolearningMockRepositoryImpl()
         // Vytvoření ViewModelu s injektovaným FakeRemoteRepository
-        viewModel = LessonScreenVM(remoteRepository)
+        viewModel = LessonScreenVM(remoteRepository, localRepository)
     }
 
     @Test
-    fun test() = runTest {
+    fun test1() {
+        assertTrue(true)
+    }
+
+    @Test
+    fun test2(){
+        assertNotNull(viewModel)
+    }
+
+    @Test
+    fun test3() {
+        mode.value = Modes.REVISION.name
+    }
+
+    @Test
+    fun test() = runTest {// kvuli suspend fcim
 //        viewModel.lessonId = 1
 //        viewModel.sGetLessonById()
 
