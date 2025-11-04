@@ -40,7 +40,7 @@ fun SettingsScreenContent(
             })
         ListItem(
             headlineText = { Text("Modes") },
-            supportingText = { Text(mode.value) },
+            supportingText = { Text(mode.value.lowercase().replaceFirstChar { it.uppercase() }) },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
     }

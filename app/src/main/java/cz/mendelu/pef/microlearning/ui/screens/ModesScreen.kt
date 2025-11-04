@@ -42,7 +42,7 @@ fun ModesScreenContent(
 
     Column {
         RadioButtonSingleSelection(
-            radioOptions = Modes.values().toList().map { it.name },//"Revision", "Tuition", "Testing"),
+            radioOptions = Modes.values().toList().map { it.name.lowercase().replaceFirstChar { ch -> ch.uppercase() } },//"Revision", "Tuition", "Testing"),
             selectedOption = mode // todo ukladat do DB nastaveny rezim?
         )
     }

@@ -150,7 +150,7 @@ fun MainScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "${mode.value} MODE",
+                text = "${mode.value.lowercase().replaceFirstChar { it.uppercase() }} mode",
                 color = getPrimaryColor())
 //        }
         }
