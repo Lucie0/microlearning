@@ -13,6 +13,8 @@ import dagger.hilt.android.HiltAndroidApp
 //Or, set and send a custom/non-standard browser User-Agent request header.
 //Or, please upgrade to any paid ngrok account.
 
+// apk -- C:\LUCINKA\MENDELU\6-semestr-LS-2023-2024\BP-Bakalarska-prace\mobilni_appka\Microlearning\app\release
+
 @HiltAndroidApp
 class MainApplication : Application() {
 

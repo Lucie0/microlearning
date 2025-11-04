@@ -341,10 +341,12 @@ fun QuestionScreenContent(
 
                                 Modes.TUITION.name -> {
                                     if (viewModel.isTestCorrect()) {
+
+                                        // kontrola korenoveho uzlu -- musi probehnout kazdopadne
                                         if (todoNodes.isNotEmpty()) {
                                             val item = todoNodes.iterator().next()
                                             if (graph.map[item]?.lessonOrdinalNumber == 0) {
-                                                // pokud list obsahuje na prvnim indexu korenovy uzel
+                                                // pokud seznam obsahuje na prvnim indexu korenovy uzel
                                                 // odstranit ho
                                                 todoNodes.remove(item)
                                             }
@@ -370,7 +372,8 @@ fun QuestionScreenContent(
                                                 )
                                             } else {
                                                 // jinak (pravdepodobne, ze se rovnaji)
-                                                println("actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) >= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})")
+                                                println("actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) " +
+                                                        ">= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})")
 
                                                 // zobrazit lekci aktualniho uzlu
                                                 // navigation.navigateToLessonScreen()

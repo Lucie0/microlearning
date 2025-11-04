@@ -23,7 +23,7 @@ fun MyTopics(
             topics.forEach { topic ->
                 if (topic != null) {
                     if (topic.dbActualNode != null) {
-                        // jestli je to zalozka my lesson --> zobrazeni nazvu + cislo aktualni lekce / nodu
+                        // jestli je to zalozka my lessons (rozpracovane lekce) --> zobrazeni nazvu + cislo aktualni lekce / nodu
                         ListItem(
                             headlineText = { Text("${topic.name} (${topic.dbActualNode})") },
                             modifier = Modifier.clickable {
