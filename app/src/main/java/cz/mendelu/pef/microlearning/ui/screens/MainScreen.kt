@@ -129,7 +129,9 @@ fun MainScreenContent(
     uiState: UiState<MainData, MainErrors>,
 //    nodeId: Long
 ){
-    Column {
+    Column (
+        modifier = Modifier.padding(16.dp)
+    ) {
 //        HelloWorldScreen()
 //        Icons.Outlined
 //        Box(modifier = Modifier.fillMaxWidth(1f)) {
