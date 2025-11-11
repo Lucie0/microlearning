@@ -6,6 +6,7 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 
     override fun getNavController(): NavController = navController
 
+    // todo navazat HW tlacitko na fci
     override fun navigateBack() {
         navController.popBackStack()
     }
@@ -47,12 +48,21 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 //    }
 
     override fun navigateToMainScreen() {
-        println("navcontroller=${navController.previousBackStackEntry?.arguments}")
+//        navController.popBackStack(route = "Main", inclusive = false)
+
+        navController.navigate("Main") {
+            popUpTo(navController.graph.startDestinationId) { inclusive = false }
+            launchSingleTop = true
+        }
+
+        println("NAVIGATION TO MAIN SCREEN -- LAUNCH SINGLE TOP = true, promazani zasobniku backStacku")
+
+//        println("navcontroller=${navController.previousBackStackEntry?.arguments}")
 //        navController.setOnBackPressedDispatcher()
-        navController.navigate(Destination.MainScreen.route)
-//        {
-//            popUpTo(Destination.MainScreen.route)
-//        }
+//        navController.navigate(Destination.MainScreen.route)
+////        {
+////            popUpTo(Destination.MainScreen.route)
+////        }
     }
 
 
