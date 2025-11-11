@@ -256,7 +256,7 @@ fun QuestionScreenContent(
 //                            color = getCorrectAnswersColor()
 //                        )
 
-                        if (mode.value == Modes.TUITION.name) {
+                        if (mode.value.uppercase() == Modes.TUITION.name) {
                             // zobrazeni spravnych odpovedi
                             Text(
                                 text = "List of correct answers is following",
@@ -312,7 +312,7 @@ fun QuestionScreenContent(
                             onSubmitClicked.value = true
                             viewModel.isTestCorrect()
                         } else {
-                            when (mode.value) {
+                            when (mode.value.uppercase()) {
                                 Modes.TESTING.name -> {
                                     if (viewModel.isTestCorrect()) {
                                         if (todoNodes.isEmpty()) {

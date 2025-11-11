@@ -162,7 +162,7 @@ fun LessonScreenContent(
             }
             item {
 
-                when (mode.value) {
+                when (mode.value.uppercase()) {
                     // button pro REVISION mode
                     Modes.REVISION.name -> {
                         if (lessonOrdinalNumber != null && topicId != null) {

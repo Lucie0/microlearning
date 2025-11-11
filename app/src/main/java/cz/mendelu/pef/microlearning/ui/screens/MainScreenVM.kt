@@ -132,7 +132,7 @@ class MainScreenVM @Inject constructor(
     // suspned do local repo
     fun getFromDB(){
         launch {
-            localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value).ordinal).collect {
+            localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value.uppercase()).ordinal).collect {
                 println("localRepo: $it")
                 val list = mutableListOf<Topic>()
                 it.forEach {st ->

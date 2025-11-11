@@ -54,7 +54,7 @@ class QuestionScreenVM @Inject constructor(
     fun getData() {
         if (NetworkInterceptor.isNetworkConnected()) {
 //        getQuestions()
-            if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
+            if (mode.value.uppercase() == Modes.TESTING.name || mode.value.uppercase() == Modes.TUITION.name) {
                 getQuestionsByLessonIdsTestingMode()
             } else {
                 getQuestionsByLessonId()
@@ -89,7 +89,7 @@ class QuestionScreenVM @Inject constructor(
                 } else countOfCorrect += 1
             }
 
-            if (mode.value == Modes.TESTING.name || mode.value == Modes.TUITION.name) {
+            if (mode.value.uppercase() == Modes.TESTING.name || mode.value.uppercase() == Modes.TUITION.name) {
                 // zapsat do graphu
                 graph.map[nodeId]?.countOfCorrectAnswers =
                     (graph.map[nodeId]?.countOfCorrectAnswers ?: 0) + countOfCorrect
@@ -99,7 +99,7 @@ class QuestionScreenVM @Inject constructor(
                 graph.map[nodeId]?.successfullyCompleted = isOk && countOfCorrect != 0
                 println("Graph[$nodeId]:${graph.map[nodeId]}")
 
-                if (mode.value == Modes.TUITION.name && !isOk) {
+                if (mode.value.uppercase() == Modes.TUITION.name && !isOk) {
 //            graph.map[nodeId]?.previousNodesIds?.let { lessonsToStudy.addAll(it) }
                     // pridej do seznamu lekce k dostudovani
                     lessonsToStudy.addAll(graph.map[actualNodeInGraph]?.previousNodesIds!!)

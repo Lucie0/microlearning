@@ -96,7 +96,7 @@ fun ChooseNameOfLessonScreenContent(
 //                            } else Text(text = if (it.name != null) "${it.id}. ${it.name}" else "Lesson" + it.id)
                         },
                         modifier = Modifier.clickable {
-                            when (mode.value) {
+                            when (mode.value.uppercase()) {
                                 Modes.REVISION.name -> {
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     navigation.navigateToLessonScreen(

@@ -45,14 +45,14 @@ class ChooseLessonVM @Inject constructor(
             getLessonsByTopic()
             // nacist graf
 //            getGraph()
-            if (mode.value == Modes.TESTING.name && graph.topicId != topicId) {
+            if (mode.value.uppercase() == Modes.TESTING.name && graph.topicId != topicId) {
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud testing mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
 //                getPreviousAndSubsequentNodes()
-            } else if (mode.value == Modes.TESTING.name) {
+            } else if (mode.value.uppercase() == Modes.TESTING.name) {
                 // promazat graf co se tyce poctu odpovedi, walkthrough, succesfully completed
                 println("Cisteni grafu")
                 graph.map.values.forEach {
@@ -61,12 +61,12 @@ class ChooseLessonVM @Inject constructor(
                     it.countOfCorrectAnswers = 0
                     it.countOfIncorrectAnswers = 0
                 }
-            } else if (mode.value == Modes.TUITION.name && graph.topicId != topicId){
+            } else if (mode.value.uppercase() == Modes.TUITION.name && graph.topicId != topicId){
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud tuition mode -> nacist graf: Nody dle topicu
                 getNodesByTopic()
-            } else if (mode.value == Modes.REVISION.name) {
+            } else if (mode.value.uppercase() == Modes.REVISION.name) {
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
             }
         } else {
@@ -164,7 +164,7 @@ class ChooseLessonVM @Inject constructor(
     // revisionLessonList
     // data.lessons
     private fun getGraph(){
-        when (mode.value) {
+        when (mode.value.uppercase()) {
             Modes.REVISION.name -> {
                 revisionLessonList = mutableMapOf()
                 data.lessons?.items?.forEach {
