@@ -44,7 +44,7 @@ fun BaseScreen(
 //                            if(topBarText != null) {
                                 Text(
                                     text = topBarText,
-                                    style = MaterialTheme.typography.titleLarge,
+                                    style = MaterialTheme.typography.headlineSmall,
 //                                    color = Color.White,
                                     modifier = Modifier
                                         .padding(start = 0.dp)
