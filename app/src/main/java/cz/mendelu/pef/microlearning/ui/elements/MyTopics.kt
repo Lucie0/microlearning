@@ -7,6 +7,8 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 
@@ -58,7 +60,7 @@ fun MyTopics(
     } else {
         PlaceHolderScreen(
             modifier = Modifier.fillMaxWidth(),
-            content = PlaceholderScreenContent(null, placeholderText ?: "No lessons")
+            content = PlaceholderScreenContent(null, placeholderText ?: stringResource(R.string.no_lessons))
         )
     }
 

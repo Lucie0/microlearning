@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
@@ -79,7 +80,7 @@ fun LessonScreen(
 
     // --> text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
-        topBarText = "Lesson ${lessonId ?: lessonOrdinalNumber}",//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
+        topBarText = stringResource(R.string.title_lesson) + (lessonId ?: lessonOrdinalNumber),//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -139,8 +140,8 @@ fun LessonScreenContent(
 
                     navigation.navigateToMainScreen()
                 },
-                dialogTitle = "Progress not saved",
-                dialogText = "Progress is yet not saved. Do you want to save progress?",
+                dialogTitle = stringResource(R.string.dialog_progress_not_saved),
+                dialogText = stringResource(R.string.dialog_progress_is_yet_not_saved_do_you_want_to_save_progress),
                 icon = null
 //                icon = Icons.Default.Info
 
@@ -164,7 +165,7 @@ fun LessonScreenContent(
             }
             item {
                 // samotny content
-                HtmlText(string = uiState.value.data!!.lesson?.content?.content ?: "No content")
+                HtmlText(string = uiState.value.data!!.lesson?.content?.content ?: stringResource(R.string.txt_no_content))
             }
             item {
 
@@ -186,7 +187,7 @@ fun LessonScreenContent(
                                         )
                                     }
                                 ) {
-                                    Text("Previous lesson")
+                                    Text(stringResource(R.string.btn_previous_lesson))
                                 }
 
                                 Button(
@@ -201,7 +202,7 @@ fun LessonScreenContent(
                                         )
                                     }
                                 ) {
-                                    Text("Next lesson")
+                                    Text(stringResource(R.string.btn_next_lesson))
                                 }
                             }
                         }
@@ -300,7 +301,7 @@ fun LessonScreenContent(
                                 */
                             }
                         ) {
-                            Text("Continue to next part")
+                            Text(stringResource(R.string.btn_continue_to_next_part))
                         }
                     }
                 }

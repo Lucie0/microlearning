@@ -9,9 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import cz.mendelu.pef.microlearning.R
 
 @Composable
 fun Dialog(
@@ -64,7 +64,7 @@ fun AlertDialog(
                     onConfirmation()
                 }
             ) {
-                Text("Confirm")
+                Text(stringResource(R.string.dialog_confirm))
             }
         },
         dismissButton = {
@@ -73,7 +73,7 @@ fun AlertDialog(
                     onDismissRequest()
                 }
             ) {
-                Text("Dismiss")
+                Text(stringResource(R.string.dialog_dismiss))
             }
         }
     )

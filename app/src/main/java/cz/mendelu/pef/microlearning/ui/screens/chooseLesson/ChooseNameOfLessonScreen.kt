@@ -18,6 +18,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.MainApplication
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
@@ -153,7 +155,7 @@ fun ChooseNameOfLessonScreenContent(
         } else {
             PlaceholderScreenContent(
                 image = null,
-                text = "Empty list of lessons, try another topic :)"
+                text = MainApplication.appContext.getString(R.string.empty_list_of_lessons_try_another_topic)
             )
         }
     }

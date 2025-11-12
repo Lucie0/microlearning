@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Microlearning</string>
+    <string name="app_name">NanoStudy</string>
     <string name="communication_error">Communication error</string>
     <string name="some_unexpected_error">Some unexpected error</string>
     <string name="unknown_error">Unknown error</string>
@@ -10,4 +10,38 @@
     <string name="not_found">Not found</string>
     <string name="network_is_not_connected">Network is not connected</string>
     <string name="no_testing_questions_for_this_domain">No testing questions for this domain</string>
+
+    <string name="submit">Submit</string>
+    <string name="txt_continue">Continue</string>
+    <string name="txt_no_data">No data</string>
+    <string name="prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed">Prerequisites are not sufficient.\nPrevious lessons need to be reviewed.</string>
+    <string name="answers_are_not_correct">Answers are not correct.</string>
+    <string name="well_done_answers_are_correct">Well done!</string>
+    <string name="testing_will_be_ended">Testing will be ended</string>
+    <string name="do_you_really_want_to_leave_testing">Do you really want to leave testing?</string>
+    <string name="pretest_of_lesson">"Pretest of lesson "</string>
+    <string name="empty_list_of_lessons_try_another_topic">Empty list of lessons, try another topic :)</string>
+    <string name="title_lesson">"Lesson "</string>
+    <string name="dialog_progress_not_saved">Progress not saved</string>
+    <string name="dialog_progress_is_yet_not_saved_do_you_want_to_save_progress">Progress is yet not saved. Do you want to save progress?</string>
+    <string name="txt_no_content">No content</string>
+    <string name="btn_previous_lesson">Previous lesson</string>
+    <string name="btn_next_lesson">Next lesson</string>
+    <string name="btn_continue_to_next_part">Continue to next part</string>
+    <string name="title_results">Results</string>
+    <string name="txt_show_nonscalar_evaluation">Show nonscalar evaluation</string>
+    <string name="txt_points">"Points: "</string>
+    <string name="no_lessons_available">No lessons available</string>
+    <string name="no_lessons_in_progress">No lessons in progress</string>
+    <string name="no_lessons">No lessons</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_dismiss">Dismiss</string>
+    <string name="all_lessons">All Lessons</string>
+    <string name="my_lessons">My Lessons</string>
+
+    <string name="modes_revision">Revision</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_modes">Modes</string>
+    <string name="version">Version</string>
+    <string name="txt_modes">Modes</string>
 </resources>

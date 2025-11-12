@@ -4,7 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.api.Graph
 import cz.mendelu.pef.microlearning.model.graph
@@ -19,7 +24,7 @@ fun ModesScreen(
     navigation: INavigationRouter
 ){
     BaseScreen(
-        topBarText = "Modes",
+        topBarText = stringResource(R.string.title_modes),
         onBackClick = {
             graph = Graph(0, "no name", mutableMapOf())
             navigation.navigateBack()
@@ -40,7 +45,9 @@ fun ModesScreenContent(
 ){
 //    val selectedOption = remember { mutableStateOf(mode.value) } // vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
 
-    Column {
+    Column(
+        modifier = Modifier.padding(start=16.dp, end=16.dp)
+    ){
         RadioButtonSingleSelection(
             radioOptions = Modes.values().toList().map { it.name.lowercase().replaceFirstChar { ch -> ch.uppercase() } },//"Revision", "Tuition", "Testing"),
             selectedOption = mode // todo ukladat do DB nastaveny rezim?

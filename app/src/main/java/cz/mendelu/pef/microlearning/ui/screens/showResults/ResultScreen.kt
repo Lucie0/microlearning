@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.graph
@@ -62,8 +63,8 @@ fun ResultScreen(
         navigation.navigateToMainScreen()
     }
 
-     BaseScreen(
-        topBarText = "Results",
+    BaseScreen(
+        topBarText = stringResource(R.string.title_results),
         onBackClick = { navigation.navigateToMainScreen() },
         showLoading = uiState.value.loading,
         placeholderScreenContent = if (uiState.value.errors != null) {
@@ -108,7 +109,7 @@ fun ResultScreenContent(
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=$points&outline=1" + urlArguments.value))) }) {
-            Text("Show nonscalar evaluation")
+            Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
 
         uiState.value.data?.items?.forEach {
@@ -144,7 +145,7 @@ fun ResultScreenContent(
             sc = viewModel.getScalarResult()
         }
         Text(urlArguments.value)
-        Text("Points: $points $sc")
+        Text(stringResource(R.string.txt_points) + points + " " + sc)
 
         Text(text = viewModel.getGraphResult())
 

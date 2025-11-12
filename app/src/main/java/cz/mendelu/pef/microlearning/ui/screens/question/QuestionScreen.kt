@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
@@ -88,7 +89,7 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = "Pretest of lesson ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}",
+        topBarText = stringResource(R.string.pretest_of_lesson) + graph.map[actualNodeInGraph]?.lessonOrdinalNumber,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = null,
@@ -149,8 +150,8 @@ fun QuestionScreenContent(
                     println("CONFIRM: Testing left")
                     navigation.navigateToMainScreen()
                 },
-                dialogTitle = "Testing will be ended",
-                dialogText = "Do you really want to leave testing?",
+                dialogTitle = stringResource(R.string.testing_will_be_ended),
+                dialogText = stringResource(R.string.do_you_really_want_to_leave_testing),
                 icon = null
 //                icon = Icons.Default.Info
 
@@ -250,10 +251,11 @@ fun QuestionScreenContent(
             ) {
                 if (onSubmitClicked.value) {
                     if (viewModel.testOk == 1) {
-                        Text("Well done!", Modifier.padding(8.dp))
+                        Text(stringResource(R.string.well_done_answers_are_correct), Modifier.padding(8.dp))
                     } else if (viewModel.testOk == -1) {
                         Text(
-                            "Answers are not correct.", Modifier.padding(8.dp),
+                            stringResource(R.string.answers_are_not_correct),
+                            modifier = Modifier.padding(8.dp),
                             color = getErrorColor()
                         )
 //                        Text(
@@ -283,7 +285,7 @@ fun QuestionScreenContent(
                                 )
                             }
                             Text(
-                                text = "Prerequisites are not sufficient.\nPrevious lessons need to be reviewed.",
+                                text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
                                 color = getPrimaryColor()
                             )
                         }
@@ -522,9 +524,9 @@ fun QuestionScreenContent(
                         }
                     }) {
                     if (!onSubmitClicked.value) {
-                        Text("Submit")
+                        Text(stringResource(R.string.submit))
                     } else {
-                        Text("Continue")
+                        Text(stringResource(R.string.txt_continue))
                     }
                 }
             }
@@ -545,7 +547,7 @@ fun QuestionItem(
     showCorrectAnswers: Boolean = false,
     navigation: INavigationRouter,
 ) {
-    val questionText: String = question?.text ?: "No data"
+    val questionText: String = question?.text ?: stringResource(R.string.txt_no_data)
     val options: List<Option>? = question?.options?.items
 //    val correctAnswers = hashMapOf<String, String>()
 

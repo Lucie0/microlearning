@@ -11,6 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 
@@ -23,7 +25,7 @@ fun TabScreen(
     ) {
     var tabIndex by remember { mutableStateOf(0) }
 
-    val tabs = listOf("All Lessons", "My Lessons")
+    val tabs = listOf(stringResource(R.string.all_lessons), stringResource(R.string.my_lessons))
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(selectedTabIndex = tabIndex) {
@@ -38,12 +40,12 @@ fun TabScreen(
             0 -> MyTopics(
                 navigation,
                 allTopics ?: listOf(),
-                "No lessons available"
+                stringResource(R.string.no_lessons_available)
             )
             1 -> MyTopics(
                 navigation,
                 myTopics ?: listOf()/*listOf("AP", "ALG", "DBaaa", "Python", "Java", "TZI")*/,
-                "No lessons in progress"
+                stringResource(R.string.no_lessons_in_progress)
             )
         }
     }
