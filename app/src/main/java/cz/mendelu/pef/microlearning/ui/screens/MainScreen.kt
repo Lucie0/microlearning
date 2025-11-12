@@ -130,7 +130,7 @@ fun MainScreenContent(
 //    nodeId: Long
 ){
     Column (
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(start=16.dp, end=16.dp)
     ) {
 //        HelloWorldScreen()
 //        Icons.Outlined

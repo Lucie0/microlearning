@@ -599,7 +599,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
                     //moznosti
@@ -634,7 +634,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
                     //moznosti
@@ -663,7 +663,7 @@ fun QuestionItem(
 //                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                             string = sentence.substring(0,sentence.length-3-1),
                             textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                            fontSize = MaterialTheme.typography.titleLarge.fontSize
                         )
 
                         // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
@@ -705,7 +705,7 @@ fun QuestionItem(
                     HtmlText(
                         string = questionText,
                         textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
                     )
 
                     OutlinedTextField(
