@@ -6,7 +6,6 @@ class NavigationRouterImpl(private val navController: NavController) : INavigati
 
     override fun getNavController(): NavController = navController
 
-    // todo navazat HW tlacitko na fci
     override fun navigateBack() {
         navController.popBackStack()
     }

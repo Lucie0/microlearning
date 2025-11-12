@@ -1,6 +1,7 @@
 package cz.mendelu.pef.microlearning.ui.screens.lesson
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -69,6 +70,11 @@ fun LessonScreen(
     // poslech nad uistatem
     viewModel.lessonsUiState.value.let {
         uiState.value = it
+    }
+
+    BackHandler {
+        println("Navigating by BACK HANDLER")
+        openAlertDialog.value = true
     }
 
     // --> text staticky predavat v parametru screeny a uz ho pote neaktualizovat

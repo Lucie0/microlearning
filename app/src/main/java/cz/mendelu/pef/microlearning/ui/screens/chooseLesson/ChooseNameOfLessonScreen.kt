@@ -1,6 +1,7 @@
 package cz.mendelu.pef.microlearning.ui.screens.chooseLesson
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,6 +50,12 @@ fun ChooseNameOfLessonScreen(
     // poslech nad uistatem
     viewModel.uiState.value.let {
         uiState.value = it
+    }
+
+    // navazani vlastni akce na HW tlacitko zpet
+    BackHandler {
+        println("Navigating by BACK HANDLER")
+        navigation.navigateBack()
     }
 
     BaseScreen(

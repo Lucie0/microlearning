@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -55,6 +56,10 @@ fun ResultScreen(
     // poslech nad uistatem
     viewModel.uiState.value.let {
         uiState.value = it
+    }
+    BackHandler {
+        println("Navigating by BACK HANDLER")
+        navigation.navigateToMainScreen()
     }
 
      BaseScreen(

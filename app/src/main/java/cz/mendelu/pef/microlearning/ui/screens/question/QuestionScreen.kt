@@ -1,6 +1,7 @@
 package cz.mendelu.pef.microlearning.ui.screens.question
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -79,6 +80,11 @@ fun QuestionScreen(
     // poslech nad uistatem
     viewModel.uiState.value.let {
         uiState.value = it
+    }
+
+    BackHandler {
+        println("Navigating by BACK HANDLER")
+        openAlertDialog.value = true
     }
 
     BaseScreen(
