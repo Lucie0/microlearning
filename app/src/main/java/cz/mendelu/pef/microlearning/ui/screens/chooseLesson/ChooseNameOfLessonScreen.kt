@@ -105,8 +105,8 @@ fun ChooseNameOfLessonScreenContent(
 //                            } else Text(text = if (it.name != null) "${it.id}. ${it.name}" else "Lesson" + it.id)
                         },
                         modifier = Modifier.clickable {
-                            when (mode.value.uppercase()) {
-                                Modes.REVISION.name -> {
+                            when (mode.value) {
+                                Modes.Revision.name -> {
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     navigation.navigateToLessonScreen(
                                         lessonId = -1L,
@@ -116,7 +116,7 @@ fun ChooseNameOfLessonScreenContent(
                                     ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
                                 }
 
-                                Modes.TESTING.name -> {
+                                Modes.Testing.name -> {
                                     println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     //  todo navigate to test 1 apod...
                                     if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
@@ -131,7 +131,7 @@ fun ChooseNameOfLessonScreenContent(
                                     }
                                 }
 
-                                Modes.TUITION.name -> {
+                                Modes.Tuition.name -> {
                                     // TUITION MODE
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     // todo navigate to lesson, then test apod...

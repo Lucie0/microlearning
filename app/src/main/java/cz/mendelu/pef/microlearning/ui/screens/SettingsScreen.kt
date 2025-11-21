@@ -46,7 +46,8 @@ fun SettingsScreenContent(
             })
         ListItem(
             headlineText = { Text(stringResource(R.string.txt_modes)) },
-            supportingText = { Text(mode.value.lowercase().replaceFirstChar { it.uppercase() }) },
+            supportingText = { Text(mode.value) },
+//                .lowercase().replaceFirstChar { it.uppercase() }) },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
     }

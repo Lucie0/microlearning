@@ -35,16 +35,9 @@ class MainScreenVM @Inject constructor(
 //    var myLLId: Long = 1L
 //    var nodeId: Long = 101L
 
-//    private val context = getApplication<Application>().applicationContext
-
-
-    // app context
     // vola suspend fce
     fun getData() {
         if (NetworkInterceptor.isNetworkConnected()) {
-//            getFromDB()
-////            getNodeById()
-//            getAllTopics()
             get()
         } else {
             println("Network not connected")
@@ -62,7 +55,7 @@ class MainScreenVM @Inject constructor(
                 // spusteni async fci paralelne
                 val apiDeferred = async { remoteRepository.getTopics() }
                 val dbDeferred = async {
-                    localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value.uppercase()).ordinal)
+                    localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value).ordinal)
                         .first()
 
                 }

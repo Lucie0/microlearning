@@ -42,10 +42,13 @@
     <string name="all_lessons">Všechny lekce</string>
     <string name="my_lessons">Moje lekce</string>
 
-    <string name="modes_revision">Opakovací</string>
     <string name="title_settings">Nastavení</string>
     <string name="title_modes">Režimy</string>
     <string name="version">Verze</string>
     <string name="txt_modes">Režimy</string>
+
+    <string name="modes_revision">Opakovací</string>
+    <string name="modes_tuition">Výukový</string>
+    <string name="modes_testing">Zkouškový</string>
 
 </resources>

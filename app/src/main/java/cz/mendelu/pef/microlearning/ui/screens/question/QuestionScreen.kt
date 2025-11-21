@@ -264,7 +264,7 @@ fun QuestionScreenContent(
 //                            color = getCorrectAnswersColor()
 //                        )
 
-                        if (mode.value.uppercase() == Modes.TUITION.name) {
+                        if (mode.value == Modes.Tuition.name) {
                             // zobrazeni spravnych odpovedi
                             Text(
                                 text = "List of correct answers is following",
@@ -320,8 +320,8 @@ fun QuestionScreenContent(
                             onSubmitClicked.value = true
                             viewModel.isTestCorrect()
                         } else {
-                            when (mode.value.uppercase()) {
-                                Modes.TESTING.name -> {
+                            when (mode.value) {
+                                Modes.Testing.name -> {
                                     if (viewModel.isTestCorrect()) {
                                         if (todoNodes.isEmpty()) {
                                             // testovani je ukonceno a je zobrazen vysledek
@@ -347,7 +347,7 @@ fun QuestionScreenContent(
                                     }
                                 }
 
-                                Modes.TUITION.name -> {
+                                Modes.Tuition.name -> {
                                     if (viewModel.isTestCorrect()) {
 
                                         // kontrola korenoveho uzlu -- musi probehnout kazdopadne

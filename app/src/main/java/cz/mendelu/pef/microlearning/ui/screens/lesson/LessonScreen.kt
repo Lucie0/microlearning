@@ -169,9 +169,9 @@ fun LessonScreenContent(
             }
             item {
 
-                when (mode.value.uppercase()) {
+                when (mode.value) {
                     // button pro REVISION mode
-                    Modes.REVISION.name -> {
+                    Modes.Revision.name -> {
                         if (lessonOrdinalNumber != null && topicId != null) {
                             println("lessonList>$revisionLessonList")
                             Row {
@@ -209,7 +209,7 @@ fun LessonScreenContent(
                     }
 
                     // button pro TUITION mode
-                    Modes.TUITION.name -> {
+                    Modes.Tuition.name -> {
                         Button(
 //                            enabled = (uiState.value.data!!.linkAfter?.items?.size != null) ?: false,
 //                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&

@@ -49,7 +49,7 @@ fun ModesScreenContent(
         modifier = Modifier.padding(start=16.dp, end=16.dp)
     ){
         RadioButtonSingleSelection(
-            radioOptions = Modes.values().toList().map { it.name.lowercase().replaceFirstChar { ch -> ch.uppercase() } },//"Revision", "Tuition", "Testing"),
+            radioOptions = Modes.values().toList().map { it.name },//.lowercase().replaceFirstChar { ch -> ch.uppercase() } },//"Revision", "Tuition", "Testing"),
             selectedOption = mode // todo ukladat do DB nastaveny rezim?
         )
     }

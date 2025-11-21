@@ -3,7 +3,7 @@ package cz.mendelu.pef.microlearning.model
 import androidx.compose.runtime.mutableStateOf
 import cz.mendelu.pef.microlearning.model.api.Graph
 
-var mode = mutableStateOf(Modes.TUITION.name)
+var mode = mutableStateOf(Modes.Tuition.name)
 
 //TESTING + TUITION
 // node_id, node
