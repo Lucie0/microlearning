@@ -81,44 +81,52 @@ fun QuestionItem(
 
     // LazyColumn()
     Column(
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(16.dp)
     ) {
         if (question != null) {
             when (question.questionType) {
                 "ONE_FROM_N" -> {
-                    val selectedOption = remember { mutableStateOf("") }
+                    if (showCorrectAnswers) {
+                        Text(
+                            text = viewModel.correctOptions["${question.id}.0"]!!,
+                            color = getCorrectAnswersColor()
+                        )
+                    } else {
+                        val selectedOption = remember { mutableStateOf("") }
 
 //                    item {
-                    // otazka
-                    HtmlText(
-                        string = questionText,
-                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
-                    )
+                        // otazka
+                        HtmlText(
+                            string = questionText,
+                            textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
+                            fontSize = MaterialTheme.typography.titleLarge.fontSize
+                        )
 
-                    //moznosti
-                    RadioButtonSingleSelection(
-                        enabled = !onSubmitClicked.value,
-                        radioOptions = radioOptions,
-                        // popis:
-                        // pokud uz je klic obsazen v hashmape, tak do MutableStatu uloz jeho
-                        // hodnotu, pokud ne, nic nedelej, kazdopadne odesli do fce RadioButton
-                        // promennou selectedOption
-                        // FUNGUJE !!!
-                        selectedOption = if (showCorrectAnswers) {
-                            selectedOption.value = viewModel.correctOptions["${question.id}.0"]!!
-                            selectedOption
-                        } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
-                            selectedOption.value = viewModel.selectedOptions["${question.id}.0"]!!
-                            selectedOption
-                        } else selectedOption,
-                        onClickAfter = {
-                            // pod klic se znenim otazky je ulozena hodnota odpovedi
-                            viewModel.selectedOptions["${question.id}.0"] = selectedOption.value
-                            println(viewModel.selectedOptions)
-                        }
-                    )
-//                }
+                        //moznosti
+                        RadioButtonSingleSelection(
+                            enabled = !onSubmitClicked.value,
+                            radioOptions = radioOptions,
+                            // popis:
+                            // pokud uz je klic obsazen v hashmape, tak do MutableStatu uloz jeho
+                            // hodnotu, pokud ne, nic nedelej, kazdopadne odesli do fce RadioButton
+                            // promennou selectedOption
+                            // FUNGUJE !!!
+                            selectedOption = if (showCorrectAnswers) {
+                                selectedOption.value =
+                                    viewModel.correctOptions["${question.id}.0"]!!
+                                selectedOption
+                            } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
+                                selectedOption.value =
+                                    viewModel.selectedOptions["${question.id}.0"]!!
+                                selectedOption
+                            } else selectedOption,
+                            onClickAfter = {
+                                // pod klic se znenim otazky je ulozena hodnota odpovedi
+                                viewModel.selectedOptions["${question.id}.0"] = selectedOption.value
+                                println(viewModel.selectedOptions)
+                            }
+                        )
+                    }
                 }
 
                 "MORE_FROM_N" -> {
@@ -146,83 +154,116 @@ fun QuestionItem(
 //                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
                     val dividedSentence = question.text?.split("]]")
 
-                    for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
-                        val selectedOption = remember { mutableStateOf("") }
-                        // text
+                    if (showCorrectAnswers) {
+                        for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
+                            Text(
+                                text = viewModel.correctOptions["${question.id}.${
+                                    sentence.substringAfter("[[")}"]!!,
+                                color = getCorrectAnswersColor()
+                            )
+                        }
+                    } else {
+                        for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
+                            val selectedOption = remember { mutableStateOf("") }
+                            // text
 //                            HtmlText(
 //                                string = sentence,
 //                                fontSize = MaterialTheme.typography.titleLarge.fontSize
 //                            )
-                        HtmlText(
+                            HtmlText(
 //                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                            string = sentence.substring(0,sentence.length-3-1),
-                            textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
-                        )
-
-                        // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
-                        val listStrings = // listOptions. ...
-                            question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
-                                ?.map { opt -> opt.text }
-
-                        // okenko pro vyberovy seznam
-                        if (listStrings != null)
-                            Dropdown(
-                                enabled = !onSubmitClicked.value,
-                                options = listStrings,
-                                selected = if (showCorrectAnswers) {
-                                    selectedOption.value = viewModel.correctOptions["${question.id}.${sentence.substringAfter("[[")}"]!!
-                                    selectedOption
-                                } else if (viewModel.selectedOptions.keys.contains("${question.id}.${sentence.substringAfter("[[")}")) {
-                                    selectedOption.value = viewModel.selectedOptions["${question.id}.${sentence.substringAfter("[[")}"]!!
-                                    selectedOption
-                                } else selectedOption,
-                                onClickAfter = {
-                                    // pod klic se znenim casti otazky otazky je ulozena hodnota
-                                    // odpovedi
-                                    viewModel.selectedOptions["${question.id}.${sentence.substringAfter("[[")}"] = selectedOption.value
-                                    println(viewModel.selectedOptions)
-                                }
+                                string = sentence.substring(0, sentence.length - 3 - 1),
+                                textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
+                                fontSize = MaterialTheme.typography.titleLarge.fontSize
                             )
 
-                        // zvyseni na dalsi skupinu
-                        groupNumber += 1
-                    }
+                            // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
+                            val listStrings = // listOptions. ...
+                                question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
+                                    ?.map { opt -> opt.text }
 
-                    // posledni blok textu, pote uz nenasleduje vyberovy seznam
-                    HtmlText(string = dividedSentence[dividedSentence.size - 1])
+                            // okenko pro vyberovy seznam
+                            if (listStrings != null)
+                                Dropdown(
+                                    enabled = !onSubmitClicked.value,
+                                    options = listStrings,
+                                    selected = if (showCorrectAnswers) {
+                                        selectedOption.value =
+                                            viewModel.correctOptions["${question.id}.${
+                                                sentence.substringAfter("[[")
+                                            }"]!!
+                                        selectedOption
+                                    } else if (viewModel.selectedOptions.keys.contains(
+                                            "${question.id}.${
+                                                sentence.substringAfter(
+                                                    "[["
+                                                )
+                                            }"
+                                        )
+                                    ) {
+                                        selectedOption.value =
+                                            viewModel.selectedOptions["${question.id}.${
+                                                sentence.substringAfter("[[")
+                                            }"]!!
+                                        selectedOption
+                                    } else selectedOption,
+                                    onClickAfter = {
+                                        // pod klic se znenim casti otazky otazky je ulozena hodnota
+                                        // odpovedi
+                                        viewModel.selectedOptions["${question.id}.${
+                                            sentence.substringAfter(
+                                                "[["
+                                            )
+                                        }"] = selectedOption.value
+                                        println(viewModel.selectedOptions)
+                                    }
+                                )
+
+                            // zvyseni na dalsi skupinu
+                            groupNumber += 1
+                        }
+
+                        // posledni blok textu, pote uz nenasleduje vyberovy seznam
+                        HtmlText(string = dividedSentence[dividedSentence.size - 1])
+                    }
                 }
 
                 "OPEN" -> {
                     // otevrena otazka
 //                    item {
-                    HtmlText(
-                        string = questionText,
-                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
-                    )
+                    if (showCorrectAnswers) {
+                        Text(
+                            text = viewModel.correctOptions["${question.id}.0"]!!,
+                            color = getCorrectAnswersColor()
+                        )
+                    } else {
+                        HtmlText(
+                            string = questionText,
+                            textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
+                            fontSize = MaterialTheme.typography.titleLarge.fontSize
+                        )
 
-                    OutlinedTextField(
-                        value = if (showCorrectAnswers) {
-                            answer.value = viewModel.correctOptions["${question.id}.0"]!!
-                            answer.value
-                        } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
-                            answer.value = viewModel.selectedOptions["${question.id}.0"]!!
-                            answer.value
-                        } else answer.value,
-                        onValueChange = {
-                            println("it: $it")
-                            answer.value = it
-                            viewModel.selectedOptions["${question.id}.0"] = it
-                        },
-                        label = { if (showCorrectAnswers) Text("Correct answer") else Text("Answer") },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        minLines = 1,
-                        readOnly = onSubmitClicked.value
-                    )
-//                    }
+                        OutlinedTextField(
+                            value = if (showCorrectAnswers) {
+                                answer.value = viewModel.correctOptions["${question.id}.0"]!!
+                                answer.value
+                            } else if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
+                                answer.value = viewModel.selectedOptions["${question.id}.0"]!!
+                                answer.value
+                            } else answer.value,
+                            onValueChange = {
+                                println("it: $it")
+                                answer.value = it
+                                viewModel.selectedOptions["${question.id}.0"] = it
+                            },
+                            label = { if (showCorrectAnswers) Text("Correct answer") else Text("Answer") },
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth(),
+                            minLines = 1,
+                            readOnly = onSubmitClicked.value
+                        )
+                    }
                 }
             }
         }
