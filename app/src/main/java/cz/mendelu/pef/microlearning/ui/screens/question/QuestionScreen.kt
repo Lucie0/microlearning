@@ -202,7 +202,7 @@ fun QuestionScreenContent(
                 } else if (viewModel.testOk == -1) {
                     item {
                         Text(
-                            "Answer is not correct",
+                            stringResource(R.string.answer_is_not_correct),
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                             color = getErrorColor()
                         )
@@ -210,7 +210,7 @@ fun QuestionScreenContent(
                         if (mode.value == Modes.Tuition.name) {
                             // zobrazeni spravnych odpovedi
                             Text(
-                                text = "Correct answer:",
+                                text = stringResource(R.string.correct_answers_following),
                                 modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                                 color = getPrimaryColor()
                             )
