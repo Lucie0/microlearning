@@ -51,4 +51,8 @@
     <string name="modes_tuition">Výukový</string>
     <string name="modes_testing">Zkouškový</string>
 
+    <string name="modes_revision_supptext">Učení pomocí lekcí bez testování.</string>
+    <string name="modes_tuition_supptext">Učení pomocí lekcí, po kterých následují testy.</string>
+    <string name="modes_testing_supptext">Zkoušení pomocí testů.</string>
+
 </resources>

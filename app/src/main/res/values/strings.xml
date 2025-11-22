@@ -47,4 +47,8 @@
     <string name="modes_revision">Revision</string>
     <string name="modes_tuition">Tuition</string>
     <string name="modes_testing">Testing</string>
+
+    <string name="modes_revision_supptext">Learning through lessons without testing.</string>
+    <string name="modes_tuition_supptext">Learning through lessons followed by tests.</string>
+    <string name="modes_testing_supptext">Testing through quizzes.</string>
 </resources>
