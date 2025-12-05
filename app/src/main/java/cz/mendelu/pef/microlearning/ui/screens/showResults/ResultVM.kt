@@ -6,13 +6,13 @@ import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.architecture.BaseViewModel
 import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
-import cz.mendelu.pef.microlearning.communication.api.RemoteRepositoryImpl
-import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.UiState
+import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.startingNode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,17 +35,17 @@ class ResultVM @Inject constructor(
     val mapOfLesson: MutableMap<Long, Long> = mutableMapOf()
 
     // vola suspend fci
-    fun getData() {
-        getLessonsByTopic()
+    fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        getLessonsByTopic(dispatcher)
         getMap()
     }
 
     // suspend fce do remote repo
-    private fun getLessonsByTopic() {
+    private fun getLessonsByTopic(dispatcher: CoroutineDispatcher) {
         if (topicId != 0L) {
             launch {
                 val result =
-                    withContext(Dispatchers.IO) {
+                    withContext(dispatcher) {
                         remoteRepository.getLessonsShorterByTopicId(topicId)
                     }
 
