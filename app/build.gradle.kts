@@ -69,12 +69,12 @@ dependencies {
     implementation("androidx.test.ext:junit-ktx:1.2.1")
     testImplementation("junit:junit:4.13.2")
 //    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+//    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+//    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+//    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+//    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+//    debugImplementation("androidx.compose.ui:ui-tooling")
+//    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation("androidx.compose.material:material-icons-extended:1.4.3")
     implementation("androidx.compose.material3:material3:1.1.0-alpha04")
@@ -151,6 +151,42 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
+
+//    // -------------------------------------------------------
+//    // JUnit 5 (Jupiter)
+//    // -------------------------------------------------------
+//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+//    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
+
+    // Potřebné pro anotace @BeforeEach, @AfterEach, @Test
+//    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    // -------------------------------------------------------
+    // MockK
+    // -------------------------------------------------------
+    testImplementation("io.mockk:mockk:1.13.10")
+
+    // -------------------------------------------------------
+    // Kotlin Coroutines test
+    // -------------------------------------------------------
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+
+    // -------------------------------------------------------
+    // Optional: Assertions
+    // -------------------------------------------------------
+//    testImplementation("org.jetbrains.kotlin:kotlin-test")
+
+    // -------------------------------------------------------
+    // Mockito
+    // -------------------------------------------------------
+//    testImplementation("org.mockito:mockito-core:5.0")
+//    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+//    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    testImplementation("io.mockk:mockk:1.13.9")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
 
 
 }
