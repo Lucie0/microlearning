@@ -45,7 +45,7 @@ class LessonVMUnitTest {
 
     @Test
     fun test3() {
-        mode.value = Modes.REVISION.name
+        mode.value = Modes.Revision.name
     }
 
     @Test

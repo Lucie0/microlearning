@@ -1,10 +1,7 @@
 package cz.mendelu.pef.microlearning
 
-import android.view.Display.Mode
-import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.RemoteMockRepositoryImpl
 import cz.mendelu.pef.microlearning.database.MicrolearningMockRepositoryImpl
-import cz.mendelu.pef.microlearning.database.MicrolearningRepositoryImpl
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.api.Graph
@@ -12,9 +9,7 @@ import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.todoNodes
-import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreenVM
 import cz.mendelu.pef.microlearning.ui.screens.question.QuestionScreenVM
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -40,7 +35,7 @@ class QuestionVMUnitTest {
         // Vytvoření ViewModelu s injektovaným FakeRemoteRepository
         viewModel = QuestionScreenVM(remoteRepository)
 
-        mode.value = Modes.TESTING.name
+        mode.value = Modes.Testing.name
         graph = Graph(1,"topic1", mutableMapOf(
             Pair(
                 1L,

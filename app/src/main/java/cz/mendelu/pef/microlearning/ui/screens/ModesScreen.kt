@@ -1,5 +1,6 @@
 package cz.mendelu.pef.microlearning.ui.screens
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -11,11 +12,10 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cz.mendelu.pef.microlearning.MainApplication
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.api.Graph
@@ -23,13 +23,13 @@ import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
-import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun ModesScreen(
     navigation: INavigationRouter
 ){
+    val context = MainApplication.appContext
     BaseScreen(
         topBarText = stringResource(R.string.title_modes),
         onBackClick = {
@@ -39,7 +39,8 @@ fun ModesScreen(
     ) {
         ModesScreenContent(
             paddingValues = it,
-            navigation = navigation
+            navigation = navigation,
+            context = context
         )
     }
 }
@@ -49,7 +50,8 @@ fun ModesScreen(
 @Composable
 fun ModesScreenContent(
     paddingValues: PaddingValues,
-    navigation: INavigationRouter
+    navigation: INavigationRouter,
+    context: Context
 ){
 //    val selectedOption = remember { mutableStateOf(mode.value) } // vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
 
@@ -59,14 +61,14 @@ fun ModesScreenContent(
     ){
         Modes.values().forEach {
             ListItem(
-                modifier = Modifier.clickable { mode.value = it.value },
-                headlineText = { Text(it.value) },
-                supportingText = { Text(it.supportingText) },
+                modifier = Modifier.clickable { mode.value = context.getString(it.titleResId) },
+                headlineText = { Text(context.getString(it.titleResId)) },
+                supportingText = { Text(context.getString(it.supportingTextResId)) },
                 trailingContent = {
                     RadioButton(
                         enabled = enabled,
-                        selected = (it.value == mode.value),
-                        onClick = { mode.value = it.value }
+                        selected = (context.getString(it.titleResId) == mode.value),
+                        onClick = { mode.value = context.getString(it.titleResId) }
                     )
                 }
             )
