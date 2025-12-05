@@ -17,6 +17,7 @@ import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.revisionLessonList
 import cz.mendelu.pef.microlearning.model.todoNodes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,20 +37,20 @@ class ChooseLessonVM @Inject constructor(
     var topicName = "no name"
 
     //vola suspend
-    fun getData() {
+    fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         // vycisteni seznamu
         todoNodes = mutableSetOf()
         lessonsToStudy = mutableSetOf()
 
         if (NetworkInterceptor.isNetworkConnected()) {
-            getLessonsByTopic()
+            getLessonsByTopic(dispatcher)
             // nacist graf
 //            getGraph()
             if (mode.value == Modes.Testing.name && graph.topicId != topicId) {
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud testing mode -> nacist graf: Nody dle topicu
-                getNodesByTopic()
+                getNodesByTopic(dispatcher)
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
 //                getPreviousAndSubsequentNodes()
             } else if (mode.value == Modes.Testing.name) {
@@ -65,7 +66,7 @@ class ChooseLessonVM @Inject constructor(
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud tuition mode -> nacist graf: Nody dle topicu
-                getNodesByTopic()
+                getNodesByTopic(dispatcher)
             } else if (mode.value == Modes.Revision.name) {
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
             }
@@ -80,12 +81,12 @@ class ChooseLessonVM @Inject constructor(
     }
 
     // suspend do remote repo
-    private fun getLessonsByTopic() {
+    private fun getLessonsByTopic(dispatcher: CoroutineDispatcher) {
         println("Fun get LESSON ByTOPIC()")
         if (topicId != 0L) {
             launch {
                 val result =
-                    withContext(Dispatchers.IO) {
+                    withContext(dispatcher) {
                         remoteRepository.getLessonsShorterByTopicId(topicId)
                     }
 
@@ -183,13 +184,13 @@ class ChooseLessonVM @Inject constructor(
     }
 
     // suspend do remote repo
-    private fun getNodesByTopic() {
+    private fun getNodesByTopic(dispatcher: CoroutineDispatcher) {
         if (topicId != 0L) {
 //            graph.topicId = topicId
             println("Fun get NODE ByTOPIC()")
             launch {
                 val result =
-                    withContext(Dispatchers.IO) {
+                    withContext(dispatcher) {
                         remoteRepository.getNodesByTopic(topicId)
                     }
 
@@ -242,7 +243,7 @@ class ChooseLessonVM @Inject constructor(
                     is CommunicationResult.Success -> {
                         if (result.data.items != null && result.data.items!!.isNotEmpty()) {
                             println("*** Success ChLVM nodes")
-                            println("data:"+result.data)
+                            println("data: " + result.data)
                             data.nodes = result.data
                             getPreviousAndSubsequentNodes()
                             uiState.value = UiState(
