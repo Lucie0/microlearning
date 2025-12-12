@@ -5,6 +5,7 @@ import cz.mendelu.pef.microlearning.model.api.LinkAfter
 import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
+import java.io.Serializable
 
 data class LessonData(
 //    var nextNodeId: Long?,
@@ -12,4 +13,4 @@ data class LessonData(
 //    var linkBefore: ArrayResponse<LinkBefore>?,
     var lesson: ObjectResponse<Lesson>? = null,
     var nextNode: ObjectResponse<Node>? = null
-)
+): Serializable
