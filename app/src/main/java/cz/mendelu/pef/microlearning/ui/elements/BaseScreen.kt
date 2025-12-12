@@ -11,7 +11,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,6 +23,7 @@ fun BaseScreen(
     drawFullScreenContent: Boolean = false,
     placeholderScreenContent: PlaceholderScreenContent? = null,
     showLoading: Boolean = false,
+    alertDialogContent: (@Composable () -> Unit)? = null, // <-- nový parametr
     floatingActionButton: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (paddingValues: PaddingValues) -> Unit) {
@@ -95,6 +95,9 @@ fun BaseScreen(
                     content(it)
                 }
             }
+            // 4️⃣ AlertDialog (vždy nad vším ostatním)
+            if (alertDialogContent != null)
+                Box {alertDialogContent() }
         }
 
 }

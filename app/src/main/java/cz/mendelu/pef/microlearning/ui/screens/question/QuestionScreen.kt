@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,8 +25,6 @@ import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
-import cz.mendelu.pef.microlearning.model.api.Option
-import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.educationalNode
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.lessonsToStudy
@@ -38,13 +33,7 @@ import cz.mendelu.pef.microlearning.model.todoNodes
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
-import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
-import cz.mendelu.pef.microlearning.ui.elements.Dropdown
-import cz.mendelu.pef.microlearning.ui.elements.HtmlText
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
-import cz.mendelu.pef.microlearning.ui.elements.RadioButtonSingleSelection
-import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
-import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
@@ -85,7 +74,11 @@ fun QuestionScreen(
 
     BackHandler {
         println("Navigating by BACK HANDLER")
-        openAlertDialog.value = true
+        if (uiState.value.errors != null) {
+            navigation.navigateToMainScreen()
+        } else {
+            openAlertDialog.value = true
+        }
     }
 
     BaseScreen(
@@ -97,6 +90,27 @@ fun QuestionScreen(
             )
         } else null,
         showLoading = uiState.value.loading,
+        alertDialogContent = {
+            if (openAlertDialog.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        openAlertDialog.value = false
+                        println("DISMISS: Staying in tests")
+//                    navigation.navigateToMainScreen()
+                    },
+                    onConfirmation = {
+                        openAlertDialog.value = false
+                        println("CONFIRM: Testing left")
+                        navigation.navigateToMainScreen()
+                    },
+                    dialogTitle = stringResource(R.string.testing_will_be_ended),
+                    dialogText = stringResource(R.string.do_you_really_want_to_leave_testing),
+                    icon = null
+//                icon = Icons.Default.Info
+
+                )
+            }
+        },
         drawFullScreenContent = true,
         onBackClick = {
             openAlertDialog.value = true
@@ -135,29 +149,13 @@ fun QuestionScreenContent(
 ) {
     val onSubmitClicked = remember { mutableStateOf(false) }
 
-    when {
-        // ...
-        openAlertDialog.value -> {
+//    when {
+//        // ...
+//        openAlertDialog.value -> {
 
-            AlertDialog(
-                onDismissRequest = {
-                    openAlertDialog.value = false
-                    println("DISMISS: Staying in tests")
-//                    navigation.navigateToMainScreen()
-                },
-                onConfirmation = {
-                    openAlertDialog.value = false
-                    println("CONFIRM: Testing left")
-                    navigation.navigateToMainScreen()
-                },
-                dialogTitle = stringResource(R.string.testing_will_be_ended),
-                dialogText = stringResource(R.string.do_you_really_want_to_leave_testing),
-                icon = null
-//                icon = Icons.Default.Info
 
-            )
-        }
-    }
+//        }
+//    }
 
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
 //        item {

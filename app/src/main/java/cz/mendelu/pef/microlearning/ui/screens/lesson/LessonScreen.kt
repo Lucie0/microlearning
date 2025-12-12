@@ -89,6 +89,29 @@ fun LessonScreen(
             )
         } else null,
         showLoading = uiState.value.loading,
+        alertDialogContent = {
+            if (openAlertDialog.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        openAlertDialog.value = false
+                        println("DISMISS: Progress not saved")
+                        navigation.navigateToMainScreen()
+                    },
+                    onConfirmation = {
+                        openAlertDialog.value = false
+                        viewModel.saveActualStateToLocalDB(lessonOrdinalNumber ?: -1)
+
+                        println("CONFIRM: Progress saved")
+
+                        navigation.navigateToMainScreen()
+                    },
+                    dialogTitle = stringResource(R.string.dialog_progress_not_saved),
+                    dialogText = stringResource(R.string.dialog_progress_is_yet_not_saved_do_you_want_to_save_progress),
+                    icon = null
+//                icon = Icons.Default.Info
+                )
+            } else null
+        },
         drawFullScreenContent = true,
         onBackClick = {
             openAlertDialog.value = true
@@ -122,32 +145,9 @@ fun LessonScreenContent(
     navigation: INavigationRouter
 ) {
 
-    when {
-        // ...
-        openAlertDialog.value -> {
-
-            AlertDialog(
-                onDismissRequest = {
-                    openAlertDialog.value = false
-                    println("DISMISS: Progress not saved")
-                    navigation.navigateToMainScreen()
-                },
-                onConfirmation = {
-                    openAlertDialog.value = false
-                    viewModel.saveActualStateToLocalDB(lessonOrdinalNumber ?: -1)
-
-                    println("CONFIRM: Progress saved")
-
-                    navigation.navigateToMainScreen()
-                },
-                dialogTitle = stringResource(R.string.dialog_progress_not_saved),
-                dialogText = stringResource(R.string.dialog_progress_is_yet_not_saved_do_you_want_to_save_progress),
-                icon = null
-//                icon = Icons.Default.Info
-
-            )
-        }
-    }
+//    when {
+//        openAlertDialog.value -> {
+//    }
 
     if (uiState.value.data != null) {
         LazyColumn(
