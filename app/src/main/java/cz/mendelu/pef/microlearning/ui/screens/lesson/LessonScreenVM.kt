@@ -16,6 +16,7 @@ import cz.mendelu.pef.microlearning.model.db.SavedTopic
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,18 +44,18 @@ class LessonScreenVM @Inject constructor(
 
     // app context -- nemam
     // suspend fce
-    fun getData() {
+    fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         if (NetworkInterceptor.isNetworkConnected()) {
             if (lessonId != null) {
                 println("GetData> Tuition + testing mode")
                 // Tuition a testing mode -- kombinace lessonId a nodeId
-                getLessonById()
+                getLessonById(dispatcher)
 //                getNextNodeId()
             }
             if (lessonOrdinalNumber != null) {
                 println("GetData> Revision mode")
                 //  kdyz je revision mode -- stahnout lekci dle kobinace ordinalNumber--topicId
-                getLessonByOrdinalNumberInTopic()
+                getLessonByOrdinalNumberInTopic(dispatcher)
             }
             println("Get data")
         } else {
@@ -68,10 +69,10 @@ class LessonScreenVM @Inject constructor(
     }
 
     // suspend do remote repo
-    private fun getLessonByOrdinalNumberInTopic() {
+    private fun getLessonByOrdinalNumberInTopic(dispatcher: CoroutineDispatcher) {
         launch {
             val result =
-                withContext(Dispatchers.IO) {
+                withContext(dispatcher) {
                     remoteRepository
                         .getLessonsByTopicIdAndOrdinalNumber(
                             topicId!!,
@@ -148,18 +149,18 @@ class LessonScreenVM @Inject constructor(
 
     //  getLesson
     // suspend
-    private fun getLessonById() {
+    private fun getLessonById(dispatcher: CoroutineDispatcher) {
         if (lessonId != null) {
             launch {
-                sGetLessonById()
+                sGetLessonById(dispatcher)
             }
         }
     }
 
     // suspend
-    private suspend fun sGetLessonById() {
+    private suspend fun sGetLessonById(dispatcher: CoroutineDispatcher) {
         val result =
-            withContext(Dispatchers.IO) {
+            withContext(dispatcher) {
                 remoteRepository.getLessonById(lessonId!!)
             }
 
