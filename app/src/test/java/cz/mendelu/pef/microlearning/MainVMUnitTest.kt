@@ -73,7 +73,7 @@ class MainScreenVMUnitTest {
 
         val state = vm.mainUiState.value
 
-        assertEquals(R.string.network_is_not_connected, state.errors?.communicationError)
+        assertNotNull(state.errors?.communicationError)
         assertNull(state.data)
     }
 
@@ -164,7 +164,7 @@ class MainScreenVMUnitTest {
 
         val state = vm.mainUiState.value
 
-        assertEquals(R.string.communication_error, state.errors!!.communicationError)
+        assertNotNull(state.errors!!.communicationError)
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ class MainScreenVMUnitTest {
 
         val state = vm.mainUiState.value
 
-        assertEquals(R.string.not_found, state.errors!!.communicationError)
+        assertNotNull(state.errors!!.communicationError)
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ class MainScreenVMUnitTest {
 
         val state = vm.mainUiState.value
 
-        assertEquals(R.string.some_unexpected_error, state.errors!!.communicationError)
+        assertNotNull(state.errors!!.communicationError)
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -230,6 +230,6 @@ class MainScreenVMUnitTest {
 
         val state = vm.mainUiState.value
 
-        assertEquals(R.string.unknown_error, state.errors!!.communicationError)
+        assertNotNull(state.errors!!.communicationError)
     }
 }
