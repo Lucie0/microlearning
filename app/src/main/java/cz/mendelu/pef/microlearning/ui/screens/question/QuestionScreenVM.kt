@@ -18,6 +18,7 @@ import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
 import cz.mendelu.pef.microlearning.model.todoNodes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,17 +33,17 @@ class QuestionScreenVM @Inject constructor(
     // uistate
     val uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>> =
         mutableStateOf(UiState())
+
     var lessonId = -1L
     var nodeId = -1L
 
     var testState: TestState = TestState.NOT_EVALUATED
-    //
     var data: QuestionScreenData = QuestionScreenData()
 
     // mutable state kvuli radiobuttonu -- jinak se pri rekompozici zapomene :)
 //    val selectedOption = mutableStateOf("")
 
-    // selectedOptions = hashmap[zneniOtazky] = vybranaOdpoved    
+    // selectedOptions = hashmap[zneniOtazky] = vybranaOdpoved
     // selectedOptions = hashmap[question_id.option_group_id] = vybranaOdpoved
     var selectedOptions = hashMapOf<String, String>()
 
@@ -52,11 +53,11 @@ class QuestionScreenVM @Inject constructor(
 
     // app context -- nemam
     // suspend fce
-    fun getData() {
+    fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         if (NetworkInterceptor.isNetworkConnected()) {
 //        getQuestions()
             if (mode.value == Modes.Testing.name || mode.value == Modes.Tuition.name) {
-                getQuestionsByLessonIdsTestingMode()
+                getQuestionsByLessonIdsTestingMode(dispatcher)
             }
 //            else { // to je revision mode, kde se nemaji co stahovat otazky prece...?
 //                getQuestionsByLessonId()
@@ -126,6 +127,52 @@ class QuestionScreenVM @Inject constructor(
         return isOk
     }
 
+    fun correctAnswers(): List<String> {
+        return correctOptions.filter { (k, v) -> selectedOptions[k] != v }.keys.toList()
+    }
+
+    // neni suspend
+    // graph.previousNodeIds, todonodes, actualNodeInGraph
+    fun getNextNodeId(): Long {
+        // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
+        // jinak vrat -1
+
+        val ids = graph.map[actualNodeInGraph]?.previousNodesIds ?: return -1L
+//        var nextNodeId = -1L
+
+        if (ids.isNotEmpty()) {
+            todoNodes.addAll(ids)
+            val nextNodeId = todoNodes.first()
+            todoNodes.remove(nextNodeId)
+
+//            println("todoNodes:$todoNodes")
+//            println("ids:$ids")
+
+            return nextNodeId
+        } else {
+//            println("todoNodes:$todoNodes")
+            return -1L
+        }
+    }
+
+    fun answerKey(questionId: Long, group: Int = 0) =
+        "${questionId}.$group"
+
+    fun getSelected(
+        questionId: Long,
+        group: Int
+    ): String {
+        return selectedOptions[answerKey(questionId, group)] ?: ""
+    }
+
+    fun setSelected(
+        questionId: Long,
+        group: Int,
+        value: String
+    ) {
+        selectedOptions[answerKey(questionId, group)] = value
+    }
+
     /*
     fun isTestCorrect(): Boolean {
         // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
@@ -176,9 +223,9 @@ class QuestionScreenVM @Inject constructor(
 
         data.questionsList.forEach{
             val arrayResponse = it.items!!.toMutableList()
+
             while (arrayResponse.size > 3) {
-                val random = Random.nextInt(0,arrayResponse.size - 1)
-                arrayResponse.removeAt(random)
+                arrayResponse.removeAt(Random.nextInt(0,arrayResponse.size - 1))
             }
             listArrayResponses.addAll(arrayResponse)//, arrayResponse.size, it.version))
         }
@@ -189,30 +236,8 @@ class QuestionScreenVM @Inject constructor(
 //        data.questions?.items = data.questionsList[0].items
     }
 
-    // neni suspend
-    // graph.previousNodeIds, todonodes, actualNodeInGraph
-    fun getNextNodeId(): Long {
-        // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
-        // jinak vrat -1
-
-        val ids = graph.map[actualNodeInGraph]?.previousNodesIds
-        var nextNodeId = -1L
-
-        if (!ids.isNullOrEmpty()) {
-            todoNodes.addAll(ids)
-            nextNodeId = todoNodes.iterator().next()
-            todoNodes.remove(nextNodeId)
-            println("todoNodes:$todoNodes")
-            println("ids:$ids")
-        }
-
-        println("todoNodes:$todoNodes")
-
-        return nextNodeId
-    }
-
     // suspend do remote repo
-    private fun getQuestionsByLessonIdsTestingMode() {
+    private fun getQuestionsByLessonIdsTestingMode(dispatcher: CoroutineDispatcher) {
 //        // aktualni node -- jeho prechoduci -- pro kazdy
 //        println("Graph:${graph}")
         var count = graph.map[nodeId]?.previousNodesIds?.size ?: 0
@@ -225,7 +250,7 @@ class QuestionScreenVM @Inject constructor(
                 if (graph.map[id] != null && graph.map[id]!!.lessonId != null) {
 //                    println("!!!" + graph.map[id])
                     launch {
-                        val result = withContext(Dispatchers.IO) {
+                        val result = withContext(dispatcher) {
                             remoteRepository.getQuestionsByLessonId(graph.map[id]!!.lessonId!!)
                         }
 
@@ -278,10 +303,10 @@ class QuestionScreenVM @Inject constructor(
     }
 
     // suspend fce do remote repo
-    private fun getQuestionsByLessonId() {
+    private fun getQuestionsByLessonId(dispatcher: CoroutineDispatcher) {
         if (lessonId != -1L) {
             launch {
-                val result = withContext(Dispatchers.IO) {
+                val result = withContext(dispatcher) {
                     remoteRepository.getQuestionsByLessonId(lessonId)
                 }
                 when (result) {
@@ -377,16 +402,16 @@ class QuestionScreenVM @Inject constructor(
         }
     }
 
-    fun correctAnswers(): List<String> {
-        val list = mutableListOf<String>()
-
-        correctOptions.keys.forEach { key ->
-            if (selectedOptions[key] != correctOptions[key]) {
-                println(correctOptions[key])
-                list.add(key) //= string + questionText + " " + correctOptions[questionText] + ",\n"
-            }
-        }
-        println("list:$list")
-        return list
-    }
+//    fun correctAnswers(): List<String> {
+//        val list = mutableListOf<String>()
+//
+//        correctOptions.keys.forEach { key ->
+//            if (selectedOptions[key] != correctOptions[key]) {
+//                println(correctOptions[key])
+//                list.add(key) //= string + questionText + " " + correctOptions[questionText] + ",\n"
+//            }
+//        }
+//        println("list:$list")
+//        return list
+//    }
 }
