@@ -8,6 +8,7 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.model.Modes
+import cz.mendelu.pef.microlearning.model.TestState
 import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
@@ -34,12 +35,12 @@ class QuestionScreenVM @Inject constructor(
     var lessonId = -1L
     var nodeId = -1L
 
-    var testOk = 0
+    var testState: TestState = TestState.NOT_EVALUATED
     //
     var data: QuestionScreenData = QuestionScreenData()
 
     // mutable state kvuli radiobuttonu -- jinak se pri rekompozici zapomene :)
-    val selectedOption = mutableStateOf("")
+//    val selectedOption = mutableStateOf("")
 
     // selectedOptions = hashmap[zneniOtazky] = vybranaOdpoved    
     // selectedOptions = hashmap[question_id.option_group_id] = vybranaOdpoved
@@ -56,9 +57,10 @@ class QuestionScreenVM @Inject constructor(
 //        getQuestions()
             if (mode.value == Modes.Testing.name || mode.value == Modes.Tuition.name) {
                 getQuestionsByLessonIdsTestingMode()
-            } else {
-                getQuestionsByLessonId()
             }
+//            else { // to je revision mode, kde se nemaji co stahovat otazky prece...?
+//                getQuestionsByLessonId()
+//            }
         } else {
             println("Network not connected")
             uiState.value = UiState(
@@ -70,6 +72,61 @@ class QuestionScreenVM @Inject constructor(
     }
 
     // neni suspend
+    fun isTestCorrect(): Boolean {
+        // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
+        //{Seřaďte podle pořadí vyhodnocování: [1]=Závorky, Vyřešte výraz: 9 / 3 × (2 - 1)² - 4 = ...=-1,  [2]=Mocniny a odmocniny, Jakou operaci vyhodnocujeme jako poslední v matematickém výrazu?=Sčítání a odčítání, Jakou operaci vyhodnocujeme po závorkách?=Mocniny a odmocniny, Vyřešte výraz:  (8 / 2) × (4 - 2)² = ...=16,  [3]=Násobení a dělení, Jakou operaci vyhodnocujeme jako první v matematickém výrazu?=Závorky, Vyřešte výraz: 8 / 4 × 2² - 4 = ...=4,  [4]=Sčítání a odčítání, Vyřešte výraz:  5 × 6 / 2 - 8 ²/ 4 = ...=-1}
+
+        // Pokud už byl test vyhodnocen, vrať uložený výsledek
+        if (testState != TestState.NOT_EVALUATED) {
+            return testState == TestState.PASSED
+        }
+
+        // Vyhodnocení výsledků
+        val results = correctOptions.map { (key, correctValue) ->
+            selectedOptions[key] == correctValue
+        }
+
+        println("correctOpt: $correctOptions")
+        println("selectedOpt: $selectedOptions")
+        println("results: $results")
+
+        val countOfCorrect = results.count { it }
+        val countOfIncorrect = results.size - countOfCorrect
+
+        val isOk = countOfIncorrect == 0 && countOfCorrect > 0
+
+        // Uložení stavu testu
+        testState = if (isOk) TestState.PASSED else TestState.FAILED
+
+        // ---------------------------------
+        // Zápis do grafu (Testing / Tuition)
+        // ---------------------------------
+        if (mode.value == Modes.Testing.name || mode.value == Modes.Tuition.name) {
+
+            val node = graph.map[nodeId]
+
+            if (node != null) {
+                node.countOfCorrectAnswers += countOfCorrect
+                node.countOfIncorrectAnswers += countOfIncorrect
+                node.walkThrough = true
+                node.successfullyCompleted = isOk
+                graph.map[nodeId] = node
+
+                println("Graph[$nodeId]:$node")
+
+                // Pokud jsme v Tuition a student neuspěl -> přidat jeho předchůdce
+                if (mode.value == Modes.Tuition.name && !isOk) {
+                    val previousNodes = graph.map[actualNodeInGraph]?.previousNodesIds ?: emptyList()
+                    lessonsToStudy.addAll(previousNodes)
+                    println("VM, lessonsToStudy:$lessonsToStudy")
+                }
+            }
+        }
+
+        return isOk
+    }
+
+    /*
     fun isTestCorrect(): Boolean {
         // otazky CLOZE -- ukladam je s pomocnymi cisilky, tak je pak podle toho musim vyhodnocovat
         //{Seřaďte podle pořadí vyhodnocování: [1]=Závorky, Vyřešte výraz: 9 / 3 × (2 - 1)² - 4 = ...=-1,  [2]=Mocniny a odmocniny, Jakou operaci vyhodnocujeme jako poslední v matematickém výrazu?=Sčítání a odčítání, Jakou operaci vyhodnocujeme po závorkách?=Mocniny a odmocniny, Vyřešte výraz:  (8 / 2) × (4 - 2)² = ...=16,  [3]=Násobení a dělení, Jakou operaci vyhodnocujeme jako první v matematickém výrazu?=Závorky, Vyřešte výraz: 8 / 4 × 2² - 4 = ...=4,  [4]=Sčítání a odčítání, Vyřešte výraz:  5 × 6 / 2 - 8 ²/ 4 = ...=-1}
@@ -110,6 +167,7 @@ class QuestionScreenVM @Inject constructor(
             return isOk && countOfCorrect != 0
         } else return testOk == 1
     }
+    */
 
     // neni suspend
     // data questionsList

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
+import cz.mendelu.pef.microlearning.model.TestState
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
 import cz.mendelu.pef.microlearning.model.educationalNode
@@ -148,14 +149,6 @@ fun QuestionScreenContent(
     openAlertDialog: MutableState<Boolean>
 ) {
     val onSubmitClicked = remember { mutableStateOf(false) }
-
-//    when {
-//        // ...
-//        openAlertDialog.value -> {
-
-
-//        }
-//    }
 
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
 //        item {
