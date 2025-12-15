@@ -167,7 +167,7 @@ fun QuestionScreenContent(
              */
 //        }
         uiState.value.data?.questions?.items?.forEach {
-            // todo omezit na pocet 3 otazky na uzel
+
             item {
                 QuestionItem(
                     paddingValues = paddingValues,
@@ -176,8 +176,7 @@ fun QuestionScreenContent(
 //                    lessonId = lessonId,
                     viewModel = viewModel,
                     onSubmitClicked = onSubmitClicked,
-                    showCorrectAnswers = onSubmitClicked.value && mode.value == Modes.Tuition.name,
-                    navigation = navigation
+                    showCorrectAnswers = onSubmitClicked.value && mode.value == Modes.Tuition.name
                 )
             }
 

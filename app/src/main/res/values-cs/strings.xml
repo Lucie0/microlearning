@@ -58,5 +58,8 @@
     <string name="correct_answers_following">Správná odpověď:</string>
     <string name="answer_is_not_correct">Odpověď je chybná</string>
 
+    <string name="label_answer">Odpověď</string>
+
+
 
 </resources>

@@ -42,13 +42,12 @@ fun QuestionItem(
     viewModel: QuestionScreenVM,
     onSubmitClicked: MutableState<Boolean>,
     showCorrectAnswers: Boolean = false,
-    navigation: INavigationRouter,
 ) {
+
     val questionText: String = question?.text ?: stringResource(R.string.txt_no_data)
     val options: List<Option>? = question?.options?.items
 //    val correctAnswers = hashMapOf<String, String>()
 
-    // pokud je to typ otazek jinych nez CLOZE
     if (!options.isNullOrEmpty()) {// && options[0].groupNumber == 0) {
 
         options.filter { it.correctAnswer == true }.forEach { opt ->
@@ -57,6 +56,7 @@ fun QuestionItem(
 
         // todo nasledne else by se nemelo vubec provadet a byt potreba -- SMAZAT
     }
+    /*
 //    else if (!options.isNullOrEmpty()) { // pokud je to CLOZE
 //        val dividedSentence = questionText.split("""\[\[[0-9]+\]\]""".toRegex())
 //        val result = options.filter { it.correctAnswer == true }
@@ -68,6 +68,7 @@ fun QuestionItem(
 //            count += 1
 //        }
 //    }
+*/
 
 //    println("opt:$options")
 //    println("corr:$correctAnswers")
@@ -85,75 +86,35 @@ fun QuestionItem(
             when (question.questionType) {
                 "ONE_FROM_N" -> {
 
-                    val selectedOption = remember { mutableStateOf("") }
-
-//                    item {
-                    // otazka
-                    HtmlText(
-                        string = questionText,
-                        textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    OneFromNQuestion(
+                        question = question,
+                        options = options ?: emptyList(),
+                        viewModel = viewModel,
+                        onSubmit = onSubmitClicked.value,
+                        showCorrect = showCorrectAnswers
                     )
 
-                    //moznosti
-                    RadioButtonSingleSelection(
-                        enabled = !onSubmitClicked.value,
-                        radioOptions = radioOptions,
-                        // popis:
-                        // pokud uz je klic obsazen v hashmape, tak do MutableStatu uloz jeho
-                        // hodnotu, pokud ne, nic nedelej, kazdopadne odesli do fce RadioButton
-                        // promennou selectedOption
-                        // FUNGUJE !!!
-                        selectedOption = /*if (showCorrectAnswers) {
-                            selectedOption.value =
-                                viewModel.correctOptions["${question.id}.0"]!!
-                            selectedOption
-                        } else */if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
-                            selectedOption.value =
-                                viewModel.selectedOptions["${question.id}.0"]!!
-                            selectedOption
-                        } else selectedOption,
-                        onClickAfter = {
-                            // pod klic se znenim otazky je ulozena hodnota odpovedi
-                            viewModel.selectedOptions["${question.id}.0"] = selectedOption.value
-                            println("QItem VM.selected: ${viewModel.selectedOptions}")
-                        }
+                }
+
+                "CLOZE" -> {
+
+                    ClozeQuestion(
+                        question = question,
+                        viewModel = viewModel,
+                        onSubmit = onSubmitClicked.value,
+                        showCorrect = showCorrectAnswers
                     )
 
-                    // --------------------- po kliknuti na tlacitko Submit -- vyhodnoceni ---------
-                    if (onSubmitClicked.value) {
-                        if (viewModel.testState == TestState.PASSED) {
-                            Text(
-                                stringResource(R.string.well_done_answers_are_correct),
-                                Modifier.padding(8.dp)
-                            )
-                        } else { // option TEST STATE = FAILED
-                            if (viewModel.correctOptions["${question.id}.0"] == viewModel.selectedOptions["${question.id}.0"]) {
-                                Text(
-                                    stringResource(R.string.well_done_answers_are_correct),
-                                    Modifier.padding(8.dp)
-                                )
-                            } else {
-                                Text(
-                                    stringResource(R.string.answer_is_not_correct),
-                                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                    color = getErrorColor()
-                                )
+                }
 
-                                if (showCorrectAnswers) {
-                                    Text(
-                                        text = stringResource(R.string.correct_answers_following),
-                                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                        color = getPrimaryColor()
-                                    )
-                                    Text(
-                                        text = viewModel.correctOptions["${question.id}.0"]!!,
-                                        color = getCorrectAnswersColor()
-                                    )
-                                }
-                            }
-                        }
-                    }
+                "OPEN" -> {
+
+                    OpenQuestion(
+                        question = question,
+                        viewModel = viewModel,
+                        onSubmit = onSubmitClicked.value,
+                        showCorrect = showCorrectAnswers
+                    )
 
                 }
 
@@ -170,199 +131,181 @@ fun QuestionItem(
                     //moznosti
                     CheckBoxMultipleSelection()
                 }
-
-                "CLOZE" -> {
-//                    item {
-                    // doplnovacka
-                    var groupNumber = 1
-
-//                    val listOptions: List<Option?>? = question.options.items
-
-                    // rozdeli vetu, v mistech vynechavky vypise dropdown
-//                    val dividedSentence = question.text?.split("""\[\[[0-9]+\]\]""".toRegex())
-                    val dividedSentence = question.text?.split("]]")
-
-                        for (sentence in dividedSentence!!.subList(0, dividedSentence.size - 1)) {
-                            val selectedOption = remember { mutableStateOf("") }
-                            // text
-//                            HtmlText(
-//                                string = sentence,
-//                                fontSize = MaterialTheme.typography.titleLarge.fontSize
-//                            )
-                            HtmlText(
-//                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                string = sentence.substring(0, sentence.length - 3 - 1),
-                                textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                                fontSize = MaterialTheme.typography.titleLarge.fontSize
-                            )
-
-                            // z Options vyfiltrovana dana skupina a vybran pouze zneni moznosti
-                            val listStrings = // listOptions. ...
-                                question.options.items?.filter { opt -> opt.groupNumber == groupNumber }
-                                    ?.map { opt -> opt.text }
-
-                            // okenko pro vyberovy seznam
-                            if (listStrings != null)
-                                Dropdown(
-                                    enabled = !onSubmitClicked.value,
-                                    options = listStrings,
-                                    selected = /*if (showCorrectAnswers) {
-                                        selectedOption.value =
-                                            viewModel.correctOptions["${question.id}.${
-                                                sentence.substringAfter("[[")
-                                            }"]!!
-                                        selectedOption
-                                    } else*/ if (viewModel.selectedOptions.keys.contains(
-                                            "${question.id}.${
-                                                sentence.substringAfter(
-                                                    "[["
-                                                )
-                                            }"
-                                        )
-                                    ) {
-                                        selectedOption.value =
-                                            viewModel.selectedOptions["${question.id}.${
-                                                sentence.substringAfter("[[")
-                                            }"]!!
-                                        selectedOption
-                                    } else selectedOption,
-                                    onClickAfter = {
-                                        // pod klic se znenim casti otazky otazky je ulozena hodnota
-                                        // odpovedi
-                                        viewModel.selectedOptions["${question.id}.${
-                                            sentence.substringAfter(
-                                                "[["
-                                            )
-                                        }"] = selectedOption.value
-                                        println(viewModel.selectedOptions)
-                                    }
-                                )
-
-                            // --------------------- po kliknuti na tlacitko Submit -- vyhodnoceni ---------
-                            if (onSubmitClicked.value) {
-                                if (viewModel.testState == TestState.PASSED) {
-                                    Text(
-                                        stringResource(R.string.well_done_answers_are_correct),
-                                        Modifier.padding(8.dp)
-                                    )
-                                } else { // option TEST STATE = FAILED
-                                    if (viewModel.correctOptions["${question.id}.${sentence.substringAfter("[[")}"]
-                                        == viewModel.selectedOptions["${question.id}.${sentence.substringAfter("[[")}"]
-                                        ) {
-                                        Text(
-                                            stringResource(R.string.well_done_answers_are_correct),
-                                            Modifier.padding(8.dp)
-                                        )
-                                    } else {
-                                        Text(
-                                            stringResource(R.string.answer_is_not_correct),
-                                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                            color = getErrorColor()
-                                        )
-
-                                        if (showCorrectAnswers) {
-                                            Text(
-                                                text = stringResource(R.string.correct_answers_following),
-                                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                                color = getPrimaryColor()
-                                            )
-
-                                            Text(
-                                                text = viewModel.correctOptions["${question.id}.${sentence.substringAfter("[[")}"]!!,
-                                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                                color = getPrimaryColor()
-                                            )
-//                                            for (sentence in dividedSentence.subList(0, dividedSentence.size - 1)) {
-//                                                Text(
-//                                                    text = viewModel.correctOptions["${question.id}.${
-//                                                        sentence.substringAfter("[[")}"]!!,
-//                                                    color = getCorrectAnswersColor()
-//                                                )
-//                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-
-                            // zvyseni na dalsi skupinu
-                            groupNumber += 1
-                        }
-
-                        // posledni blok textu, pote uz nenasleduje vyberovy seznam
-                        HtmlText(string = dividedSentence[dividedSentence.size - 1])
-
-
-                }
-
-                "OPEN" -> {
-                    // otevrena otazka
-//                    item {
-
-                        HtmlText(
-                            string = questionText,
-                            textColor = if (showCorrectAnswers) getCorrectAnswersColor() else basicTextColor(),
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
-                        )
-
-                        OutlinedTextField(
-                            value = /*if (showCorrectAnswers) {
-                                answer.value = viewModel.correctOptions["${question.id}.0"]!!
-                                answer.value
-                            } else*/ if (viewModel.selectedOptions.keys.contains("${question.id}.0")) {
-                                answer.value = viewModel.selectedOptions["${question.id}.0"]!!
-                                answer.value
-                            } else answer.value,
-                            onValueChange = {
-                                println("it: $it")
-                                answer.value = it
-                                viewModel.selectedOptions["${question.id}.0"] = it
-                            },
-                            label = { if (showCorrectAnswers) Text("Correct answer") else Text("Answer") },
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            minLines = 1,
-                            readOnly = onSubmitClicked.value
-                        )
-
-
-                    // --------------------- po kliknuti na tlacitko Submit -- vyhodnoceni ---------
-                    if (onSubmitClicked.value) {
-                        if (viewModel.testState == TestState.PASSED) {
-                            Text(
-                                stringResource(R.string.well_done_answers_are_correct),
-                                Modifier.padding(8.dp)
-                            )
-                        } else { // option TEST STATE = FAILED
-                            if (viewModel.correctOptions["${question.id}.0"] == viewModel.selectedOptions["${question.id}.0"]) {
-                                Text(
-                                    stringResource(R.string.well_done_answers_are_correct),
-                                    Modifier.padding(8.dp)
-                                )
-                            } else {
-                                Text(
-                                    stringResource(R.string.answer_is_not_correct),
-                                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                    color = getErrorColor()
-                                )
-
-                                if (showCorrectAnswers) {
-                                    Text(
-                                        text = stringResource(R.string.correct_answers_following),
-                                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                        color = getPrimaryColor()
-                                    )
-                                    Text(
-                                        text = viewModel.correctOptions["${question.id}.0"]!!,
-                                        color = getCorrectAnswersColor()
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
     }
+}
+
+
+@Composable
+private fun AnswerResult(
+    isCorrect: Boolean,
+    correctAnswer: String?,
+    showCorrect: Boolean
+) {
+    if (isCorrect) {
+        Text(
+            stringResource(R.string.well_done_answers_are_correct),
+            Modifier.padding(8.dp)
+        )
+    } else {
+        Text(
+            stringResource(R.string.answer_is_not_correct),
+            Modifier.padding(start = 16.dp, end = 16.dp),
+            color = getErrorColor()
+        )
+
+        if (showCorrect && correctAnswer != null) {
+            Text(
+                text = stringResource(R.string.correct_answers_following),
+                Modifier.padding(start = 16.dp, end = 16.dp),
+                color = getPrimaryColor()
+            )
+            Text(
+                text = correctAnswer,
+                color = getCorrectAnswersColor(),
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
+    }
+}
+
+
+//ONE_FROM_N
+@RequiresApi(Build.VERSION_CODES.P)
+@Composable
+private fun OneFromNQuestion(
+    question: Question,
+    options: List<Option>,
+    viewModel: QuestionScreenVM,
+    onSubmit: Boolean,
+    showCorrect: Boolean
+) {
+
+    val radioOptions = options.map { it.text ?: "" }
+    val selected = remember { mutableStateOf(viewModel.getSelected( question.id ?: 0, 0)) }
+
+    HtmlText(
+        string = question.text ?: "",
+        textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+        fontSize = MaterialTheme.typography.titleLarge.fontSize
+    )
+
+    RadioButtonSingleSelection(
+        enabled = !onSubmit,
+        radioOptions = radioOptions,
+        selectedOption = selected,
+        onClickAfter = {
+            // pod klic se znenim otazky je ulozena hodnota odpovedi
+            viewModel.setSelected(question.id ?: 0, 0, selected.value)
+        }
+    )
+
+    if (onSubmit) {
+        val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, 0)]
+        AnswerResult(
+            isCorrect = (selected.value == correct),
+            correctAnswer = correct,
+            showCorrect = showCorrect
+        )
+    }
+}
+
+//OPEN
+@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.P)
+@Composable
+private fun OpenQuestion(
+    question: Question,
+    viewModel: QuestionScreenVM,
+    onSubmit: Boolean,
+    showCorrect: Boolean
+) {
+    val answer = remember { mutableStateOf(viewModel.getSelected( question.id ?: 0, 0)) }
+
+    HtmlText(
+        string = question.text ?: "",
+        textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+        fontSize = MaterialTheme.typography.titleLarge.fontSize
+    )
+
+    OutlinedTextField(
+        value = answer.value,
+        onValueChange = {
+            answer.value = it
+            viewModel.setSelected( question.id ?: 0, 0, it)
+        },
+        label = { Text(stringResource(R.string.label_answer)) },
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        readOnly = onSubmit
+    )
+
+    if (onSubmit) {
+        val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, 0)]
+        AnswerResult(
+            isCorrect = (answer.value == correct),
+            correctAnswer = correct,
+            showCorrect = showCorrect
+        )
+    }
+}
+
+//CLOZE
+@RequiresApi(Build.VERSION_CODES.P)
+@Composable
+private fun ClozeQuestion(
+    question: Question,
+    viewModel: QuestionScreenVM,
+    onSubmit: Boolean,
+    showCorrect: Boolean
+) {
+    // rozdeli vetu, v mistech vynechavky vypise dropdown
+    val parts = question.text?.split("]]") ?: return
+    var group = 1
+
+    for (part in parts.dropLast(1)) {
+
+        val prefix = part.substringBeforeLast("[[")
+        val keyNumber = part.substringAfter("[[")
+
+        HtmlText(
+            string = prefix,
+            textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+            fontSize = MaterialTheme.typography.titleLarge.fontSize
+        )
+
+        // moznosti pro danou skupinu
+        val list = question.options.items
+            ?.filter { it.groupNumber == group }
+            ?.map { it.text ?: "" } ?: emptyList()
+
+        val selected = remember {
+            mutableStateOf(viewModel.getSelected(question.id ?: 0, keyNumber.toInt()))
+        }
+
+        // vyberovy seznam
+        Dropdown(
+            enabled = !onSubmit,
+            options = list,
+            selected = selected,
+            onClickAfter = {
+                viewModel.setSelected(question.id ?: 0, keyNumber.toInt(), selected.value)
+            }
+        )
+
+        if (onSubmit) {
+            val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, keyNumber.toInt())]
+            AnswerResult(
+                isCorrect = selected.value == correct,
+                correctAnswer = correct,
+                showCorrect = showCorrect
+            )
+        }
+
+        group++
+    }
+
+    HtmlText(string = parts.last())
 }
