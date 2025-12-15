@@ -176,22 +176,25 @@ fun QuestionScreenContent(
 //                    lessonId = lessonId,
                     viewModel = viewModel,
                     onSubmitClicked = onSubmitClicked,
-                    showCorrectAnswers = false,
+                    showCorrectAnswers = onSubmitClicked.value && mode.value == Modes.Tuition.name,
                     navigation = navigation
                 )
             }
 
-            // po kliknuti na tlacitko odeslat -- zobrazeni spravneho vyplneni otazky
+            /*
+            // po kliknuti na tlacitko Odeslat --> zobrazeni spravneho vyplneni otazky
             if (onSubmitClicked.value) {
-                if (viewModel.testOk == 1) {
+                if (viewModel.testState == TestState.PASSED) {
                     item {
                         Text(
                             stringResource(R.string.well_done_answers_are_correct),
                             Modifier.padding(8.dp)
                         )
                     }
-                } else if (viewModel.testOk == -1) {
+                } else {
                     item {
+                        // if ...  if jestli je tato otazka spatne, vypis informaci o tom, pripadne zobraz spravnou odpoved
+                        // else jestli je spravne, informuj o tom
                         Text(
                             stringResource(R.string.answer_is_not_correct),
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
@@ -219,7 +222,10 @@ fun QuestionScreenContent(
                     }
                 }
             }
-            // todo zobrazeni spravnych odpovedi pri chybnem vyplneni -- presunout sem
+            */
+
+
+            //  zobrazeni spravnych odpovedi pri chybnem vyplneni -- presunout sem
             // if (clicked on submit){
             //      if (isTestOk) { zobrazit well done}
             //      else // test neni ok// { zobrazit ze neni OK a v TUITION modu vypsat take spravnou odpoved }
@@ -233,7 +239,7 @@ fun QuestionScreenContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (onSubmitClicked.value) {
+                if (onSubmitClicked.value && mode.value == Modes.Tuition.name && viewModel.testState == TestState.FAILED) {
                     Text(
                         text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
                         color = getPrimaryColor()
@@ -245,6 +251,13 @@ fun QuestionScreenContent(
                     // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
                     //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
                     enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
+                    content = {
+                        if (!onSubmitClicked.value) {
+                            Text(stringResource(R.string.submit))
+                        } else {
+                            Text(stringResource(R.string.txt_continue))
+                        }
+                    },
                     onClick = {
                         // vyhodnotit, jak dopadl test, podle toho pokracovat dal
                         // pokud je test OK
@@ -388,13 +401,8 @@ fun QuestionScreenContent(
                                 }
                             }
                         }
-                    }) {
-                    if (!onSubmitClicked.value) {
-                        Text(stringResource(R.string.submit))
-                    } else {
-                        Text(stringResource(R.string.txt_continue))
                     }
-                }
+                )
             }
         }
     }
