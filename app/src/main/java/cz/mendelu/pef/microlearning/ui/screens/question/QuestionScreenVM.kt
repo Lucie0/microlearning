@@ -9,9 +9,9 @@ import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.TestState
-import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.lessonsToStudy
 import cz.mendelu.pef.microlearning.model.mode
@@ -137,7 +137,7 @@ class QuestionScreenVM @Inject constructor(
         // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
         // jinak vrat -1
 
-        val ids = graph.map[actualNodeInGraph]?.previousNodesIds ?: return -1L
+        val ids = graph.map[actualNodeInGraph]?.previousNodesIds ?: listOf()
 //        var nextNodeId = -1L
 
         if (ids.isNotEmpty()) {
@@ -145,7 +145,7 @@ class QuestionScreenVM @Inject constructor(
             val nextNodeId = todoNodes.first()
             todoNodes.remove(nextNodeId)
 
-//            println("todoNodes:$todoNodes")
+            println("todoNodes:$todoNodes")
 //            println("ids:$ids")
 
             return nextNodeId
@@ -221,7 +221,7 @@ class QuestionScreenVM @Inject constructor(
     private fun reduceQuestions(){
         val listArrayResponses = mutableListOf<Question>()
 
-        data.questionsList.forEach{
+        data.questionsList.forEach {
             val arrayResponse = it.items!!.toMutableList()
 
             while (arrayResponse.size > 3) {
@@ -238,7 +238,7 @@ class QuestionScreenVM @Inject constructor(
 
     // suspend do remote repo
     private fun getQuestionsByLessonIdsTestingMode(dispatcher: CoroutineDispatcher) {
-//        // aktualni node -- jeho prechoduci -- pro kazdy
+//        // aktualni node -- jeho predchudci -- pro kazdy stahnout otazky
 //        println("Graph:${graph}")
         var count = graph.map[nodeId]?.previousNodesIds?.size ?: 0
 //        println("count previousNodesIds:$count")
@@ -279,18 +279,50 @@ class QuestionScreenVM @Inject constructor(
                                 }
                             }
 
+
+//                        is CommunicationResult.ConnectionError -> TODO()
+                            is CommunicationResult.Error -> {
+                                println(result.error)
+                                when (result.error.code) {
+                                    500 -> {
+                                        uiState.value = UiState(
+                                            loading = false,
+                                            data = null,
+                                            errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
+                                        )
+                                    }
+
+                                    404 -> {
+                                        uiState.value = UiState(
+                                            loading = false,
+                                            data = null,
+                                            errors = QuestionsErrors(R.string.not_found) // "not found" resource code
+                                        )
+                                    }
+
+                                    else -> {
+                                        uiState.value = UiState(
+                                            loading = false,
+                                            data = null,
+                                            errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
+                                        )
+                                    }
+                                }
+                            }
+//                        is CommunicationResult.Exception -> TODO()
                             else -> {
                                 println("Result:$result")
                             }
-
-//                        is CommunicationResult.ConnectionError -> TODO()
-//                        is CommunicationResult.Error -> TODO()
-//                        is CommunicationResult.Exception -> TODO()
                         }
 
                     }
                 } else {
                     println(" --------- ERROR: Neexistuje map[id] nebo map[id].lessonId -------------")
+                    uiState.value = UiState(
+                        loading = false,
+                        data = null,
+                        errors = QuestionsErrors(R.string.not_found)
+                    )
                 }
             }
         } else {
