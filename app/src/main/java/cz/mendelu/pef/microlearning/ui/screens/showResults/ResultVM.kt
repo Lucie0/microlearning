@@ -10,7 +10,6 @@ import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
-import cz.mendelu.pef.microlearning.model.startingNode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +33,12 @@ class ResultVM @Inject constructor(
     // pod id lekce je id nodu pro rychlejsi vyhledavani
     val mapOfLesson: MutableMap<Long, Long> = mutableMapOf()
 
+    private val calculator = GraphCalculator()
+
     // vola suspend fci
     fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         getLessonsByTopic(dispatcher)
-        getMap()
+        buildMap()
     }
 
     // suspend fce do remote repo
@@ -114,106 +115,116 @@ class ResultVM @Inject constructor(
                     }
                 }
             }
+        } else {
+            println("Topic id = 0")
         }
     }
 
     // neni suspend
     // graph, mapofLessons
-    private fun getMap(){
+    private fun buildMap(){
         graph.map.values.forEach{
             mapOfLesson[it.lessonId!!] = it.id!!
         }
     }
 
-    // neni suspend
-    // graph, starting node
     fun getScalarResult(): Int {
-        var points = 0
-//        graph.map.keys.forEach {key ->
-//            if (graph.map[key]!!.walkThrough == true) {
-//                if (graph.map[key]!!.countOfIncorrectAnswers == 0) {
-//                    points += 1
-//                } else {
-//                    points -= 1
-//                }
+        return calculator.getScalarResult()
+    }
+
+    fun getGraphResult(): String {
+        return calculator.getGraphResult()
+    }
+//
+//    // neni suspend
+//    // graph, starting node
+//    fun getScalarResult(): Int {
+//        var points = 0
+////        graph.map.keys.forEach {key ->
+////            if (graph.map[key]!!.walkThrough == true) {
+////                if (graph.map[key]!!.countOfIncorrectAnswers == 0) {
+////                    points += 1
+////                } else {
+////                    points -= 1
+////                }
+////            }
+////        }
+//
+//        if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
+//            points += getCountOfNodes(startingNode)
+//        } else {
+//            graph.map[startingNode]?.previousNodesIds?.forEach{
+//                points += getCountOfNodesIf(it)
 //            }
 //        }
-
-        if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
-            points += getCountOfNodes(startingNode)
-        } else {
-            graph.map[startingNode]?.previousNodesIds?.forEach{
-                points += getCountOfNodesIf(it)
-            }
-        }
-
-        println("point:$points")
-        return points
-    }
-
-    // neni suspend
-    // graph, nodeId (v parametru)
-    // provazana count of nodes
-    private fun getCountOfNodesIf(nodeId: Long): Int {
-        var count = 0
-        if (graph.map[nodeId]?.countOfIncorrectAnswers == 0) {
-            count += getCountOfNodes(nodeId)
-        } else {
-            graph.map[nodeId]?.previousNodesIds?.forEach{
-                count += getCountOfNodesIf(it)
-            }
-        }
-        return count
-    }
-
-    // neni suspend, provazana s count of nodesIf
-    // graph.previousNodeIds, nodeId (v parametru)
-    private fun getCountOfNodes(nodeId: Long): Int {
-        var count = 0
-        count += graph.map[nodeId]?.previousNodesIds?.size ?: 0
-        println("nID: $nodeId, count:$count")
-
-        graph.map[nodeId]?.previousNodesIds?.forEach {
-            count += getCountOfNodes(it)
-        }
-
-        return if (graph.map[nodeId]?.walkThrough != true) {
-            // todo po resetu v choose lesson VM to v result screene zobrazuje porad projite uzly,
-            //  i kdyz byly nastaveny walkThrough na false -- prepisou se na true nasledujicim prikazem
-            //  netusim proc -- je to kvuli mapOfLesson, ale nechapu
-            graph.map[nodeId]?.walkThrough = true
-            count
-        } else {
-            0
-        }
-    }
-
-    // neni suspend
-    // graph.previousNodeIds, graph.countOfIncorrectAnswers startingNode
-    fun getGraphResult(): String {
-        var result = ""
-
-        if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
-            result += getWalkThroughGraph(startingNode)
-        } else {
-            graph.map[startingNode]?.previousNodesIds?.forEach{
-                result += getWalkThroughGraph(it)
-            }
-        }
-
-        return result
-    }
-
-    // neni suspend
-    // graph, .previousNodeIds, nodeId (v parametru)
-    private fun getWalkThroughGraph(nodeId: Long): MutableSet<String> {
-        val result = mutableSetOf<String>()
-        result.add(graph.map[nodeId]?.result() ?: "")
-
-        graph.map[nodeId]?.previousNodesIds?.forEach { id ->
-            result.addAll(getWalkThroughGraph(id))
-        }
-
-        return result
-    }
+//
+//        println("point:$points")
+//        return points
+//    }
+//
+//    // neni suspend
+//    // graph, nodeId (v parametru)
+//    // provazana count of nodes
+//    private fun getCountOfNodesIf(nodeId: Long): Int {
+//        var count = 0
+//        if (graph.map[nodeId]?.countOfIncorrectAnswers == 0) {
+//            count += getCountOfNodes(nodeId)
+//        } else {
+//            graph.map[nodeId]?.previousNodesIds?.forEach{
+//                count += getCountOfNodesIf(it)
+//            }
+//        }
+//        return count
+//    }
+//
+//    // neni suspend, provazana s count of nodesIf
+//    // graph.previousNodeIds, nodeId (v parametru)
+//    private fun getCountOfNodes(nodeId: Long): Int {
+//        var count = 0
+//        count += graph.map[nodeId]?.previousNodesIds?.size ?: 0
+//        println("nID: $nodeId, count:$count")
+//
+//        graph.map[nodeId]?.previousNodesIds?.forEach {
+//            count += getCountOfNodes(it)
+//        }
+//
+//        return if (graph.map[nodeId]?.walkThrough != true) {
+//            // todo po resetu v choose lesson VM to v result screene zobrazuje porad projite uzly,
+//            //  i kdyz byly nastaveny walkThrough na false -- prepisou se na true nasledujicim prikazem
+//            //  netusim proc -- je to kvuli mapOfLesson, ale nechapu
+//            graph.map[nodeId]?.walkThrough = true
+//            count
+//        } else {
+//            0
+//        }
+//    }
+//
+//    // neni suspend
+//    // graph.previousNodeIds, graph.countOfIncorrectAnswers startingNode
+//    fun getGraphResult(): String {
+//        var result = ""
+//
+//        if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
+//            result += getWalkThroughGraph(startingNode)
+//        } else {
+//            graph.map[startingNode]?.previousNodesIds?.forEach{
+//                result += getWalkThroughGraph(it)
+//            }
+//        }
+//
+//        return result
+//    }
+//
+//    // neni suspend
+//    // graph, .previousNodeIds, nodeId (v parametru)
+//    private fun getWalkThroughGraph(nodeId: Long): MutableSet<String> {
+//        val result = mutableSetOf<String>()
+//        result.add(graph.map[nodeId]?.result() ?: "")
+//
+//        graph.map[nodeId]?.previousNodesIds?.forEach { id ->
+//            result.addAll(getWalkThroughGraph(id))
+//        }
+//
+//        return result
+//    }
 }

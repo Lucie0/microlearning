@@ -105,7 +105,7 @@ fun ResultScreenContent(
 
 
     Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-//        Text(urlArguments.value)
+
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=$points&outline=1" + urlArguments.value))) }) {
@@ -144,12 +144,12 @@ fun ResultScreenContent(
         LaunchedEffect(key1 = 1) {
             sc = viewModel.getScalarResult()
         }
-        Text(urlArguments.value)
+//        Text(urlArguments.value)
         Text(stringResource(R.string.txt_points) + points + " " + sc)
 
         Text(text = viewModel.getGraphResult())
 
-        Pok()
+//        Pok()
     }
 }
 

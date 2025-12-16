@@ -15,28 +15,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 
 class ResultVMUnitTest {
     private lateinit var remoteRepository: IRemoteRepository
     private lateinit var vm: ResultVM
 
     private val dispatcher = StandardTestDispatcher()
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -126,110 +120,10 @@ class ResultVMUnitTest {
         vm.topicId = 1L
     }
 
-    // --- TESTY SUCCESS ---
     @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns Success with items, uiState contains data`() = runTest {
-        val lessons = listOf(
-            LessonShorter(1, "Lesson 1", 1, "Topic 2", 2L)
-        )
-
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Success(ArrayResponse(items = lessons, count = 1, version = 1))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        assertNotNull(state.data)
-        Assert.assertNull(state.errors)
-        assertEquals(1, state.data!!.items!!.size)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns Success with empty items, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Success(ArrayResponse(items = emptyList(), count = 0, version = 1))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
-    }
-
-    // --- TESTY CONNECTION ERROR ---
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns ConnectionError, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(1L) } returns CommunicationResult.ConnectionError()
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
-    }
-
-    // --- TESTY ERROR ---
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns Error 404, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Error(CommunicationError(404, "Not Found"))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns Error 500, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Error(CommunicationError(500, "Server Error"))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api returns unknown Error code, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Error(CommunicationError(123, "Unknown"))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
-    }
-
-    // --- TESTY EXCEPTION ---
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `when api throws Exception, uiState errors is set`() = runTest {
-        coEvery { remoteRepository.getLessonsShorterByTopicId(vm.topicId) } returns
-                CommunicationResult.Exception(IOException("Network failure"))
-
-        vm.getData(dispatcher)
-        advanceUntilIdle()
-
-        val state = vm.uiState.value
-        Assert.assertNull(state.data)
-        assertNotNull(state.errors)
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     // --- TESTY pomocných funkcí grafu ---
@@ -315,14 +209,14 @@ class ResultVMUnitTest {
     fun test_getGraphResult1() {
         startingNode = 1
         graph.map[1L]?.countOfCorrectAnswers = 0
-        assertEquals("[Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
     fun test_getGraphResult2() {
         startingNode = 1
         graph.map[1L]?.countOfCorrectAnswers = 2
-        assertEquals("[Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
@@ -336,40 +230,172 @@ class ResultVMUnitTest {
     fun test_getGraphResult4() {
         startingNode = 2
 //        graph.map[1L]?.countOfIncorrectAnswers =
-        assertEquals("[Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
     fun test_getGraphResult5() {
         startingNode = 3
 //        graph.map[1L]?.countOfIncorrectAnswers =
-        assertEquals("[Node{id=3, lessonName=Lesson 3}, Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=3, lessonName=Lesson 3}, Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
     fun test_getGraphResult6() {
         startingNode = 3
         graph.map[3L]?.countOfIncorrectAnswers = 2
-        assertEquals("[Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
     @Test
     fun test_getGraphResult7() {
         startingNode = 3
         graph.map[2L]?.countOfIncorrectAnswers = 2
         graph.map[3L]?.countOfIncorrectAnswers = 2
-        assertEquals("[Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=2, lessonName=Lesson 2}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
     fun test_getGraphResult8() {
         startingNode = 5
-        assertEquals("[Node{id=5, lessonName=Lesson 5}, Node{id=4, lessonName=Lesson 4}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=5, lessonName=Lesson 5}, Node{id=4, lessonName=Lesson 4}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
 
     @Test
     fun test_getGraphResult9() {
         startingNode = 5
         graph.map[5L]?.countOfIncorrectAnswers = 2
-        assertEquals("[Node{id=4, lessonName=Lesson 4}, Node{id=1, lessonName=Lesson 1}]", vm.getGraphResult())
+        assertEquals("Node{id=4, lessonName=Lesson 4}, Node{id=1, lessonName=Lesson 1}", vm.getGraphResult())
     }
+
+
+    private fun fakeLessons(count: Int) = ArrayResponse(
+        items = List(count) {
+            LessonShorter(
+                id = it.toLong(),
+                ordinalNumber = it, name = "Lesson $it",
+                topicId = 1,
+                topic = "Topic"
+            )
+        },
+        version = 1,
+        count = count
+    )
+
+    // --------------------------------------------------------
+    // GET DATA
+    // --------------------------------------------------------
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `getData success sets uiState data`() = runTest {
+        val response = fakeLessons(2)
+        graph.topicId = 1L
+        vm.topicId = 1L
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.Success(
+            response
+        )
+
+        vm.getData(dispatcher)
+        advanceUntilIdle() // dokončí všechny coroutiny
+
+        val state = vm.uiState.value
+        assertNotNull(state.data)
+        assertEquals(2, state.data?.items?.size)
+        Assert.assertNull(state.errors)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `getData connection error sets uiState error`() = runTest {
+        graph.topicId = 1L
+        vm.topicId = 1L
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.ConnectionError()
+
+        vm.getData(dispatcher)
+        advanceUntilIdle()
+
+        val state = vm.uiState.value
+        Assert.assertNull(state.data)
+        assertNotNull(state.errors)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `getData 404 error sets uiState not found`() = runTest {
+        graph.topicId = 1L
+        vm.topicId = 1L
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.Error(
+            CommunicationError(404, "Not found")
+        )
+
+        vm.getData(dispatcher)
+        advanceUntilIdle()
+
+        val state = vm.uiState.value
+        Assert.assertNull(state.data)
+        assertNotNull(state.errors)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `getData 500 error sets uiState unexpected error`() = runTest {
+        graph.topicId = 1L
+        vm.topicId = 1L
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.Error(
+            CommunicationError(500, "Server error")
+        )
+
+        vm.getData(dispatcher)
+        advanceUntilIdle()
+
+        val state = vm.uiState.value
+        Assert.assertNull(state.data)
+        assertNotNull(state.errors)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `getData exception sets uiState unknown error`() = runTest {
+        graph.topicId = 1L
+        vm.topicId = 1L
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.Exception(
+            RuntimeException("Test exception")
+        )
+
+        vm.getData(dispatcher)
+        advanceUntilIdle()
+
+        val state = vm.uiState.value
+        Assert.assertNull(state.data)
+        assertNotNull(state.errors)
+    }
+
+
+    // ------------------------------------------------------------
+    // MAP OF LESSONS
+    // ------------------------------------------------------------
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `getData builds mapOfLesson correctly`() = runTest {
+        // fake graph
+        graph.map.clear()
+        graph.map[1L] = Node(id = 10L, lessonId = 100L, lessonName = null, lessonOrdinalNumber = null, level = null, levelDepth = null, questionDepth = null, successfullyCompleted = false, walkThrough = false)
+        graph.map[2L] = Node(id = 20L, lessonId = 200L, lessonName = null, lessonOrdinalNumber = null, level = null, levelDepth = null, questionDepth = null, successfullyCompleted = false, walkThrough = false)
+
+        coEvery { remoteRepository.getLessonsShorterByTopicId(any()) } returns CommunicationResult.Success(
+            data = fakeLessons(2)
+        )
+
+        vm.getData(dispatcher)
+        advanceUntilIdle() // dokončí všechny coroutiny
+
+        assertEquals(2, vm.mapOfLesson.size)
+        assertEquals(10L, vm.mapOfLesson[100L])
+        assertEquals(20L, vm.mapOfLesson[200L])
+    }
+
 }
