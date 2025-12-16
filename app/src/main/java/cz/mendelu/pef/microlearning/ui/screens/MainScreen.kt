@@ -31,6 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import cz.mendelu.pef.microlearning.R
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -150,7 +152,7 @@ fun MainScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "${mode.value} mode",
+                text = stringResource(id = Modes.values()[mode.value].stringId) + stringResource(R.string.mainscreen_text_mode),//"${mode.value} mode",
                 color = getPrimaryColor())
 //        }
         }

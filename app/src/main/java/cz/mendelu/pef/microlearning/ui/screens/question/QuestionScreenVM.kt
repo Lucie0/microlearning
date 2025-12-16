@@ -56,7 +56,7 @@ class QuestionScreenVM @Inject constructor(
     fun getData(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         if (NetworkInterceptor.isNetworkConnected()) {
 //        getQuestions()
-            if (mode.value == Modes.Testing.name || mode.value == Modes.Tuition.name) {
+            if (mode.value == Modes.TESTING.ordinal || mode.value == Modes.TUITION.ordinal) {
                 getQuestionsByLessonIdsTestingMode(dispatcher)
             }
 //            else { // to je revision mode, kde se nemaji co stahovat otazky prece...?
@@ -102,7 +102,7 @@ class QuestionScreenVM @Inject constructor(
         // ---------------------------------
         // Zápis do grafu (Testing / Tuition)
         // ---------------------------------
-        if (mode.value == Modes.Testing.name || mode.value == Modes.Tuition.name) {
+        if (mode.value == Modes.TESTING.ordinal || mode.value == Modes.TUITION.ordinal) {
 
             val node = graph.map[nodeId]
 
@@ -116,7 +116,7 @@ class QuestionScreenVM @Inject constructor(
                 println("Graph[$nodeId]:$node")
 
                 // Pokud jsme v Tuition a student neuspěl -> přidat jeho předchůdce
-                if (mode.value == Modes.Tuition.name && !isOk) {
+                if (mode.value == Modes.TUITION.ordinal && !isOk) {
                     val previousNodes = graph.map[actualNodeInGraph]?.previousNodesIds ?: emptyList()
                     lessonsToStudy.addAll(previousNodes)
                     println("VM, lessonsToStudy:$lessonsToStudy")

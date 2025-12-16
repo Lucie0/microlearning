@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.BuildConfig
 import cz.mendelu.pef.microlearning.R
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
@@ -46,7 +47,7 @@ fun SettingsScreenContent(
             })
         ListItem(
             headlineText = { Text(stringResource(R.string.txt_modes)) },
-            supportingText = { Text(mode.value) },
+            supportingText = { Text(stringResource(id = Modes.values()[mode.value].stringId)) },
 //                .lowercase().replaceFirstChar { it.uppercase() }) },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )

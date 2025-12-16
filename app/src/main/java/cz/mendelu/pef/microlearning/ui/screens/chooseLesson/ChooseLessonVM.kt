@@ -46,14 +46,14 @@ class ChooseLessonVM @Inject constructor(
             getLessonsByTopic(dispatcher)
             // nacist graf
 //            getGraph()
-            if (mode.value == Modes.Testing.name && graph.topicId != topicId) {
+            if (mode.value == Modes.TESTING.ordinal && graph.topicId != topicId) {
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud testing mode -> nacist graf: Nody dle topicu
                 getNodesByTopic(dispatcher)
                 // pokud testing mode -> stahnout pro kazdy node predchudce a nasledniky
 //                getPreviousAndSubsequentNodes()
-            } else if (mode.value == Modes.Testing.name) {
+            } else if (mode.value == Modes.TESTING.ordinal) {
                 // promazat graf co se tyce poctu odpovedi, walkthrough, succesfully completed
                 println("Cisteni grafu")
                 graph.map.values.forEach {
@@ -62,12 +62,12 @@ class ChooseLessonVM @Inject constructor(
                     it.countOfCorrectAnswers = 0
                     it.countOfIncorrectAnswers = 0
                 }
-            } else if (mode.value == Modes.Tuition.name && graph.topicId != topicId){
+            } else if (mode.value == Modes.TUITION.ordinal && graph.topicId != topicId){
                 // vynulovani graphu
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
                 // pokud tuition mode -> nacist graf: Nody dle topicu
                 getNodesByTopic(dispatcher)
-            } else if (mode.value == Modes.Revision.name) {
+            } else if (mode.value == Modes.REVISION.ordinal) {
                 graph = Graph(this.topicId, this.topicName, mutableMapOf())
             }
         } else {
@@ -166,17 +166,17 @@ class ChooseLessonVM @Inject constructor(
     // data.lessons
     private fun getGraph(){
         when (mode.value) {
-            Modes.Revision.name -> {
+            Modes.REVISION.ordinal -> {
                 revisionLessonList = mutableMapOf()
                 data.lessons?.items?.forEach {
                     revisionLessonList[it.ordinalNumber!!] = it.id!!
                 }
             }
-            Modes.Testing.name -> {
+            Modes.TESTING.ordinal -> {
                 println("Testing mode, graph:$graph")
             }
 
-            Modes.Tuition.name -> {
+            Modes.TUITION.ordinal -> {
                 println("Tuition mode, graph:$graph")
             }
         }

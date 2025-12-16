@@ -235,7 +235,7 @@ class LessonScreenVM @Inject constructor(
         var savedTopicId = 0L
         // projit graf
         when (mode.value) {
-            Modes.Revision.name -> {
+            Modes.REVISION.ordinal -> {
                 // todo pridano ukldani do db v revision modu
                 launch {
                     savedTopicId = localRepository.insertSavedTopic(
@@ -243,7 +243,7 @@ class LessonScreenVM @Inject constructor(
                             topicId = graph.topicId,
                             name = graph.topicName,
                             actualNodeId = revisionModeActualLesson.toLong(),
-                            modeNumber = Modes.valueOf(mode.value).ordinal
+                            modeNumber = mode.value
                         )
                     )
                     println("SavedTopicId z DB: $savedTopicId")
@@ -251,7 +251,7 @@ class LessonScreenVM @Inject constructor(
                 }
             }
 
-            Modes.Tuition.name -> {
+            Modes.TUITION.ordinal -> {
                 launch {
                     graph.map.values.forEach {
                         // zjistit, jestli se nejaka hodnota lisi od defaultni (pocty spravnych/spatnych, projiti, uspesne dokonceno)
@@ -267,7 +267,7 @@ class LessonScreenVM @Inject constructor(
                                         topicId = graph.topicId,
                                         name = graph.topicName,
                                         actualNodeId = actualNodeInGraph,
-                                        modeNumber = Modes.valueOf(mode.value).ordinal
+                                        modeNumber = mode.value
                                     )
                                 )
                                 println("SavedTopicId z DB: $savedTopicId")

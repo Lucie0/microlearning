@@ -125,7 +125,6 @@ fun LessonScreen(
             lessonOrdinalNumber = lessonOrdinalNumber,
             topicId = topicId,
             viewModel = viewModel,
-            openAlertDialog = openAlertDialog,
             navigation = navigation
         )
     }
@@ -141,7 +140,6 @@ fun LessonScreenContent(
     lessonOrdinalNumber: Int?,
     topicId: Long?,
     viewModel: LessonScreenVM,
-    openAlertDialog: MutableState<Boolean>,
     navigation: INavigationRouter
 ) {
 
@@ -171,7 +169,7 @@ fun LessonScreenContent(
 
                 when (mode.value) {
                     // button pro REVISION mode
-                    Modes.Revision.name -> {
+                    Modes.REVISION.ordinal -> {
                         if (lessonOrdinalNumber != null && topicId != null) {
                             println("lessonList>$revisionLessonList")
                             Row {
@@ -209,7 +207,7 @@ fun LessonScreenContent(
                     }
 
                     // button pro TUITION mode
-                    Modes.Tuition.name -> {
+                    Modes.TUITION.ordinal -> {
                         Button(
 //                            enabled = (uiState.value.data!!.linkAfter?.items?.size != null) ?: false,
 //                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&

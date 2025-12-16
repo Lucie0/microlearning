@@ -59,7 +59,7 @@ class LessonVMUnitTest {
             map = mutableMapOf()
         )
         actualNodeInGraph = 3L
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
     }
 
     // Helper to mock network
@@ -268,7 +268,7 @@ class LessonVMUnitTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `saveActualStateToLocalDB - revision mode saves topic only`() = runTest {
-        mode.value = Modes.Revision.name
+        mode.value = Modes.REVISION.ordinal
 
         coEvery { local.insertSavedTopic(any()) } returns 100L
 
@@ -278,14 +278,14 @@ class LessonVMUnitTest {
         coVerify { local.insertSavedTopic(match {
             it.topicId == graph.topicId &&
                     it.actualNodeId == 5L &&
-                    it.modeNumber == Modes.Revision.ordinal
+                    it.modeNumber == Modes.REVISION.ordinal
         }) }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `saveActualStateToLocalDB - tuition mode saves changed nodes`() = runTest {
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.REVISION.ordinal
 
         // node with changes
         graph.map = mutableMapOf(

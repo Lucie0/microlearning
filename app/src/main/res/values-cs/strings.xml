@@ -50,6 +50,7 @@
     <string name="modes_revision">Opakovací</string>
     <string name="modes_tuition">Výukový</string>
     <string name="modes_testing">Zkouškový</string>
+    <string name="mainscreen_text_mode">" režim"</string>
 
     <string name="modes_revision_supptext">Učení pomocí lekcí bez testování.</string>
     <string name="modes_tuition_supptext">Učení pomocí lekcí, po kterých následují testy.</string>

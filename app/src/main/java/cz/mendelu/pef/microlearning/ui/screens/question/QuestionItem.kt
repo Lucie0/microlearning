@@ -18,10 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.R
-import cz.mendelu.pef.microlearning.model.TestState
 import cz.mendelu.pef.microlearning.model.api.Option
 import cz.mendelu.pef.microlearning.model.api.Question
-import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
@@ -31,7 +29,6 @@ import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
-@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun QuestionItem(

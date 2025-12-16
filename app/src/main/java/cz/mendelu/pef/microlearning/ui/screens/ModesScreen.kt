@@ -40,7 +40,6 @@ fun ModesScreen(
         ModesScreenContent(
             paddingValues = it,
             navigation = navigation,
-            context = context
         )
     }
 }
@@ -51,7 +50,6 @@ fun ModesScreen(
 fun ModesScreenContent(
     paddingValues: PaddingValues,
     navigation: INavigationRouter,
-    context: Context
 ){
 //    val selectedOption = remember { mutableStateOf(mode.value) } // vytahnout z D, v jakem modu se nachazi, a dat to jako inicializaci
 
@@ -61,14 +59,14 @@ fun ModesScreenContent(
     ){
         Modes.values().forEach {
             ListItem(
-                modifier = Modifier.clickable { mode.value = context.getString(it.titleResId) },
-                headlineText = { Text(context.getString(it.titleResId)) },
-                supportingText = { Text(context.getString(it.supportingTextResId)) },
+                modifier = Modifier.clickable { mode.value = it.ordinal },
+                headlineText = { Text(stringResource(id = it.stringId)) },
+                supportingText = { Text(stringResource(id = it.supportingTextId)) },
                 trailingContent = {
                     RadioButton(
                         enabled = enabled,
-                        selected = (context.getString(it.titleResId) == mode.value),
-                        onClick = { mode.value = context.getString(it.titleResId) }
+                        selected = (it.ordinal == mode.value),
+                        onClick = { mode.value = it.ordinal }
                     )
                 }
             )

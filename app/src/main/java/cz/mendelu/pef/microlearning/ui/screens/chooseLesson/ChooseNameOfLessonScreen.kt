@@ -106,7 +106,7 @@ fun ChooseNameOfLessonScreenContent(
                         },
                         modifier = Modifier.clickable {
                             when (mode.value) {
-                                Modes.Revision.name -> {
+                                Modes.REVISION.ordinal -> {
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     navigation.navigateToLessonScreen(
                                         lessonId = -1L,
@@ -116,7 +116,7 @@ fun ChooseNameOfLessonScreenContent(
                                     ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
                                 }
 
-                                Modes.Testing.name -> {
+                                Modes.TESTING.ordinal -> {
                                     println("Clicked on title: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     //  todo navigate to test 1 apod...
                                     if (viewModel.getNodeFromGraphByLesson(it.id!!) != -1L) {
@@ -131,7 +131,7 @@ fun ChooseNameOfLessonScreenContent(
                                     }
                                 }
 
-                                Modes.Tuition.name -> {
+                                Modes.TUITION.ordinal -> {
                                     // TUITION MODE
                                     println("Clicked on lesson: " + it.id + ". " + it.name + ", ord " + it.ordinalNumber)
                                     // todo navigate to lesson, then test apod...

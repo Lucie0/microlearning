@@ -59,7 +59,7 @@ class QuestionVMUnitTest {
         actualNodeInGraph = -1L
 
 
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
         graph = Graph(1,"topic1", mutableMapOf(
             Pair(
                 1L,
@@ -172,7 +172,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getData - Tuition mode - calls getQuestionsByLessonIdsTestingMode -- previous node does not exist`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
 
         // Node with a parent
         graph.map[10] = Node(10, 5, "L1", 1, 0, 0, null, false, successfullyCompleted = false).apply {
@@ -195,7 +195,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getData - Tuition mode - calls getQuestionsByLessonIdsTestingMode`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
 
         // Node with a parent
         graph.map[10] = Node(10, 5, "L1", 1, 0, 0, null, false, successfullyCompleted = false).apply {
@@ -275,7 +275,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getQuestionsByLessonIdsTestingMode - no previous nodes`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
         vm.nodeId = 10
 
         graph.map[10] = Node(10, 5, "L", 1, 0, 0, null, false, false).apply {
@@ -292,7 +292,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getQuestionsByLessonIdsTestingMode - success merging multiple nodes`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
 
         vm.nodeId = 10
 
@@ -404,7 +404,7 @@ class QuestionVMUnitTest {
 
     @Test
     fun `isTestCorrect - incorrect updates graph and lessonsToStudy in Tuition mode`() {
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
         vm.nodeId = 10
 
         graph.map[10] = Node(10, null, "", 1, 0, 0, null, false, false)
@@ -459,7 +459,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getQuestionsByLessonIdsTestingMode - node skipped when lessonId is null`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
         vm.nodeId = 10
 
         graph.map[10] = Node(10, null, "",1,0,0,null, false,false).apply {
@@ -479,7 +479,7 @@ class QuestionVMUnitTest {
     @Test
     fun `getQuestionsByLessonIdsTestingMode - error on last fetch sets error`() = runTest {
         mockNetwork(true)
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
         vm.nodeId = 10
 
         graph.map[10] = Node(10, null, "", 1, 0,0,null, false,false).apply {

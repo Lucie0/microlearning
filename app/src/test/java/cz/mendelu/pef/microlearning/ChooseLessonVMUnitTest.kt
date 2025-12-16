@@ -51,7 +51,7 @@ class ChooseLessonVMUnitTest {
         repo = mockk(relaxed = true)
         vm = ChooseLessonVM(repo)
 
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
 //        graph = Graph(0, "", mutableMapOf())
 
         mockkObject(NetworkInterceptor)
@@ -230,7 +230,7 @@ class ChooseLessonVMUnitTest {
         graph = Graph(999, "Old", mutableMapOf())
         vm.topicId = 1L
         vm.topicName = "Topic A"
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
 
         coEvery { repo.getLessonsShorterByTopicId(any()) } returns
                 CommunicationResult.Success(
@@ -280,7 +280,7 @@ class ChooseLessonVMUnitTest {
             )
         )
         vm.topicId = 1L
-        mode.value = Modes.Testing.name
+        mode.value = Modes.TESTING.ordinal
 
         coEvery { repo.getLessonsShorterByTopicId(any()) } returns
                 CommunicationResult.Success(
@@ -319,7 +319,7 @@ class ChooseLessonVMUnitTest {
     fun `Tuition mode - topic changed resets graph and loads nodes`() = runTest {
         every { NetworkInterceptor.isNetworkConnected() } returns true
 
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
         graph = Graph(999, "Old", mutableMapOf())
 
         vm.topicId = 1L
@@ -353,7 +353,7 @@ class ChooseLessonVMUnitTest {
     fun `Revision mode - graph is reset and nodes are NOT loaded`() = runTest {
         every { NetworkInterceptor.isNetworkConnected() } returns true
 
-        mode.value = Modes.Revision.name
+        mode.value = Modes.REVISION.ordinal
         graph = Graph(999, "Old", mutableMapOf(10L to Node(
             id = 10L,
             lessonId = 10L,

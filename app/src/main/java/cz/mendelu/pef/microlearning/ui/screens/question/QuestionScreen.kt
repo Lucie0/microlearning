@@ -35,7 +35,6 @@ import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.AlertDialog
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
-import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -130,7 +129,6 @@ fun QuestionScreen(
             uiState = uiState,
             viewModel = viewModel,
             navigation = navigation,
-            openAlertDialog = openAlertDialog
         )
     }
 }
@@ -146,7 +144,6 @@ fun QuestionScreenContent(
     uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
-    openAlertDialog: MutableState<Boolean>
 ) {
     val onSubmitClicked = remember { mutableStateOf(false) }
 
@@ -176,7 +173,7 @@ fun QuestionScreenContent(
 //                    lessonId = lessonId,
                     viewModel = viewModel,
                     onSubmitClicked = onSubmitClicked,
-                    showCorrectAnswers = onSubmitClicked.value && mode.value == Modes.Tuition.name
+                    showCorrectAnswers = onSubmitClicked.value && mode.value == Modes.TUITION.ordinal
                 )
             }
 
@@ -238,7 +235,7 @@ fun QuestionScreenContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (onSubmitClicked.value && mode.value == Modes.Tuition.name && viewModel.testState == TestState.FAILED) {
+                if (onSubmitClicked.value && mode.value == Modes.TUITION.ordinal && viewModel.testState == TestState.FAILED) {
                     Text(
                         text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
                         color = getPrimaryColor()
@@ -271,7 +268,7 @@ fun QuestionScreenContent(
                             viewModel.isTestCorrect()
                         } else {
                             when (mode.value) {
-                                Modes.Testing.name -> {
+                                Modes.TESTING.ordinal -> {
                                     if (viewModel.isTestCorrect()) {
                                         if (todoNodes.isEmpty()) {
                                             // testovani je ukonceno a je zobrazen vysledek
@@ -297,7 +294,7 @@ fun QuestionScreenContent(
                                     }
                                 }
 
-                                Modes.Tuition.name -> {
+                                Modes.TUITION.ordinal -> {
                                     if (viewModel.isTestCorrect()) {
 
                                         // kontrola korenoveho uzlu -- musi probehnout kazdopadne

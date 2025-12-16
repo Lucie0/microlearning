@@ -39,7 +39,7 @@ class MainScreenVMUnitTest {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        mode.value = Modes.Tuition.name
+        mode.value = Modes.TUITION.ordinal
 
         // MockK initializace
         MockKAnnotations.init(this, relaxed = true)

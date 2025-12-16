@@ -9,7 +9,6 @@ import cz.mendelu.pef.microlearning.architecture.CommunicationResult
 import cz.mendelu.pef.microlearning.communication.api.IRemoteRepository
 import cz.mendelu.pef.microlearning.communication.api.NetworkInterceptor
 import cz.mendelu.pef.microlearning.database.IMicrolearningRepository
-import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.model.db.SavedTopic
@@ -19,11 +18,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,7 +56,7 @@ class MainScreenVM @Inject constructor(
                 // spusteni async fci paralelne
                 val apiDeferred = async(dispatcher) { remoteRepository.getTopics() }
                 val dbDeferred = async(dispatcher) {
-                    localRepository.getAllSavedTopicsByMode(Modes.valueOf(mode.value).ordinal)
+                    localRepository.getAllSavedTopicsByMode(mode.value)
                         .first()
 
                 }
