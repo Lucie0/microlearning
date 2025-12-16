@@ -40,11 +40,8 @@ import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun QuestionScreen(
-//    title: String? = null,
     nodeId: Long?,// v jakem uzlu se nachazim
-//    testId: Long?, // jaky test mam zobrazovat
     lessonId: Long?,
-//    lessonName: String? = null,
     navigation: INavigationRouter
 ) {
     // VM
@@ -54,7 +51,7 @@ fun QuestionScreen(
 
     val openAlertDialog = remember { mutableStateOf(false) }
 
-    println("---* ACTUAL NODE Qs:$actualNodeInGraph")
+    println("---* ACTUAL NODE QSc:$actualNodeInGraph")
     println("lessonId=$lessonId,nodeId=$nodeId")
 
     LaunchedEffect(key1 = 1, block = { viewModel.getData() })
@@ -82,13 +79,19 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = stringResource(R.string.pretest_of_lesson) + graph.map[actualNodeInGraph]?.lessonOrdinalNumber,
-        placeholderScreenContent = if (uiState.value.errors != null) {
+        topBarText = stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: ""),
+        placeholderScreenContent = if (nodeId == -1L) {
+            PlaceholderScreenContent(
+                image = R.drawable.undraw_blank_canvas_a6x5,
+                text = stringResource(R.string.no_more_questions_try_another_topic)
+            )
+        } else if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = when (uiState.value.errors!!.communicationError) {
                     R.string.communication_error -> R.drawable.undraw_server_error_syuz
                     R.string.not_found -> R.drawable.undraw_not_found_6bgl
                     R.string.no_data -> R.drawable.undraw_no_data_ig65
+                    R.string.no_testing_questions_for_this_domain -> R.drawable.undraw_blank_canvas_a6x5
                     else -> R.drawable.undraw_dreamer_gb41
                 },
                 text = stringResource(id = uiState.value.errors!!.communicationError)
@@ -122,15 +125,10 @@ fun QuestionScreen(
 //            navigation.navigateBack()
         }
     ) {
-//        BackHandler(enabled = true) {
-//            // Zde můžete definovat vlastní akci při stisknutí tlačítka Zpět
-//            println("Tlačítko Zpět bylo stisknuto!")
-//        }
 
         QuestionScreenContent(
             paddingValues = it,
             nodeId = nodeId,
-//            lessonId = lessonId,
             uiState = uiState,
             viewModel = viewModel,
             navigation = navigation,
@@ -142,10 +140,7 @@ fun QuestionScreen(
 @Composable
 fun QuestionScreenContent(
     paddingValues: PaddingValues,
-//    question: Question?,
     nodeId: Long?,
-//    lessonId: Long?,
-//    lessonName: String?,
     uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
@@ -291,10 +286,11 @@ fun QuestionScreenContent(
                                     } else {
                                         // pokracovani na rodicovske uzly s otazkami
                                         actualNodeInGraph = viewModel.getNextNodeId()
+                                        println("actualNode (cili next node)= $actualNodeInGraph")
 
                                         navigation.navigateToQuestionScreen(
                                             nodeId = actualNodeInGraph,
-                                            lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                            lessonId = graph.map[actualNodeInGraph]?.lessonId ?: -1
                                         )
                                     }
                                 }

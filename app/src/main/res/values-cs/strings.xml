@@ -61,6 +61,9 @@
 
     <string name="label_answer">Odpověď</string>
 
+    <string name="no_more_questions_try_another_topic">Žádné další otázky k dispozici, zkuste jiné téma :)</string>
+
+
 
 
 </resources>

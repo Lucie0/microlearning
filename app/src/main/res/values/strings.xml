@@ -55,5 +55,8 @@
 
     <string name="correct_answers_following">Correct answer:</string>
     <string name="answer_is_not_correct">Answer is not correct</string>
+
     <string name="label_answer">Answer</string>
+
+    <string name="no_more_questions_try_another_topic">No more questions available, try another topic :)</string>
 </resources>

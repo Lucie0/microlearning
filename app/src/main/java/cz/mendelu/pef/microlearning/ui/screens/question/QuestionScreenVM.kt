@@ -138,12 +138,26 @@ class QuestionScreenVM @Inject constructor(
         // jinak vrat -1
 
         val ids = graph.map[actualNodeInGraph]?.previousNodesIds ?: listOf()
-//        var nextNodeId = -1L
+        var nextNodeId: Long
 
         if (ids.isNotEmpty()) {
             todoNodes.addAll(ids)
-            val nextNodeId = todoNodes.first()
-            todoNodes.remove(nextNodeId)
+            nextNodeId = todoNodes.first()
+
+            // pokud je ordinal number 0 (cili je to korenovy uzel) a je jeste v todoNodes nejaky dalsi node, tak pokracuj na ten dalsi uzel
+            if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0 && todoNodes.size > 1) {
+                todoNodes.remove(nextNodeId)
+                nextNodeId = todoNodes.first()
+                todoNodes.remove(nextNodeId)
+
+            } // jinak se zobrazi tento node, a tim nebudou otazky a jde z testu jen odejit
+            else if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0) {
+                nextNodeId = -1
+            } else {
+                todoNodes.remove(nextNodeId)
+            }
+
+
 
             println("todoNodes:$todoNodes")
 //            println("ids:$ids")
@@ -265,6 +279,7 @@ class QuestionScreenVM @Inject constructor(
                                     if (count == 0) {
                                         reduceQuestions()
                                     }
+
                                     uiState.value = UiState(
                                         loading = false,
                                         data = data,
@@ -279,8 +294,14 @@ class QuestionScreenVM @Inject constructor(
                                 }
                             }
 
+                            is CommunicationResult.ConnectionError -> {
+                                uiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
+                                )
+                            }
 
-//                        is CommunicationResult.ConnectionError -> TODO()
                             is CommunicationResult.Error -> {
                                 println(result.error)
                                 when (result.error.code) {
@@ -309,12 +330,14 @@ class QuestionScreenVM @Inject constructor(
                                     }
                                 }
                             }
-//                        is CommunicationResult.Exception -> TODO()
-                            else -> {
-                                println("Result:$result")
+                            is CommunicationResult.Exception -> {
+                                uiState.value = UiState(
+                                    loading = false,
+                                    data = null,
+                                    errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
+                                )
                             }
                         }
-
                     }
                 } else {
                     println(" --------- ERROR: Neexistuje map[id] nebo map[id].lessonId -------------")
@@ -333,117 +356,4 @@ class QuestionScreenVM @Inject constructor(
             )
         }
     }
-
-    // suspend fce do remote repo
-    private fun getQuestionsByLessonId(dispatcher: CoroutineDispatcher) {
-        if (lessonId != -1L) {
-            launch {
-                val result = withContext(dispatcher) {
-                    remoteRepository.getQuestionsByLessonId(lessonId)
-                }
-                when (result) {
-                    is CommunicationResult.ConnectionError -> {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = QuestionsErrors(R.string.communication_error) // "communication error" resource code
-                        )
-                    }
-
-                    is CommunicationResult.Error -> {
-                        println(result.error)
-                        when (result.error.code) {
-                            500 -> {
-                                uiState.value = UiState(
-                                    loading = false,
-                                    data = null,
-                                    errors = QuestionsErrors(R.string.some_unexpected_error) // "exception" resource code
-                                )
-                            }
-
-                            404 -> {
-                                uiState.value = UiState(
-                                    loading = false,
-                                    data = null,
-                                    errors = QuestionsErrors(R.string.not_found) // "not found" resource code
-                                )
-                            }
-
-                            else -> {
-                                uiState.value = UiState(
-                                    loading = false,
-                                    data = null,
-                                    errors = QuestionsErrors(R.string.something_went_wrong_please_reload_screen)
-                                )
-                                println(result.error.message)
-                            }
-                        }
-                    }
-
-                    is CommunicationResult.Exception -> {
-                        uiState.value = UiState(
-                            loading = false,
-                            data = null,
-                            errors = QuestionsErrors(R.string.unknown_error) // "exception" resource code
-                        )
-                    }
-
-                    is CommunicationResult.Success -> {
-                        if (result.data.items != null) {
-                            data.questions = result.data
-                            uiState.value = UiState(
-                                loading = false,
-                                data = data,
-                                errors = null
-                            )
-                        } else {
-                            uiState.value = UiState(
-                                loading = false,
-                                data = null,
-                                errors = QuestionsErrors(R.string.no_data) // "exception" resource code
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getNodeIdToContinue(actualNodeId: Long): Long {
-        val previous = graph.map[actualNodeId]?.previousNodesIds
-
-        if (previous?.size!! > 0) {
-            // pokud jsou rodice
-            todoNodes.addAll(previous.subList(1, previous.size - 1))
-            // vrat prvniho na rada
-            return previous[0]
-        } else {
-            // pokuid nejsou rodicovske uzly
-            // projit todoNodes, jestli je prazdny
-            if (todoNodes.size > 0) {
-                // kdyz neni, vyber prvni v seznamu, odstran ho a vrat jako navratovou hodnotu
-                val item = todoNodes.iterator().next()
-                todoNodes.remove(item)
-                return item
-            } else {
-                // kdyz je todoNodes prazdny
-                // dosazeno prvniho nodu
-                // todo predelat, vracet nejake presmerovani jinam
-                return actualNodeId
-            }
-        }
-    }
-
-//    fun correctAnswers(): List<String> {
-//        val list = mutableListOf<String>()
-//
-//        correctOptions.keys.forEach { key ->
-//            if (selectedOptions[key] != correctOptions[key]) {
-//                println(correctOptions[key])
-//                list.add(key) //= string + questionText + " " + correctOptions[questionText] + ",\n"
-//            }
-//        }
-//        println("list:$list")
-//        return list
-//    }
 }
