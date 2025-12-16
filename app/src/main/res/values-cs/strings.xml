@@ -17,7 +17,7 @@
     <string name="txt_no_data">Žádná data</string>
     <string name="prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed">Prerekvizity nejsou dostatečné.\nMusí být zopakovány předchozí lekce.</string>
     <string name="answers_are_not_correct">Odpovědi nejsou správné</string>
-    <string name="well_done_answers_are_correct">Výborně!</string>
+    <string name="well_done_answers_are_correct">🎉 Výborně! 🎉</string>
     <string name="testing_will_be_ended">Test bude ukončen</string>
     <string name="do_you_really_want_to_leave_testing">Opravdu chcete odejít z testu?</string>
     <string name="pretest_of_lesson">"Pretest lekce "</string>

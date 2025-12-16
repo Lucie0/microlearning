@@ -1,9 +1,12 @@
 package cz.mendelu.pef.microlearning.ui.screens.question
 
+import android.graphics.fonts.FontStyle
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.api.Option
@@ -28,6 +33,7 @@ import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -141,14 +147,22 @@ private fun AnswerResult(
     showCorrect: Boolean
 ) {
     if (isCorrect) {
-        Text(
-            stringResource(R.string.well_done_answers_are_correct),
-            Modifier.padding(8.dp)
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.well_done_answers_are_correct),
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = getCorrectAnswersColor()
+            )
+        }
     } else {
         Text(
-            stringResource(R.string.answer_is_not_correct),
-            Modifier.padding(start = 16.dp, end = 16.dp),
+            text = stringResource(R.string.answer_is_not_correct),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
             color = getErrorColor()
         )
 

@@ -16,7 +16,7 @@
     <string name="txt_no_data">No data</string>
     <string name="prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed">Prerequisites are not sufficient.\nPrevious lessons need to be reviewed.</string>
     <string name="answers_are_not_correct">Answers are not correct.</string>
-    <string name="well_done_answers_are_correct">Well done!</string>
+    <string name="well_done_answers_are_correct">🎉 Well done! 🎉</string>
     <string name="testing_will_be_ended">Testing will be ended</string>
     <string name="do_you_really_want_to_leave_testing">Do you really want to leave testing?</string>
     <string name="pretest_of_lesson">"Pretest of lesson "</string>
