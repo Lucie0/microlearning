@@ -285,7 +285,7 @@ class LessonVMUnitTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `saveActualStateToLocalDB - tuition mode saves changed nodes`() = runTest {
-        mode.value = Modes.REVISION.ordinal
+        mode.value = Modes.TUITION.ordinal
 
         // node with changes
         graph.map = mutableMapOf(

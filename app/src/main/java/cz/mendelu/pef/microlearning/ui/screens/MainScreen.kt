@@ -55,7 +55,6 @@ fun MainScreen(
     // java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}                                                                                                    java.lang.IllegalArgumentException: Navigation destination that matches request NavDeepLinkRequest{ uri=android-app://androidx.navigation/main/null } cannot be found in the navigation graph NavGraph(0x0) startDestination={Destination(0x78da56c6) route=main}
 
     val viewModel = hiltViewModel<MainScreenVM>()
-//    viewModel.myLLId = lastLessonId ?: 1L
 
     val uiState: MutableState<UiState<MainData, MainErrors>> = rememberSaveable { mutableStateOf(
         UiState()
@@ -65,31 +64,11 @@ fun MainScreen(
         viewModel.getData()
     })
 
-    // znovu nacti z DB
-//    LaunchedEffect(key1 = mode, block = {
-//        viewModel.getFromDB()
-//    })
-
     // poslech nad uistatem
     viewModel.mainUiState.value.let {
-//        println("*** uistate ")
-//        println(it.data)
-//        println("*** uistate node")
-//        println(it.data?.node)
         uiState.value = it
     }
 
-    // todo hodit do VM
-//    var myLLId: Long = lastLessonId ?: 1L
-    // moje osetreni pro nepreteceni
-//    if (viewModel.myLLId > 8) {
-//        viewModel.myLLId = 1
-//    }
-
-    // ulozit prichazejici lastLessonId do VM
-    // pokud zadne lastLessonId neni, nastavit na 1
-    // popripade na jinou inicializacni hodnotu (zacatek grafu, nahodne cislo, ... ???)
-    // pote, kdyz chci navigovat na stranku s lekci, tak predavat tam lastLessonId
 
     BaseScreen(
         topBarText = "",
@@ -109,17 +88,14 @@ fun MainScreen(
                     R.drawable.undraw_no_signal_nqfa
                 else
                     R.drawable.undraw_dreamer_gb41,
-//                image = R.drawable.undraw_warning,
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
         } else null
     ) {
         MainScreenContent(
-//            lastLessonId = viewModel.myLLId,
             paddingValues = it,
             navigation = navigation,
             uiState = uiState.value,
-//            nodeId = viewModel.nodeId
         )
     }
 }
@@ -128,19 +104,14 @@ fun MainScreen(
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun MainScreenContent(
-//    lastLessonId: Long,
     paddingValues: PaddingValues,
     navigation: INavigationRouter,
     uiState: UiState<MainData, MainErrors>,
-//    nodeId: Long
 ){
     Column (
         modifier = Modifier.padding(start=16.dp, end=16.dp)
     ) {
-//        HelloWorldScreen()
-//        Icons.Outlined
-//        Box(modifier = Modifier.fillMaxWidth(1f)) {
-//        item {
+
         Icon(
             imageVector = Icons.Default.AutoStories,
             contentDescription = "NanoStudy",
@@ -181,6 +152,7 @@ fun MainScreenContent(
 //            Text(text = "Start")
 //        }
 //
+        /*
         Button(onClick = {
 //            navigation.navigateToChooseNameOfLessonScreen("Programming", 2)
             navigation.navigateToQuestionScreen(
@@ -204,6 +176,7 @@ fun MainScreenContent(
         Button(onClick =  { navigation.navigateToResultScreen() }) {
             Text(text = "ResultScreen")
         }
+        */
 
 //        val open = remember { mutableStateOf(false) }
 //
@@ -275,14 +248,3 @@ fun HelloWorldScreen() {
     HtmlText(string = spannableString)
 
 }
-
-//@Composable
-//fun DbData(
-//    uiState: UiState<MainData, MainErrors>
-//) {
-//    Column {
-//        Text(text = uiState.data?.myLessons.toString())
-//    }
-//
-//}
-
