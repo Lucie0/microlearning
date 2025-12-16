@@ -83,7 +83,12 @@ fun LessonScreen(
         topBarText = stringResource(R.string.title_lesson) + (lessonId ?: lessonOrdinalNumber),//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
-                image = null,
+                image = when (uiState.value.errors!!.communicationError) {
+                    R.string.communication_error -> R.drawable.undraw_server_error_syuz
+                    R.string.not_found -> R.drawable.undraw_not_found_6bgl
+                    R.string.no_data -> R.drawable.undraw_no_data_ig65
+                    else -> R.drawable.undraw_dreamer_gb41
+                },
 //                image = R.drawable.undraw_warning,
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )

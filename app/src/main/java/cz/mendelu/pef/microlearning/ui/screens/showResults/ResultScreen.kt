@@ -69,7 +69,7 @@ fun ResultScreen(
         showLoading = uiState.value.loading,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
-                image = null,
+                image = R.drawable.undraw_blank_canvas_a6x5,
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
         } else null

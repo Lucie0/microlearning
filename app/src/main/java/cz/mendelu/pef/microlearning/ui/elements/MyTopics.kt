@@ -2,12 +2,14 @@ package cz.mendelu.pef.microlearning.ui.elements
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.api.Topic
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
@@ -35,7 +37,7 @@ fun MyTopics(
                                     topicName = topic.name ?: "Topic ${topic.id}",
                                     topicId = topic.id
                                 )
-                                // todo revision mode nacitani z db pridano vvv
+                                // revision mode nacitani z db pridano vvv
                                 navigation.navigateToLessonScreen(
                                     lessonId = -1L,
                                     nodeId = -1L,
@@ -48,19 +50,26 @@ fun MyTopics(
                             headlineText = { Text(topic.name ?: ("Topic " + topic.id)) },
                             modifier = Modifier.clickable {
                                 println("Clicked on ${topic.name}")
+
                                 navigation.navigateToChooseNameOfLessonScreen(
                                     topic.name ?: "Topic ${topic.id}", topic.id
                                 )
-                            })
+                            }
+                        )
                     }
                 }
-
             }
-//        }
+
     } else {
         PlaceHolderScreen(
             modifier = Modifier.fillMaxWidth(),
-            content = PlaceholderScreenContent(null, placeholderText ?: stringResource(R.string.no_lessons))
+            modifierImage = Modifier
+                .size(80.dp),
+//                .clip(CircleShape)
+//                .background(Color.LightGray),
+            content = PlaceholderScreenContent(
+                R.drawable.undraw_books_wxzz,
+                placeholderText ?: stringResource(R.string.no_lessons))
         )
     }
 

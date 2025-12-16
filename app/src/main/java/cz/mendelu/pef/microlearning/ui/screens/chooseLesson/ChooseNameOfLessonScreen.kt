@@ -66,7 +66,12 @@ fun ChooseNameOfLessonScreen(
         onBackClick = { navigation.navigateBack() },
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
-                image = null,
+                image = when (uiState.value.errors!!.communicationError) {
+                    R.string.communication_error -> R.drawable.undraw_server_error_syuz
+                    R.string.not_found -> R.drawable.undraw_not_found_6bgl
+                    R.string.no_data -> R.drawable.undraw_no_data_ig65
+                    else -> R.drawable.undraw_dreamer_gb41
+                },
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
         } else null,

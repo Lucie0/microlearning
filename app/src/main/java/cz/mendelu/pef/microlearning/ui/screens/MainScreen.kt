@@ -105,7 +105,10 @@ fun MainScreen(
         showLoading = uiState.value.loading,
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
-                image = null,
+                image = if (uiState.value.errors!!.communicationError == R.string.network_is_not_connected)
+                    R.drawable.undraw_no_signal_nqfa
+                else
+                    R.drawable.undraw_dreamer_gb41,
 //                image = R.drawable.undraw_warning,
                 text = stringResource(id = uiState.value.errors!!.communicationError)
             )
