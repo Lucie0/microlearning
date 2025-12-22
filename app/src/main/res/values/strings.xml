@@ -58,5 +58,5 @@
 
     <string name="label_answer">Answer</string>
 
-    <string name="no_more_questions_try_another_topic">No more questions available, try another topic :)</string>
+    <string name="no_more_questions_you_need_to_study">No more questions available. You need to study the entire topic.</string>
 </resources>

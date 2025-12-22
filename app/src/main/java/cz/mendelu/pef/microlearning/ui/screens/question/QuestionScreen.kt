@@ -83,7 +83,7 @@ fun QuestionScreen(
         placeholderScreenContent = if (nodeId == -1L) {
             PlaceholderScreenContent(
                 image = R.drawable.undraw_blank_canvas_a6x5,
-                text = stringResource(R.string.no_more_questions_try_another_topic)
+                text = stringResource(R.string.no_more_questions_you_need_to_study)
             )
         } else if (uiState.value.errors != null) {
             PlaceholderScreenContent(
@@ -297,7 +297,6 @@ fun QuestionScreenContent(
 
                                 Modes.TUITION.ordinal -> {
                                     if (viewModel.isTestCorrect()) {
-
                                         // kontrola korenoveho uzlu -- musi probehnout kazdopadne
                                         if (todoNodes.isNotEmpty()) {
                                             val item = todoNodes.iterator().next()
@@ -317,20 +316,10 @@ fun QuestionScreenContent(
                                             // a = c
 
                                             if ((graph.map[actualNodeInGraph]?.lessonOrdinalNumber
-                                                    ?: 0) < (graph.map[educationalNode]?.lessonOrdinalNumber
+                                                    ?: 0) >= (graph.map[educationalNode]?.lessonOrdinalNumber
                                                     ?: 0)
                                             ) {
-                                                // pokud ordinal number aktualniho uzlu < ord.n.edukacniho uzlu,
-                                                //  jit do edukacniho uzlu (actual = educational) a zobrazit otazky
-                                                actualNodeInGraph = educationalNode
-
-                                                // navigateToQuestionScreen()
-                                                navigation.navigateToQuestionScreen(
-                                                    nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                )
-                                            } else {
-                                                // jinak (pravdepodobne, ze se rovnaji)
+                                                // pokud ordinal number je rovno (nebo nahodou vetsi) nez edukacni uzel, jdi na lekci
                                                 println(
                                                     "actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) " +
                                                             ">= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})"
@@ -339,6 +328,16 @@ fun QuestionScreenContent(
                                                 // zobrazit lekci aktualniho uzlu
                                                 // navigation.navigateToLessonScreen()
                                                 navigation.navigateToLessonScreen(
+                                                    nodeId = actualNodeInGraph,
+                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                )
+                                            } else {
+                                                // pokud ordinal number aktualniho uzlu < ord.n.edukacniho uzlu,
+                                                //  jit do edukacniho uzlu (actual = educational) a zobrazit otazky
+                                                actualNodeInGraph = educationalNode
+
+                                                // navigateToQuestionScreen()
+                                                navigation.navigateToQuestionScreen(
                                                     nodeId = actualNodeInGraph,
                                                     lessonId = graph.map[actualNodeInGraph]?.lessonId
                                                 )
@@ -381,10 +380,9 @@ fun QuestionScreenContent(
                                         val lId = lessonsToStudy.iterator().next()
                                         lessonsToStudy.remove(lId)
 
-                                        var nId: Long? = null
-                                        graph.map.values.forEach {
-                                            if (it.lessonId == lId) nId = it.id
-                                        }
+                                        val nId: Long? = graph.map.values
+                                            .firstOrNull { it.lessonId == lId }
+                                            ?.id
 
                                         navigation.navigateToLessonScreen(
                                             nodeId = nId, // bylo -1L misto null, zajima me hlavne lekce
@@ -392,8 +390,6 @@ fun QuestionScreenContent(
                                         )
 
                                         //  4. pokud lessonsToStudy je prazdny -> NENASTANE, po spatnych odpovedich VZDY prichazi LEKCE
-                                        // todo     !! musi se osetrit korenovy uzel !!
-                                        // navigation.navigateToLessonScreen()
                                     }
                                 }
                             }
