@@ -118,7 +118,7 @@ fun ChooseNameOfLessonScreenContent(
                                         nodeId = -1L,
                                         lessonOrdinalNumber = it.ordinalNumber,
                                         topicId = topicId
-                                    ) //asi ne... topic id  gettnout z it po vytvoreni modelu LessonNAMES?
+                                    )
                                 }
 
                                 Modes.TESTING.ordinal -> {

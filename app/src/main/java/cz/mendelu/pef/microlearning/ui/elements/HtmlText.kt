@@ -36,7 +36,6 @@ import cz.mendelu.pef.microlearning.ui.theme.robotoFontFamily
 @Composable
 fun HtmlText(
     string: String,
-//    html: AnnotatedString?,
     modifier: Modifier = Modifier,
     linkColor: Color = Color.Blue, // Default link color
     textColor: Color = basicTextColor(),
@@ -67,7 +66,6 @@ fun HtmlText(
                 }
         },
         style = TextStyle(
-//            textAlign = textAlign,
             color = textColor,
             fontSize = fontSize,
             fontWeight = fontWeight,

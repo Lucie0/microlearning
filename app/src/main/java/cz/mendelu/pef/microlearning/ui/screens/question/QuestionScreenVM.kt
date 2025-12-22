@@ -157,8 +157,6 @@ class QuestionScreenVM @Inject constructor(
                 todoNodes.remove(nextNodeId)
             }
 
-
-
             println("todoNodes:$todoNodes")
 //            println("ids:$ids")
 

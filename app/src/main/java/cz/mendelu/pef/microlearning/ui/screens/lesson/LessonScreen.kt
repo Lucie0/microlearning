@@ -258,8 +258,7 @@ fun LessonScreenContent(
                                 } else {
                                     // jinak se posunuju dale na dalsi uzel v graphu -- pretest toho uzlu
                                     actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) ?: -1L// -1L jako uzel nenalezen
-                                    /*.get(
-                                        Random.nextInt(0, graph.map[actualNodeInGraph]?.subsequentNodeIds?.size ?: 0)) ?: -1L // -1L jako uzel nenalezen*/
+
                                     println("ActualNode=$actualNodeInGraph (posun z lessonSc dale v graphu do QuestionSc")
 
                                     navigation.navigateToQuestionScreen(

@@ -97,6 +97,7 @@ fun ResultScreenContent(
 
 ){
     var points = 0
+    val sc = remember { mutableStateOf(0) }
 
     val context = LocalContext.current
 //    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pcx.wz.cz/ML/GraphTopic1.html?score=3&outline=1&fill1=0:0&fill2=0:0&fill3=0:0&fill4=0:0&fill5=12:0&fill6=1:2&fill7=3:3")) }
@@ -111,6 +112,9 @@ fun ResultScreenContent(
             onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=$points&outline=1" + urlArguments.value))) }) {
             Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
+
+
+        Text(stringResource(R.string.txt_points) + points + " " + sc.value)
 
         uiState.value.data?.items?.forEach {
             ListItem(
@@ -140,12 +144,12 @@ fun ResultScreenContent(
                 },
             )
         }
-        var sc = 0
+
         LaunchedEffect(key1 = 1) {
-            sc = viewModel.getScalarResult()
+            sc.value = viewModel.getScalarResult()
         }
 //        Text(urlArguments.value)
-        Text(stringResource(R.string.txt_points) + points + " " + sc)
+
 
         Text(text = viewModel.getGraphResult())
 
