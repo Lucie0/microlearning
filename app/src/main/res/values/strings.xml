@@ -53,7 +53,7 @@
     <string name="modes_tuition_supptext">Learning through lessons followed by tests.</string>
     <string name="modes_testing_supptext">Testing through quizzes.</string>
 
-    <string name="correct_answers_following">Correct answer:</string>
+    <string name="correct_answers_following">Correct answer: </string>
     <string name="answer_is_not_correct">Answer is not correct</string>
 
     <string name="label_answer">Answer</string>

@@ -56,7 +56,7 @@
     <string name="modes_tuition_supptext">Učení pomocí lekcí, po kterých následují testy.</string>
     <string name="modes_testing_supptext">Zkoušení pomocí testů.</string>
 
-    <string name="correct_answers_following">Správná odpověď:</string>
+    <string name="correct_answers_following">Správná odpověď: </string>
     <string name="answer_is_not_correct">Odpověď je chybná</string>
 
     <string name="label_answer">Odpověď</string>

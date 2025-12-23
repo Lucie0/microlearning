@@ -1,6 +1,5 @@
 package cz.mendelu.pef.microlearning.ui.screens.question
 
-import android.graphics.fonts.FontStyle
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -33,7 +32,6 @@ import cz.mendelu.pef.microlearning.ui.theme.basicTextColor
 import cz.mendelu.pef.microlearning.ui.theme.getCorrectAnswersColor
 import cz.mendelu.pef.microlearning.ui.theme.getErrorColor
 import cz.mendelu.pef.microlearning.ui.theme.getPrimaryColor
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -160,23 +158,31 @@ private fun AnswerResult(
             )
         }
     } else {
-        Text(
-            text = stringResource(R.string.answer_is_not_correct),
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-            color = getErrorColor()
-        )
+//        Box(
+//            modifier = Modifier.fillMaxSize(),
+//            contentAlignment = Alignment.Center
+//        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-        if (showCorrect && correctAnswer != null) {
-            Text(
-                text = stringResource(R.string.correct_answers_following),
-                Modifier.padding(start = 16.dp, end = 16.dp),
-                color = getPrimaryColor()
-            )
-            Text(
-                text = correctAnswer,
-                color = getCorrectAnswersColor(),
-                modifier = Modifier.padding(start = 16.dp)
-            )
+                Text(
+                    text = stringResource(R.string.answer_is_not_correct),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                    color = getErrorColor()
+                )
+
+                if (showCorrect && correctAnswer != null) {
+                    Text(
+                        text = stringResource(R.string.correct_answers_following) + correctAnswer,
+                        Modifier.padding(start = 16.dp, end = 16.dp),
+                        color = getPrimaryColor()
+                    )
+//                    Text(
+//                        text = correctAnswer,
+//                        color = getCorrectAnswersColor(),
+//                        modifier = Modifier.padding(start = 16.dp)
+//                    )
+                }
+//            }
         }
     }
 }
@@ -198,7 +204,7 @@ private fun OneFromNQuestion(
 
     HtmlText(
         string = question.text ?: "",
-        textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+        textColor = basicTextColor(),
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )
 
@@ -236,7 +242,7 @@ private fun OpenQuestion(
 
     HtmlText(
         string = question.text ?: "",
-        textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+        textColor = basicTextColor(),
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )
 
@@ -283,7 +289,7 @@ private fun ClozeQuestion(
 
         HtmlText(
             string = prefix,
-            textColor = if (showCorrect) getCorrectAnswersColor() else basicTextColor(),
+            textColor = basicTextColor(),
             fontSize = MaterialTheme.typography.titleLarge.fontSize
         )
 
