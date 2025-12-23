@@ -50,6 +50,8 @@ fun QuestionScreen(
     viewModel.nodeId = nodeId ?: actualNodeInGraph
 
     val openAlertDialog = remember { mutableStateOf(false) }
+    val onSubmitClicked = remember { mutableStateOf(false) }
+
 
     println("---* ACTUAL NODE QSc:$actualNodeInGraph")
     println("lessonId=$lessonId,nodeId=$nodeId")
@@ -79,7 +81,8 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: ""),
+        topBarText = if (!onSubmitClicked.value) stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: "")
+        else stringResource(R.string.title_evaluation) + stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: ""),
         placeholderScreenContent = if (nodeId == -1L) {
             PlaceholderScreenContent(
                 image = R.drawable.undraw_blank_canvas_a6x5,
@@ -136,6 +139,7 @@ fun QuestionScreen(
             uiState = uiState,
             viewModel = viewModel,
             navigation = navigation,
+            onSubmitClicked = onSubmitClicked
         )
     }
 }
@@ -148,8 +152,8 @@ fun QuestionScreenContent(
     uiState: MutableState<UiState<QuestionScreenData, QuestionsErrors>>,
     viewModel: QuestionScreenVM,
     navigation: INavigationRouter,
+    onSubmitClicked: MutableState<Boolean>
 ) {
-    val onSubmitClicked = remember { mutableStateOf(false) }
 
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
 //        item {

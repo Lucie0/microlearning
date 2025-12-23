@@ -65,7 +65,9 @@
 
     <string name="dialog_yes">Ano</string>
     <string name="dialog_no">Ne</string>
-    <string name="dialog_no_leave">Ne a odejít></string>
+    <string name="dialog_no_leave">Ne a odejít</string>
+
+    <string name="title_evaluation">"Vyhodnocení — "</string>
 
 
 
