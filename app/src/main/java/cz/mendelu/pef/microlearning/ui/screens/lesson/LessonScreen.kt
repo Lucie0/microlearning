@@ -97,21 +97,24 @@ fun LessonScreen(
         alertDialogContent = {
             if (openAlertDialog.value) {
                 AlertDialog(
-                    onDismissRequest = {
+                    dialogTitle = stringResource(R.string.dialog_progress_not_saved),
+                    dialogText = stringResource(R.string.dialog_progress_is_yet_not_saved_do_you_want_to_save_progress),
+                    confirmText = stringResource(R.string.dialog_yes),
+                    onConfirmButton = {
+                        openAlertDialog.value = false
+                        viewModel.saveActualStateToLocalDB(lessonOrdinalNumber ?: -1)
+                        println("CONFIRM: Progress saved")
+                        navigation.navigateToMainScreen()
+                    },
+                    dismissText = stringResource(R.string.dialog_no_leave),
+                    onDismissButton = {
                         openAlertDialog.value = false
                         println("DISMISS: Progress not saved")
                         navigation.navigateToMainScreen()
                     },
-                    onConfirmation = {
+                    onDismissRequest = {
                         openAlertDialog.value = false
-                        viewModel.saveActualStateToLocalDB(lessonOrdinalNumber ?: -1)
-
-                        println("CONFIRM: Progress saved")
-
-                        navigation.navigateToMainScreen()
                     },
-                    dialogTitle = stringResource(R.string.dialog_progress_not_saved),
-                    dialogText = stringResource(R.string.dialog_progress_is_yet_not_saved_do_you_want_to_save_progress),
                     icon = null
 //                icon = Icons.Default.Info
                 )

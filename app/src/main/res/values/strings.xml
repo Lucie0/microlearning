@@ -59,4 +59,7 @@
     <string name="label_answer">Answer</string>
 
     <string name="no_more_questions_you_need_to_study">No more questions available. You need to study the entire topic.</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_no_leave"><![CDATA[No & leave]]></string>
 </resources>

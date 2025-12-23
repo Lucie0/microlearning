@@ -36,7 +36,10 @@ import cz.mendelu.pef.microlearning.R
 @Composable
 fun AlertDialog(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    dismissText: String,
+    onConfirmButton: () -> Unit,
+    confirmText: String,
+    onDismissButton: () -> Unit,
     dialogTitle: String,
     dialogText: String,
     icon: ImageVector?,
@@ -57,19 +60,21 @@ fun AlertDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onConfirmation()
+                    onConfirmButton()
                 }
             ) {
-                Text(stringResource(R.string.dialog_confirm))
+                Text(confirmText)
+//                Text(stringResource(R.string.dialog_confirm))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = {
-                    onDismissRequest()
+                    onDismissButton()
                 }
             ) {
-                Text(stringResource(R.string.dialog_dismiss))
+                Text(dismissText)
+//                Text(stringResource(R.string.dialog_dismiss))
             }
         }
     )

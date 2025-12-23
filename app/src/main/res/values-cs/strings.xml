@@ -23,7 +23,7 @@
     <string name="pretest_of_lesson">"Pretest lekce "</string>
     <string name="empty_list_of_lessons_try_another_topic">Žádné lekce k dispozici, zkuste jiné téma :)</string>
     <string name="title_lesson">"Lekce "</string>
-    <string name="dialog_progress_not_saved">Postup není uložen</string>
+    <string name="dialog_progress_not_saved">Pozice není uložena</string>
     <string name="dialog_progress_is_yet_not_saved_do_you_want_to_save_progress">Rozpracovaný postup ještě není uložen. Přejete si jej uložit?</string>
     <string name="txt_no_content">Žádný obsah</string>
     <string name="btn_previous_lesson">Předchozí lekce</string>
@@ -63,6 +63,9 @@
 
     <string name="no_more_questions_you_need_to_study">Žádné další otázky k dispozici. Je potřeba dostudovat celé téma.</string>
 
+    <string name="dialog_yes">Ano</string>
+    <string name="dialog_no">Ne</string>
+    <string name="dialog_no_leave">Ne a odejít></string>
 
 
 

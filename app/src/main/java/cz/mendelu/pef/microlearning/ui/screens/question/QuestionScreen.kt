@@ -101,18 +101,22 @@ fun QuestionScreen(
         alertDialogContent = {
             if (openAlertDialog.value) {
                 AlertDialog(
-                    onDismissRequest = {
-                        openAlertDialog.value = false
-                        println("DISMISS: Staying in tests")
-//                    navigation.navigateToMainScreen()
-                    },
-                    onConfirmation = {
+                    dialogTitle = stringResource(R.string.testing_will_be_ended),
+                    dialogText = stringResource(R.string.do_you_really_want_to_leave_testing),
+
+                    confirmText = stringResource(R.string.dialog_yes),
+                    onConfirmButton = {
                         openAlertDialog.value = false
                         println("CONFIRM: Testing left")
                         navigation.navigateToMainScreen()
                     },
-                    dialogTitle = stringResource(R.string.testing_will_be_ended),
-                    dialogText = stringResource(R.string.do_you_really_want_to_leave_testing),
+                    dismissText = stringResource(R.string.dialog_no),
+                    onDismissButton = {
+                        openAlertDialog.value = false
+                    },
+                    onDismissRequest = {
+                        openAlertDialog.value = false
+                    },
                     icon = null
 //                icon = Icons.Default.Info
 
