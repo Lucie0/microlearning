@@ -28,6 +28,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import cz.mendelu.pef.microlearning.model.showHint
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -85,7 +86,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { Text(it ?: "none") }, onClick = {
+                DropdownMenuItem(text = { Text(if (showHint.value) it ?: "none" else it?.replace(" ✅ ","") ?: "none") }, onClick = {
                     onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value

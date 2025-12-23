@@ -22,6 +22,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
+import cz.mendelu.pef.microlearning.model.showHint
 
 // nefunguje prime kliknuti na text jako oznaceni dane moznosti,
 // plocha kolem ano, ale samotny text nikoliv
@@ -69,7 +70,7 @@ fun RadioButtonSingleSelection(
                 )
                 //htmltonormaltext
                 Text(
-                    text = text ?: "null",
+                    text = if (showHint.value) {text ?: "null"} else text?.replace(" ✅ ","") ?: "null",
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                     modifier = Modifier.padding(16.dp)
                 )

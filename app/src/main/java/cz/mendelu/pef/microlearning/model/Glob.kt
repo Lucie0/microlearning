@@ -26,3 +26,5 @@ var lessonsToStudy = mutableSetOf<Long>()
 // REVISION
 // ordinal number, lesson_id
 var revisionLessonList = mutableMapOf<Int, Long>()
+
+var showHint = mutableStateOf(false)

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.api.Option
 import cz.mendelu.pef.microlearning.model.api.Question
+import cz.mendelu.pef.microlearning.model.showHint
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
 import cz.mendelu.pef.microlearning.ui.elements.HtmlText
@@ -241,7 +242,7 @@ private fun OpenQuestion(
     val answer = remember { mutableStateOf(viewModel.getSelected( question.id ?: 0, 0)) }
 
     HtmlText(
-        string = question.text ?: "",
+        string = if (showHint.value) question.text ?: "" else question.text?.replace("""\{[-0-9]+\}""".toRegex(), "") ?: "",
         textColor = basicTextColor(),
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )

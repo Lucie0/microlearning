@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import cz.mendelu.pef.microlearning.BuildConfig
 import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.mode
+import cz.mendelu.pef.microlearning.model.showHint
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 
@@ -50,6 +52,19 @@ fun SettingsScreenContent(
             supportingText = { Text(stringResource(id = Modes.values()[mode.value].stringId)) },
 //                .lowercase().replaceFirstChar { it.uppercase() }) },
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
+        )
+        ListItem(
+            headlineText = { Text(text = "Show hints in Tuition mode") },
+            supportingText = {},
+            trailingContent = {
+                Switch(
+                    checked = showHint.value,
+                    enabled = mode.value == Modes.TUITION.ordinal,
+                    onCheckedChange = {
+                        showHint.value = it
+                    }
+                )
+            }
         )
     }
 
