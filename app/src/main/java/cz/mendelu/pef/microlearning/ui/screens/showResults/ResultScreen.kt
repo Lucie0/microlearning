@@ -97,7 +97,9 @@ fun ResultScreenContent(
     navigation: INavigationRouter,
 
 ){
-    var points = 0
+    var points = remember {
+        mutableStateOf(0)
+    }
     val sc = remember { mutableStateOf(0) }
 
     val context = LocalContext.current
@@ -116,8 +118,7 @@ fun ResultScreenContent(
             Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
 
-
-        Text(stringResource(R.string.txt_points) + points + " " + sc.value)
+        Text(stringResource(R.string.txt_points) + points.value + " " + sc.value)
 
         uiState.value.data?.items?.forEach {
             ListItem(
@@ -128,15 +129,16 @@ fun ResultScreenContent(
                             graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0 &&
                             it.ordinalNumber != 0
                         ) {
-                            points += 1
                             LaunchedEffect(key1 = 1) {
+                                points.value += 1
                                 urlArguments.value += "&fill${it.ordinalNumber}=${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers}"
                             }
                             getCorrectAnswersColor()
                         } else if (graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers != 0 &&
                             it.ordinalNumber != 0) {
-                            points -= 1
+
                             LaunchedEffect(key1 = 1) {
+                                points.value -= 1
                                 urlArguments.value += "&fill${it.ordinalNumber}=${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers}"
                             }
                             getErrorColor()
