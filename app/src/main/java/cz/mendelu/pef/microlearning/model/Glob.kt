@@ -28,3 +28,7 @@ var lessonsToStudy = mutableSetOf<Long>()
 var revisionLessonList = mutableMapOf<Int, Long>()
 
 var showHint = mutableStateOf(false)
+
+fun showHint(): Boolean {
+    return showHint.value && mode.value == Modes.TUITION.ordinal
+}

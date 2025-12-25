@@ -53,13 +53,14 @@ fun Dropdown(
     }
     val icon = if (expanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(0.dp)) {
 //        IconButton(onClick = { expanded = !expanded }) {
 //            Icon(Icons.Default.MoreVert, contentDescription = null)
 //        }
         // todo v selected.value promenit vsechny html znaky na normal znaky
         OutlinedTextField(
-            value = selected.value,
+            value = if (showHint()) selected.value
+            else selected.value.replace(" ✅ ", ""),
             onValueChange = { selected.value = it },
             readOnly = true,
 //            label = { Text(text = "Label") },
@@ -86,7 +87,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { Text(if (showHint.value) it ?: "none" else it?.replace(" ✅ ","") ?: "none") }, onClick = {
+                DropdownMenuItem(text = { Text(if (showHint()) it ?: "none" else it?.replace(" ✅ ","") ?: "none") }, onClick = {
                     onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value

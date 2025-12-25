@@ -165,7 +165,10 @@ private fun AnswerResult(
 //            modifier = Modifier.fillMaxSize(),
 //            contentAlignment = Alignment.Center
 //        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
                 Text(
                     text = stringResource(R.string.answer_is_not_correct),
@@ -175,7 +178,9 @@ private fun AnswerResult(
 
                 if (showCorrect && correctAnswer != null) {
                     Text(
-                        text = stringResource(R.string.correct_answers_following) + correctAnswer,
+                        text = stringResource(R.string.correct_answers_following) +
+                                if (showHint()) correctAnswer
+                                else correctAnswer.replace(" ✅ ", ""),
                         Modifier.padding(start = 16.dp, end = 16.dp),
                         color = getPrimaryColor()
                     )
@@ -245,7 +250,7 @@ private fun OpenQuestion(
     val isInt = question.options.items?.get(0)?.text?.toInt()
 
     HtmlText(
-        string = if (showHint.value) question.text ?: "" else question.text?.replace("""\{[-0-9]+\}""".toRegex(), "") ?: "",
+        string = if (showHint()) question.text ?: "" else question.text?.replace("""\{[-0-9]+\}""".toRegex(), "") ?: "",
         textColor = basicTextColor(),
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )
