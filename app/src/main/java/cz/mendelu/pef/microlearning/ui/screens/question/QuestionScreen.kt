@@ -81,8 +81,10 @@ fun QuestionScreen(
     }
 
     BaseScreen(
-        topBarText = if (!onSubmitClicked.value) stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: "")
-        else stringResource(R.string.title_evaluation) + stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: ""),
+        topBarText = if (!onSubmitClicked.value)
+            stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: "")
+        else
+            stringResource(R.string.title_evaluation) + stringResource(R.string.pretest_of_lesson) + (graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: ""),
         placeholderScreenContent = if (nodeId == -1L) {
             PlaceholderScreenContent(
                 image = R.drawable.undraw_blank_canvas_a6x5,
