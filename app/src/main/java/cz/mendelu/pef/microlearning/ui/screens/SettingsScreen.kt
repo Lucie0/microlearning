@@ -54,12 +54,12 @@ fun SettingsScreenContent(
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
         ListItem(
-            headlineText = { Text(text = "Show hints in Tuition mode") },
+            headlineText = { Text(text = "Show hints for tests") },
             supportingText = {},
             trailingContent = {
                 Switch(
                     checked = showHint.value,
-                    enabled = mode.value == Modes.TUITION.ordinal,
+                    enabled = mode.value == Modes.TUITION.ordinal || mode.value == Modes.TESTING.ordinal,
                     onCheckedChange = {
                         showHint.value = it
                     }

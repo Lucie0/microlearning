@@ -65,7 +65,7 @@ fun RadioButtonSingleSelection(
                 )
                 //htmltonormaltext
                 Text(
-                    text = if (showHint()) {text ?: "null"} else text?.replace(" ✅ ","") ?: "null",
+                    text = if (showHint.value) {text ?: "null"} else text?.replace("✅", "")?.replace("  ", "") ?: "null",
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                     modifier = Modifier.padding(16.dp)
                 )
