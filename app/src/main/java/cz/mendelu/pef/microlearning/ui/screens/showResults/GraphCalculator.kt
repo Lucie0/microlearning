@@ -1,5 +1,7 @@
 package cz.mendelu.pef.microlearning.ui.screens.showResults
 
+import cz.mendelu.pef.microlearning.model.api.Graph
+import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.startingNode
 
@@ -90,4 +92,78 @@ class GraphCalculator(
 
         return result
     }
+
+    // ---------------------------
+
+    data class DfsResult(
+        val walkthroughNodes: List<Node>,
+        val successfullyCompletedNodes: List<Node>
+    )
+
+    fun dfsAnalyzeGraphUpwards(graph: Graph, startId: Long): DfsResult {
+        val visited = mutableSetOf<Long>()
+
+        val walkthroughNodes = mutableListOf<Node>()
+        val successfullyCompletedNodes = mutableListOf<Node>()
+
+        dfsUpwards(
+            nodeId = startId,
+            graph = graph,
+            visited = visited,
+            walkthroughNodes = walkthroughNodes,
+            successfullyCompletedNodes = successfullyCompletedNodes
+        )
+
+        return DfsResult(
+            walkthroughNodes = walkthroughNodes,
+            successfullyCompletedNodes = successfullyCompletedNodes
+        )
+    }
+    private fun dfsUpwards(
+        nodeId: Long,
+        graph: Graph,
+        visited: MutableSet<Long>,
+        walkthroughNodes: MutableList<Node>,
+        successfullyCompletedNodes: MutableList<Node>
+    ) {
+        if (visited.contains(nodeId)) return
+
+        val node = graph.map[nodeId] ?: return
+        visited.add(nodeId)
+
+        // vyhodnocení uzlu
+        if (node.walkThrough == true) {
+            walkthroughNodes.add(node)
+        }
+
+        if (node.successfullyCompleted == true) {
+            successfullyCompletedNodes.add(node)
+        }
+
+        // DFS proti směru hran (k rodičům)
+        for (parentId in node.previousNodesIds) {
+            dfsUpwards(
+                nodeId = parentId,
+                graph = graph,
+                visited = visited,
+                walkthroughNodes = walkthroughNodes,
+                successfullyCompletedNodes = successfullyCompletedNodes
+            )
+        }
+    }
+
+
+
+    fun main(startId: Long) : DfsResult {
+        val result: DfsResult = dfsAnalyzeGraphUpwards(graph, startId)
+
+        println("\nWalkthrough uzly (${result.walkthroughNodes.size}):")
+        result.walkthroughNodes.forEach { println(it) }
+
+        println("\nSuccessfully completed uzly (${result.successfullyCompletedNodes.size}):")
+        result.successfullyCompletedNodes.forEach { println(it) }
+
+        return result
+    }
+
 }

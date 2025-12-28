@@ -135,6 +135,10 @@ class ResultVM @Inject constructor(
     fun getGraphResult(): String {
         return calculator.getGraphResult()
     }
+
+    fun getMain(startId: Long): GraphCalculator.DfsResult{
+        return calculator.main(startId)
+    }
 //
 //    // neni suspend
 //    // graph, starting node

@@ -150,6 +150,13 @@ fun ResultScreenContent(
             )
         }
 
+        val result = viewModel.getMain(startingNode)
+        Text("nWalkthrough uzly (${result.walkthroughNodes.size}):")
+        Text(result.walkthroughNodes.toString())
+
+        Text("Successfully completed uzly (${result.successfullyCompletedNodes.size}):")
+        Text(result.successfullyCompletedNodes.toString())
+
         LaunchedEffect(key1 = 1) {
             sc.value = viewModel.getScalarResult()
         }
