@@ -137,24 +137,41 @@ class QuestionScreenVM @Inject constructor(
         // pokud jsou nejaci predci uzlu, pridej je vsechny do todoNodes, odstran prvni a ten predej
         // jinak vrat -1
 
-        val ids = graph.map[actualNodeInGraph]?.previousNodesIds ?: listOf()
+        val ids = graph.map[actualNodeInGraph]?.previousNodesIds?.filter { graph.map[it]?.walkThrough == false } ?: listOf()
         var nextNodeId: Long
 
         if (ids.isNotEmpty()) {
+//            todoNodes.addAll(ids)
+//            nextNodeId = todoNodes.first()
+
+            // vybrat jednoho rodice
+            nextNodeId = ids.first()
+
+            // ostatni rodice pridat do todoNodes -- pridat ale pouze ty, ktere nejsou jiz projite
             todoNodes.addAll(ids)
-            nextNodeId = todoNodes.first()
+            todoNodes.remove(nextNodeId) // bez toho vybraneho rodice
+
+            // pokud je nextNode Id korenovy uzel
+            // tak jit na nejstarsiho rodice
+            // a pak vvv
+            // todo return nextNodeId
+
+            println("todoNodes:$todoNodes")
 
             // pokud je ordinal number 0 (cili je to korenovy uzel) a je jeste v todoNodes nejaky dalsi node, tak pokracuj na ten dalsi uzel
-            if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0 && todoNodes.size > 1) {
-                todoNodes.remove(nextNodeId)
+            if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0 && todoNodes.size > 0) {
+                println("todoNodes:$todoNodes")
+
                 nextNodeId = todoNodes.first()
                 todoNodes.remove(nextNodeId)
 
             } // jinak se zobrazi tento node, a tim nebudou otazky a jde z testu jen odejit
             else if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0) {
+                println("todoNodes:$todoNodes")
+
                 nextNodeId = -1
             } else {
-                todoNodes.remove(nextNodeId)
+//                todoNodes.remove(nextNodeId)
             }
 
             println("todoNodes:$todoNodes")
@@ -162,7 +179,8 @@ class QuestionScreenVM @Inject constructor(
 
             return nextNodeId
         } else {
-//            println("todoNodes:$todoNodes")
+            // nejsou rodicove uzlu
+            println("todoNodes:$todoNodes")
             return -1L
         }
     }
