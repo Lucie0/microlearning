@@ -30,8 +30,8 @@ import cz.mendelu.pef.microlearning.R
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.graph
-import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
+import cz.mendelu.pef.microlearning.model.startingNode
 import cz.mendelu.pef.microlearning.navigation.INavigationRouter
 import cz.mendelu.pef.microlearning.ui.elements.BaseScreen
 import cz.mendelu.pef.microlearning.ui.elements.PlaceholderScreenContent
@@ -104,9 +104,7 @@ fun ResultScreenContent(
 
     val context = LocalContext.current
 //    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pcx.wz.cz/ML/GraphTopic1.html?score=3&outline=1&fill1=0:0&fill2=0:0&fill3=0:0&fill4=0:0&fill5=12:0&fill6=1:2&fill7=3:3")) }
-    var url = "https://pcx.wz.cz/ML/GraphTopic"
-    url += graph.topicId.toInt()
-    url += ".html?"
+    val url = "https://pcx.wz.cz/ML/GraphTopic${graph.topicId.toInt()}.html?"
     val urlArguments = remember { mutableStateOf("") }
 
 
@@ -114,17 +112,18 @@ fun ResultScreenContent(
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=$points&outline=1" + urlArguments.value))) }) {
+            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=${points.value}&outline=1" + urlArguments.value))) }) {
             Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
 
-        Text(stringResource(R.string.txt_points) + points.value + " " + sc.value)
+        Text(stringResource(R.string.txt_points) + points.value + " (${sc.value})")
 
         uiState.value.data?.items?.forEach {
             ListItem(
                 headlineText = {
                     Text(
-                        text = it.name ?: "",
+                        text = "${it.name} (${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:" +
+                                "${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers})",
                         color = if (graph.map[viewModel.mapOfLesson[it.id]]?.walkThrough == true &&
                             graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0 &&
                             it.ordinalNumber != 0
@@ -161,7 +160,6 @@ fun ResultScreenContent(
             sc.value = viewModel.getScalarResult()
         }
 //        Text(urlArguments.value)
-
 
         Text(text = viewModel.getGraphResult())
 
