@@ -182,7 +182,7 @@ private fun AnswerResult(
                     Text(
                         text = stringResource(R.string.correct_answers_following) +
                                 if (showHint.value) correctAnswer
-                                else correctAnswer.replace("✅", "").replace("  ", ""),
+                                else correctAnswer.trim().replace("✅", "").trim(),
                         Modifier.padding(start = 16.dp, end = 16.dp),
                         color = getPrimaryColor()
                     )
@@ -252,7 +252,7 @@ private fun OpenQuestion(
     val isInt = question.options.items?.get(0)?.text?.toInt()
 
     HtmlText(
-        string = if (showHint.value) question.text ?: "" else question.text?.replace("""\{[-0-9]+\}""".toRegex(), "") ?: "",
+        string = if (showHint.value) question.text ?: "" else question.text?.replace("""\{–?[0-9]+\}""".toRegex(), "") ?: "",
         textColor = basicTextColor(),
         fontSize = MaterialTheme.typography.titleLarge.fontSize
     )

@@ -60,7 +60,7 @@ fun Dropdown(
         // todo v selected.value promenit vsechny html znaky na normal znaky
         OutlinedTextField(
             value = if (showHint.value) selected.value
-            else selected.value.replace("✅", "").replace("  ", ""),
+            else selected.value.trim().replace("✅", "").trim(),
             onValueChange = { selected.value = it },
             readOnly = true,
 //            label = { Text(text = "Label") },
@@ -87,7 +87,7 @@ fun Dropdown(
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
             options.forEach{
-                DropdownMenuItem(text = { Text(if (showHint.value) it ?: "none" else it?.replace("✅", "")?.replace("  ", "") ?: "none") }, onClick = {
+                DropdownMenuItem(text = { Text(if (showHint.value) it ?: "none" else it?.trim()?.replace("✅", "")?.trim() ?: "none") }, onClick = {
                     onClickBefore()
                     selected.value = it ?: "none"
                     expanded.value = !expanded.value
