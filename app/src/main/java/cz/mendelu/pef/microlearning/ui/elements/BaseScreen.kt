@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +41,7 @@ fun BaseScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .wrapContentWidth(align = Alignment.CenterHorizontally)
+                                    .wrapContentHeight(align = Alignment.CenterVertically)
                             ) {
 //                            if(topBarText != null) {
                                 Text(
@@ -47,8 +49,10 @@ fun BaseScreen(
                                     style = MaterialTheme.typography.headlineSmall,
 //                                    color = Color.White,
                                     modifier = Modifier
-                                        .padding(start = 0.dp)
-                                        .weight(1.5f)
+                                        .padding(start = 0.dp, end = 8.dp)
+                                        .weight(1.5f),
+//                                    maxLines = 1,
+//                                    overflow = TextOverflow.Ellipsis
                                 )
 //                            }
                             }
