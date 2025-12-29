@@ -26,8 +26,8 @@
     <string name="dialog_progress_not_saved">Pozice není uložena</string>
     <string name="dialog_progress_is_yet_not_saved_do_you_want_to_save_progress">Rozpracovaný postup ještě není uložen. Přejete si jej uložit?</string>
     <string name="txt_no_content">Žádný obsah</string>
-    <string name="btn_previous_lesson">Předchozí lekce</string>
-    <string name="btn_next_lesson">Následující lekce</string>
+    <string name="btn_previous_lesson">Předchozí</string>
+    <string name="btn_next_lesson">Následující</string>
     <string name="btn_continue_to_next_part">Pokračovat  na další část</string>
     <string name="title_results">Výsledky</string>
     <string name="txt_show_nonscalar_evaluation">Zobrazit neskalární hodnocení</string>
