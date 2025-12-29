@@ -54,7 +54,7 @@ fun SettingsScreenContent(
             modifier = Modifier.clickable { navigation.navigateToModesScreen() }
         )
         ListItem(
-            headlineText = { Text(text = "Show hints for tests") },
+            headlineText = { Text(text = stringResource(R.string.show_hints_for_tests)) },
             supportingText = {},
             trailingContent = {
                 Switch(
