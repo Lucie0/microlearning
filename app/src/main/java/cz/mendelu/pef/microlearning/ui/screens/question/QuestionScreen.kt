@@ -239,78 +239,37 @@ fun QuestionScreenContent(
         }
 
         item {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (onSubmitClicked.value && mode.value == Modes.TUITION.ordinal && viewModel.testState == TestState.FAILED) {
-                    Text(
-                        text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
-                        color = getPrimaryColor()
-                    )
-                }
-                //  pridat item a v nem zobrazit tlacitko zespodu
-                Button(
-                    modifier = Modifier.padding(8.dp),
-                    // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
-                    //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                    enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
-                    content = {
-                        if (!onSubmitClicked.value) {
-                            Text(stringResource(R.string.submit))
-                        } else {
-                            Text(stringResource(R.string.txt_continue))
+            when (mode.value) {
+                Modes.TUITION.ordinal -> {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        if (onSubmitClicked.value && viewModel.testState == TestState.FAILED) {
+                            Text(
+                                text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
+                                color = getPrimaryColor()
+                            )
                         }
-                    },
-                    onClick = {
-                        // vyhodnotit, jak dopadl test, podle toho pokracovat dal
-                        // pokud je test OK
-                        // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
-                        // presmerovat se na lekci
-                        // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
-                        // rodice a tak porad dokola
-
-                        if (!onSubmitClicked.value) {
-                            // kliknuto na Submit
-                            onSubmitClicked.value = true
-                            viewModel.isTestCorrect()
-                        } else {
-                            when (mode.value) {
-                                Modes.TESTING.ordinal -> {
-                                    if (viewModel.isTestCorrect()) {
-                                        if (todoNodes.isEmpty()) {
-                                            // finalni uzel
-                                            // testovani je ukonceno a je zobrazen vysledek
-                                            navigation.navigateToResultScreen()
-                                        } else {
-                                            println("todoNodes:$todoNodes")
-                                            actualNodeInGraph = todoNodes.iterator().next()
-                                            todoNodes.remove(actualNodeInGraph)
-
-                                            navigation.navigateToQuestionScreen(
-                                                nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                            )
-                                        }
-                                    } else {
-                                        // pokracovani na rodicovske uzly s otazkami
-                                        actualNodeInGraph = viewModel.getNextNodeId()
-                                        println("actualNode (cili next node)= $actualNodeInGraph")
-
-                                        if (actualNodeInGraph != -1L) {
-                                            navigation.navigateToQuestionScreen(
-                                                nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                    ?: -1
-                                            )
-                                        } else {
-                                            // pokud se jedna o korenovy uzel a uz neni kam dal
-                                            navigation.navigateToResultScreen()
-                                        }
-                                    }
+                        //  pridat item a v nem zobrazit tlacitko zespodu
+                        Button(
+                            modifier = Modifier.padding(8.dp),
+                            // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
+                            //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
+                            enabled = nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
+                            content = {
+                                if (!onSubmitClicked.value) {
+                                    Text(stringResource(R.string.submit))
+                                } else {
+                                    Text(stringResource(R.string.txt_continue))
                                 }
-
-                                Modes.TUITION.ordinal -> {
+                            },
+                            onClick = {
+                                if (!onSubmitClicked.value) {
+                                    // kliknuto na Submit
+                                    onSubmitClicked.value = true
+                                    viewModel.isTestCorrect()
+                                } else {
                                     if (viewModel.isTestCorrect()) {
                                         // kontrola korenoveho uzlu -- musi probehnout kazdopadne
 //                                        if (todoNodes.isNotEmpty()) {
@@ -349,11 +308,13 @@ fun QuestionScreenContent(
                                                 // zobrazit lekci aktualniho uzlu
                                                 // navigation.navigateToLessonScreen()
 
-                                                println("navigateToLessonScreen:" +
-                                                        "nodeId = $actualNodeInGraph,\n" +
-                                                        "lessonId = ${graph.map[actualNodeInGraph]?.lessonId},\n" +
-                                                        "lessonOrdinalNumber = ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber},\n" +
-                                                        "topicId = ${graph.topicId}")
+                                                println(
+                                                    "navigateToLessonScreen:" +
+                                                            "nodeId = $actualNodeInGraph,\n" +
+                                                            "lessonId = ${graph.map[actualNodeInGraph]?.lessonId},\n" +
+                                                            "lessonOrdinalNumber = ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber},\n" +
+                                                            "topicId = ${graph.topicId}"
+                                                )
 
                                                 navigation.navigateToLessonScreen(
                                                     nodeId = actualNodeInGraph,
@@ -430,9 +391,71 @@ fun QuestionScreenContent(
                                     }
                                 }
                             }
-                        }
+                        )
                     }
-                )
+                }
+
+                Modes.TESTING.ordinal -> {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(
+                            modifier = Modifier.padding(8.dp),
+                            // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
+                            //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
+                            enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
+                            content = {
+                                    Text(stringResource(R.string.btn_check_up))
+                            },
+                            onClick = {
+                                // vyhodnotit, jak dopadl test, podle toho pokracovat dal
+                                // pokud je test OK
+                                // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
+                                // presmerovat se na lekci
+                                // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
+                                // rodice a tak porad dokola
+
+                                if (!onSubmitClicked.value) {
+                                    // kliknuto na Submit
+                                    onSubmitClicked.value = true
+
+                                    if (viewModel.isTestCorrect()) {
+                                        if (todoNodes.isEmpty()) {
+                                            // finalni uzel
+                                            // testovani je ukonceno a je zobrazen vysledek
+                                            navigation.navigateToResultScreen()
+                                        } else {
+                                            println("todoNodes:$todoNodes")
+                                            actualNodeInGraph = todoNodes.iterator().next()
+                                            todoNodes.remove(actualNodeInGraph)
+
+                                            navigation.navigateToQuestionScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                            )
+                                        }
+                                    } else {
+                                        // pokracovani na rodicovske uzly s otazkami
+                                        actualNodeInGraph = viewModel.getNextNodeId()
+                                        println("actualNode (cili next node)= $actualNodeInGraph")
+
+                                        if (actualNodeInGraph != -1L) {
+                                            navigation.navigateToQuestionScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                    ?: -1
+                                            )
+                                        } else {
+                                            // pokud se jedna o korenovy uzel a uz neni kam dal
+                                            navigation.navigateToResultScreen()
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
     }

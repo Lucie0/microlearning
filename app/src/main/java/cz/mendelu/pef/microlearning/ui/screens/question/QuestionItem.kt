@@ -24,8 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cz.mendelu.pef.microlearning.R
+import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.api.Option
 import cz.mendelu.pef.microlearning.model.api.Question
+import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.showHint
 import cz.mendelu.pef.microlearning.ui.elements.CheckBoxMultipleSelection
 import cz.mendelu.pef.microlearning.ui.elements.Dropdown
@@ -226,7 +228,7 @@ private fun OneFromNQuestion(
         }
     )
 
-    if (onSubmit) {
+    if (onSubmit && mode.value == Modes.TUITION.ordinal) {
         val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, 0)]
         AnswerResult(
             isCorrect = (selected.value == correct),
@@ -269,7 +271,7 @@ private fun OpenQuestion(
         readOnly = onSubmit
     )
 
-    if (onSubmit) {
+    if (onSubmit && mode.value == Modes.TUITION.ordinal) {
         val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, 0)]
         AnswerResult(
             isCorrect = (answer.value == correct),
@@ -322,7 +324,7 @@ private fun ClozeQuestion(
             }
         )
 
-        if (onSubmit) {
+        if (onSubmit && mode.value == Modes.TUITION.ordinal) {
             val correct = viewModel.correctOptions[viewModel.answerKey(question.id ?: 0, keyNumber.toInt())]
             AnswerResult(
                 isCorrect = selected.value == correct,

@@ -39,8 +39,8 @@
 
     <string name="dialog_confirm">Potvrdit</string>
     <string name="dialog_dismiss">Zrušit</string>
-    <string name="all_lessons">Všechny lekce</string>
-    <string name="my_lessons">Moje lekce</string>
+    <string name="all_lessons">Tématické okruhy</string>
+    <string name="my_lessons">Uložené lekce</string>
 
     <string name="title_settings">Nastavení</string>
     <string name="title_modes">Režimy</string>
@@ -68,6 +68,8 @@
     <string name="dialog_no_leave">Ne a odejít</string>
 
     <string name="title_evaluation">"Vyhodnocení — "</string>
+
+    <string name="btn_check_up">Vyhodnotit</string>
 
 
 

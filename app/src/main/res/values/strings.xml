@@ -36,8 +36,9 @@
     <string name="no_lessons">No lessons</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_dismiss">Dismiss</string>
-    <string name="all_lessons">All Lessons</string>
-    <string name="my_lessons">My Lessons</string>
+
+    <string name="all_lessons">All Topics</string>
+    <string name="my_lessons">Saved Lessons</string>
 
     <string name="title_settings">Settings</string>
     <string name="title_modes">Modes</string>
@@ -63,4 +64,5 @@
     <string name="dialog_no">No</string>
     <string name="dialog_no_leave"><![CDATA[No & leave]]></string>
     <string name="title_evaluation">"Evaluation — "</string>
+    <string name="btn_check_up">Check up</string>
 </resources>
