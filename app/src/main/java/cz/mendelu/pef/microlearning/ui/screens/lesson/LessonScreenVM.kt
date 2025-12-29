@@ -51,8 +51,7 @@ class LessonScreenVM @Inject constructor(
                 // Tuition a testing mode -- kombinace lessonId a nodeId
                 getLessonById(dispatcher)
 //                getNextNodeId()
-            }
-            if (lessonOrdinalNumber != null) {
+            } else if (lessonOrdinalNumber != null && mode.value == Modes.REVISION.ordinal) {
                 println("GetData> Revision mode")
                 //  kdyz je revision mode -- stahnout lekci dle kobinace ordinalNumber--topicId
                 getLessonByOrdinalNumberInTopic(dispatcher)

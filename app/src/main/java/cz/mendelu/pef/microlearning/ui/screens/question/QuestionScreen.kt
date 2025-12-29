@@ -131,10 +131,8 @@ fun QuestionScreen(
         drawFullScreenContent = true,
         onBackClick = {
             openAlertDialog.value = true
-//            navigation.navigateBack()
         }
     ) {
-
         QuestionScreenContent(
             paddingValues = it,
             nodeId = nodeId,
@@ -281,6 +279,7 @@ fun QuestionScreenContent(
                                 Modes.TESTING.ordinal -> {
                                     if (viewModel.isTestCorrect()) {
                                         if (todoNodes.isEmpty()) {
+                                            // finalni uzel
                                             // testovani je ukonceno a je zobrazen vysledek
                                             navigation.navigateToResultScreen()
                                         } else {
@@ -298,24 +297,30 @@ fun QuestionScreenContent(
                                         actualNodeInGraph = viewModel.getNextNodeId()
                                         println("actualNode (cili next node)= $actualNodeInGraph")
 
-                                        navigation.navigateToQuestionScreen(
-                                            nodeId = actualNodeInGraph,
-                                            lessonId = graph.map[actualNodeInGraph]?.lessonId ?: -1
-                                        )
+                                        if (actualNodeInGraph != -1L) {
+                                            navigation.navigateToQuestionScreen(
+                                                nodeId = actualNodeInGraph,
+                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                    ?: -1
+                                            )
+                                        } else {
+                                            // pokud se jedna o korenovy uzel a uz neni kam dal
+                                            navigation.navigateToResultScreen()
+                                        }
                                     }
                                 }
 
                                 Modes.TUITION.ordinal -> {
                                     if (viewModel.isTestCorrect()) {
                                         // kontrola korenoveho uzlu -- musi probehnout kazdopadne
-                                        if (todoNodes.isNotEmpty()) {
-                                            val item = todoNodes.iterator().next()
-                                            if (graph.map[item]?.lessonOrdinalNumber == 0) {
-                                                // pokud seznam obsahuje na prvnim indexu korenovy uzel
-                                                // odstranit ho
-                                                todoNodes.remove(item)
-                                            }
-                                        }
+//                                        if (todoNodes.isNotEmpty()) {
+//                                            val item = todoNodes.iterator().next()
+//                                            if (graph.map[item]?.lessonOrdinalNumber == 0) {
+//                                                // pokud seznam obsahuje na prvnim indexu korenovy uzel
+//                                                // odstranit ho
+//                                                todoNodes.remove(item)
+//                                            }
+//                                        }
 
                                         if (todoNodes.isEmpty()) {
                                             println("TUITION>Test OK>todoNodes(empty): $todoNodes")
@@ -324,6 +329,12 @@ fun QuestionScreenContent(
                                             // b) dostala jsem se ze smycky a vratila se ke startovacimu uzlu -> zobrazim odpovidajici lekci
                                             // c) mam bezproblemovy pruchod grafem -> zobrazim odpovidajici lekci
                                             // a = c
+
+                                            println("actualNode:$actualNodeInGraph \n educationalNode:$educationalNode")
+                                            println(
+                                                "actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) " +
+                                                        ">= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})"
+                                            )
 
                                             if ((graph.map[actualNodeInGraph]?.lessonOrdinalNumber
                                                     ?: 0) >= (graph.map[educationalNode]?.lessonOrdinalNumber
@@ -337,13 +348,23 @@ fun QuestionScreenContent(
 
                                                 // zobrazit lekci aktualniho uzlu
                                                 // navigation.navigateToLessonScreen()
+
+                                                println("navigateToLessonScreen:" +
+                                                        "nodeId = $actualNodeInGraph,\n" +
+                                                        "lessonId = ${graph.map[actualNodeInGraph]?.lessonId},\n" +
+                                                        "lessonOrdinalNumber = ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber},\n" +
+                                                        "topicId = ${graph.topicId}")
+
                                                 navigation.navigateToLessonScreen(
                                                     nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId,
+                                                    lessonOrdinalNumber = graph.map[actualNodeInGraph]?.lessonOrdinalNumber,
+                                                    topicId = graph.topicId
                                                 )
                                             } else {
                                                 // pokud ordinal number aktualniho uzlu < ord.n.edukacniho uzlu,
                                                 //  jit do edukacniho uzlu (actual = educational) a zobrazit otazky
+                                                println("actualNode:$actualNodeInGraph")
                                                 actualNodeInGraph = educationalNode
 
                                                 // navigateToQuestionScreen()
@@ -367,6 +388,8 @@ fun QuestionScreenContent(
                                             )
                                         }
                                     } else {
+                                        println("test neni ok")
+                                        println("LessonToStudy:$lessonsToStudy")
                                         // test neni OK
 
                                         //  1. zobrazit vsechny lekce (ted jen prvni, ostatni se musi zacyklit v lessonScreene)
@@ -377,6 +400,7 @@ fun QuestionScreenContent(
                                                 lessonsToStudy.add(graph.map[nId]!!.lessonId!!)
                                             }
                                         }
+                                        println("LessonToStudy:$lessonsToStudy")
 
                                         //  2. pak se budu zase snazit o vstup do uzlu (po lekcich navigovani na
                                         //     Pretest -> rozhodnuti -> lekce),
@@ -390,13 +414,16 @@ fun QuestionScreenContent(
                                         val lId = lessonsToStudy.iterator().next()
                                         lessonsToStudy.remove(lId)
 
-                                        val nId: Long? = graph.map.values
+                                        val node = graph.map.values
                                             .firstOrNull { it.lessonId == lId }
-                                            ?.id
+
+                                        val nId = node?.id
 
                                         navigation.navigateToLessonScreen(
-                                            nodeId = nId, // bylo -1L misto null, zajima me hlavne lekce
-                                            lessonId = lId
+                                            nodeId = node?.id, // bylo -1L misto null, zajima me hlavne lekce
+                                            lessonId = lId,
+                                            lessonOrdinalNumber = node?.lessonOrdinalNumber,
+                                            topicId = graph.topicId
                                         )
 
                                         //  4. pokud lessonsToStudy je prazdny -> NENASTANE, po spatnych odpovedich VZDY prichazi LEKCE
@@ -410,348 +437,3 @@ fun QuestionScreenContent(
         }
     }
 }
-
-
-//            item {
-//                QuestionScreenContent(
-//                    paddingValues = it,
-//                    question = uiState.value.data?.items?.get(3), //  cislo je napevno!!!!
-////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-////            options = uiState.value.data?.items?.get(0)?.options?.items
-//                    lessonId = myLessonId,
-//                    lessonName = lessonName,
-//                    nodeId = nodeId,
-//                    viewModel = viewModel,
-//                    navigation = navigation
-//                )
-//            }
-
-
-//            item {
-//                QuestionScreenContent(
-//                    paddingValues = it,
-//                    question = uiState.value.data?.items?.get(6), //  cislo je napevno!!!!
-////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-////            options = uiState.value.data?.items?.get(0)?.options?.items
-//                    lessonId = myLessonId,
-//                    lessonName = lessonName,
-//                    nodeId = nodeId,
-//                    viewModel = viewModel,
-//                    navigation = navigation
-//                )
-//            }
-
-//            item {
-//                QuestionScreenContent(
-//                    paddingValues = it,
-//                    question = uiState.value.data?.items?.get(8), //  cislo je napevno!!!!
-////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-////            options = uiState.value.data?.items?.get(0)?.options?.items
-//                    lessonId = myLessonId,
-//                    lessonName = lessonName,
-//                    nodeId = nodeId,
-//                    viewModel = viewModel,
-//                    navigation = navigation
-//                )
-//
-//                QuestionScreenContent(
-//                    paddingValues = it,
-//                    question = uiState.value.data?.items?.get(4), //  cislo je napevno!!!!
-////            questionText = uiState.value.data?.items?.get(0)?.text ?: "No data",
-////            options = uiState.value.data?.items?.get(0)?.options?.items
-//                    lessonId = myLessonId,
-//                    lessonName = lessonName,
-//                    nodeId = nodeId,
-//                    viewModel = viewModel,
-//                    navigation = navigation
-//                )
-//            }
-        /*
-        item {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (onSubmitClicked.value) {
-                    if (viewModel.testOk == 1) {
-                        Text(stringResource(R.string.well_done_answers_are_correct), Modifier.padding(8.dp))
-                    } else if (viewModel.testOk == -1) {
-                        Text(
-                            stringResource(R.string.answers_are_not_correct),
-                            modifier = Modifier.padding(8.dp),
-                            color = getErrorColor()
-                        )
-//                        Text(
-//                            "Correct answers: \n ${viewModel.correctAnswers()}",
-//                            Modifier.padding(8.dp),
-//                            color = getCorrectAnswersColor()
-//                        )
-
-                        if (mode.value == Modes.Tuition.name) {
-                            // zobrazeni spravnych odpovedi
-                            Text(
-                                text = "List of correct answers is following",
-                                color = getPrimaryColor()
-                            )
-                            uiState.value.data?.questions?.items?.forEach {
-//                            if (viewModel.correctAnswers().contains(it.text)) {
-//                        viewModel.correctAnswers().forEach{
-                                QuestionItem(
-                                    paddingValues = paddingValues,
-                                    question = it,
-                                    nodeId = nodeId,
-//                                    lessonId = lessonId,
-                                    viewModel = viewModel,
-                                    onSubmitClicked = onSubmitClicked,
-                                    showCorrectAnswers = true,
-                                    navigation = navigation
-                                )
-                            }
-                            Text(
-                                text = stringResource(R.string.prerequisites_are_not_sufficient_previous_lessons_need_to_be_reviewed),
-                                color = getPrimaryColor()
-                            )
-                        }
-                    }
-//                    }
-
-//                    Button(onClick = {
-//                        navigation.navigateToLessonScreen(
-//                            lessonId = lessonId,
-//                            nodeId = nodeId
-//                        )
-//                    }) {
-//                        Text("Continue")
-//                    }
-                }
-
-                Button(
-                    modifier = Modifier.padding(8.dp),
-                    // todo enablovat tlacitko, az kdyz jsou vsechny odpovedi vyplnene
-                    //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
-                    enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
-                    onClick = {
-                        // vyhodnotit, jak dopadl test, podle toho pokracovat dal
-                        // pokud je test OK
-                        // todo gettnout lekci, ktera nasleduje po tomto testu z uzlu
-                        // presmerovat se na lekci
-                        // jinak presmerovat na jinou lekci (sousedni uzel, resp. uzly, pote soused
-                        // rodice a tak porad dokola
-
-                        if (!onSubmitClicked.value) {
-                            // kliknuto na Submit
-                            onSubmitClicked.value = true
-                            viewModel.isTestCorrect()
-                        } else {
-                            when (mode.value) {
-                                Modes.Testing.name -> {
-                                    if (viewModel.isTestCorrect()) {
-                                        if (todoNodes.isEmpty()) {
-                                            // testovani je ukonceno a je zobrazen vysledek
-                                            navigation.navigateToResultScreen()
-                                        } else {
-                                            println("todoNodes:$todoNodes")
-                                            actualNodeInGraph = todoNodes.iterator().next()
-                                            todoNodes.remove(actualNodeInGraph)
-
-                                            navigation.navigateToQuestionScreen(
-                                                nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                            )
-                                        }
-                                    } else {
-                                        // pokracovani na rodicovske uzly s otazkami
-                                        actualNodeInGraph = viewModel.getNextNodeId()
-
-                                        navigation.navigateToQuestionScreen(
-                                            nodeId = actualNodeInGraph,
-                                            lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                        )
-                                    }
-                                }
-
-                                Modes.Tuition.name -> {
-                                    if (viewModel.isTestCorrect()) {
-
-                                        // kontrola korenoveho uzlu -- musi probehnout kazdopadne
-                                        if (todoNodes.isNotEmpty()) {
-                                            val item = todoNodes.iterator().next()
-                                            if (graph.map[item]?.lessonOrdinalNumber == 0) {
-                                                // pokud seznam obsahuje na prvnim indexu korenovy uzel
-                                                // odstranit ho
-                                                todoNodes.remove(item)
-                                            }
-                                        }
-
-                                        if (todoNodes.isEmpty()) {
-                                            println("TUITION>Test OK>todoNodes(empty): $todoNodes")
-                                            // test OK, nejsou uzly k projiti
-                                            // a) prave zacinam -> zobrazim odpovidajici lekci k pretestu
-                                            // b) dostala jsem se ze smycky a vratila se ke startovacimu uzlu -> zobrazim odpovidajici lekci
-                                            // c) mam bezproblemovy pruchod grafem -> zobrazim odpovidajici lekci
-                                            // a = c
-
-                                            if ((graph.map[actualNodeInGraph]?.lessonOrdinalNumber ?: 0)  < (graph.map[educationalNode]?.lessonOrdinalNumber ?: 0)){
-                                                // pokud ordinal number aktualniho uzlu < ord.n.edukacniho uzlu,
-                                                //  jit do edukacniho uzlu (actual = educational) a zobrazit otazky
-                                                actualNodeInGraph = educationalNode
-
-                                                // navigateToQuestionScreen()
-                                                navigation.navigateToQuestionScreen(
-                                                    nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                )
-                                            } else {
-                                                // jinak (pravdepodobne, ze se rovnaji)
-                                                println("actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) " +
-                                                        ">= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})")
-
-                                                // zobrazit lekci aktualniho uzlu
-                                                // navigation.navigateToLessonScreen()
-                                                navigation.navigateToLessonScreen(
-                                                    nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                )
-                                            }
-
-                                        } else {
-                                            // test je OK a jsou uzly k projiti v todoNodes
-                                            println("TUITION>Test OK>todoNodes(!empty): $todoNodes")
-
-                                            //  zobrazeni dalsiho uzlu z todoNodes, resp. pretestu
-                                            //// navigation.navigateToQuestionScreen()
-                                            actualNodeInGraph = todoNodes.iterator().next()
-                                            todoNodes.remove(actualNodeInGraph)
-//                                            if (graph.map[actualNodeInGraph]?.lessonOrdinalNumber == 0){
-//                                                // pokud by nasledny uzel mel byt korenovy -- preskoc na dalsi uzel
-//                                                actualNodeInGraph = todoNodes.removeAt(0)
-//                                            }
-
-                                            navigation.navigateToQuestionScreen(
-                                                nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                            )
-
-
-
-//        ------------------------------------------- nasledujici je original z TESTING modu -------
-//                                            actualNodeInGraph = todoNodes.removeAt(0)
-
-                                            // naviguje se na otazky uzlu z todoNodes
-                                            // dany uzel s odpovidajici lekci
-//                                            navigation.navigateToQuestionScreen(
-//                                                nodeId = actualNodeInGraph,
-//                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-//                                            )
-                                            // -----------------------------------------------------
-                                        }
-                                    } else {
-                                        // test neni OK
-
-                                        //  1. zobrazit vsechny lekce (ted jen prvni, ostatni se musi zacyklit v lessonScreene)
-                                        //     predku ,
-                                        //todo     tzn. pridat tyto vsechny lekce to __lessonsToStudy__
-                                        graph.map[actualNodeInGraph]?.previousNodesIds?.forEach{ nId ->
-                                            if (graph.map[nId] != null && graph.map[nId]!!.lessonId != null) {
-                                                lessonsToStudy.add(graph.map[nId]!!.lessonId!!)
-                                            }
-                                        }
-
-                                        //  2. pak se budu zase snazit o vstup do uzlu (po lekcich navigovani na
-                                        //     Pretest -> rozhodnuti -> lekce),
-                                        //todo      tzn. pridat vsechny tyto uzly do __todoNodes__
-                                        todoNodes.addAll(graph.map[actualNodeInGraph]?.previousNodesIds ?: listOf())
-
-                                        //  todo 3. navigovat do lekce (radeji osetrit, ze lessonsToStudy neni prazdny, ale to jen, aby to nespadlo)
-                                        val lId = lessonsToStudy.iterator().next()
-                                        lessonsToStudy.remove(lId)
-
-                                        var nId: Long? = null
-                                        graph.map.values.forEach {
-                                            if (it.lessonId == lId) nId = it.id
-                                        }
-
-                                        navigation.navigateToLessonScreen(
-                                            nodeId = nId, // bylo -1L misto null, zajima me hlavne lekce
-                                            lessonId = lId
-                                        )
-
-                                        //  4. pokud lessonsToStudy je prazdny -> NENASTANE, po spatnych odpovedich VZDY prichazi LEKCE
-                                        // todo     !! musi se osetrit korenovy uzel !!
-                                        // navigation.navigateToLessonScreen()
-
-                                        /*
-                                        actualNodeInGraph = viewModel.getNextNodeId()
-
-                                        if (actualNodeInGraph != -1L) {
-                                            navigation.navigateToQuestionScreen(
-                                                nodeId = actualNodeInGraph,
-                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                            )
-                                        } else {
-                                            println("NEJSOU PREDCHUDCI, vm.getNextNodeId() returns -1L")
-                                        }
-                                    }
-                                         */
-                                    }
-
-                                    /* // cast slessons to study
-                                    Modes.TUITION.name -> {
-                                        println("actualNodeInGraph=$actualNodeInGraph\n" +
-                                                "graph[actual].lessonId=${graph.map[actualNodeInGraph]?.lessonId}\n" +
-                                                "lessonsToStudy=$lessonsToStudy\n" +
-                                                "todoNodes=$todoNodes")
-
-                                        if (viewModel.isTestCorrect()) {
-                                            if (lessonsToStudy.isEmpty()) {
-                                                // pokracuje se niz v grafu
-                                                println("pokracuje se niz v grafu")
-
-    //                                            if (graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null)
-    //                                                actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)!!
-
-                                                navigation.navigateToLessonScreen(
-                                                    nodeId = actualNodeInGraph,
-                                                    lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                )
-
-                                            } else {
-                                                // lessonsToStudy is not empty
-                                                println("TEST OK, lessonsToStudy:$lessonsToStudy")
-                                                val lessonToStudy = lessonsToStudy.iterator().next()
-                                                lessonsToStudy.remove(lessonToStudy)
-    //                                            actualNodeInGraph = lessonsToStudy.removeAt(0)
-
-                                                navigation.navigateToLessonScreen(
-    //                                                nodeId = actualNodeInGraph,
-                                                    nodeId = actualNodeInGraph,
-    //                                                lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                                    lessonId = lessonToStudy
-                                                )
-                                            }
-                                        } else {
-                                            // to do kdyz test neni vyplnen spravne
-                                            // to do navigovat na lekce rodicovskych uzlu
-                                            val lessonToStudy = lessonsToStudy.iterator().next()
-                                            lessonsToStudy.remove(lessonToStudy)
-                                            println("Removing lessonToStudy:$lessonToStudy from $lessonsToStudy")
-
-                                            navigation.navigateToLessonScreen(
-                                                nodeId = -1L, // node je null -- debugger ok
-                                                lessonId = lessonToStudy
-                                            )
-                                        }
-                                     */
-                                }
-                            }
-                        }
-                    }) {
-                    if (!onSubmitClicked.value) {
-                        Text(stringResource(R.string.submit))
-                    } else {
-                        Text(stringResource(R.string.txt_continue))
-                    }
-                }
-            }
-        }
-        */
