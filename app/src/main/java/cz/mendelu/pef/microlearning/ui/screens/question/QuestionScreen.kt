@@ -242,7 +242,7 @@ fun QuestionScreenContent(
             when (mode.value) {
                 Modes.TUITION.ordinal -> {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (onSubmitClicked.value && viewModel.testState == TestState.FAILED) {
