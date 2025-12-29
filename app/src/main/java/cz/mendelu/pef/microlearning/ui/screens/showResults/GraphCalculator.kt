@@ -11,64 +11,50 @@ class GraphCalculator(
 ) {
     var result = -1
 
-    fun getScalarResult(): Int {
-        println("GET RESULT")
-        var points = 0
-
-        println("result: $result")
-        if (result != -1) return result
-
+    fun markWalkthroughParents() {
         if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
-            points += getCountOfNodes(startingNode)
-            println("if1: $points")
+            markNodes(startingNode)
         } else {
             graph.map[startingNode]?.previousNodesIds?.forEach {
-                points += getCountOfNodesIf(it)
-                println("else1:$points")
+                markNodesIf(it)
             }
         }
-
-        result = points
-        return points
     }
 
-    private fun getCountOfNodesIf(nodeId: Long): Int {
-        println("COUNT IF")
-
-        var count = 0
+    private fun markNodesIf(nodeId: Long) {
         if (graph.map[nodeId]?.countOfIncorrectAnswers == 0) {
-            count += getCountOfNodes(nodeId)
-            println("CountIf if:$count")
+            markNodes(nodeId)
+
         } else {
             graph.map[nodeId]?.previousNodesIds?.forEach {
-                count += getCountOfNodesIf(it)
-                println("CountIf else:$count")
+                markNodesIf(it)
             }
         }
-        return count
     }
 
-    private fun getCountOfNodes(nodeId: Long): Int {
-        println("COUNT")
-
-        var count = graph.map[nodeId]?.previousNodesIds?.size ?: 0
+    private fun markNodes(nodeId: Long) {
 
         graph.map[nodeId]?.previousNodesIds?.forEach {
-            count += getCountOfNodes(it)
+            markNodes(it)
         }
 
-        println("Count: $count")
         if (graph.map[nodeId]?.walkThrough != true) {
-            // todo po resetu v choose lesson VM to v result screene zobrazuje porad projite uzly,
-            //  i kdyz byly nastaveny walkThrough na false -- prepisou se na true nasledujicim prikazem
-            //  netusim proc -- je to kvuli mapOfLesson, ale nechapu
             graph.map[nodeId]?.walkThrough = true
-            return count
         }
-
-        println("Count else: 0")
-        return 0
     }
+
+    fun countPoints() : Int {
+        val walkAndTestOK = graph.map.values.filter{
+            it.walkThrough == true && it.countOfIncorrectAnswers == 0 && it.lessonOrdinalNumber != 0
+        }.size
+
+        val walkAndTestNotOk = graph.map.values.filter {
+            it.walkThrough == true && it.countOfIncorrectAnswers != 0 && it.lessonOrdinalNumber != 0
+        }.size
+
+        return walkAndTestOK - walkAndTestNotOk
+    }
+
 
     fun getGraphResult(): String {
         val result = mutableListOf<String>()

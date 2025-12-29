@@ -157,6 +157,10 @@ class ResultVM @Inject constructor(
         } else ""
         return it.name + result
     }
+
+    fun getCountPoints() : Int {
+        return calculator.countPoints()
+    }
 //
 //    // neni suspend
 //    // graph, starting node
