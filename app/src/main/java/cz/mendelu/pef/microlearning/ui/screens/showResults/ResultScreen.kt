@@ -97,49 +97,41 @@ fun ResultScreenContent(
     navigation: INavigationRouter,
 
 ){
-    var points = remember {
-        mutableStateOf(0)
-    }
-    val sc = remember { mutableStateOf(0) }
-
     val context = LocalContext.current
 //    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pcx.wz.cz/ML/GraphTopic1.html?score=3&outline=1&fill1=0:0&fill2=0:0&fill3=0:0&fill4=0:0&fill5=12:0&fill6=1:2&fill7=3:3")) }
     val url = "https://pcx.wz.cz/ML/GraphTopic${graph.topicId.toInt()}.html?"
     val urlArguments = remember { mutableStateOf("") }
 
+    LaunchedEffect(key1 = 1) {
+        viewModel.markParents()
+    }
 
-    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+    Column(modifier = Modifier.padding(8.dp)) {
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=${points.value}&outline=1" + urlArguments.value))) }) {
+            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=${viewModel.getCountPoints()}&outline=1" + viewModel.createUrlArguments()))) }) {
             Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
 
-        Text(stringResource(R.string.txt_points) + points.value + " (${sc.value})")
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = stringResource(R.string.txt_points) + viewModel.getCountPoints())
+
+//        Text("Count points:${viewModel.getCountPoints()}")
 
         uiState.value.data?.items?.forEach {
             ListItem(
                 headlineText = {
                     Text(
-                        text = "${it.name} (${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:" +
-                                "${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers})",
+                        text = viewModel.showNameOfLesson(it),
                         color = if (graph.map[viewModel.mapOfLesson[it.id]]?.walkThrough == true &&
                             graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers == 0 &&
                             it.ordinalNumber != 0
                         ) {
-                            LaunchedEffect(key1 = 1) {
-                                points.value += 1
-                                urlArguments.value += "&fill${it.ordinalNumber}=${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers}"
-                            }
                             getCorrectAnswersColor()
                         } else if (graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers != 0 &&
                             it.ordinalNumber != 0) {
-
-                            LaunchedEffect(key1 = 1) {
-                                points.value -= 1
-                                urlArguments.value += "&fill${it.ordinalNumber}=${graph.map[viewModel.mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[viewModel.mapOfLesson[it.id]]?.countOfIncorrectAnswers}"
-                            }
                             getErrorColor()
                         } else
                             basicTextColor(),
@@ -150,18 +142,9 @@ fun ResultScreenContent(
         }
 
         val result = viewModel.getMain(startingNode)
-        Text("nWalkthrough uzly (${result.walkthroughNodes.size}):")
-        Text(result.walkthroughNodes.toString())
-
-        Text("Successfully completed uzly (${result.successfullyCompletedNodes.size}):")
-        Text(result.successfullyCompletedNodes.toString())
-
-        LaunchedEffect(key1 = 1) {
-            sc.value = viewModel.getScalarResult()
-        }
 //        Text(urlArguments.value)
 
-        Text(text = viewModel.getGraphResult())
+//        Text(text = viewModel.getGraphResult())
 
 //        Pok()
     }

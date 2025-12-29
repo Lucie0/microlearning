@@ -128,8 +128,18 @@ class ResultVM @Inject constructor(
         }
     }
 
-    fun getScalarResult(): Int {
-        return calculator.getScalarResult()
+    fun markParents() {
+        return calculator.markWalkthroughParents()
+    }
+
+    fun createUrlArguments() : String{
+        val urlArguments = graph.map.values.filter{
+            it.walkThrough == true && it.lessonOrdinalNumber != 0
+        }.joinToString("") { "&fill${it.lessonOrdinalNumber}=${graph.map[mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[mapOfLesson[it.id]]?.countOfIncorrectAnswers}" }
+
+        println("urlArgs:$urlArguments")
+
+        return urlArguments
     }
 
     fun getGraphResult(): String {
@@ -138,6 +148,14 @@ class ResultVM @Inject constructor(
 
     fun getMain(startId: Long): GraphCalculator.DfsResult{
         return calculator.main(startId)
+    }
+
+    fun showNameOfLesson(it: LessonShorter): String {
+        val result = if ((graph.map[mapOfLesson[it.id]]?.countOfIncorrectAnswers?.plus(graph.map[mapOfLesson[it.id]]?.countOfCorrectAnswers ?:0) ) != 0) {
+            " (${graph.map[mapOfLesson[it.id]]?.countOfCorrectAnswers}:" +
+                    "${graph.map[mapOfLesson[it.id]]?.countOfIncorrectAnswers})"
+        } else ""
+        return it.name + result
     }
 //
 //    // neni suspend
