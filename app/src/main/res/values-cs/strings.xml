@@ -71,6 +71,9 @@
 
     <string name="btn_check_up">Vyhodnotit</string>
 
+    <string name="btn_continue_to_lesson">Pokračovat na další lekci</string>
+    <string name="btn_continue_to_test">Otestovat prerekvizity</string>
+
 
 
 </resources>

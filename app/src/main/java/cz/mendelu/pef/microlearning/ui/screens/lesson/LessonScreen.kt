@@ -161,7 +161,13 @@ fun LessonScreenContent(
     if (uiState.value.data != null) {
         LazyColumn(
             modifier = Modifier
-                .padding(top = paddingValues.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 16.dp).fillMaxWidth(),
+                .padding(
+                    top = paddingValues.calculateTopPadding(),
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                )
+                .fillMaxWidth(),
 //            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
@@ -236,7 +242,6 @@ fun LessonScreenContent(
 //                                    || lessonsToStudy.isNotEmpty(), //&&
                             enabled = graph.map[nodeId]?.subsequentNodeIds?.isNotEmpty() ?: false,
                             onClick = {
-
                                 if (todoNodes.isNotEmpty()) {
                                     val item = todoNodes.iterator().next()
                                     if (graph.map[item]?.lessonOrdinalNumber == 0) {
@@ -321,7 +326,8 @@ fun LessonScreenContent(
                                 */
                             }
                         ) {
-                            Text(stringResource(R.string.btn_continue_to_next_part))
+                            if (lessonsToStudy.isNotEmpty()) Text(stringResource(R.string.btn_continue_to_lesson))
+                            else Text(stringResource(R.string.btn_continue_to_test))
                         }
                     }
                 }

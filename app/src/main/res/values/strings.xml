@@ -64,5 +64,9 @@
     <string name="dialog_no">No</string>
     <string name="dialog_no_leave"><![CDATA[No & leave]]></string>
     <string name="title_evaluation">"Evaluation — "</string>
+
     <string name="btn_check_up">Check up</string>
+
+    <string name="btn_continue_to_lesson">Continue to next lesson</string>
+    <string name="btn_continue_to_test">Test of prerequisites</string>
 </resources>
