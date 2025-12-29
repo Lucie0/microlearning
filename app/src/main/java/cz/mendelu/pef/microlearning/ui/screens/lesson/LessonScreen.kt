@@ -235,69 +235,76 @@ fun LessonScreenContent(
 
                     // button pro TUITION mode
                     Modes.TUITION.ordinal -> {
-                        Button(
+                        Row (
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.Center,
+                            ) {
+                            Button(
 //                            enabled = (uiState.value.data!!.linkAfter?.items?.size != null) ?: false,
 //                            enabled = (uiState.value.data!!.nextNode?.content?.id != null &&
 //                                    uiState.value.data!!.nextNode?.content?.lessonId != null)
 //                                    || lessonsToStudy.isNotEmpty(), //&&
-                            enabled = graph.map[nodeId]?.subsequentNodeIds?.isNotEmpty() ?: false,
-                            onClick = {
-                                if (todoNodes.isNotEmpty()) {
-                                    val item = todoNodes.iterator().next()
-                                    if (graph.map[item]?.lessonOrdinalNumber == 0) {
-                                    // pokud list obsahuje na prvnim indexu korenovy uzel
-                                    // odstranit ho
-                                    todoNodes.remove(item)
+                                enabled = graph.map[nodeId]?.subsequentNodeIds?.isNotEmpty()
+                                    ?: false,
+                                onClick = {
+                                    if (todoNodes.isNotEmpty()) {
+                                        val item = todoNodes.iterator().next()
+                                        if (graph.map[item]?.lessonOrdinalNumber == 0) {
+                                            // pokud list obsahuje na prvnim indexu korenovy uzel
+                                            // odstranit ho
+                                            todoNodes.remove(item)
 //                                    todoNodes.removeAt(0)
-                                }
-                            }
-
-                                //---------------------------------------------------------------
-                                //  kdyz lessonsToStudy neni prazdny, navigovat na lekci z nej
-                                //    odstranit ji ze seznamu a predat do paramentru v LessonScreen()
-                                if (lessonsToStudy.isNotEmpty()) {
-                                    val lId = lessonsToStudy.iterator().next()
-                                    lessonsToStudy.remove(lId)
-
-                                    graph.map.values.forEach {
-                                        if (it.lessonId == lId) viewModel.actualNodeId = it.id
+                                        }
                                     }
 
-                                    navigation.navigateToLessonScreen(
-                                        nodeId = viewModel.actualNodeId, // bylo -1L misto null, zajima me jen lekce
-                                        lessonId = lId,
-                                        lessonOrdinalNumber = graph.map[viewModel.actualNodeId]?.lessonOrdinalNumber,
-                                        topicId = graph.topicId
-                                    )
-                                } else if (todoNodes.isNotEmpty()) {// pokud lessonsToStudy je prazdny, zkontrolovat, jestli todoNodes neni prazdny
-                                // a navigovat na pretest prvniho nodu
-                                    actualNodeInGraph = todoNodes.iterator().next()
-                                    todoNodes.remove(actualNodeInGraph)
+                                    //---------------------------------------------------------------
+                                    //  kdyz lessonsToStudy neni prazdny, navigovat na lekci z nej
+                                    //    odstranit ji ze seznamu a predat do paramentru v LessonScreen()
+                                    if (lessonsToStudy.isNotEmpty()) {
+                                        val lId = lessonsToStudy.iterator().next()
+                                        lessonsToStudy.remove(lId)
 
-                                    navigation.navigateToQuestionScreen(
-                                        nodeId = actualNodeInGraph,
-                                        lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                    )
-                                } else {
-                                    // jinak se posunuju dale na dalsi uzel v graphu -- pretest toho uzlu
-                                    actualNodeInGraph = graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) ?: -1L// -1L jako uzel nenalezen
+                                        graph.map.values.forEach {
+                                            if (it.lessonId == lId) viewModel.actualNodeId = it.id
+                                        }
 
-                                    println("ActualNode=$actualNodeInGraph (posun z lessonSc dale v graphu do QuestionSc")
+                                        navigation.navigateToLessonScreen(
+                                            nodeId = viewModel.actualNodeId, // bylo -1L misto null, zajima me jen lekce
+                                            lessonId = lId,
+                                            lessonOrdinalNumber = graph.map[viewModel.actualNodeId]?.lessonOrdinalNumber,
+                                            topicId = graph.topicId
+                                        )
+                                    } else if (todoNodes.isNotEmpty()) {// pokud lessonsToStudy je prazdny, zkontrolovat, jestli todoNodes neni prazdny
+                                        // a navigovat na pretest prvniho nodu
+                                        actualNodeInGraph = todoNodes.iterator().next()
+                                        todoNodes.remove(actualNodeInGraph)
 
-                                    navigation.navigateToQuestionScreen(
-                                        nodeId = actualNodeInGraph,
-                                        lessonId = graph.map[actualNodeInGraph]?.lessonId
-                                    )
-                                }
-                                //---------------------------------------------------------------
+                                        navigation.navigateToQuestionScreen(
+                                            nodeId = actualNodeInGraph,
+                                            lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                        )
+                                    } else {
+                                        // jinak se posunuju dale na dalsi uzel v graphu -- pretest toho uzlu
+                                        actualNodeInGraph =
+                                            graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0)
+                                                ?: -1L// -1L jako uzel nenalezen
 
-                                // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... to do tak co?
-                                // pokracovat na test v nasledujicim uzlu
-                                // to do co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
+                                        println("ActualNode=$actualNodeInGraph (posun z lessonSc dale v graphu do QuestionSc")
+
+                                        navigation.navigateToQuestionScreen(
+                                            nodeId = actualNodeInGraph,
+                                            lessonId = graph.map[actualNodeInGraph]?.lessonId
+                                        )
+                                    }
+                                    //---------------------------------------------------------------
+
+                                    // pokracovat na dalsi lekci, pokud se k tomuto uzlu bude vazat vice lekci... to do tak co?
+                                    // pokracovat na test v nasledujicim uzlu
+                                    // to do co kdyz jich je tam vice? vybirat na zaklade walkThrough? => na zaklade walkthrough
 //                                println("nextNodeId:" + uiState.value.data!!.linkAfter?.items?.get(0)?.nextNodeId)
 //                                println("Size:${uiState.value.data!!.linkAfter?.items?.size}")
 
-                                /*
+                                    /*
                                 if (lessonsToStudy.isNotEmpty()) {
                                     val l = lessonsToStudy.iterator().next()
                                     lessonsToStudy.remove(l)
@@ -324,10 +331,11 @@ fun LessonScreenContent(
                                     )
                                 }
                                 */
+                                }
+                            ) {
+                                if (lessonsToStudy.isNotEmpty()) Text(stringResource(R.string.btn_continue_to_lesson))
+                                else Text(stringResource(R.string.btn_continue_to_test))
                             }
-                        ) {
-                            if (lessonsToStudy.isNotEmpty()) Text(stringResource(R.string.btn_continue_to_lesson))
-                            else Text(stringResource(R.string.btn_continue_to_test))
                         }
                     }
                 }

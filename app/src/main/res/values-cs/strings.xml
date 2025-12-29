@@ -74,6 +74,9 @@
     <string name="btn_continue_to_lesson">Pokračovat na další lekci</string>
     <string name="btn_continue_to_test">Otestovat prerekvizity</string>
 
-
+    <string name="btn_continue_in_tests">Pokračovat v testech</string>
+    <string name="btn_review_lessons">Zopakovat lekce</string>
+    <string name="btn_new_lesson">⭐️ Nová lekce ⭐️</string>
+    <string name="show_hints_for_tests">Zobrazit nápovědy v testech</string>
 
 </resources>

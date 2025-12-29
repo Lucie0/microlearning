@@ -259,9 +259,24 @@ fun QuestionScreenContent(
                             enabled = nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
                             content = {
                                 if (!onSubmitClicked.value) {
-                                    Text(stringResource(R.string.submit))
+                                    Text(stringResource(R.string.btn_check_up))
                                 } else {
-                                    Text(stringResource(R.string.txt_continue))
+                                    if (viewModel.isTestCorrect()) {
+                                        if (todoNodes.isEmpty()) {
+                                            if ((graph.map[actualNodeInGraph]?.lessonOrdinalNumber
+                                                    ?: 0) >= (graph.map[educationalNode]?.lessonOrdinalNumber
+                                                    ?: 0)
+                                            ) {
+                                                Text(stringResource(R.string.btn_new_lesson))
+                                            } else {
+                                                Text(stringResource(R.string.btn_continue_in_tests))
+                                            }
+                                        } else {
+                                            Text(stringResource(R.string.btn_continue_in_tests))
+                                        }
+                                    } else {
+                                        Text(stringResource(R.string.btn_review_lessons))
+                                    }
                                 }
                             },
                             onClick = {
@@ -300,21 +315,9 @@ fun QuestionScreenContent(
                                                     ?: 0)
                                             ) {
                                                 // pokud ordinal number je rovno (nebo nahodou vetsi) nez edukacni uzel, jdi na lekci
-                                                println(
-                                                    "actualNodeOrdinalNum (${graph.map[actualNodeInGraph]?.lessonOrdinalNumber}) " +
-                                                            ">= educationalNodeOrdinalNum (${graph.map[educationalNode]?.lessonOrdinalNumber})"
-                                                )
 
                                                 // zobrazit lekci aktualniho uzlu
                                                 // navigation.navigateToLessonScreen()
-
-                                                println(
-                                                    "navigateToLessonScreen:" +
-                                                            "nodeId = $actualNodeInGraph,\n" +
-                                                            "lessonId = ${graph.map[actualNodeInGraph]?.lessonId},\n" +
-                                                            "lessonOrdinalNumber = ${graph.map[actualNodeInGraph]?.lessonOrdinalNumber},\n" +
-                                                            "topicId = ${graph.topicId}"
-                                                )
 
                                                 navigation.navigateToLessonScreen(
                                                     nodeId = actualNodeInGraph,
@@ -406,7 +409,7 @@ fun QuestionScreenContent(
                             //  -- cislo, ktere se meni, musi byt v mutableState, jinak se to nepropise
                             enabled = /*lessonId != null &&*/ nodeId != null,// || (mode.value == Modes.TUITION.name && graph.map[actualNodeInGraph]?.subsequentNodeIds?.get(0) != null),// viewModel.selectedOptions.size == 1
                             content = {
-                                    Text(stringResource(R.string.btn_check_up))
+                                    Text(stringResource(R.string.submit))
                             },
                             onClick = {
                                 // vyhodnotit, jak dopadl test, podle toho pokracovat dal

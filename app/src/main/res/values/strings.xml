@@ -69,4 +69,8 @@
 
     <string name="btn_continue_to_lesson">Continue to next lesson</string>
     <string name="btn_continue_to_test">Test of prerequisites</string>
+    <string name="btn_continue_in_tests">Continue in tests</string>
+    <string name="btn_review_lessons">Review lessons</string>
+    <string name="btn_new_lesson">⭐️ New lesson ⭐️</string>
+    <string name="show_hints_for_tests">Show hints for tests</string>
 </resources>
