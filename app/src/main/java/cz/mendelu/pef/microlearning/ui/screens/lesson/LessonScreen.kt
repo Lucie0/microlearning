@@ -3,8 +3,12 @@ package cz.mendelu.pef.microlearning.ui.screens.lesson
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -63,7 +67,6 @@ fun LessonScreen(
     val uiState: MutableState<UiState<LessonData, LessonsErrors>> = rememberSaveable { mutableStateOf(UiState()) } // rememberSaveable si ulozi data i pri zmene orientace obrazovky
     val openAlertDialog = remember { mutableStateOf(false) }
 
-
     LaunchedEffect(key1 = 1, block = {
         viewModel.getData()
     })
@@ -80,7 +83,7 @@ fun LessonScreen(
 
     // --> text staticky predavat v parametru screeny a uz ho pote neaktualizovat
     BaseScreen(
-        topBarText = stringResource(R.string.title_lesson) + (lessonId ?: lessonOrdinalNumber),//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
+        topBarText = stringResource(R.string.title_lesson) + (lessonOrdinalNumber ?: "(ID $lessonId)"),//+ if (uiState.value.data != null) uiState.value.data!!.content.name else "",
         placeholderScreenContent = if (uiState.value.errors != null) {
             PlaceholderScreenContent(
                 image = when (uiState.value.errors!!.communicationError) {
@@ -158,16 +161,21 @@ fun LessonScreenContent(
     if (uiState.value.data != null) {
         LazyColumn(
             modifier = Modifier
-                .padding(top = paddingValues.calculateTopPadding(), bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(top = paddingValues.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 16.dp).fillMaxWidth(),
+//            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 // nadpis
-                HtmlText(
-                    string = uiState.value.data!!.lesson?.content?.name ?: "",
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                    textAlign = TextAlign.Center
-                )
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    HtmlText(
+                        string = uiState.value.data!!.lesson?.content?.name ?: "",
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
             item {
                 // samotny content
@@ -180,9 +188,13 @@ fun LessonScreenContent(
                     Modes.REVISION.ordinal -> {
                         if (lessonOrdinalNumber != null && topicId != null) {
                             println("lessonList>$revisionLessonList")
-                            Row {
+                            Row (
+                                modifier = Modifier.fillMaxSize(),
+                                horizontalArrangement = Arrangement.Center,
+
+                            ){
                                 Button(
-                                    modifier = Modifier.padding(8.dp),
+                                    modifier = Modifier.padding(end = 8.dp, top = 8.dp),
                                     enabled = revisionLessonList.containsKey(lessonOrdinalNumber - 1),
                                     onClick = {
                                         navigation.navigateToLessonScreen(
@@ -197,7 +209,7 @@ fun LessonScreenContent(
                                 }
 
                                 Button(
-                                    modifier = Modifier.padding(8.dp),
+                                    modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp),
                                     enabled = revisionLessonList.containsKey(lessonOrdinalNumber + 1),
                                     onClick = {
                                         navigation.navigateToLessonScreen(
@@ -208,7 +220,8 @@ fun LessonScreenContent(
                                         )
                                     }
                                 ) {
-                                    Text(stringResource(R.string.btn_next_lesson))
+                                    Text(
+                                        text = stringResource(R.string.btn_next_lesson))
                                 }
                             }
                         }
@@ -247,7 +260,9 @@ fun LessonScreenContent(
 
                                     navigation.navigateToLessonScreen(
                                         nodeId = viewModel.actualNodeId, // bylo -1L misto null, zajima me jen lekce
-                                        lessonId = lId
+                                        lessonId = lId,
+                                        lessonOrdinalNumber = graph.map[viewModel.actualNodeId]?.lessonOrdinalNumber,
+                                        topicId = graph.topicId
                                     )
                                 } else if (todoNodes.isNotEmpty()) {// pokud lessonsToStudy je prazdny, zkontrolovat, jestli todoNodes neni prazdny
                                 // a navigovat na pretest prvniho nodu
