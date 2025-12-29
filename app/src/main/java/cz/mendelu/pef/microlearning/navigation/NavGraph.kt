@@ -119,8 +119,8 @@ fun NavGraph(
 //                title = if (it.arguments?.getString("title") != "") it.arguments?.getString("title") else null,
                 lessonOrdinalNumber = if (lessonOrdinalNumber != -1) lessonOrdinalNumber else null,
                 topicId = if (topicId != -1L) topicId else null,
-                lessonId = if (lessonId != -1L) topicId else null,
-                nodeId = if (nodeId != -1L) topicId else null,
+                lessonId = if (lessonId != -1L) lessonId else null,
+                nodeId = if (nodeId != -1L) nodeId else null,
                 navigation = navigation
             )
         }
