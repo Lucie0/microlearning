@@ -53,6 +53,8 @@ fun ResultScreen(
 
     LaunchedEffect(key1 = 1, block = {
         viewModel.getData()
+        viewModel.markParents()
+        viewModel.getCountPoints()
     })
 
     // poslech nad uistatem
@@ -101,22 +103,19 @@ fun ResultScreenContent(
 //    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pcx.wz.cz/ML/GraphTopic1.html?score=3&outline=1&fill1=0:0&fill2=0:0&fill3=0:0&fill4=0:0&fill5=12:0&fill6=1:2&fill7=3:3")) }
     val url = "https://pcx.wz.cz/ML/GraphTopic${graph.topicId.toInt()}.html?"
     val urlArguments = remember { mutableStateOf("") }
-
-    LaunchedEffect(key1 = 1) {
-        viewModel.markParents()
-    }
+    val points = remember { mutableStateOf(viewModel.points.value) }
 
     Column(modifier = Modifier.padding(8.dp)) {
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=${viewModel.getCountPoints()}&outline=1" + viewModel.createUrlArguments()))) }) {
+            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url + "score=${points.value}&outline=1" + viewModel.createUrlArguments()))) }) {
             Text(stringResource(R.string.txt_show_nonscalar_evaluation))
         }
 
         Text(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(R.string.txt_points) + viewModel.getCountPoints())
+            text = stringResource(R.string.txt_points) + points.value)
 
 //        Text("Count points:${viewModel.getCountPoints()}")
 

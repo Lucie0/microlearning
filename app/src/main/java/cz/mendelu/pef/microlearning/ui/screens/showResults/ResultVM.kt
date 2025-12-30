@@ -27,6 +27,8 @@ class ResultVM @Inject constructor(
     val uiState: MutableState<UiState<ArrayResponse<LessonShorter>, ResultErrors>> =
         mutableStateOf(UiState())
 
+    val points = mutableStateOf(0)
+
     var topicId = graph.topicId
 
     // map[lessonId] = nodeId
@@ -158,8 +160,8 @@ class ResultVM @Inject constructor(
         return it.name + result
     }
 
-    fun getCountPoints() : Int {
-        return calculator.countPoints()
+    fun getCountPoints() {
+        points.value = calculator.countPoints()
     }
 //
 //    // neni suspend
