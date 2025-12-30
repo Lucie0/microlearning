@@ -8,7 +8,7 @@
     <string name="no_data">Žádná data</string>
     <string name="wrong_lesson_id">Chybné ID lekce</string>
     <string name="something_went_wrong_please_reload_screen">Něco se pokazilo, prosím, znovu načtěte obrazovku</string>
-    <string name="not_found">Nenalezeno</string>
+    <string name="not_found">Data nenalezena</string>
     <string name="network_is_not_connected">Není připojení k internetu</string>
     <string name="no_testing_questions_for_this_domain">Pro tuto oblast nenalezeny testové otázky</string>
 
