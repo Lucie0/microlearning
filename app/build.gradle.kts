@@ -6,7 +6,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     // Navigation using: https://github.com/raamcosta/compose-destinations
     id("com.google.devtools.ksp") version "1.8.10-1.0.9"
-
 }
 
 android {
@@ -18,7 +17,7 @@ android {
         minSdk = 24
         targetSdk = 33
         versionCode = 1
-        versionName = "1.21"
+        versionName = "1.23"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

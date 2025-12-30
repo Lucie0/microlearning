@@ -178,8 +178,16 @@ class QuestionScreenVM @Inject constructor(
 //            println("ids:$ids")
 
             return nextNodeId
+        } else if (todoNodes.isNotEmpty()){
+            println("todoNodes:$todoNodes")
+
+            nextNodeId = todoNodes.first()
+            todoNodes.remove(nextNodeId)
+
+            return nextNodeId
+
         } else {
-            // nejsou rodicove uzlu
+            println("nejsou rodicove uzlu")
             println("todoNodes:$todoNodes")
             return -1L
         }
