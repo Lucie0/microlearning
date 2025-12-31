@@ -69,6 +69,7 @@ fun QuestionScreen(
     // poslech nad uistatem
     viewModel.uiState.value.let {
         uiState.value = it
+        println("questions:" + uiState.value.data)
     }
 
     BackHandler {
@@ -346,46 +347,19 @@ fun QuestionScreenContent(
                                             //// navigation.navigateToQuestionScreen()
                                             actualNodeInGraph = todoNodes.iterator().next()
                                             todoNodes.remove(actualNodeInGraph)
+
                                             navigation.navigateToQuestionScreen(
                                                 nodeId = actualNodeInGraph,
                                                 lessonId = graph.map[actualNodeInGraph]?.lessonId
                                             )
                                         }
                                     } else {
-                                        println("test neni ok")
-                                        println("LessonToStudy:$lessonsToStudy")
-                                        // test neni OK
 
-                                        //  1. zobrazit vsechny lekce (ted jen prvni, ostatni se musi zacyklit v lessonScreene)
-                                        //     predku ,
-                                        //todo     tzn. pridat tyto vsechny lekce to __lessonsToStudy__
-                                        graph.map[actualNodeInGraph]?.previousNodesIds?.forEach { nId ->
-                                            if (graph.map[nId] != null && graph.map[nId]!!.lessonId != null) {
-                                                lessonsToStudy.add(graph.map[nId]!!.lessonId!!)
-                                            }
-                                        }
-                                        println("LessonToStudy:$lessonsToStudy")
-
-                                        //  2. pak se budu zase snazit o vstup do uzlu (po lekcich navigovani na
-                                        //     Pretest -> rozhodnuti -> lekce),
-                                        //todo      tzn. pridat vsechny tyto uzly do __todoNodes__
-                                        todoNodes.addAll(
-                                            graph.map[actualNodeInGraph]?.previousNodesIds
-                                                ?: listOf()
-                                        )
-
-                                        //  todo 3. navigovat do lekce (radeji osetrit, ze lessonsToStudy neni prazdny, ale to jen, aby to nespadlo)
-                                        val lId = lessonsToStudy.iterator().next()
-                                        lessonsToStudy.remove(lId)
-
-                                        val node = graph.map.values
-                                            .firstOrNull { it.lessonId == lId }
-
-                                        val nId = node?.id
+                                        val node = viewModel.getNextLessonToStudy()
 
                                         navigation.navigateToLessonScreen(
                                             nodeId = node?.id, // bylo -1L misto null, zajima me hlavne lekce
-                                            lessonId = lId,
+                                            lessonId = node?.lessonId,
                                             lessonOrdinalNumber = node?.lessonOrdinalNumber,
                                             topicId = graph.topicId
                                         )

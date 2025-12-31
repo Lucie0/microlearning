@@ -11,6 +11,7 @@ import cz.mendelu.pef.microlearning.model.Modes
 import cz.mendelu.pef.microlearning.model.TestState
 import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.actualNodeInGraph
+import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.api.Question
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.lessonsToStudy
@@ -156,30 +157,30 @@ class QuestionScreenVM @Inject constructor(
             // a pak vvv
             // todo return nextNodeId
 
-            println("todoNodes:$todoNodes")
+//            println("todoNodes:$todoNodes")
 
             // pokud je ordinal number 0 (cili je to korenovy uzel) a je jeste v todoNodes nejaky dalsi node, tak pokracuj na ten dalsi uzel
             if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0 && todoNodes.size > 0) {
-                println("todoNodes:$todoNodes")
+//                println("todoNodes:$todoNodes")
 
                 nextNodeId = todoNodes.first()
                 todoNodes.remove(nextNodeId)
 
             } // jinak se zobrazi tento node, a tim nebudou otazky a jde z testu jen odejit
             else if (graph.map[nextNodeId]?.lessonOrdinalNumber != null && graph.map[nextNodeId]?.lessonOrdinalNumber == 0) {
-                println("todoNodes:$todoNodes")
+//                println("todoNodes:$todoNodes")
 
                 nextNodeId = -1
             } else {
 //                todoNodes.remove(nextNodeId)
             }
 
-            println("todoNodes:$todoNodes")
+//            println("todoNodes:$todoNodes")
 //            println("ids:$ids")
 
             return nextNodeId
         } else if (todoNodes.isNotEmpty()){
-            println("todoNodes:$todoNodes")
+//            println("todoNodes:$todoNodes")
 
             nextNodeId = todoNodes.first()
             todoNodes.remove(nextNodeId)
@@ -188,7 +189,7 @@ class QuestionScreenVM @Inject constructor(
 
         } else {
             println("nejsou rodicove uzlu")
-            println("todoNodes:$todoNodes")
+//            println("todoNodes:$todoNodes")
             return -1L
         }
     }
@@ -270,8 +271,40 @@ class QuestionScreenVM @Inject constructor(
 
         data.questions = ArrayResponse(listArrayResponses, listArrayResponses.size, 1)
 
-        println("listArrayResponses:$listArrayResponses")
+        println("listArrayResponses:${listArrayResponses.map { it1 -> it1.options.items?.filter { it.correctAnswer == true } } }}")
 //        data.questions?.items = data.questionsList[0].items
+    }
+
+    fun getNextLessonToStudy(): Node? {
+        println("test neni ok")
+        println("LessonToStudy:$lessonsToStudy")
+        // test neni OK
+
+        //  1. zobrazit vsechny lekce (ted jen prvni, ostatni se musi zacyklit v lessonScreene)
+        //     predku ,
+        //todo     tzn. pridat tyto vsechny lekce to __lessonsToStudy__
+        graph.map[actualNodeInGraph]?.previousNodesIds?.forEach { nId ->
+            if (graph.map[nId] != null && graph.map[nId]!!.lessonId != null) {
+                lessonsToStudy.add(graph.map[nId]!!.lessonId!!)
+            }
+        }
+        println("LessonToStudy:$lessonsToStudy")
+
+        //  2. pak se budu zase snazit o vstup do uzlu (po lekcich navigovani na
+        //     Pretest -> rozhodnuti -> lekce),
+        //todo      tzn. pridat vsechny tyto uzly do __todoNodes__
+        todoNodes.addAll(
+            graph.map[actualNodeInGraph]?.previousNodesIds
+                ?: listOf()
+        )
+
+        //  todo 3. navigovat do lekce (radeji osetrit, ze lessonsToStudy neni prazdny, ale to jen, aby to nespadlo)
+        val lId = lessonsToStudy.iterator().next()
+        lessonsToStudy.remove(lId)
+
+
+        return graph.map.values
+            .firstOrNull { it.lessonId == lId }
     }
 
     // suspend do remote repo
@@ -279,12 +312,14 @@ class QuestionScreenVM @Inject constructor(
 //        // aktualni node -- jeho predchudci -- pro kazdy stahnout otazky
 //        println("Graph:${graph}")
         var count = graph.map[nodeId]?.previousNodesIds?.size ?: 0
-//        println("count previousNodesIds:$count")
-//        println("Graph[102]:${graph.map[102]?.previousNodesIds}")
+        println("count previousNodesIds:$count")
+        println("Graph[$nodeId]:${graph.map[nodeId]?.previousNodesIds}")
 
         if (count > 0) {
             graph.map[nodeId]?.previousNodesIds?.forEach { id ->
                 println("nodeID:$id")
+                println("lessonId:${graph.map[id]!!.lessonId}")
+
                 if (graph.map[id] != null && graph.map[id]!!.lessonId != null) {
 //                    println("!!!" + graph.map[id])
                     launch {
@@ -300,6 +335,7 @@ class QuestionScreenVM @Inject constructor(
                                     count -= 1
                                     println("count:$count")
 
+                                    // jakmile jsou stazeny otazky ze vsech uzlu
                                     if (count == 0) {
                                         reduceQuestions()
                                     }
