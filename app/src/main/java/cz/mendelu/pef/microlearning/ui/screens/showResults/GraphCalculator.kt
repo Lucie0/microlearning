@@ -11,23 +11,12 @@ class GraphCalculator(
 ) {
     var result = -1
 
-    fun markWalkthroughParents() {
-        if (graph.map[startingNode]?.countOfIncorrectAnswers == 0) {
-            markNodes(startingNode)
-        } else {
-            graph.map[startingNode]?.previousNodesIds?.forEach {
-                markNodesIf(it)
-            }
-        }
-    }
-
-    private fun markNodesIf(nodeId: Long) {
+    fun markWalkthroughParents(nodeId: Long) {
         if (graph.map[nodeId]?.countOfIncorrectAnswers == 0) {
             markNodes(nodeId)
-
         } else {
             graph.map[nodeId]?.previousNodesIds?.forEach {
-                markNodesIf(it)
+                markWalkthroughParents(it)
             }
         }
     }
@@ -37,10 +26,8 @@ class GraphCalculator(
         graph.map[nodeId]?.previousNodesIds?.forEach {
             markNodes(it)
         }
+         graph.map[nodeId]?.walkThrough = true
 
-        if (graph.map[nodeId]?.walkThrough != true) {
-            graph.map[nodeId]?.walkThrough = true
-        }
     }
 
     fun countPoints() : Int {
