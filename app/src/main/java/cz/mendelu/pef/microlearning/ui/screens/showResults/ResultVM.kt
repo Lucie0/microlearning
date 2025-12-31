@@ -10,6 +10,7 @@ import cz.mendelu.pef.microlearning.model.UiState
 import cz.mendelu.pef.microlearning.model.api.LessonShorter
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.response.ArrayResponse
+import cz.mendelu.pef.microlearning.model.startingNode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +63,7 @@ class ResultVM @Inject constructor(
                     }
 
                     is CommunicationResult.Error -> {
-                        println(result.error)
+                        println("error: " + result.error)
                         when (result.error.code) {
                             500 -> {
                                 uiState.value = UiState(
@@ -131,13 +132,17 @@ class ResultVM @Inject constructor(
     }
 
     fun markParents() {
-        return calculator.markWalkthroughParents()
+        return calculator.markWalkthroughParents(startingNode)
     }
 
     fun createUrlArguments() : String{
         val urlArguments = graph.map.values.filter{
             it.walkThrough == true && it.lessonOrdinalNumber != 0
-        }.joinToString("") { "&fill${it.lessonOrdinalNumber}=${graph.map[mapOfLesson[it.id]]?.countOfCorrectAnswers}:${graph.map[mapOfLesson[it.id]]?.countOfIncorrectAnswers}" }
+        }.joinToString("") {
+            "&fill${it.lessonOrdinalNumber}=" +
+                    "${graph.map[mapOfLesson[it.id]]?.countOfCorrectAnswers}" +
+                    ":${graph.map[mapOfLesson[it.id]]?.countOfIncorrectAnswers}"
+        }
 
         println("urlArgs:$urlArguments")
 
