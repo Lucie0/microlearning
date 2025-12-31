@@ -39,13 +39,13 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
         val start = getSpanStart(span)
         val end = getSpanEnd(span)
 
-        println("Type:$span")
-        println("start:$start, end: $end")
-        println("length:${spanned.length}")
+//        println("Type:$span")
+//        println("start:$start, end: $end")
+//        println("length:${spanned.length}")
 
         when (span) {
             is StyleSpan -> {
-                println(span.style)
+//                println(span.style)
                 when (span.style) {
                     Typeface.BOLD -> addStyle(SpanStyle(fontWeight = FontWeight.Bold), start, end)
                     Typeface.ITALIC -> addStyle(SpanStyle(fontStyle = FontStyle.Italic), start, end)
@@ -59,25 +59,25 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 //                append(spanned.subSequence(start, end))
             }
             is UnderlineSpan -> {
-                println(span.describeContents())
+//                println(span.describeContents())
                 addStyle(SpanStyle(textDecoration = TextDecoration.Underline), start, end)
 //                append(spanned.subSequence(start, end))
             }
             is ForegroundColorSpan -> {
-                println(span.foregroundColor)
-                println(span.describeContents())
+//                println(span.foregroundColor)
+//                println(span.describeContents())
                 addStyle(SpanStyle(color = Color(span.foregroundColor)), start, end)
 //                append(spanned.subSequence(start, end))
             }
             is RelativeSizeSpan -> {
-                println(span.sizeChange)
-                println(span.describeContents())
+//                println(span.sizeChange)
+//                println(span.describeContents())
                 addStyle(SpanStyle(fontSize = span.sizeChange.em), start, end)
 //                append(spanned.subSequence(start, end))
             }
             // is URLSpan
             is URLSpan -> {
-                println(span.url)
+//                println(span.url)
                 addStyle(SpanStyle(color = Color.Cyan, textDecoration = TextDecoration.Underline), start, end)
                 // todo add onclick -- htmltext to dela pomoci elementu clickable text v composu
                 addStringAnnotation(
@@ -91,16 +91,16 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             }
             //StrikethroughSpan = deleted text -- neni asi potreba
             is StrikethroughSpan -> {
-                println(span.underlying)
+//                println(span.underlying)
 //                append(spanned.subSequence(start, end))
             }
             //BulletSpan
             is BulletSpan -> {
                 // todo co s temi puntiky pred textem v seznamu
-                println("gap:${span.gapWidth}")
-                println("start:$start, end: $end")
-                println("len:${this.length}")
-                println("string:${spanned.subSequence(start, end)}")
+//                println("gap:${span.gapWidth}")
+//                println("start:$start, end: $end")
+//                println("len:${this.length}")
+//                println("string:${spanned.subSequence(start, end)}")
 
                 addStyle(
                     style = ParagraphStyle(textIndent = TextIndent(firstLine = (span.gapWidth*4).sp)),
@@ -111,7 +111,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
             }
             is ImageSpan -> {
                 // todo osetrit obrazky
-                println(span.source)
+//                println(span.source)
 
 //                AsyncImage(
 //                    model = "https://example.com/image.jpg",
@@ -119,7 +119,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 //                )
             }
             is TypefaceSpan -> {
-                println("code:" + span.family)
+//                println("code:" + span.family)
                 when(span.family){
                     "code" ->  addStyle(SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.8.em), start, end)
                 }
