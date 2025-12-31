@@ -23,6 +23,8 @@ public class NodeResponse {
     private boolean walkThrough;
     private boolean successfullyCompleted;
 
+    private int pomOrdNum;
+
     public NodeResponse(Node node){
         this.id = node.getId();
         this.level = node.getLevel();
