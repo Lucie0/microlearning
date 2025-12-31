@@ -13,7 +13,7 @@ import cz.mendelu.pef.microlearning.model.api.Node
 import cz.mendelu.pef.microlearning.model.graph
 import cz.mendelu.pef.microlearning.model.mode
 import cz.mendelu.pef.microlearning.model.response.ObjectResponse
-import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonScreenVM
+import cz.mendelu.pef.microlearning.ui.screens.lesson.LessonVM
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -33,7 +33,7 @@ import org.junit.Test
 
 class LessonVMUnitTest {
 
-    private lateinit var vm: LessonScreenVM
+    private lateinit var vm: LessonVM
     private lateinit var remote: IRemoteRepository
     private lateinit var local: IMicrolearningRepository
 
@@ -50,7 +50,7 @@ class LessonVMUnitTest {
         remote = mockk()
         local = mockk()
 
-        vm = LessonScreenVM(remote, local)
+        vm = LessonVM(remote, local)
 
         // Mock global variables
         graph = Graph(

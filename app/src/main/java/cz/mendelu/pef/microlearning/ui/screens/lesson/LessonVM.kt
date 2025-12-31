@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class LessonScreenVM @Inject constructor(
+class LessonVM @Inject constructor(
     private val remoteRepository: IRemoteRepository,
     private val localRepository: IMicrolearningRepository
 ) : BaseViewModel() {
@@ -89,7 +89,7 @@ class LessonScreenVM @Inject constructor(
                 }
 
                 is CommunicationResult.Error -> {
-                    println(result.error)
+                    println("error:${result.error}")
                     when (result.error.code) {
                         500 -> {
                             lessonsUiState.value = UiState(
@@ -173,7 +173,7 @@ class LessonScreenVM @Inject constructor(
             }
 
             is CommunicationResult.Error -> {
-                println(result.error)
+                println("error:${result.error}")
                 when (result.error.code) {
                     500 -> {
                         lessonsUiState.value = UiState(

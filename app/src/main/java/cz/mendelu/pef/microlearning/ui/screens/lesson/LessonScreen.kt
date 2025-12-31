@@ -51,7 +51,7 @@ fun LessonScreen(
     topicId: Long?,
     navigation: INavigationRouter
 ){
-    val viewModel = hiltViewModel<LessonScreenVM>()
+    val viewModel = hiltViewModel<LessonVM>()
 
 //    println("GRAPH: ${graph.topicId}, ${graph.map.size}")
 
@@ -150,7 +150,7 @@ fun LessonScreenContent(
     nodeId: Long?,
     lessonOrdinalNumber: Int?,
     topicId: Long?,
-    viewModel: LessonScreenVM,
+    viewModel: LessonVM,
     navigation: INavigationRouter
 ) {
 
