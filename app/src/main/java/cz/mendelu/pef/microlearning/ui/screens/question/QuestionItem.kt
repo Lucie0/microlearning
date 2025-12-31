@@ -249,7 +249,7 @@ private fun OpenQuestion(
     showCorrect: Boolean
 ) {
     val answer = remember { mutableStateOf(viewModel.getSelected( question.id ?: 0, 0)) }
-    val isInt = question.options.items?.get(0)?.text?.toInt()
+    val isFloat = question.options.items?.get(0)?.text?.toFloatOrNull()
 
     HtmlText(
         string = if (showHint.value) question.text ?: "" else question.text?.replace("""\{–?[0-9]+\}""".toRegex(), "") ?: "",
@@ -259,7 +259,7 @@ private fun OpenQuestion(
 
     OutlinedTextField(
         value = answer.value,
-        keyboardOptions = if (isInt != null) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default,
+        keyboardOptions = if (isFloat != null) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default,
         onValueChange = {
             answer.value = it
             viewModel.setSelected( question.id ?: 0, 0, it)
