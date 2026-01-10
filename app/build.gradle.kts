@@ -16,8 +16,8 @@ android {
         applicationId = "cz.mendelu.pef.microlearning"
         minSdk = 24
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.23"
+        versionCode = 3
+        versionName = "1.24"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
